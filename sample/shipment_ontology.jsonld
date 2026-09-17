@@ -124,7 +124,7 @@
       "@id": "urn:ship:個数",
       "@type": "DatatypeProperty",
       "domain": "urn:ship:出荷",
-      "_comment": "0個の出荷は出荷ではないので positiveInteger である",
+      "_comment": "0個の出荷は出荷ではないので positiveInteger である（同期の確認）",
       "range": "positiveInteger",
       "label": {
         "ja": "個数",
