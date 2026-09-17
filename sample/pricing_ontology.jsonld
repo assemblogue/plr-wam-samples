@@ -1,0 +1,311 @@
+{
+  "@id": "urn:pr:ontology",
+  "@type": "Ontology",
+  "_comment": "属性はすべて cardinality が 0 か 1。クラスid・属性idは絶対URI、range のデータ型名は接頭辞なし。",
+  "defines": [
+    {
+      "@id": "urn:pr:単価・掛率",
+      "@type": "Class",
+      "subClassOf": [
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:商品",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:バイヤー",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:単価",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:掛率",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "単価・掛率",
+        "en": "Unit price and rate"
+      }
+    },
+    {
+      "@id": "urn:pr:上位カテゴリ",
+      "@type": "Class",
+      "subClassOf": [
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:対象",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:カテゴリ",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "上位カテゴリ",
+        "en": "Ancestor category"
+      }
+    },
+    {
+      "@id": "urn:pr:直上カテゴリ",
+      "@type": "Class",
+      "subClassOf": [
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:対象",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:カテゴリ",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "直上カテゴリ",
+        "en": "Parent category"
+      }
+    },
+    {
+      "@id": "urn:pr:商品・バイヤー・単価",
+      "@type": "Class",
+      "subClassOf": [
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:商品",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:バイヤー",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:単価",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "商品・バイヤー・単価",
+        "en": "Product/buyer unit price"
+      }
+    },
+    {
+      "@id": "urn:pr:商品・単価",
+      "@type": "Class",
+      "subClassOf": [
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:商品",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:単価",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "商品・単価",
+        "en": "Product unit price"
+      }
+    },
+    {
+      "@id": "urn:pr:カテゴリ・バイヤー・掛率",
+      "@type": "Class",
+      "subClassOf": [
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:カテゴリ",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:バイヤー",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:掛率",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "カテゴリ・バイヤー・掛率",
+        "en": "Category/buyer rate"
+      }
+    },
+    {
+      "@id": "urn:pr:カテゴリ・掛率",
+      "@type": "Class",
+      "subClassOf": [
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:カテゴリ",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:掛率",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "カテゴリ・掛率",
+        "en": "Category rate"
+      }
+    },
+    {
+      "@id": "urn:pr:商品・バイヤー・掛率",
+      "@type": "Class",
+      "subClassOf": [
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:商品",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:バイヤー",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:掛率",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "商品・バイヤー・掛率",
+        "en": "Product/buyer rate"
+      }
+    },
+    {
+      "@id": "urn:pr:商品・掛率",
+      "@type": "Class",
+      "subClassOf": [
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:商品",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:掛率",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "商品・掛率",
+        "en": "Product rate"
+      }
+    },
+    {
+      "@id": "urn:pr:商品マスター",
+      "@type": "Class",
+      "subClassOf": [
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:商品",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:pr:単価",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "商品マスター",
+        "en": "Product master"
+      }
+    },
+    {
+      "@id": "urn:pr:商品",
+      "@type": "DatatypeProperty",
+      "range": "string",
+      "label": {
+        "ja": "商品",
+        "en": "Product"
+      }
+    },
+    {
+      "@id": "urn:pr:バイヤー",
+      "@type": "DatatypeProperty",
+      "range": "string",
+      "label": {
+        "ja": "バイヤー",
+        "en": "Buyer"
+      }
+    },
+    {
+      "@id": "urn:pr:カテゴリ",
+      "@type": "DatatypeProperty",
+      "range": "string",
+      "label": {
+        "ja": "カテゴリ",
+        "en": "Category"
+      }
+    },
+    {
+      "@id": "urn:pr:対象",
+      "@type": "DatatypeProperty",
+      "range": "string",
+      "label": {
+        "ja": "対象",
+        "en": "Target"
+      }
+    },
+    {
+      "@id": "urn:pr:単価",
+      "@type": "DatatypeProperty",
+      "range": "nonNegativeInteger",
+      "label": {
+        "ja": "単価",
+        "en": "Unit price"
+      }
+    },
+    {
+      "@id": "urn:pr:掛率",
+      "@type": "DatatypeProperty",
+      "range": "decimal",
+      "label": {
+        "ja": "掛率",
+        "en": "Rate"
+      }
+    }
+  ]
+}

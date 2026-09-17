@@ -1,0 +1,5 @@
+{
+  "sessionId": "sess-sample",
+  "_comment": "okButtons は、停止(pending)したときに押すOKボタンのURIを押す順に並べる。このサンプルは完成確認を使わないので空でよい。",
+  "okButtons": []
+}

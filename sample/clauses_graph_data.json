@@ -1,0 +1,84 @@
+{
+  "_comment": "ホーン節（追記207 の新形式）。ホーン節は「ノード1つ ＋ その内部グラフ」である。",
+  "調達申請ワークフロー": [
+    {
+      "@id": "urn:node:chotatsu.head",
+      "@type": "調達申請ワークフロー",
+      "variables": [
+        {
+          "@id": "#T1",
+          "variableName": "T1"
+        },
+        {
+          "@id": "#T2",
+          "variableName": "T2"
+        },
+        {
+          "@id": "#T3",
+          "variableName": "T3"
+        }
+      ],
+      "internalGraph": [
+        {
+          "@id": "urn:node:sinsei-001",
+          "@type": "申請",
+          "wam:truthValue": {
+            "@id": "#T1"
+          }
+        },
+        {
+          "@id": "urn:node:shonin-001",
+          "@type": "承認",
+          "wam:truthValue": {
+            "@id": "#T2"
+          }
+        },
+        {
+          "@id": "urn:node:hacchu-001",
+          "@type": "発注",
+          "wam:truthValue": {
+            "@id": "#T3"
+          }
+        },
+        {
+          "@id": "urn:node:chotatsu.head#link1",
+          "@type": "urn:wamtest:Then",
+          "arg1": {
+            "@id": "urn:node:sinsei-001"
+          },
+          "arg2": {
+            "@id": "urn:node:shonin-001"
+          }
+        },
+        {
+          "@id": "urn:node:chotatsu.head#link2",
+          "@type": "urn:wamtest:Then",
+          "arg1": {
+            "@id": "urn:node:shonin-001"
+          },
+          "arg2": {
+            "@id": "urn:node:hacchu-001"
+          }
+        }
+      ]
+    }
+  ],
+  "申請": [
+    {
+      "@id": "urn:node:申請.head",
+      "@type": "申請"
+    }
+  ],
+  "承認": [
+    {
+      "@id": "urn:node:承認.head",
+      "@type": "承認"
+    }
+  ],
+  "発注": [
+    {
+      "@id": "urn:node:発注.head",
+      "@type": "発注"
+    }
+  ]
+}

@@ -1,0 +1,374 @@
+{
+  "_comment": "順序の悪いホーン節（Andorra の並べ替えの確認用。追記207 の新形式）。",
+  "urn:pr:単価・掛率": [
+    {
+      "@id": "urn:node:単価掛率1.head-1",
+      "@type": "urn:pr:単価・掛率",
+      "urn:pr:商品": {
+        "@id": "#Item"
+      },
+      "urn:pr:バイヤー": {
+        "@id": "#Buyer"
+      },
+      "urn:pr:単価": {
+        "@id": "#Price"
+      },
+      "urn:pr:掛率": 1,
+      "variables": [
+        {
+          "@id": "#Buyer",
+          "variableName": "Buyer"
+        },
+        {
+          "@id": "#Item",
+          "variableName": "Item"
+        },
+        {
+          "@id": "#Price",
+          "variableName": "Price"
+        }
+      ],
+      "internalGraph": [
+        {
+          "@id": "urn:node:商品バイヤー単価-2",
+          "@type": "urn:pr:商品・バイヤー・単価",
+          "urn:pr:商品": {
+            "@id": "#Item"
+          },
+          "urn:pr:バイヤー": {
+            "@id": "#Buyer"
+          },
+          "urn:pr:単価": {
+            "@id": "#Price"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "urn:node:単価掛率2.head-3",
+      "@type": "urn:pr:単価・掛率",
+      "urn:pr:商品": {
+        "@id": "#Item"
+      },
+      "urn:pr:単価": {
+        "@id": "#Price"
+      },
+      "urn:pr:掛率": 1,
+      "variables": [
+        {
+          "@id": "#Item",
+          "variableName": "Item"
+        },
+        {
+          "@id": "#Price",
+          "variableName": "Price"
+        }
+      ],
+      "internalGraph": [
+        {
+          "@id": "urn:node:商品単価-4",
+          "@type": "urn:pr:商品・単価",
+          "urn:pr:商品": {
+            "@id": "#Item"
+          },
+          "urn:pr:単価": {
+            "@id": "#Price"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "urn:node:単価掛率3.head-5",
+      "@type": "urn:pr:単価・掛率",
+      "urn:pr:商品": {
+        "@id": "#Item"
+      },
+      "urn:pr:バイヤー": {
+        "@id": "#Buyer"
+      },
+      "urn:pr:単価": 0,
+      "urn:pr:掛率": {
+        "@id": "#Ratio"
+      },
+      "variables": [
+        {
+          "@id": "#Buyer",
+          "variableName": "Buyer"
+        },
+        {
+          "@id": "#Item",
+          "variableName": "Item"
+        },
+        {
+          "@id": "#ItemCat",
+          "variableName": "ItemCat"
+        },
+        {
+          "@id": "#Ratio",
+          "variableName": "Ratio"
+        }
+      ],
+      "internalGraph": [
+        {
+          "@id": "urn:node:カテゴリバイヤー掛率-7",
+          "@type": "urn:pr:カテゴリ・バイヤー・掛率",
+          "urn:pr:カテゴリ": {
+            "@id": "#ItemCat"
+          },
+          "urn:pr:バイヤー": {
+            "@id": "#Buyer"
+          },
+          "urn:pr:掛率": {
+            "@id": "#Ratio"
+          }
+        },
+        {
+          "@id": "urn:node:上位カテゴリ-6",
+          "@type": "urn:pr:上位カテゴリ",
+          "urn:pr:対象": {
+            "@id": "#Item"
+          },
+          "urn:pr:カテゴリ": {
+            "@id": "#ItemCat"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "urn:node:単価掛率4.head-8",
+      "@type": "urn:pr:単価・掛率",
+      "urn:pr:商品": {
+        "@id": "#Item"
+      },
+      "urn:pr:単価": 0,
+      "urn:pr:掛率": {
+        "@id": "#Ratio"
+      },
+      "variables": [
+        {
+          "@id": "#Item",
+          "variableName": "Item"
+        },
+        {
+          "@id": "#ItemCat",
+          "variableName": "ItemCat"
+        },
+        {
+          "@id": "#Ratio",
+          "variableName": "Ratio"
+        }
+      ],
+      "internalGraph": [
+        {
+          "@id": "urn:node:カテゴリ掛率-10",
+          "@type": "urn:pr:カテゴリ・掛率",
+          "urn:pr:カテゴリ": {
+            "@id": "#ItemCat"
+          },
+          "urn:pr:掛率": {
+            "@id": "#Ratio"
+          }
+        },
+        {
+          "@id": "urn:node:上位カテゴリ-9",
+          "@type": "urn:pr:上位カテゴリ",
+          "urn:pr:対象": {
+            "@id": "#Item"
+          },
+          "urn:pr:カテゴリ": {
+            "@id": "#ItemCat"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "urn:node:単価掛率5.head-11",
+      "@type": "urn:pr:単価・掛率",
+      "urn:pr:商品": {
+        "@id": "#Item"
+      },
+      "urn:pr:バイヤー": {
+        "@id": "#Buyer"
+      },
+      "urn:pr:単価": 0,
+      "urn:pr:掛率": {
+        "@id": "#Ratio"
+      },
+      "variables": [
+        {
+          "@id": "#Buyer",
+          "variableName": "Buyer"
+        },
+        {
+          "@id": "#Item",
+          "variableName": "Item"
+        },
+        {
+          "@id": "#Ratio",
+          "variableName": "Ratio"
+        }
+      ],
+      "internalGraph": [
+        {
+          "@id": "urn:node:商品バイヤー掛率-12",
+          "@type": "urn:pr:商品・バイヤー・掛率",
+          "urn:pr:商品": {
+            "@id": "#Item"
+          },
+          "urn:pr:バイヤー": {
+            "@id": "#Buyer"
+          },
+          "urn:pr:掛率": {
+            "@id": "#Ratio"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "urn:node:単価掛率6.head-13",
+      "@type": "urn:pr:単価・掛率",
+      "urn:pr:商品": {
+        "@id": "#Item"
+      },
+      "urn:pr:単価": 0,
+      "urn:pr:掛率": {
+        "@id": "#Ratio"
+      },
+      "variables": [
+        {
+          "@id": "#Item",
+          "variableName": "Item"
+        },
+        {
+          "@id": "#Ratio",
+          "variableName": "Ratio"
+        }
+      ],
+      "internalGraph": [
+        {
+          "@id": "urn:node:商品掛率-14",
+          "@type": "urn:pr:商品・掛率",
+          "urn:pr:商品": {
+            "@id": "#Item"
+          },
+          "urn:pr:掛率": {
+            "@id": "#Ratio"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "urn:node:単価掛率7.head-15",
+      "@type": "urn:pr:単価・掛率",
+      "urn:pr:商品": {
+        "@id": "#Item"
+      },
+      "urn:pr:単価": {
+        "@id": "#Price"
+      },
+      "urn:pr:掛率": 1,
+      "variables": [
+        {
+          "@id": "#Item",
+          "variableName": "Item"
+        },
+        {
+          "@id": "#Price",
+          "variableName": "Price"
+        }
+      ],
+      "internalGraph": [
+        {
+          "@id": "urn:node:商品マスター-16",
+          "@type": "urn:pr:商品マスター",
+          "urn:pr:商品": {
+            "@id": "#Item"
+          },
+          "urn:pr:単価": {
+            "@id": "#Price"
+          }
+        }
+      ]
+    }
+  ],
+  "urn:pr:上位カテゴリ": [
+    {
+      "@id": "urn:node:上位カテゴリ1.head-17",
+      "@type": "urn:pr:上位カテゴリ",
+      "urn:pr:対象": {
+        "@id": "#Item"
+      },
+      "urn:pr:カテゴリ": {
+        "@id": "#ItemCat"
+      },
+      "variables": [
+        {
+          "@id": "#Item",
+          "variableName": "Item"
+        },
+        {
+          "@id": "#ItemCat",
+          "variableName": "ItemCat"
+        }
+      ],
+      "internalGraph": [
+        {
+          "@id": "urn:node:直上カテゴリ-18",
+          "@type": "urn:pr:直上カテゴリ",
+          "urn:pr:対象": {
+            "@id": "#Item"
+          },
+          "urn:pr:カテゴリ": {
+            "@id": "#ItemCat"
+          }
+        }
+      ]
+    },
+    {
+      "@id": "urn:node:上位カテゴリ2.head-19",
+      "@type": "urn:pr:上位カテゴリ",
+      "urn:pr:対象": {
+        "@id": "#Item"
+      },
+      "urn:pr:カテゴリ": {
+        "@id": "#ItemCat"
+      },
+      "variables": [
+        {
+          "@id": "#IC",
+          "variableName": "IC"
+        },
+        {
+          "@id": "#Item",
+          "variableName": "Item"
+        },
+        {
+          "@id": "#ItemCat",
+          "variableName": "ItemCat"
+        }
+      ],
+      "internalGraph": [
+        {
+          "@id": "urn:node:直上カテゴリ-20",
+          "@type": "urn:pr:直上カテゴリ",
+          "urn:pr:対象": {
+            "@id": "#Item"
+          },
+          "urn:pr:カテゴリ": {
+            "@id": "#IC"
+          }
+        },
+        {
+          "@id": "urn:node:上位カテゴリ再帰-21",
+          "@type": "urn:pr:上位カテゴリ",
+          "urn:pr:対象": {
+            "@id": "#IC"
+          },
+          "urn:pr:カテゴリ": {
+            "@id": "#ItemCat"
+          }
+        }
+      ]
+    }
+  ]
+}

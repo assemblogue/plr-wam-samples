@@ -1,0 +1,38 @@
+{
+  "_comment": "見積書デモの通し: 2Bのえんぴつ60本 + ノート10冊 → 総額 6300",
+  "sessionId": "quote",
+  "agentProperty": "urn:quote:agent",
+  "steps": [
+    {
+      "task": "urn:node:pick1",
+      "values": {
+        "urn:quote:itemName": "2Bのえんぴつ"
+      },
+      "ok": true,
+      "comment": "品目1を選ぶ。OKを押すと Then が開いて商品マスターDBを引く"
+    },
+    {
+      "task": "urn:node:line1",
+      "values": {
+        "urn:quote:quantity": 60
+      },
+      "ok": true,
+      "comment": "数量60。単価80がDBから入り、金額4800が × で定まって完成する"
+    },
+    {
+      "task": "urn:node:pick2",
+      "values": {
+        "urn:quote:itemName": "ノート"
+      },
+      "ok": true
+    },
+    {
+      "task": "urn:node:line2",
+      "values": {
+        "urn:quote:quantity": 10
+      },
+      "ok": true,
+      "comment": "単価150 × 10 = 1500。総額 = 4800 + 1500 = 6300"
+    }
+  ]
+}

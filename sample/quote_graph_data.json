@@ -1,0 +1,230 @@
+{
+  "_comment": "見積書デモ（追記207 の新形式）。⚠️ **見積書は空の状態から始まる**——明細が1本も無いので、まず明細を作って商品と数量を入れ、見積書に足す。`lineItem` は minCardinality 1 なので、空のままでは完成せずOKも押せない。ホーン節に明細は1個しか書かれていない——本数はデータが決める。",
+  "urn:quote:QuoteRecord": [
+    {
+      "_comment": "見積書のホーン節。**頭部がトップレベルのタスクノードである**——明細のパターンと総額をどちらも頭部が持つ。パターンを書くことが「各要素へ分配せよ」の宣言であり（追記205）、頭部に現れたアトムノードは本体のアトムノードでもある（追記215・216）ので、明細1本ずつがそれ自身のタスクノードとして解かれる。",
+      "@id": "urn:node:Quote.head",
+      "@type": "urn:quote:QuoteRecord",
+      "variables": [
+        {
+          "@id": "#T",
+          "variableName": "T",
+          "@type": "nonNegativeInteger"
+        },
+        {
+          "@id": "#Amount",
+          "variableName": "Amount",
+          "@type": "nonNegativeInteger"
+        },
+        {
+          "@id": "#Qty",
+          "variableName": "Qty",
+          "@type": "nonNegativeInteger"
+        },
+        {
+          "@id": "#Label",
+          "variableName": "Label",
+          "@type": "string"
+        },
+        {
+          "@id": "#Unit",
+          "variableName": "Unit",
+          "@type": "nonNegativeInteger"
+        },
+        {
+          "@id": "#Agent",
+          "variableName": "Agent"
+        }
+      ],
+      "urn:quote:lineItem": {
+        "@type": "urn:quote:QuoteLine",
+        "urn:quote:lineAmount": {
+          "@id": "#Amount"
+        },
+        "urn:quote:lineQuantity": {
+          "@id": "#Qty"
+        },
+        "urn:quote:lineProduct": {
+          "@type": "urn:quote:CatalogItem",
+          "urn:quote:itemLabel": {
+            "@id": "#Label"
+          },
+          "urn:quote:itemPrice": {
+            "@id": "#Unit"
+          }
+        }
+      },
+      "urn:quote:agent": {
+        "@id": "#Agent"
+      },
+      "urn:quote:total": {
+        "@id": "#T"
+      },
+      "internalGraph": [
+        {
+          "_comment": "多値引数の値は和である。= は総額の側を束縛する（追記204）。",
+          "@id": "urn:node:total",
+          "@type": "urn:quote:Equals",
+          "arg1": {
+            "@id": "#T"
+          },
+          "arg2": {
+            "@id": "#Amount"
+          }
+        }
+      ]
+    },
+    {
+      "_comment": "見積書1件。**明細はまだ1本も無い。** 本数を決めるのはここであって、ホーン節ではない。",
+      "@id": "urn:entity:quote-001",
+      "urn:quote:agent": "urn:entity:buyer"
+    }
+  ],
+  "urn:quote:QuoteLine": [
+    {
+      "_comment": "明細のホーン節。⚠️ 単価は商品の属性であって明細の欄ではない——頭部に入れ子のパターンで書き、商品から取る。 ⚠️ **担当者は明細の欄ではない**——頭部に書かなければ明細は担当者を持たない（個数はホーン節が決める）。持たせると、見積書と明細が同じ担当者を指して**担当者が共有ノードになる**（追記250・252）。根である見積書が指せば足りる。 ⚠️ **`node:` はノード自身を指す**——商品ノードを在庫の検索鍵として使うために取る。使わないところでは書かない。",
+      "@id": "urn:node:LineItem.head",
+      "variables": [
+        {
+          "@id": "#Q",
+          "variableName": "Q",
+          "@type": "nonNegativeInteger"
+        },
+        {
+          "@id": "#U",
+          "variableName": "U",
+          "@type": "nonNegativeInteger"
+        },
+        {
+          "@id": "#A",
+          "variableName": "A",
+          "@type": "nonNegativeInteger"
+        },
+        {
+          "@id": "#P",
+          "variableName": "P"
+        },
+        {
+          "@id": "#R",
+          "variableName": "R",
+          "@type": "nonNegativeInteger"
+        }
+      ],
+      "urn:quote:lineQuantity": {
+        "@id": "#Q"
+      },
+      "urn:quote:lineAmount": {
+        "@id": "#A"
+      },
+      "internalGraph": [
+        {
+          "_comment": "金額 = 単価 × 数量。要素ごとの計算はここにある。",
+          "@id": "urn:node:lineAmount",
+          "@type": "urn:quote:Times",
+          "arg1": [
+            {
+              "@id": "#U"
+            },
+            {
+              "@id": "#Q"
+            }
+          ],
+          "arg2": {
+            "@id": "#A"
+          }
+        },
+        {
+          "_comment": "在庫を引く。**商品ノードそのもの**（`node:` で取った #P）が引くための鍵であり、商品名や単価では引けない——同じ名前の別ノードがありうるし、名前を持たない商品もありうる。",
+          "@id": "urn:node:lineStock",
+          "@type": "urn:quote:Stock",
+          "urn:quote:stockProduct": {
+            "@id": "#P"
+          },
+          "urn:quote:stockRemaining": {
+            "@id": "#R"
+          }
+        },
+        {
+          "_comment": "数量は残数を超えられない。",
+          "@id": "urn:node:lineStockCheck",
+          "@type": "urn:quote:AtLeast",
+          "arg1": {
+            "@id": "#R"
+          },
+          "arg2": {
+            "@id": "#Q"
+          }
+        }
+      ],
+      "urn:quote:lineProduct": {
+        "@type": "urn:quote:CatalogItem",
+        "urn:quote:itemPrice": {
+          "@id": "#U"
+        },
+        "node": {
+          "@id": "#P"
+        }
+      }
+    }
+  ],
+  "urn:quote:CatalogItem": [
+    {
+      "@id": "urn:entity:pencil-2b",
+      "urn:quote:itemLabel": "2Bのえんぴつ",
+      "urn:quote:itemPrice": 80
+    },
+    {
+      "@id": "urn:entity:pencil-4b",
+      "urn:quote:itemLabel": "4Bのえんぴつ",
+      "urn:quote:itemPrice": 90
+    },
+    {
+      "@id": "urn:entity:eraser",
+      "urn:quote:itemLabel": "消しゴム",
+      "urn:quote:itemPrice": 120
+    },
+    {
+      "@id": "urn:entity:notebook",
+      "urn:quote:itemLabel": "ノート",
+      "urn:quote:itemPrice": 150
+    },
+    {
+      "@id": "urn:entity:paper",
+      "urn:quote:itemLabel": "印刷用紙",
+      "urn:quote:itemPrice": 500
+    }
+  ],
+  "urn:quote:Person": [
+    {
+      "@id": "urn:entity:buyer",
+      "urn:quote:personName": "購買担当"
+    }
+  ],
+  "urn:quote:Stock": [
+    {
+      "@id": "urn:entity:stock-pencil-2b",
+      "urn:quote:stockProduct": "urn:entity:pencil-2b",
+      "urn:quote:stockRemaining": 1000
+    },
+    {
+      "@id": "urn:entity:stock-pencil-4b",
+      "urn:quote:stockProduct": "urn:entity:pencil-4b",
+      "urn:quote:stockRemaining": 1000
+    },
+    {
+      "@id": "urn:entity:stock-eraser",
+      "urn:quote:stockProduct": "urn:entity:eraser",
+      "urn:quote:stockRemaining": 500
+    },
+    {
+      "@id": "urn:entity:stock-notebook",
+      "urn:quote:stockProduct": "urn:entity:notebook",
+      "urn:quote:stockRemaining": 200
+    },
+    {
+      "@id": "urn:entity:stock-paper",
+      "urn:quote:stockProduct": "urn:entity:paper",
+      "urn:quote:stockRemaining": 30
+    }
+  ]
+}

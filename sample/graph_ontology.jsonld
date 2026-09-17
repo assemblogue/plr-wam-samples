@@ -1,0 +1,98 @@
+{
+  "@id": "urn:gc:ontology",
+  "@type": "Ontology",
+  "_comment": "--graph-clauses の最小例。ホーン節が知識グラフ側（graph_data.json）に、追記207 の新形式（ノード1つ ＋ その internalGraph）で書かれている。クラスid・属性idは ASCII の絶対URI（追記181）。",
+  "defines": [
+    {
+      "@id": "urn:gc:Template",
+      "@type": "Class",
+      "label": {
+        "ja": "テンプレート",
+        "en": "Template"
+      }
+    },
+    {
+      "@id": "urn:gc:Goal",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:gc:Task"
+      ],
+      "label": {
+        "ja": "ゴール",
+        "en": "Goal"
+      }
+    },
+    {
+      "@id": "urn:gc:Atom",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:gc:Template"
+      ],
+      "label": {
+        "ja": "アトムノード",
+        "en": "Atom"
+      }
+    },
+    {
+      "_comment": "タスクノード（副作用を伴う。真偽値を持つ）。Goal の親である（追記261）。",
+      "@id": "urn:gc:Task",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:gc:Atom"
+      ],
+      "label": {
+        "ja": "タスクノード",
+        "en": "Task"
+      }
+    },
+    {
+      "@id": "urn:gc:Quote",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:gc:Goal"
+      ],
+      "label": {
+        "ja": "見積書",
+        "en": "Quote"
+      }
+    },
+    {
+      "@id": "urn:gc:total",
+      "@type": "DatatypeProperty",
+      "range": "nonNegativeInteger",
+      "label": {
+        "ja": "総額",
+        "en": "Total"
+      }
+    },
+    {
+      "@id": "urn:gc:Product",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:gc:Atom"
+      ],
+      "label": {
+        "ja": "商品",
+        "en": "Product"
+      }
+    },
+    {
+      "@id": "urn:gc:name",
+      "@type": "DatatypeProperty",
+      "range": "string",
+      "label": {
+        "ja": "名称",
+        "en": "Name"
+      }
+    },
+    {
+      "@id": "urn:gc:unitPrice",
+      "@type": "DatatypeProperty",
+      "range": "nonNegativeInteger",
+      "label": {
+        "ja": "単価",
+        "en": "Unit price"
+      }
+    }
+  ]
+}

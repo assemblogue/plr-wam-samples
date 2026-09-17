@@ -1,0 +1,477 @@
+{
+  "@id": "urn:golden:ontology",
+  "@type": "Ontology",
+  "defines": [
+    {
+      "@id": "urn:golden:Template",
+      "@type": "Class",
+      "subClassOf": [
+        {
+          "@type": "Restriction",
+          "onProperty": "wam:isComplete",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "テンプレート",
+        "en": "Template"
+      }
+    },
+    {
+      "@id": "urn:golden:Goal",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:golden:Task"
+      ],
+      "label": {
+        "ja": "ゴール",
+        "en": "Goal"
+      }
+    },
+    {
+      "@id": "urn:golden:Atom",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:golden:Template"
+      ],
+      "label": {
+        "ja": "アトムノード",
+        "en": "Atom"
+      }
+    },
+    {
+      "@id": "urn:golden:Task",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:golden:Atom"
+      ],
+      "label": {
+        "ja": "タスクノード",
+        "en": "Task"
+      }
+    },
+    {
+      "@id": "urn:golden:Constraint",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:golden:Atom"
+      ],
+      "label": {
+        "ja": "制約ノード",
+        "en": "Constraint"
+      }
+    },
+    {
+      "@id": "urn:golden:OtherAtom",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:golden:Atom"
+      ],
+      "label": {
+        "ja": "その他のアトムノード",
+        "en": "Other atom"
+      }
+    },
+    {
+      "@id": "urn:golden:Cancelable",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:golden:Atom"
+      ],
+      "label": {
+        "ja": "取消可能",
+        "en": "Cancelable"
+      }
+    },
+    {
+      "@id": "urn:golden:Compensable",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:golden:Atom"
+      ],
+      "label": {
+        "ja": "補償可能",
+        "en": "Compensable"
+      }
+    },
+    {
+      "@id": "urn:golden:Person",
+      "@type": "Class",
+      "label": {
+        "ja": "人",
+        "en": "Person"
+      }
+    },
+    {
+      "@id": "urn:golden:agent",
+      "@type": "ObjectProperty",
+      "range": "urn:golden:Person",
+      "label": {
+        "ja": "担当者",
+        "en": "Agent"
+      }
+    },
+    {
+      "@id": "urn:golden:組織",
+      "@type": "Class",
+      "label": {
+        "ja": "組織",
+        "en": "Organization"
+      }
+    },
+    {
+      "@id": "urn:golden:商品",
+      "@type": "Class",
+      "label": {
+        "ja": "商品",
+        "en": "Product"
+      }
+    },
+    {
+      "@id": "urn:golden:上司",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:golden:OtherAtom",
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:golden:上司.構成員",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:golden:上司.上司",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "上司",
+        "en": "Manager"
+      }
+    },
+    {
+      "@id": "urn:golden:上司.構成員",
+      "@type": "ObjectProperty",
+      "domain": "urn:golden:上司",
+      "range": "urn:golden:Person",
+      "label": {
+        "ja": "構成員",
+        "en": "Member"
+      }
+    },
+    {
+      "@id": "urn:golden:上司.上司",
+      "@type": "ObjectProperty",
+      "domain": "urn:golden:上司",
+      "range": "urn:golden:Person",
+      "label": {
+        "ja": "上司",
+        "en": "Manager"
+      }
+    },
+    {
+      "@id": "urn:golden:申請",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:golden:Cancelable",
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:golden:申請.申請者",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:golden:申請.商品",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:golden:申請.数量",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:golden:申請.発注先",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "申請",
+        "en": "Request"
+      }
+    },
+    {
+      "@id": "urn:golden:申請.申請者",
+      "@type": "ObjectProperty",
+      "domain": "urn:golden:申請",
+      "range": "urn:golden:Person",
+      "label": {
+        "ja": "申請者",
+        "en": "Requester"
+      }
+    },
+    {
+      "@id": "urn:golden:申請.商品",
+      "@type": "ObjectProperty",
+      "domain": "urn:golden:申請",
+      "range": "urn:golden:商品",
+      "label": {
+        "ja": "商品",
+        "en": "Product"
+      }
+    },
+    {
+      "@id": "urn:golden:申請.数量",
+      "@type": "DatatypeProperty",
+      "range": "xsd:integer",
+      "label": {
+        "ja": "数量",
+        "en": "Quantity"
+      }
+    },
+    {
+      "@id": "urn:golden:申請.発注先",
+      "@type": "ObjectProperty",
+      "domain": "urn:golden:申請",
+      "range": "urn:golden:組織",
+      "label": {
+        "ja": "発注先",
+        "en": "Supplier"
+      }
+    },
+    {
+      "@id": "urn:golden:承認",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:golden:Cancelable",
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:golden:承認.対象",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "wam:completeByOkButton",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "承認",
+        "en": "Approval"
+      }
+    },
+    {
+      "@id": "urn:golden:承認.対象",
+      "@type": "ObjectProperty",
+      "domain": "urn:golden:承認",
+      "range": "urn:golden:申請",
+      "label": {
+        "ja": "対象",
+        "en": "Target"
+      }
+    },
+    {
+      "@id": "urn:golden:発注",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:golden:Compensable",
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:golden:発注.申請者",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:golden:発注.商品",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:golden:発注.数量",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:golden:発注.発注先",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:golden:発注.記録",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:golden:発注.根拠",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "wam:completeByOkButton",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "発注",
+        "en": "Order"
+      }
+    },
+    {
+      "@id": "urn:golden:発注.申請者",
+      "@type": "ObjectProperty",
+      "domain": "urn:golden:発注",
+      "range": "urn:golden:Person",
+      "label": {
+        "ja": "申請者",
+        "en": "Requester"
+      }
+    },
+    {
+      "@id": "urn:golden:発注.商品",
+      "@type": "ObjectProperty",
+      "domain": "urn:golden:発注",
+      "range": "urn:golden:商品",
+      "label": {
+        "ja": "商品",
+        "en": "Product"
+      }
+    },
+    {
+      "@id": "urn:golden:発注.数量",
+      "@type": "DatatypeProperty",
+      "range": "xsd:integer",
+      "label": {
+        "ja": "数量",
+        "en": "Quantity"
+      }
+    },
+    {
+      "@id": "urn:golden:発注.発注先",
+      "@type": "ObjectProperty",
+      "domain": "urn:golden:発注",
+      "range": "urn:golden:組織",
+      "label": {
+        "ja": "発注先",
+        "en": "Supplier"
+      }
+    },
+    {
+      "@id": "urn:golden:発注.記録",
+      "@type": "ObjectProperty",
+      "domain": "urn:golden:発注",
+      "range": "urn:golden:発注",
+      "label": {
+        "ja": "記録",
+        "en": "Record"
+      }
+    },
+    {
+      "@id": "urn:golden:発注.根拠",
+      "@type": "ObjectProperty",
+      "domain": "urn:golden:発注",
+      "range": "urn:golden:承認",
+      "label": {
+        "ja": "根拠",
+        "en": "Basis"
+      }
+    },
+    {
+      "@id": "urn:golden:発注取消",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:golden:Compensable"
+      ],
+      "label": {
+        "ja": "発注取消",
+        "en": "Order cancellation"
+      }
+    },
+    {
+      "@id": "urn:golden:調達申請ワークフロー",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:golden:Goal"
+      ],
+      "label": {
+        "ja": "調達申請ワークフロー",
+        "en": "Procurement workflow"
+      }
+    },
+    {
+      "@id": "urn:wamtest:Then",
+      "@type": "Class",
+      "linkKind": "then",
+      "_comment": "リンクは属性ではなくクラスである。arg1 が始点、arg2 が終点。",
+      "label": {
+        "ja": "Then",
+        "en": "Then"
+      }
+    },
+    {
+      "@id": "arg1",
+      "@type": "ObjectProperty",
+      "label": {
+        "ja": "第1引数",
+        "en": "Arg 1"
+      }
+    },
+    {
+      "@id": "arg2",
+      "@type": "ObjectProperty",
+      "label": {
+        "ja": "第2引数",
+        "en": "Arg 2"
+      }
+    },
+    {
+      "_comment": "完成の属性の上位属性（追記249）。complete と completeByOkButton はどちらもこれの下位属性であり、cardinality を1以下にすることで「いずれか一方しか使えない」が表される。",
+      "@id": "wam:isComplete",
+      "@type": "DatatypeProperty",
+      "domain": "urn:golden:Template",
+      "range": "string",
+      "label": {
+        "ja": "完成",
+        "en": "Is complete"
+      }
+    },
+    {
+      "_comment": "OKボタンを持たないノードの完成（2値）。",
+      "@id": "wam:complete",
+      "@type": "DatatypeProperty",
+      "domain": "urn:golden:Template",
+      "range": "boolean",
+      "subPropertyOf": "wam:isComplete",
+      "label": {
+        "ja": "完成",
+        "en": "Complete"
+      }
+    },
+    {
+      "_comment": "OKボタンによる完成（3値。偽＝未完成、真＝完成したが未押下、ユーザ＝その人が確認した）。**この属性を宣言することが「OKボタンを持つ」の宣言である**（追記249。completionMode は使わない）。",
+      "@id": "wam:completeByOkButton",
+      "@type": "DatatypeProperty",
+      "domain": "urn:golden:Template",
+      "range": "string",
+      "subPropertyOf": "wam:isComplete",
+      "label": {
+        "ja": "完成（OKボタン）",
+        "en": "Complete by OK button"
+      }
+    }
+  ]
+}

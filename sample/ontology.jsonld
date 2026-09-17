@@ -1,0 +1,98 @@
+{
+  "@id": "urn:wamtest:ontology",
+  "@type": "Ontology",
+  "defines": [
+    {
+      "@id": "Task",
+      "@type": "Class",
+      "label": {
+        "ja": "タスクノード",
+        "en": "Task"
+      }
+    },
+    {
+      "@id": "Constraint",
+      "@type": "Class",
+      "label": {
+        "ja": "制約ノード",
+        "en": "Constraint"
+      }
+    },
+    {
+      "@id": "申請",
+      "@type": "Class",
+      "subClassOf": [
+        "Task"
+      ],
+      "label": {
+        "ja": "申請",
+        "en": "Request"
+      }
+    },
+    {
+      "@id": "承認",
+      "@type": "Class",
+      "subClassOf": [
+        "Task"
+      ],
+      "label": {
+        "ja": "承認",
+        "en": "Approval"
+      }
+    },
+    {
+      "@id": "発注",
+      "@type": "Class",
+      "subClassOf": [
+        "Task"
+      ],
+      "label": {
+        "ja": "発注",
+        "en": "Order"
+      }
+    },
+    {
+      "@id": "調達申請ワークフロー",
+      "@type": "Class",
+      "label": {
+        "ja": "調達申請ワークフロー",
+        "en": "Procurement workflow"
+      }
+    },
+    {
+      "@id": "urn:wamtest:Then",
+      "@type": "Class",
+      "linkKind": "then",
+      "_comment": "リンクは属性ではなくクラスである。arg1 が始点、arg2 が終点。",
+      "label": {
+        "ja": "Then",
+        "en": "Then"
+      }
+    },
+    {
+      "@id": "urn:wamtest:Else",
+      "@type": "Class",
+      "linkKind": "else",
+      "label": {
+        "ja": "Else",
+        "en": "Else"
+      }
+    },
+    {
+      "@id": "arg1",
+      "@type": "ObjectProperty",
+      "label": {
+        "ja": "第1引数",
+        "en": "Arg 1"
+      }
+    },
+    {
+      "@id": "arg2",
+      "@type": "ObjectProperty",
+      "label": {
+        "ja": "第2引数",
+        "en": "Arg 2"
+      }
+    }
+  ]
+}

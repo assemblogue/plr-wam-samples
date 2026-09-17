@@ -1,0 +1,5 @@
+{
+  "sessionId": "sess-master",
+  "_comment": "上司照会で求まった承認者（B）がOKボタンを押す。",
+  "okButtons": ["urn:entity:master-shonin"]
+}

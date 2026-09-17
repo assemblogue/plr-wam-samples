@@ -1,0 +1,6 @@
+{
+  "sessionId": "sess-golden",
+  "_comment": "golden_scenario.md ステップ3: Bが承認を完成させOKボタンを押す。",
+  "agentProperty": "urn:golden:agent",
+  "okButtons": ["urn:entity:ninka-001"]
+}

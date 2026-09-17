@@ -1,0 +1,210 @@
+{
+  "_comment": "ホーン節（追記207 の新形式）。ホーン節は「ノード1つ ＋ その内部グラフ」である。",
+  "urn:quote:CreateQuote": [
+    {
+      "@id": "urn:node:CreateQuote.head",
+      "@type": "urn:quote:CreateQuote",
+      "urn:quote:total": {
+        "@id": "#T"
+      },
+      "variables": [
+        {
+          "@id": "#A1",
+          "variableName": "A1"
+        },
+        {
+          "@id": "#A2",
+          "variableName": "A2"
+        },
+        {
+          "@id": "#N1",
+          "variableName": "N1"
+        },
+        {
+          "@id": "#N2",
+          "variableName": "N2"
+        },
+        {
+          "@id": "#Q1",
+          "variableName": "Q1"
+        },
+        {
+          "@id": "#Q2",
+          "variableName": "Q2"
+        },
+        {
+          "@id": "#T",
+          "variableName": "T"
+        },
+        {
+          "@id": "#TL1",
+          "variableName": "TL1"
+        },
+        {
+          "@id": "#TL2",
+          "variableName": "TL2"
+        },
+        {
+          "@id": "#TP1",
+          "variableName": "TP1"
+        },
+        {
+          "@id": "#TP2",
+          "variableName": "TP2"
+        },
+        {
+          "@id": "#U1",
+          "variableName": "U1"
+        },
+        {
+          "@id": "#U2",
+          "variableName": "U2"
+        }
+      ],
+      "internalGraph": [
+        {
+          "@id": "urn:node:pick1",
+          "@type": "urn:quote:PickItem",
+          "urn:quote:itemName": {
+            "@id": "#N1"
+          },
+          "urn:quote:agent": "urn:entity:buyer",
+          "wam:truthValue": {
+            "@id": "#TP1"
+          }
+        },
+        {
+          "@id": "urn:node:lookup1",
+          "@type": "urn:quote:Product",
+          "urn:quote:productName": {
+            "@id": "#N1"
+          },
+          "urn:quote:productPrice": {
+            "@id": "#U1"
+          }
+        },
+        {
+          "@id": "urn:node:line1",
+          "@type": "urn:quote:LineItem",
+          "urn:quote:lineName": {
+            "@id": "#N1"
+          },
+          "urn:quote:quantity": {
+            "@id": "#Q1"
+          },
+          "urn:quote:amount": {
+            "@id": "#A1"
+          },
+          "urn:quote:agent": "urn:entity:buyer",
+          "wam:truthValue": {
+            "@id": "#TL1"
+          }
+        },
+        {
+          "@id": "urn:node:amount1",
+          "@type": "urn:quote:Times",
+          "arg1": [
+            {
+              "@id": "#U1"
+            },
+            {
+              "@id": "#Q1"
+            }
+          ],
+          "arg2": {
+            "@id": "#A1"
+          }
+        },
+        {
+          "@id": "urn:node:pick2",
+          "@type": "urn:quote:PickItem",
+          "urn:quote:itemName": {
+            "@id": "#N2"
+          },
+          "urn:quote:agent": "urn:entity:buyer",
+          "wam:truthValue": {
+            "@id": "#TP2"
+          }
+        },
+        {
+          "@id": "urn:node:lookup2",
+          "@type": "urn:quote:Product",
+          "urn:quote:productName": {
+            "@id": "#N2"
+          },
+          "urn:quote:productPrice": {
+            "@id": "#U2"
+          }
+        },
+        {
+          "@id": "urn:node:line2",
+          "@type": "urn:quote:LineItem",
+          "urn:quote:lineName": {
+            "@id": "#N2"
+          },
+          "urn:quote:quantity": {
+            "@id": "#Q2"
+          },
+          "urn:quote:amount": {
+            "@id": "#A2"
+          },
+          "urn:quote:agent": "urn:entity:buyer",
+          "wam:truthValue": {
+            "@id": "#TL2"
+          }
+        },
+        {
+          "@id": "urn:node:amount2",
+          "@type": "urn:quote:Times",
+          "arg1": [
+            {
+              "@id": "#U2"
+            },
+            {
+              "@id": "#Q2"
+            }
+          ],
+          "arg2": {
+            "@id": "#A2"
+          }
+        },
+        {
+          "@id": "urn:node:total",
+          "@type": "urn:quote:Equals",
+          "arg1": {
+            "@id": "#T"
+          },
+          "arg2": [
+            {
+              "@id": "#A1"
+            },
+            {
+              "@id": "#A2"
+            }
+          ]
+        },
+        {
+          "@id": "urn:node:CreateQuote.head#link1",
+          "@type": "urn:wamtest:Then",
+          "arg1": {
+            "@id": "urn:node:pick1"
+          },
+          "arg2": {
+            "@id": "urn:node:lookup1"
+          }
+        },
+        {
+          "@id": "urn:node:CreateQuote.head#link2",
+          "@type": "urn:wamtest:Then",
+          "arg1": {
+            "@id": "urn:node:pick2"
+          },
+          "arg2": {
+            "@id": "urn:node:lookup2"
+          }
+        }
+      ],
+      "_comment": "見積書作成。商品マスターDBから単価を引き、人が数量を入れると 明細金額が × で定まり、総額が明細金額の和として定まる。"
+    }
+  ]
+}

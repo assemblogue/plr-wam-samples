@@ -1,0 +1,30 @@
+{
+  "_comment": "商品マスターDB。エンジンから見ると「頭部だけ・本体が空のホーン節（＝事実）」であり、DB検索とホーン節の呼び出しは区別されない。",
+  "urn:quote:Product": [
+    {
+      "@id": "urn:entity:pencil-2b",
+      "urn:quote:productName": "2Bのえんぴつ",
+      "urn:quote:productPrice": 80
+    },
+    {
+      "@id": "urn:entity:pencil-4b",
+      "urn:quote:productName": "4Bのえんぴつ",
+      "urn:quote:productPrice": 90
+    },
+    {
+      "@id": "urn:entity:eraser",
+      "urn:quote:productName": "消しゴム",
+      "urn:quote:productPrice": 120
+    },
+    {
+      "@id": "urn:entity:notebook",
+      "urn:quote:productName": "ノート",
+      "urn:quote:productPrice": 150
+    },
+    {
+      "@id": "urn:entity:paper",
+      "urn:quote:productName": "印刷用紙",
+      "urn:quote:productPrice": 500
+    }
+  ]
+}

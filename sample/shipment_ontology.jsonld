@@ -1,0 +1,331 @@
+{
+  "@id": "urn:ship:ontology",
+  "@type": "Ontology",
+  "_comment": "クラスid・属性idは URI 形式でなければならない（bare な名前は schemaObjectFromByteStream が拾わず、getCardinality が「未知のクラスid」で落ちる）。一方 range のデータ型名は接頭辞付き（xsd:...）では解決されないので、そのままの名前で書く。非負整数であることは ≧0 という不等式として組込述語の連立に入る",
+  "defines": [
+    {
+      "@id": "urn:ship:Template",
+      "@type": "Class",
+      "subClassOf": [
+        {
+          "@type": "Restriction",
+          "onProperty": "wam:isComplete",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "テンプレート",
+        "en": "Template"
+      }
+    },
+    {
+      "@id": "urn:ship:Goal",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:ship:Task"
+      ],
+      "label": {
+        "ja": "ゴール",
+        "en": "Goal"
+      }
+    },
+    {
+      "@id": "urn:ship:Atom",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:ship:Template"
+      ],
+      "label": {
+        "ja": "アトムノード",
+        "en": "Atom"
+      }
+    },
+    {
+      "@id": "urn:ship:Task",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:ship:Atom"
+      ],
+      "label": {
+        "ja": "タスクノード",
+        "en": "Task"
+      }
+    },
+    {
+      "@id": "urn:ship:Constraint",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:ship:Atom"
+      ],
+      "label": {
+        "ja": "制約ノード",
+        "en": "Constraint"
+      }
+    },
+    {
+      "@id": "urn:ship:OtherAtom",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:ship:Atom"
+      ],
+      "label": {
+        "ja": "その他のアトムノード",
+        "en": "Other atom"
+      }
+    },
+    {
+      "@id": "urn:ship:Person",
+      "@type": "Class",
+      "label": {
+        "ja": "人",
+        "en": "Person"
+      }
+    },
+    {
+      "@id": "urn:ship:agent",
+      "@type": "ObjectProperty",
+      "range": "urn:ship:Person",
+      "label": {
+        "ja": "担当者",
+        "en": "Agent"
+      }
+    },
+    {
+      "@id": "urn:ship:出荷",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:ship:Task",
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:ship:個数",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:ship:agent",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "wam:completeByOkButton",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "出荷",
+        "en": "Shipment"
+      }
+    },
+    {
+      "@id": "urn:ship:個数",
+      "@type": "DatatypeProperty",
+      "domain": "urn:ship:出荷",
+      "_comment": "0個の出荷は出荷ではないので positiveInteger である",
+      "range": "positiveInteger",
+      "label": {
+        "ja": "個数",
+        "en": "Count"
+      }
+    },
+    {
+      "@id": "urn:ship:検収",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:ship:Task",
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:ship:納入数",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:ship:返品数",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:ship:agent",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "wam:completeByOkButton",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "検収",
+        "en": "Acceptance"
+      }
+    },
+    {
+      "@id": "urn:ship:納入数",
+      "@type": "DatatypeProperty",
+      "domain": "urn:ship:検収",
+      "range": "nonNegativeInteger",
+      "label": {
+        "ja": "納入数",
+        "en": "Delivered count"
+      }
+    },
+    {
+      "@id": "urn:ship:返品数",
+      "@type": "DatatypeProperty",
+      "domain": "urn:ship:検収",
+      "range": "nonNegativeInteger",
+      "label": {
+        "ja": "返品数",
+        "en": "Returned count"
+      }
+    },
+    {
+      "@id": "urn:ship:出荷+検収",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:ship:OtherAtom",
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:ship:出荷済数",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:ship:要出荷数",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "出荷＋検収",
+        "en": "Ship and accept"
+      }
+    },
+    {
+      "@id": "urn:ship:出荷済数",
+      "@type": "DatatypeProperty",
+      "domain": "urn:ship:出荷+検収",
+      "range": "nonNegativeInteger",
+      "label": {
+        "ja": "出荷済数",
+        "en": "Shipped count"
+      }
+    },
+    {
+      "@id": "urn:ship:要出荷数",
+      "@type": "DatatypeProperty",
+      "domain": "urn:ship:出荷+検収",
+      "range": "nonNegativeInteger",
+      "label": {
+        "ja": "要出荷数",
+        "en": "Count to ship"
+      }
+    },
+    {
+      "@id": "urn:ship:＝",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:ship:Constraint"
+      ],
+      "builtInFunction": "=",
+      "isConstraint": true,
+      "label": {
+        "ja": "＝",
+        "en": "Equals"
+      }
+    },
+    {
+      "@id": "urn:ship:≧",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:ship:Constraint"
+      ],
+      "builtInFunction": "≧",
+      "isConstraint": true,
+      "label": {
+        "ja": "≧",
+        "en": "At least"
+      }
+    },
+    {
+      "@id": "urn:ship:納品ゴール",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:ship:Goal"
+      ],
+      "label": {
+        "ja": "納品ゴール",
+        "en": "Delivery goal"
+      }
+    },
+    {
+      "@id": "urn:wamtest:Then",
+      "@type": "Class",
+      "linkKind": "then",
+      "_comment": "リンクは属性ではなくクラスである。arg1 が始点、arg2 が終点。",
+      "label": {
+        "ja": "Then",
+        "en": "Then"
+      }
+    },
+    {
+      "@id": "arg1",
+      "@type": "ObjectProperty",
+      "label": {
+        "ja": "第1引数",
+        "en": "Arg 1"
+      }
+    },
+    {
+      "@id": "arg2",
+      "@type": "ObjectProperty",
+      "label": {
+        "ja": "第2引数",
+        "en": "Arg 2"
+      }
+    },
+    {
+      "_comment": "完成の属性の上位属性（追記249）。complete と completeByOkButton はどちらもこれの下位属性であり、cardinality を1以下にすることで「いずれか一方しか使えない」が表される。",
+      "@id": "wam:isComplete",
+      "@type": "DatatypeProperty",
+      "domain": "urn:ship:Template",
+      "range": "string",
+      "label": {
+        "ja": "完成",
+        "en": "Is complete"
+      }
+    },
+    {
+      "_comment": "OKボタンを持たないノードの完成（2値）。",
+      "@id": "wam:complete",
+      "@type": "DatatypeProperty",
+      "domain": "urn:ship:Template",
+      "range": "boolean",
+      "subPropertyOf": "wam:isComplete",
+      "label": {
+        "ja": "完成",
+        "en": "Complete"
+      }
+    },
+    {
+      "_comment": "OKボタンによる完成（3値。偽＝未完成、真＝完成したが未押下、ユーザ＝その人が確認した）。**この属性を宣言することが「OKボタンを持つ」の宣言である**（追記249。completionMode は使わない）。",
+      "@id": "wam:completeByOkButton",
+      "@type": "DatatypeProperty",
+      "domain": "urn:ship:Template",
+      "range": "string",
+      "subPropertyOf": "wam:isComplete",
+      "label": {
+        "ja": "完成（OKボタン）",
+        "en": "Complete by OK button"
+      }
+    }
+  ]
+}

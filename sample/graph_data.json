@@ -1,0 +1,37 @@
+{
+  "_comment": "--graph-clauses の最小例。ホーン節も商品マスターも同じ知識グラフに載っている——これが追記207 の「ホーン節は『ノード1つ ＋ その内部グラフ』である」の形である。旧形式（節レベルの predicate ＋ head/body ＋ termType）は使わない。",
+
+  "urn:gc:Quote": [
+    {
+      "_comment": "ホーン節。頭部はこのノード自身、本体は internalGraph に並ぶ。変数は variables に定義し、使用側は @id で指す（⚠️ 同一性は @id であって variableName ではない）。",
+      "@id": "urn:gc:clause:quote",
+      "variables": [
+        { "@id": "#price", "variableName": "Price" }
+      ],
+      "urn:gc:total": { "@id": "#price" },
+      "internalGraph": [
+        {
+          "_comment": "本体のアトムノード1つ。商品名は定数、単価は頭部と共有する変数。商品マスターのレコード（下）と頭部単一化して Price が決まる。",
+          "@id": "urn:gc:clause:quote:body1",
+          "@type": "urn:gc:Product",
+          "urn:gc:name": "2Bのえんぴつ",
+          "urn:gc:unitPrice": { "@id": "#price" }
+        }
+      ]
+    }
+  ],
+
+  "urn:gc:Product": [
+    {
+      "_comment": "商品マスター。内部グラフを持たないので事実である（RecordHornClausePort が供給する）。",
+      "@id": "urn:gc:product:pencil2b",
+      "urn:gc:name": "2Bのえんぴつ",
+      "urn:gc:unitPrice": 120
+    },
+    {
+      "@id": "urn:gc:product:eraser",
+      "urn:gc:name": "消しゴム",
+      "urn:gc:unitPrice": 80
+    }
+  ]
+}

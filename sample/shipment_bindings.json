@@ -1,0 +1,15 @@
+{
+  "sessionId": "sess-ship",
+  "agentProperty": "urn:ship:agent",
+  "_comment": "5個出荷 → 2個出荷 → 3個返品 → 4個出荷 → 2個返品 → 4個出荷 で完了する。返品はその出荷を検収した結果なので、出荷と検収の nth（再帰の深さ）が対応する。最後の2件（返品0）は、返品が無かったことを確定させるための検収である",
+  "steps": [
+    { "comment": "① サプライヤーが5個を出荷（1回目）", "task": "urn:node:出荷", "nth": 1, "values": { "urn:ship:個数": 5 } },
+    { "comment": "② サプライヤーが2個を出荷（2回目・分納）", "task": "urn:node:出荷", "nth": 2, "values": { "urn:ship:個数": 2 } },
+    { "comment": "③ バイヤーが1回目の出荷から3個を返品", "task": "urn:node:検収", "nth": 1, "values": { "urn:ship:返品数": 3 } },
+    { "comment": "④ サプライヤーが4個を出荷（3回目）", "task": "urn:node:出荷", "nth": 3, "values": { "urn:ship:個数": 4 } },
+    { "comment": "⑤ バイヤーが2回目の出荷から2個を返品", "task": "urn:node:検収", "nth": 2, "values": { "urn:ship:返品数": 2 } },
+    { "comment": "⑥ サプライヤーが4個を出荷（4回目）", "task": "urn:node:出荷", "nth": 4, "values": { "urn:ship:個数": 4 } },
+    { "comment": "⑦ バイヤーが3回目の出荷を返品なしで検収", "task": "urn:node:検収", "nth": 3, "values": { "urn:ship:返品数": 0 } },
+    { "comment": "⑧ バイヤーが4回目の出荷を返品なしで検収", "task": "urn:node:検収", "nth": 4, "values": { "urn:ship:返品数": 0 } }
+  ]
+}

@@ -1,0 +1,373 @@
+{
+  "@id": "urn:quote:ontology",
+  "@type": "Ontology",
+  "_comment": "見積書デモ。クラスid・属性idは ASCII の絶対URI（changelog 追記181）。range のデータ型名は接頭辞なしで書く（xsd: を付けると解決されない）。 単価（unitPrice）は Product の属性であって LineItem の欄ではない。したがって set_value の対象として存在せず、人も AI も書けない。",
+  "defines": [
+    {
+      "@id": "urn:quote:Template",
+      "@type": "Class",
+      "subClassOf": [
+        {
+          "@type": "Restriction",
+          "onProperty": "wam:isComplete",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "テンプレート",
+        "en": "Template"
+      }
+    },
+    {
+      "@id": "urn:quote:Goal",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Task"
+      ],
+      "label": {
+        "ja": "ゴール",
+        "en": "Goal"
+      }
+    },
+    {
+      "@id": "urn:quote:Atom",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Template"
+      ],
+      "label": {
+        "ja": "アトムノード",
+        "en": "Atom"
+      }
+    },
+    {
+      "@id": "urn:quote:Task",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Atom"
+      ],
+      "label": {
+        "ja": "タスクノード",
+        "en": "Task"
+      }
+    },
+    {
+      "@id": "urn:quote:Constraint",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Atom"
+      ],
+      "label": {
+        "ja": "制約ノード",
+        "en": "Constraint"
+      }
+    },
+    {
+      "@id": "urn:quote:OtherAtom",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Atom"
+      ],
+      "label": {
+        "ja": "その他のアトムノード",
+        "en": "Other atom"
+      }
+    },
+    {
+      "@id": "urn:quote:Person",
+      "@type": "Class",
+      "label": {
+        "ja": "人",
+        "en": "Person"
+      }
+    },
+    {
+      "@id": "urn:quote:agent",
+      "@type": "ObjectProperty",
+      "range": "urn:quote:Person",
+      "label": {
+        "ja": "担当者",
+        "en": "Agent"
+      }
+    },
+    {
+      "@id": "urn:quote:CreateQuote",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Goal",
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:total",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "見積書作成",
+        "en": "Create quote"
+      }
+    },
+    {
+      "@id": "urn:quote:total",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:CreateQuote",
+      "range": "nonNegativeInteger",
+      "label": {
+        "ja": "総額",
+        "en": "Total"
+      }
+    },
+    {
+      "@id": "urn:quote:PickItem",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Task",
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:itemName",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:agent",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "wam:completeByOkButton",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "品目選択",
+        "en": "Pick item"
+      }
+    },
+    {
+      "@id": "urn:quote:itemName",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:PickItem",
+      "range": "string",
+      "label": {
+        "ja": "商品名",
+        "en": "Product name"
+      }
+    },
+    {
+      "@id": "urn:quote:LineItem",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Task",
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:lineName",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:quantity",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:amount",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:agent",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "wam:completeByOkButton",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "明細",
+        "en": "Line item"
+      }
+    },
+    {
+      "@id": "urn:quote:lineName",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:LineItem",
+      "range": "string",
+      "label": {
+        "ja": "商品名",
+        "en": "Product name"
+      }
+    },
+    {
+      "@id": "urn:quote:quantity",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:LineItem",
+      "range": "nonNegativeInteger",
+      "label": {
+        "ja": "数量",
+        "en": "Quantity"
+      }
+    },
+    {
+      "@id": "urn:quote:unitPrice",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:Product",
+      "range": "nonNegativeInteger",
+      "_comment": "単価は商品マスターの属性である。明細の欄ではない——だから人も AI も書けない",
+      "label": {
+        "ja": "単価",
+        "en": "Unit price"
+      }
+    },
+    {
+      "@id": "urn:quote:amount",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:LineItem",
+      "range": "nonNegativeInteger",
+      "label": {
+        "ja": "金額",
+        "en": "Amount"
+      }
+    },
+    {
+      "@id": "urn:quote:Product",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:OtherAtom",
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:productName",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:productPrice",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "商品",
+        "en": "Product"
+      }
+    },
+    {
+      "@id": "urn:quote:productName",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:Product",
+      "range": "string",
+      "label": {
+        "ja": "商品名",
+        "en": "Product name"
+      }
+    },
+    {
+      "@id": "urn:quote:productPrice",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:Product",
+      "range": "nonNegativeInteger",
+      "label": {
+        "ja": "単価",
+        "en": "Unit price"
+      }
+    },
+    {
+      "@id": "urn:quote:Times",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Constraint"
+      ],
+      "builtInFunction": "×",
+      "isConstraint": true,
+      "label": {
+        "ja": "×",
+        "en": "Times"
+      }
+    },
+    {
+      "@id": "urn:quote:Equals",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Constraint"
+      ],
+      "builtInFunction": "=",
+      "isConstraint": true,
+      "label": {
+        "ja": "＝",
+        "en": "Equals"
+      }
+    },
+    {
+      "@id": "urn:wamtest:Then",
+      "@type": "Class",
+      "linkKind": "then",
+      "_comment": "リンクは属性ではなくクラスである。arg1 が始点、arg2 が終点。",
+      "label": {
+        "ja": "Then",
+        "en": "Then link"
+      }
+    },
+    {
+      "@id": "arg1",
+      "@type": "ObjectProperty",
+      "label": {
+        "ja": "第1引数",
+        "en": "Arg 1"
+      }
+    },
+    {
+      "@id": "arg2",
+      "@type": "ObjectProperty",
+      "label": {
+        "ja": "第2引数",
+        "en": "Arg 2"
+      }
+    },
+    {
+      "_comment": "完成の属性の上位属性（追記249）。complete と completeByOkButton はどちらもこれの下位属性であり、cardinality を1以下にすることで「いずれか一方しか使えない」が表される。",
+      "@id": "wam:isComplete",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:Template",
+      "range": "string",
+      "label": {
+        "ja": "完成",
+        "en": "Is complete"
+      }
+    },
+    {
+      "_comment": "OKボタンを持たないノードの完成（2値）。",
+      "@id": "wam:complete",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:Template",
+      "range": "boolean",
+      "subPropertyOf": "wam:isComplete",
+      "label": {
+        "ja": "完成",
+        "en": "Complete"
+      }
+    },
+    {
+      "_comment": "OKボタンによる完成（3値。偽＝未完成、真＝完成したが未押下、ユーザ＝その人が確認した）。**この属性を宣言することが「OKボタンを持つ」の宣言である**（追記249。completionMode は使わない）。",
+      "@id": "wam:completeByOkButton",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:Template",
+      "range": "string",
+      "subPropertyOf": "wam:isComplete",
+      "label": {
+        "ja": "完成（OKボタン）",
+        "en": "Complete by OK button"
+      }
+    }
+  ]
+}

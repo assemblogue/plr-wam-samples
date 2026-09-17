@@ -1,0 +1,116 @@
+{
+  "_comment": "見積書レコード1件と、その明細3件、商品カタログ3件。明細の本数はホーン節に書かれていない——データが決める。",
+  "urn:quote:QuoteRecord": [
+    {
+      "@id": "urn:entity:quote-001",
+      "urn:quote:lineItem": [
+        "urn:entity:line-1",
+        "urn:entity:line-2",
+        "urn:entity:line-3"
+      ]
+    }
+  ],
+  "urn:quote:QuoteLine": [
+    {
+      "@id": "urn:entity:line-1",
+      "urn:quote:lineQuantity": 60,
+      "urn:quote:lineAmount": 4800,
+      "urn:quote:lineProduct": "urn:entity:pencil-2b"
+    },
+    {
+      "@id": "urn:entity:line-2",
+      "urn:quote:lineQuantity": 10,
+      "urn:quote:lineAmount": 1500,
+      "urn:quote:lineProduct": "urn:entity:notebook"
+    },
+    {
+      "@id": "urn:entity:line-3",
+      "urn:quote:lineQuantity": 2,
+      "urn:quote:lineAmount": 240,
+      "urn:quote:lineProduct": "urn:entity:eraser"
+    }
+  ],
+  "urn:quote:CatalogItem": [
+    {
+      "@id": "urn:entity:pencil-2b",
+      "urn:quote:itemLabel": "2Bのえんぴつ",
+      "urn:quote:itemPrice": 80
+    },
+    {
+      "@id": "urn:entity:notebook",
+      "urn:quote:itemLabel": "ノート",
+      "urn:quote:itemPrice": 150
+    },
+    {
+      "@id": "urn:entity:eraser",
+      "urn:quote:itemLabel": "消しゴム",
+      "urn:quote:itemPrice": 120
+    }
+  ],
+  "urn:quote:QuoteTotal": [
+    {
+      "@id": "urn:node:quoteTotal.head",
+      "@type": "urn:quote:QuoteTotal",
+      "urn:quote:total": {
+        "@id": "#T"
+      },
+      "variables": [
+        {
+          "@id": "#Amount",
+          "variableName": "Amount"
+        },
+        {
+          "@id": "#Label",
+          "variableName": "Label"
+        },
+        {
+          "@id": "#Qty",
+          "variableName": "Qty"
+        },
+        {
+          "@id": "#T",
+          "variableName": "T"
+        },
+        {
+          "@id": "#Unit",
+          "variableName": "Unit"
+        }
+      ],
+      "internalGraph": [
+        {
+          "@id": "urn:node:lines",
+          "@type": "urn:quote:QuoteRecord",
+          "urn:quote:lineItem": {
+            "@type": "urn:quote:QuoteLine",
+            "urn:quote:lineAmount": {
+              "@id": "#Amount"
+            },
+            "urn:quote:lineQuantity": {
+              "@id": "#Qty"
+            },
+            "urn:quote:lineProduct": {
+              "@type": "urn:quote:CatalogItem",
+              "urn:quote:itemLabel": {
+                "@id": "#Label"
+              },
+              "urn:quote:itemPrice": {
+                "@id": "#Unit"
+              }
+            }
+          }
+        },
+        {
+          "@id": "urn:node:total",
+          "@type": "urn:quote:Equals",
+          "arg1": {
+            "@id": "#T"
+          },
+          "arg2": {
+            "@id": "#Amount"
+          }
+        }
+      ],
+      "_comment": "明細が何本あっても総額が定まる。パターンが各明細へ分配され、金額が多値に集まり、= がその和を総額に入れる。"
+    }
+  ]
+}

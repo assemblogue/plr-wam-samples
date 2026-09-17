@@ -1,0 +1,248 @@
+{
+  "@id": "urn:quote:pattern-ontology",
+  "@type": "Ontology",
+  "_comment": "パターンで集計する見積書。クラスid・属性idは ASCII（追記181）。lineProduct は refersTo の下位属性なので、明細の担当者の書き込み権限は商品ノードへ及ばない（spec_ops.md『担当ユーザは N から refersTo 以外の属性を辿って到達できる範囲に書き込み権限を持つ』）。",
+  "defines": [
+    {
+      "@id": "urn:quote:Template",
+      "@type": "Class",
+      "label": {
+        "ja": "テンプレート",
+        "en": "Template"
+      }
+    },
+    {
+      "@id": "urn:quote:Goal",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Task"
+      ],
+      "label": {
+        "ja": "ゴール",
+        "en": "Goal"
+      }
+    },
+    {
+      "@id": "urn:quote:Atom",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Template"
+      ],
+      "label": {
+        "ja": "アトムノード",
+        "en": "Atom"
+      }
+    },
+    {
+      "_comment": "タスクノード（副作用を伴う。真偽値を持つ）。Goal の親である（追記261）。",
+      "@id": "urn:quote:Task",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Atom"
+      ],
+      "label": {
+        "ja": "タスクノード",
+        "en": "Task"
+      }
+    },
+    {
+      "@id": "urn:quote:Constraint",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Atom"
+      ],
+      "label": {
+        "ja": "制約ノード",
+        "en": "Constraint"
+      }
+    },
+    {
+      "@id": "urn:quote:OtherAtom",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Atom"
+      ],
+      "label": {
+        "ja": "その他のアトムノード",
+        "en": "Other atom"
+      }
+    },
+    {
+      "@id": "urn:quote:refersTo",
+      "@type": "ObjectProperty",
+      "label": {
+        "ja": "参照",
+        "en": "Refers to"
+      }
+    },
+    {
+      "@id": "urn:quote:QuoteTotal",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Goal",
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:total",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "見積総額",
+        "en": "Quote total"
+      }
+    },
+    {
+      "@id": "urn:quote:total",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:QuoteTotal",
+      "range": "nonNegativeInteger",
+      "label": {
+        "ja": "総額",
+        "en": "Total"
+      }
+    },
+    {
+      "@id": "urn:quote:QuoteRecord",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:OtherAtom",
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:lineItem",
+          "minCardinality": 0,
+          "maxCardinality": 99
+        }
+      ],
+      "label": {
+        "ja": "見積書",
+        "en": "Quote"
+      }
+    },
+    {
+      "@id": "urn:quote:lineItem",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:QuoteRecord",
+      "range": "string",
+      "label": {
+        "ja": "明細",
+        "en": "Line item"
+      }
+    },
+    {
+      "@id": "urn:quote:QuoteLine",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:OtherAtom",
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:lineQuantity",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:lineAmount",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:lineProduct",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "明細",
+        "en": "Quote line"
+      }
+    },
+    {
+      "@id": "urn:quote:lineQuantity",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:QuoteLine",
+      "range": "nonNegativeInteger",
+      "label": {
+        "ja": "数量",
+        "en": "Quantity"
+      }
+    },
+    {
+      "@id": "urn:quote:lineAmount",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:QuoteLine",
+      "range": "nonNegativeInteger",
+      "label": {
+        "ja": "金額",
+        "en": "Amount"
+      }
+    },
+    {
+      "@id": "urn:quote:lineProduct",
+      "@type": "ObjectProperty",
+      "subPropertyOf": "urn:quote:refersTo",
+      "domain": "urn:quote:QuoteLine",
+      "label": {
+        "ja": "商品",
+        "en": "Product"
+      }
+    },
+    {
+      "@id": "urn:quote:CatalogItem",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:OtherAtom",
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:itemLabel",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:itemPrice",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "商品",
+        "en": "Catalog item"
+      }
+    },
+    {
+      "@id": "urn:quote:itemLabel",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:CatalogItem",
+      "range": "string",
+      "label": {
+        "ja": "商品名",
+        "en": "Product name"
+      }
+    },
+    {
+      "@id": "urn:quote:itemPrice",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:CatalogItem",
+      "range": "nonNegativeInteger",
+      "label": {
+        "ja": "単価",
+        "en": "Unit price"
+      }
+    },
+    {
+      "@id": "urn:quote:Equals",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Constraint"
+      ],
+      "builtInFunction": "=",
+      "isConstraint": true,
+      "label": {
+        "ja": "＝",
+        "en": "Equals"
+      }
+    }
+  ]
+}

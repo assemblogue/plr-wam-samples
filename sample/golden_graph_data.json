@@ -1,0 +1,111 @@
+{
+  "_comment": "ホーン節（追記207 の新形式）。ホーン節は「ノード1つ ＋ その内部グラフ」である。",
+  "urn:golden:調達申請ワークフロー": [
+    {
+      "@id": "urn:node:調達申請ワークフロー.head",
+      "@type": "urn:golden:調達申請ワークフロー",
+      "variables": [
+        {
+          "@id": "#T2",
+          "variableName": "T2"
+        },
+        {
+          "@id": "#T3",
+          "variableName": "T3"
+        },
+        {
+          "@id": "#承認者",
+          "variableName": "承認者"
+        }
+      ],
+      "internalGraph": [
+        {
+          "@id": "urn:entity:sinsei-001",
+          "@type": "urn:golden:申請",
+          "urn:golden:申請.申請者": "urn:entity:person-m",
+          "urn:golden:申請.商品": "urn:entity:item-paper",
+          "urn:golden:申請.数量": 100,
+          "urn:golden:申請.発注先": "urn:entity:org-a",
+          "wam:truthValue": "t"
+        },
+        {
+          "@id": "urn:node:上司照会",
+          "@type": "urn:golden:上司",
+          "urn:golden:上司.構成員": "urn:entity:person-m",
+          "urn:golden:上司.上司": {
+            "@id": "#承認者"
+          }
+        },
+        {
+          "@id": "urn:entity:ninka-001",
+          "@type": "urn:golden:承認",
+          "urn:golden:承認.対象": "urn:entity:sinsei-001",
+          "urn:golden:agent": {
+            "@id": "#承認者"
+          },
+          "wam:truthValue": {
+            "@id": "#T2"
+          }
+        },
+        {
+          "@id": "urn:entity:hacchu-001",
+          "@type": "urn:golden:発注",
+          "urn:golden:発注.申請者": "urn:entity:person-m",
+          "urn:golden:発注.商品": "urn:entity:item-paper",
+          "urn:golden:発注.数量": 100,
+          "urn:golden:発注.発注先": "urn:entity:org-a",
+          "urn:golden:agent": "urn:entity:person-c",
+          "wam:truthValue": {
+            "@id": "#T3"
+          }
+        },
+        {
+          "@id": "urn:node:調達申請ワークフロー.head#link1",
+          "@type": "urn:wamtest:Then",
+          "arg1": {
+            "@id": "urn:entity:sinsei-001"
+          },
+          "arg2": {
+            "@id": "urn:entity:ninka-001"
+          }
+        },
+        {
+          "@id": "urn:node:調達申請ワークフロー.head#link2",
+          "@type": "urn:wamtest:Then",
+          "arg1": {
+            "@id": "urn:entity:ninka-001"
+          },
+          "arg2": {
+            "@id": "urn:entity:hacchu-001"
+          }
+        }
+      ]
+    }
+  ],
+  "urn:golden:上司": [
+    {
+      "@id": "urn:node:上司.head",
+      "@type": "urn:golden:上司",
+      "urn:golden:上司.構成員": "urn:entity:person-m",
+      "urn:golden:上司.上司": "urn:entity:person-b"
+    }
+  ],
+  "urn:golden:申請": [
+    {
+      "@id": "urn:node:申請.head",
+      "@type": "urn:golden:申請"
+    }
+  ],
+  "urn:golden:承認": [
+    {
+      "@id": "urn:node:承認.head",
+      "@type": "urn:golden:承認"
+    }
+  ],
+  "urn:golden:発注": [
+    {
+      "@id": "urn:node:発注.head",
+      "@type": "urn:golden:発注"
+    }
+  ]
+}

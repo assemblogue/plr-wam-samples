@@ -1,0 +1,223 @@
+{
+  "_comment": "ホーン節（追記207 の新形式）。ホーン節は「ノード1つ ＋ その内部グラフ」である。",
+  "urn:ship:納品ゴール": [
+    {
+      "@id": "urn:node:ゴール.head",
+      "@type": "urn:ship:納品ゴール",
+      "internalGraph": [
+        {
+          "@id": "urn:node:納品",
+          "@type": "urn:ship:出荷+検収",
+          "urn:ship:出荷済数": 0,
+          "urn:ship:要出荷数": 10
+        }
+      ],
+      "_comment": ":- 出荷+検収(出荷済数:0, 要出荷数:10). ゴールは初期束縛を受け取れないので、定数を渡すだけの包み節にしてある"
+    }
+  ],
+  "urn:ship:出荷+検収": [
+    {
+      "@id": "urn:node:出荷+検収.完了.head",
+      "@type": "urn:ship:出荷+検収",
+      "urn:ship:出荷済数": {
+        "@id": "#Shipped"
+      },
+      "urn:ship:要出荷数": {
+        "@id": "#ToShip"
+      },
+      "variables": [
+        {
+          "@id": "#Shipped",
+          "variableName": "Shipped"
+        },
+        {
+          "@id": "#ToShip",
+          "variableName": "ToShip"
+        }
+      ],
+      "internalGraph": [
+        {
+          "@id": "urn:node:完了判定",
+          "@type": "urn:ship:＝",
+          "arg1": {
+            "@id": "#Shipped"
+          },
+          "arg2": {
+            "@id": "#ToShip"
+          }
+        }
+      ],
+      "_comment": "出荷+検収(出荷済数:Shipped, 要出荷数:ToShip) :- ＝(arg1:Shipped, arg2:ToShip)."
+    },
+    {
+      "@id": "urn:node:出荷+検収.継続.head",
+      "@type": "urn:ship:出荷+検収",
+      "urn:ship:出荷済数": {
+        "@id": "#Shipped"
+      },
+      "urn:ship:要出荷数": {
+        "@id": "#ToShip"
+      },
+      "variables": [
+        {
+          "@id": "#R",
+          "variableName": "R"
+        },
+        {
+          "@id": "#S",
+          "variableName": "S"
+        },
+        {
+          "@id": "#Shipped",
+          "variableName": "Shipped"
+        },
+        {
+          "@id": "#ToShip",
+          "variableName": "ToShip"
+        },
+        {
+          "@id": "#T出荷",
+          "variableName": "T出荷"
+        },
+        {
+          "@id": "#T検収",
+          "variableName": "T検収"
+        }
+      ],
+      "internalGraph": [
+        {
+          "@id": "urn:node:出荷",
+          "@type": "urn:ship:出荷",
+          "urn:ship:個数": {
+            "@id": "#S"
+          },
+          "urn:ship:agent": "urn:entity:サプライヤー",
+          "wam:truthValue": {
+            "@id": "#T出荷"
+          }
+        },
+        {
+          "@id": "urn:node:検収",
+          "@type": "urn:ship:検収",
+          "urn:ship:納入数": {
+            "@id": "#S"
+          },
+          "urn:ship:返品数": {
+            "@id": "#R"
+          },
+          "urn:ship:agent": "urn:entity:バイヤー",
+          "wam:truthValue": {
+            "@id": "#T検収"
+          }
+        },
+        {
+          "@id": "urn:node:再帰",
+          "@type": "urn:ship:出荷+検収",
+          "urn:ship:出荷済数": [
+            {
+              "@id": "#Shipped"
+            },
+            {
+              "@id": "#S"
+            }
+          ],
+          "urn:ship:要出荷数": [
+            {
+              "@id": "#ToShip"
+            },
+            {
+              "@id": "#R"
+            }
+          ]
+        },
+        {
+          "@id": "urn:node:出荷上限",
+          "@type": "urn:ship:≧",
+          "arg1": {
+            "@id": "#ToShip"
+          },
+          "arg2": [
+            {
+              "@id": "#Shipped"
+            },
+            {
+              "@id": "#S"
+            }
+          ]
+        },
+        {
+          "@id": "urn:node:出荷+検収.継続.head#link1",
+          "@type": "urn:wamtest:Then",
+          "arg1": {
+            "@id": "urn:node:出荷"
+          },
+          "arg2": {
+            "@id": "urn:node:検収"
+          }
+        },
+        {
+          "@id": "urn:node:出荷+検収.継続.head#link2",
+          "@type": "urn:wamtest:Then",
+          "arg1": {
+            "@id": "urn:node:出荷"
+          },
+          "arg2": {
+            "@id": "urn:node:再帰"
+          }
+        }
+      ],
+      "_comment": "出荷+検収(出荷済数:Shipped, 要出荷数:ToShip) :- 出荷(個数:S), ├Then→検収(納入数:S, 返品数:R), └Then→出荷+検収(出荷済数:[Shipped,S], 要出荷数:[ToShip,R]), ≧(arg1:ToShip, arg2:[Shipped,S])."
+    }
+  ],
+  "urn:ship:検収": [
+    {
+      "@id": "urn:node:検収.head",
+      "@type": "urn:ship:検収",
+      "urn:ship:納入数": {
+        "@id": "#納入"
+      },
+      "urn:ship:返品数": {
+        "@id": "#返品"
+      },
+      "variables": [
+        {
+          "@id": "#納入",
+          "variableName": "納入"
+        },
+        {
+          "@id": "#返品",
+          "variableName": "返品"
+        }
+      ],
+      "internalGraph": [
+        {
+          "@id": "urn:node:返品上限",
+          "@type": "urn:ship:≧",
+          "arg1": {
+            "@id": "#納入"
+          },
+          "arg2": {
+            "@id": "#返品"
+          }
+        }
+      ],
+      "_comment": "検収(納入数:S, 返品数:R) :- ≧(arg1:S, arg2:R)."
+    }
+  ],
+  "urn:ship:出荷": [
+    {
+      "@id": "urn:node:出荷.head",
+      "@type": "urn:ship:出荷",
+      "urn:ship:個数": {
+        "@id": "#S"
+      },
+      "variables": [
+        {
+          "@id": "#S",
+          "variableName": "S"
+        }
+      ],
+      "_comment": "出荷(個数:S). 出荷数の上限 ≧(要出荷数, [出荷済数, 個数]) は 出荷+検収 の本体にある制約ノードで、連立で解かれるのでどちらに書いても同じ"
+    }
+  ]
+}

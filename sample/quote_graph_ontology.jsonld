@@ -1,0 +1,424 @@
+{
+  "@id": "urn:quote:ontology",
+  "@type": "Ontology",
+  "_comment": "見積書デモ（追記207 の新形式 ＋ 追記205 のパターン）。**ホーン節に明細は1個しか書かれていない。** 相手が多値ならパターンは各要素へ分配され、パターン中の変数は要素ごとの結果を多値へ収集する——だから明細が何本あっても金額が多値に集まり、組込述語 = がその和を総額に入れる。builtInFunction / isConstraint / linkKind と完成の制限（wam:complete か wam:completeByOkButton）は、ホーン節を知識グラフから組み立てるためのクラスレベル宣言である。 ⚠️ 明細（QuoteLine）は**制約ノードだがユーザ作成制約ノードではない**——見積書の節の頭部の引数に埋め込まれているので制約ノードであり（追記237）、ユーザ作成データではなくホーン節に現れるのでユーザ作成制約ノードの定義には当たらない（追記223）。扱いは同じである。金額は明細の節が入れる：要素ごとの計算は分配の中ではできないので（追記205）、要素の側に置く。",
+  "agentProperty": "urn:quote:agent",
+  "defines": [
+    {
+      "@id": "urn:quote:Template",
+      "@type": "Class",
+      "subClassOf": [
+        {
+          "@type": "Restriction",
+          "onProperty": "wam:isComplete",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "テンプレート",
+        "en": "Template"
+      }
+    },
+    {
+      "@id": "urn:quote:Goal",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Task"
+      ],
+      "label": {
+        "ja": "ゴール",
+        "en": "Goal"
+      }
+    },
+    {
+      "@id": "urn:quote:Atom",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Template"
+      ],
+      "label": {
+        "ja": "アトムノード",
+        "en": "Atom"
+      }
+    },
+    {
+      "_comment": "タスクノード（副作用を伴う。真偽値を持つ）。Goal の親である（追記261）。",
+      "@id": "urn:quote:Task",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Atom"
+      ],
+      "label": {
+        "ja": "タスクノード",
+        "en": "Task"
+      }
+    },
+    {
+      "@id": "urn:quote:Constraint",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Atom"
+      ],
+      "label": {
+        "ja": "制約ノード",
+        "en": "Constraint"
+      }
+    },
+    {
+      "@id": "urn:quote:OtherAtom",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Atom"
+      ],
+      "label": {
+        "ja": "その他のアトムノード",
+        "en": "Other atom"
+      }
+    },
+    {
+      "@id": "urn:quote:Cancelable",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Atom"
+      ],
+      "_comment": "取消可能タスクのマーカークラス（`spec_kg.md`「決定: Template の下位クラス構成」）。判定は TaskPolicyProjection が isSubClassOf で行う——ハーネスが文字列で持たない。",
+      "label": {
+        "ja": "取消可能",
+        "en": "Cancelable"
+      }
+    },
+    {
+      "@id": "urn:quote:refersTo",
+      "@type": "ObjectProperty",
+      "label": {
+        "ja": "参照",
+        "en": "Refers to"
+      }
+    },
+    {
+      "@id": "urn:quote:total",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:QuoteRecord",
+      "range": "nonNegativeInteger",
+      "label": {
+        "ja": "総額",
+        "en": "Total"
+      }
+    },
+    {
+      "@id": "urn:quote:QuoteRecord",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Goal",
+        "urn:quote:Cancelable",
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:lineItem",
+          "minCardinality": 1,
+          "maxCardinality": 99
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:total",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "wam:completeByOkButton",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:agent",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "見積書",
+        "en": "Quote"
+      },
+      "_comment": "見積書そのものがゴールである。頭部が明細のパターンと総額を持ち、この頭部がトップレベルのタスクノードになる。⚠️ 見積書はどの本体にも現れないので呼ばれない。 ⚠️ **OKボタンは見積書が持つ**——`wam:completeByOkButton` を宣言することがそれである（追記249。`completionMode` は使わない）——見積書全体の完成を担当ユーザが確認する。明細は持たない（値が入った時点で金額も総額も解けるので、確認を待たせる理由が無い）。 ⚠️ Cancelable を継承して取消可能タスクだと宣言する（追記232）——OK を押した後に直すには引き戻しが要り、引き戻しには取消可能性の宣言が要る。下書き中の見積書と明細は外界に副作用を持たないので取消可能である。"
+    },
+    {
+      "@id": "urn:quote:lineItem",
+      "@type": "ObjectProperty",
+      "domain": "urn:quote:QuoteRecord",
+      "range": "urn:quote:QuoteLine",
+      "label": {
+        "ja": "明細",
+        "en": "Line item"
+      },
+      "_comment": "見積書の明細。**値域を宣言する**——宣言が無いと「この欄に何のノードを入れるのか」に答えられず、**新しい明細を作ろうとする側はクラスidを当てるしかない**（実測で AI が`urn:quote:LineItem` という存在しないクラスを発明した）。⚠️ **`DatatypeProperty` で `range: string` と宣言していた**のが誤りだった——実際にはノードを指す。"
+    },
+    {
+      "@id": "urn:quote:QuoteLine",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Constraint",
+        "urn:quote:Cancelable",
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:lineQuantity",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:lineAmount",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:lineProduct",
+          "minCardinality": 1,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "明細",
+        "en": "Quote line"
+      },
+      "_comment": "⚠️ **明細はアトムノードではない。制約ノードである**（追記237）——ホーン節のアトムノードに埋め込まれたアトムノードは制約ノードであり、明細は見積書の節の頭部の引数の中に入れ子で現れる。ユーザ作成制約ノードと同様に処理する。 ⚠️ ただし**ユーザ作成制約ノードではない**（追記223）——あちらはユーザ作成データに含まれる制約ノードのことで、明細はホーン節に現れる。扱いが同じだというだけである。 ⚠️ **OKボタンは持たない**（`wam:completeByOkButton` を宣言しない）——数量が入った時点で金額も総額も解けて知識グラフへ書き戻るので、明細ごとに確認を待たせる理由が無い（総額が OK の前に出ることを実測で確かめた）。確認するのは見積書全体である。",
+      "isConstraint": true
+    },
+    {
+      "@id": "urn:quote:lineQuantity",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:QuoteLine",
+      "range": "nonNegativeInteger",
+      "label": {
+        "ja": "数量",
+        "en": "Quantity"
+      }
+    },
+    {
+      "@id": "urn:quote:lineAmount",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:QuoteLine",
+      "range": "nonNegativeInteger",
+      "label": {
+        "ja": "金額",
+        "en": "Amount"
+      }
+    },
+    {
+      "@id": "urn:quote:lineProduct",
+      "@type": "ObjectProperty",
+      "subPropertyOf": "urn:quote:refersTo",
+      "domain": "urn:quote:QuoteLine",
+      "label": {
+        "ja": "商品",
+        "en": "Product"
+      },
+      "range": "urn:quote:CatalogItem",
+      "_comment": "値域を宣言する。宣言が無いと「何を入れられるか」に答えられない（範囲の問い合わせはオントロジー側の答えとエンジン側の答えを突き合わせるものなので、片方が空だと絞れない）。"
+    },
+    {
+      "@id": "urn:quote:CatalogItem",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Constraint",
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:itemLabel",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:itemPrice",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "商品",
+        "en": "Catalog item"
+      },
+      "isConstraint": true,
+      "_comment": "⚠️ **制約ノードである**（追記237）——頭部の引数の中に入れ子で現れるアトムノードは、トップレベルでないので制約ノードであり、ユーザ作成制約ノードと同様に処理する。"
+    },
+    {
+      "@id": "urn:quote:itemLabel",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:CatalogItem",
+      "range": "string",
+      "label": {
+        "ja": "商品名",
+        "en": "Product name"
+      }
+    },
+    {
+      "@id": "urn:quote:itemPrice",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:CatalogItem",
+      "range": "nonNegativeInteger",
+      "label": {
+        "ja": "単価",
+        "en": "Unit price"
+      }
+    },
+    {
+      "@id": "urn:quote:Equals",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Constraint"
+      ],
+      "builtInFunction": "=",
+      "isConstraint": true,
+      "label": {
+        "ja": "＝",
+        "en": "Equals"
+      }
+    },
+    {
+      "@id": "urn:quote:Times",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Constraint"
+      ],
+      "builtInFunction": "×",
+      "isConstraint": true,
+      "label": {
+        "ja": "×",
+        "en": "Times"
+      }
+    },
+    {
+      "@id": "urn:quote:AtLeast",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Constraint"
+      ],
+      "builtInFunction": "≧",
+      "isConstraint": true,
+      "label": {
+        "ja": "≧",
+        "en": "At least"
+      }
+    },
+    {
+      "_comment": "在庫の記録。**制約ノードである**——頭部が制約ノード（明細）のホーン節の本体は、すべて制約ノードだからである。",
+      "@id": "urn:quote:Stock",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Constraint",
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:stockProduct",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "urn:quote:stockRemaining",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "isConstraint": true,
+      "label": {
+        "ja": "在庫",
+        "en": "Stock"
+      }
+    },
+    {
+      "@id": "urn:quote:stockProduct",
+      "@type": "ObjectProperty",
+      "domain": "urn:quote:Stock",
+      "range": "urn:quote:CatalogItem",
+      "label": {
+        "ja": "商品",
+        "en": "Product"
+      }
+    },
+    {
+      "@id": "urn:quote:stockRemaining",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:Stock",
+      "range": "nonNegativeInteger",
+      "label": {
+        "ja": "残数",
+        "en": "Remaining"
+      }
+    },
+    {
+      "@id": "urn:quote:lineUnitPrice",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:QuoteLine",
+      "range": "nonNegativeInteger",
+      "label": {
+        "ja": "単価",
+        "en": "Unit price"
+      }
+    },
+    {
+      "@id": "urn:quote:Person",
+      "@type": "Class",
+      "label": {
+        "ja": "人",
+        "en": "Person"
+      }
+    },
+    {
+      "@id": "urn:quote:personName",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:Person",
+      "range": "string",
+      "label": {
+        "ja": "氏名",
+        "en": "Name"
+      }
+    },
+    {
+      "@id": "urn:quote:agent",
+      "@type": "ObjectProperty",
+      "range": "urn:quote:Person",
+      "label": {
+        "ja": "担当者",
+        "en": "Agent"
+      },
+      "_comment": "担当ユーザ。**個数はホーン節が決める**（橋田さん）——頭部に書けば1個、書かなければ0個であり、「任意」という中間は無い。この例では**見積書だけが持つ**：明細にも持たせると、両者が同じ担当者を指して**担当者が共有ノードになる**（追記250・252）。⚠️ **誰かが作らなければならないデータの根ノードは、agent 属性でその人を指す**——ここでは見積書がそれである。"
+    },
+    {
+      "_comment": "完成の属性の上位属性（追記249）。complete と completeByOkButton はどちらもこれの下位属性であり、cardinality を1以下にすることで「いずれか一方しか使えない」が表される。専用の静的検査は要らない。",
+      "@id": "wam:isComplete",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:Template",
+      "range": "string",
+      "label": {
+        "ja": "完成",
+        "en": "Is complete"
+      }
+    },
+    {
+      "_comment": "OKボタンを持たないノードの完成（2値）。",
+      "@id": "wam:complete",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:Template",
+      "range": "boolean",
+      "subPropertyOf": "wam:isComplete",
+      "label": {
+        "ja": "完成",
+        "en": "Complete"
+      }
+    },
+    {
+      "_comment": "OKボタンによる完成（3値。偽＝未完成、真＝完成したが未押下、ユーザ＝その人が確認した）。この属性を宣言することが「OKボタンを持つ」の宣言である。",
+      "@id": "wam:completeByOkButton",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:Template",
+      "range": "string",
+      "subPropertyOf": "wam:isComplete",
+      "label": {
+        "ja": "完成（OKボタン）",
+        "en": "Complete by OK button"
+      }
+    }
+  ]
+}
