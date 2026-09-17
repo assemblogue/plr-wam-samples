@@ -1,6 +1,8 @@
 {
   "@id": "urn:ship:ontology",
   "@type": "Ontology",
+  "_comment_agent": "担当ユーザを指す属性（agentProperty）。**宣言しないとエンジンは誰が担当かを知らない**——既定は bare な \"agent\" なので、OK押下の押し主が記録されず（追記248 の配下ロックが掛からない）、督促の宛先も決まらない。bindings ファイルにも書けるが、GUI は bindings を渡さないので、**オントロジー側が正典である**",
+  "agentProperty": "urn:ship:agent",
   "_comment": "クラスid・属性idは URI 形式でなければならない（bare な名前は schemaObjectFromByteStream が拾わず、getCardinality が「未知のクラスid」で落ちる）。一方 range のデータ型名は接頭辞付き（xsd:...）では解決されないので、そのままの名前で書く。非負整数であることは ≧0 という不等式として組込述語の連立に入る",
   "defines": [
     {

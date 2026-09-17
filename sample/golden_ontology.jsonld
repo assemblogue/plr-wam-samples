@@ -1,6 +1,8 @@
 {
   "@id": "urn:golden:ontology",
   "@type": "Ontology",
+  "_comment_agent": "担当ユーザを指す属性（agentProperty）。**宣言しないとエンジンは誰が担当かを知らない**——既定は bare な \"agent\" なので、OK押下の押し主が記録されず（追記248 の配下ロックが掛からない）、督促の宛先も決まらない。bindings ファイルにも書けるが、GUI は bindings を渡さないので、**オントロジー側が正典である**",
+  "agentProperty": "urn:golden:agent",
   "defines": [
     {
       "@id": "urn:golden:Template",
