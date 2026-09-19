@@ -1,0 +1,98 @@
+{
+ "@id": "urn:mship:ontology",
+ "@type": "Ontology",
+ "agentProperty": "urn:mship:agent",
+ "defines": [
+  {"@id": "urn:ship:Template", "@type": "Class",
+   "subClassOf": [{"@type": "Restriction", "onProperty": "wam:isComplete", "minCardinality": 0, "maxCardinality": 1}],
+   "label": {"ja": "テンプレート", "en": "Template"}},
+  {"@id": "urn:ship:Goal", "@type": "Class", "subClassOf": ["urn:ship:Task"], "label": {"ja": "ゴール", "en": "Goal"}},
+  {"@id": "urn:ship:Atom", "@type": "Class", "subClassOf": ["urn:ship:Template"], "label": {"ja": "アトムノード", "en": "Atom"}},
+  {"@id": "urn:ship:Task", "@type": "Class", "subClassOf": ["urn:ship:Atom"], "label": {"ja": "タスクノード", "en": "Task"}},
+  {"@id": "urn:ship:Constraint", "@type": "Class", "subClassOf": ["urn:ship:Atom"], "label": {"ja": "制約ノード", "en": "Constraint"}},
+  {"@id": "urn:ship:OtherAtom", "@type": "Class", "subClassOf": ["urn:ship:Atom"], "label": {"ja": "その他のアトムノード", "en": "Other atom"}},
+  {"@id": "wam:isComplete", "@type": "DatatypeProperty", "domain": "urn:ship:Template", "range": "string", "label": {"ja": "完成", "en": "Is complete"}},
+  {"@id": "urn:mship:Person", "@type": "Class", "label": {"ja": "人", "en": "Person"}},
+  {"@id": "urn:mship:agent", "@type": "ObjectProperty", "range": "urn:mship:Person", "label": {"ja": "担当者", "en": "Agent"}},
+  {"@id": "urn:mship:Eq", "@type": "Class", "subClassOf": ["urn:ship:Constraint"], "builtInFunction": "=", "isConstraint": true, "label": {"ja": "＝", "en": "Equals"}},
+  {"@id": "urn:mship:Geq", "@type": "Class", "subClassOf": ["urn:ship:Constraint"], "builtInFunction": "≧", "isConstraint": true, "label": {"ja": "≧", "en": "AtLeast"}},
+  {"@id": "urn:mship:Then", "@type": "Class", "linkKind": "then", "label": {"ja": "Then", "en": "Then"}},
+  {"@id": "urn:mship:arg1", "@type": "ObjectProperty", "label": {"ja": "第1引数", "en": "Arg 1"}},
+  {"@id": "urn:mship:arg2", "@type": "ObjectProperty", "label": {"ja": "第2引数", "en": "Arg 2"}},
+  {
+   "_comment": "参照属性の上位属性（橋田さん、2026-09-19）。この下位に属する属性は担当者が自分では書き込めない——他方から流れてくる値を参照するだけである。ノードの型によって、同じ意味の値でもrefersToの下位属性かどうかが変わる（出荷検収自身の要出荷数は権威ある元の値だが、出荷から見た要出荷数は参照——別の属性idにする）。",
+   "@id": "urn:mship:refersTo", "@type": "ObjectProperty", "label": {"ja": "参照", "en": "RefersTo"}
+  },
+
+  {"@id": "urn:mship:引数", "@type": "ObjectProperty", "label": {"ja": "引数", "en": "Args"}},
+  {"@id": "urn:mship:商品", "@type": "DatatypeProperty", "range": "string", "label": {"ja": "商品", "en": "Item"}},
+  {"@id": "urn:mship:要出荷数", "@type": "DatatypeProperty", "range": "nonNegativeInteger", "label": {"ja": "要出荷数", "en": "ToShip"}},
+  {"@id": "urn:mship:出荷済数", "@type": "DatatypeProperty", "range": "nonNegativeInteger", "label": {"ja": "出荷済数", "en": "Shipped"}},
+  {"@id": "urn:mship:出荷リンク", "@type": "ObjectProperty", "domain": "urn:mship:出荷検収", "range": "urn:mship:出荷", "label": {"ja": "出荷", "en": "ShipRef"}},
+  {"@id": "urn:mship:検収リンク", "@type": "ObjectProperty", "domain": "urn:mship:出荷検収", "range": "urn:mship:検収", "label": {"ja": "検収", "en": "InspectRef"}},
+  {"@id": "urn:mship:次リンク", "@type": "ObjectProperty", "domain": "urn:mship:出荷検収", "range": "urn:mship:出荷検収", "label": {"ja": "出荷検収", "en": "NextRef"}},
+  {
+   "@id": "urn:mship:出荷検収", "@type": "Class",
+   "subClassOf": ["urn:ship:OtherAtom",
+    {"@type": "Restriction", "onProperty": "urn:mship:商品", "minCardinality": 1, "maxCardinality": 1},
+    {"@type": "Restriction", "onProperty": "urn:mship:出荷済数", "minCardinality": 1, "maxCardinality": 1},
+    {"@type": "Restriction", "onProperty": "urn:mship:要出荷数", "minCardinality": 1, "maxCardinality": 1},
+    {"@type": "Restriction", "onProperty": "urn:mship:出荷リンク", "minCardinality": 0, "maxCardinality": 1},
+    {"@type": "Restriction", "onProperty": "urn:mship:検収リンク", "minCardinality": 0, "maxCardinality": 1},
+    {"@type": "Restriction", "onProperty": "urn:mship:次リンク", "minCardinality": 0, "maxCardinality": 1}],
+   "label": {"ja": "出荷検収", "en": "ShipInspect"}
+  },
+  {
+   "@id": "urn:mship:出荷検収+", "@type": "Class",
+   "subClassOf": ["urn:ship:OtherAtom", {"@type": "Restriction", "onProperty": "urn:mship:引数", "minCardinality": 1, "maxCardinality": 9}],
+   "label": {"ja": "出荷検収+", "en": "ShipInspectPlus"}
+  },
+
+  {"@id": "urn:mship:出荷数", "@type": "DatatypeProperty", "range": "positiveInteger", "label": {"ja": "出荷数", "en": "ShipCount"}},
+  {
+   "_comment": "出荷検収自身の要出荷数（urn:mship:要出荷数）は権威ある元の値だが、出荷から見た要出荷数はバイヤー側からの参照であり、サプライヤーは書き込めない——別の属性にしrefersToの下位属性として宣言する（橋田さん、2026-09-19）。",
+   "@id": "urn:mship:要出荷数参照", "@type": "DatatypeProperty",
+   "subPropertyOf": "urn:mship:refersTo",
+   "range": "nonNegativeInteger", "label": {"ja": "要出荷数", "en": "ToShip (ref)"}
+  },
+  {
+   "@id": "urn:mship:出荷", "@type": "Class",
+   "subClassOf": ["urn:ship:OtherAtom",
+    {"@type": "Restriction", "onProperty": "urn:mship:商品", "minCardinality": 1, "maxCardinality": 1},
+    {"@type": "Restriction", "onProperty": "urn:mship:出荷数", "minCardinality": 0, "maxCardinality": 1},
+    {"@type": "Restriction", "onProperty": "urn:mship:出荷済数", "minCardinality": 1, "maxCardinality": 1},
+    {"@type": "Restriction", "onProperty": "urn:mship:要出荷数参照", "minCardinality": 1, "maxCardinality": 1},
+    {"@type": "Restriction", "onProperty": "urn:mship:agent", "minCardinality": 0, "maxCardinality": 1}],
+   "label": {"ja": "出荷", "en": "Ship"}
+  },
+  {
+   "@id": "urn:mship:出荷+", "@type": "Class",
+   "subClassOf": ["urn:ship:OtherAtom", {"@type": "Restriction", "onProperty": "urn:mship:引数", "minCardinality": 1, "maxCardinality": 9}],
+   "label": {"ja": "出荷+", "en": "ShipPlus"}
+  },
+
+  {
+   "_comment": "検収から見た納入数は出荷側の出荷数からの参照であり、バイヤーは書き込めない——refersToの下位属性として宣言する（橋田さん、2026-09-19）。",
+   "@id": "urn:mship:納入数", "@type": "DatatypeProperty",
+   "subPropertyOf": "urn:mship:refersTo",
+   "range": "nonNegativeInteger", "label": {"ja": "納入数", "en": "Delivered"}
+  },
+  {"@id": "urn:mship:返品数", "@type": "DatatypeProperty", "range": "nonNegativeInteger", "label": {"ja": "返品数", "en": "Returned"}},
+  {
+   "@id": "urn:mship:検収", "@type": "Class",
+   "subClassOf": ["urn:ship:OtherAtom",
+    {"@type": "Restriction", "onProperty": "urn:mship:商品", "minCardinality": 1, "maxCardinality": 1},
+    {"@type": "Restriction", "onProperty": "urn:mship:納入数", "minCardinality": 1, "maxCardinality": 1},
+    {"@type": "Restriction", "onProperty": "urn:mship:返品数", "minCardinality": 0, "maxCardinality": 1},
+    {"@type": "Restriction", "onProperty": "urn:mship:agent", "minCardinality": 0, "maxCardinality": 1}],
+   "label": {"ja": "検収", "en": "Inspect"}
+  },
+  {
+   "@id": "urn:mship:検収+", "@type": "Class",
+   "subClassOf": ["urn:ship:OtherAtom", {"@type": "Restriction", "onProperty": "urn:mship:引数", "minCardinality": 1, "maxCardinality": 9}],
+   "label": {"ja": "検収+", "en": "InspectPlus"}
+  },
+
+  {"@id": "urn:mship:ゴール", "@type": "Class", "subClassOf": ["urn:ship:Goal"], "label": {"ja": "ゴール", "en": "Goal"}}
+ ]
+}
