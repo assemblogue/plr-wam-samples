@@ -125,6 +125,7 @@
    "internalGraph": [
     {
      "@id": "urn:node:出荷", "@type": "urn:mship:出荷+",
+     "urn:mship:agent": "urn:entity:サプライヤー",
      "urn:mship:引数": {
       "@type": "urn:mship:出荷", "node": {"@id": "#X"},
       "urn:mship:商品": {"@id": "#Item"},
@@ -135,6 +136,7 @@
     },
     {
      "@id": "urn:node:検収", "@type": "urn:mship:検収+",
+     "urn:mship:agent": "urn:entity:バイヤー",
      "urn:mship:引数": {
       "@type": "urn:mship:検収", "node": {"@id": "#Y"},
       "urn:mship:商品": {"@id": "#Item"},

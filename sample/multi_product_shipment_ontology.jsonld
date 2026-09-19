@@ -66,8 +66,12 @@
    "label": {"ja": "出荷", "en": "Ship"}
   },
   {
+   "_comment": "パターンの要素として照合される出荷は制約ノード扱いになり、完成確認・OKボタン・担当者タブの対象にならない（_gateCompletionは_runAtomGroupが処理するトップレベルの本体アトムノードにしか掛からない）。担当者に見せる帳票としてのタスクはこちら（出荷+）の側で持つ。",
    "@id": "urn:mship:出荷+", "@type": "Class",
-   "subClassOf": ["urn:ship:OtherAtom", {"@type": "Restriction", "onProperty": "urn:mship:引数", "minCardinality": 1, "maxCardinality": 9}],
+   "subClassOf": ["urn:ship:Task",
+    {"@type": "Restriction", "onProperty": "urn:mship:引数", "minCardinality": 1, "maxCardinality": 9},
+    {"@type": "Restriction", "onProperty": "urn:mship:agent", "minCardinality": 1, "maxCardinality": 1},
+    {"@type": "Restriction", "onProperty": "wam:completeByOkButton", "minCardinality": 0, "maxCardinality": 1}],
    "label": {"ja": "出荷+", "en": "ShipPlus"}
   },
 
@@ -88,8 +92,12 @@
    "label": {"ja": "検収", "en": "Inspect"}
   },
   {
+   "_comment": "担当者タブ・OKボタンの対象は検収+側で持つ（urn:mship:出荷+と同じ理由）。",
    "@id": "urn:mship:検収+", "@type": "Class",
-   "subClassOf": ["urn:ship:OtherAtom", {"@type": "Restriction", "onProperty": "urn:mship:引数", "minCardinality": 1, "maxCardinality": 9}],
+   "subClassOf": ["urn:ship:Task",
+    {"@type": "Restriction", "onProperty": "urn:mship:引数", "minCardinality": 1, "maxCardinality": 9},
+    {"@type": "Restriction", "onProperty": "urn:mship:agent", "minCardinality": 1, "maxCardinality": 1},
+    {"@type": "Restriction", "onProperty": "wam:completeByOkButton", "minCardinality": 0, "maxCardinality": 1}],
    "label": {"ja": "検収+", "en": "InspectPlus"}
   },
 
