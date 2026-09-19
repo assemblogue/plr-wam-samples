@@ -17,8 +17,6 @@
   {"@id": "urn:mship:Eq", "@type": "Class", "subClassOf": ["urn:ship:Constraint"], "builtInFunction": "=", "isConstraint": true, "label": {"ja": "＝", "en": "Equals"}},
   {"@id": "urn:mship:Geq", "@type": "Class", "subClassOf": ["urn:ship:Constraint"], "builtInFunction": "≧", "isConstraint": true, "label": {"ja": "≧", "en": "AtLeast"}},
   {"@id": "urn:mship:Then", "@type": "Class", "linkKind": "then", "label": {"ja": "Then", "en": "Then"}},
-  {"@id": "urn:mship:arg1", "@type": "ObjectProperty", "label": {"ja": "第1引数", "en": "Arg 1"}},
-  {"@id": "urn:mship:arg2", "@type": "ObjectProperty", "label": {"ja": "第2引数", "en": "Arg 2"}},
   {
    "_comment": "参照属性の上位属性（橋田さん、2026-09-19）。この下位に属する属性は担当者が自分では書き込めない——他方から流れてくる値を参照するだけである。ノードの型によって、同じ意味の値でもrefersToの下位属性かどうかが変わる（出荷検収自身の要出荷数は権威ある元の値だが、出荷から見た要出荷数は参照——別の属性idにする）。",
    "@id": "urn:mship:refersTo", "@type": "ObjectProperty", "label": {"ja": "参照", "en": "RefersTo"}

@@ -153,8 +153,8 @@
       "urn:mship:要出荷数": [{"@id": "#ToShip"}, {"@id": "#R5"}]
      }
     },
-    {"@id": "urn:node:出荷検収+.継続.head#link1", "@type": "urn:mship:Then", "urn:mship:arg1": {"@id": "urn:node:出荷"}, "urn:mship:arg2": {"@id": "urn:node:検収"}},
-    {"@id": "urn:node:出荷検収+.継続.head#link2", "@type": "urn:mship:Then", "urn:mship:arg1": {"@id": "urn:node:出荷"}, "urn:mship:arg2": {"@id": "urn:node:再帰"}}
+    {"@id": "urn:node:出荷検収+.継続.head#link1", "@type": "urn:mship:Then", "arg1": {"@id": "urn:node:出荷"}, "arg2": {"@id": "urn:node:検収"}},
+    {"@id": "urn:node:出荷検収+.継続.head#link2", "@type": "urn:mship:Then", "arg1": {"@id": "urn:node:出荷"}, "arg2": {"@id": "urn:node:再帰"}}
    ]
   }
  ],
