@@ -2,34 +2,65 @@
  "urn:mship:出荷": [
   {
    "@id": "urn:node:出荷.head", "@type": "urn:mship:出荷",
-   "urn:mship:商品": {"@id": "#Item2"},
-   "urn:mship:出荷数": {"@id": "#S"},
-   "urn:mship:出荷済数": {"@id": "#Shipped"},
-   "urn:mship:要出荷数参照": {"@id": "#ToShip"},
+   "urn:mship:出荷数": {"@id": "#S2"},
+   "urn:mship:出荷済数": {"@id": "#Shipped2"},
+   "urn:mship:要出荷数参照": {"@id": "#ToShip2"},
    "variables": [
-    {"@id": "#Item2", "variableName": "Item2"},
-    {"@id": "#S", "variableName": "S"},
-    {"@id": "#Shipped", "variableName": "Shipped"},
-    {"@id": "#ToShip", "variableName": "ToShip"}
+    {"@id": "#S2", "variableName": "S2"},
+    {"@id": "#Shipped2", "variableName": "Shipped2"},
+    {"@id": "#ToShip2", "variableName": "ToShip2"}
    ],
    "internalGraph": [
-    {"@id": "urn:node:出荷.geq", "@type": "urn:mship:Geq", "arg1": {"@id": "#S"}, "arg2": 1}
+    {"@id": "urn:node:出荷.geq", "@type": "urn:mship:Geq", "arg1": {"@id": "#ToShip2"}, "arg2": [{"@id": "#Shipped2"}, {"@id": "#S2"}]}
    ]
   }
  ],
  "urn:mship:検収": [
   {
    "@id": "urn:node:検収.head", "@type": "urn:mship:検収",
-   "urn:mship:商品": {"@id": "#Item3"},
    "urn:mship:納入数": {"@id": "#S4"},
    "urn:mship:返品数": {"@id": "#R4"},
    "variables": [
-    {"@id": "#Item3", "variableName": "Item3"},
     {"@id": "#S4", "variableName": "S4"},
     {"@id": "#R4", "variableName": "R4"}
    ],
    "internalGraph": [
-    {"@id": "urn:node:検収.geq", "@type": "urn:mship:Geq", "arg1": {"@id": "#S4"}, "arg2": 1}
+    {"@id": "urn:node:検収.geq", "@type": "urn:mship:Geq", "arg1": {"@id": "#S4"}, "arg2": {"@id": "#R4"}}
+   ]
+  }
+ ],
+ "urn:mship:出荷+": [
+  {
+   "@id": "urn:node:出荷+.head", "@type": "urn:mship:出荷+",
+   "urn:mship:引数": {
+    "@type": "urn:mship:出荷",
+    "urn:mship:出荷数": {"@id": "#S5"},
+    "urn:mship:出荷済数": {"@id": "#Shipped5"},
+    "urn:mship:要出荷数参照": {"@id": "#ToShip5"}
+   },
+   "urn:mship:agent": "urn:entity:サプライヤー",
+   "variables": [
+    {"@id": "#S5", "variableName": "S5"},
+    {"@id": "#Shipped5", "variableName": "Shipped5"},
+    {"@id": "#ToShip5", "variableName": "ToShip5"}
+   ],
+   "internalGraph": [
+    {"@id": "urn:node:出荷+.geq", "@type": "urn:mship:Geq", "arg1": {"@id": "#S5"}, "arg2": 1}
+   ]
+  }
+ ],
+ "urn:mship:検収+": [
+  {
+   "@id": "urn:node:検収+.head", "@type": "urn:mship:検収+",
+   "urn:mship:引数": {
+    "@type": "urn:mship:検収",
+    "urn:mship:納入数": {"@id": "#S7"},
+    "urn:mship:返品数": {"@id": "#R7"}
+   },
+   "urn:mship:agent": "urn:entity:バイヤー",
+   "variables": [
+    {"@id": "#S7", "variableName": "S7"},
+    {"@id": "#R7", "variableName": "R7"}
    ]
   }
  ],
@@ -57,47 +88,61 @@
     "@type": "urn:mship:出荷検収",
     "urn:mship:商品": {"@id": "#Item"},
     "urn:mship:出荷済数": {"@id": "#Shipped"},
-    "urn:mship:要出荷数": {"@id": "#ToShip"}
+    "urn:mship:要出荷数": {"@id": "#ToShip"},
+    "urn:mship:出荷同一性": {"@id": "#X"},
+    "urn:mship:検収同一性": {"@id": "#Y"},
+    "urn:mship:出荷検収同一性": {"@id": "#Z"}
    },
    "variables": [
     {"@id": "#Item", "variableName": "Item"},
     {"@id": "#Shipped", "variableName": "Shipped"},
     {"@id": "#ToShip", "variableName": "ToShip"},
-    {"@id": "#S5", "variableName": "S5"},
-    {"@id": "#R5", "variableName": "R5"},
+    {"@id": "#X", "variableName": "X"},
+    {"@id": "#Y", "variableName": "Y"},
+    {"@id": "#Z", "variableName": "Z"},
+    {"@id": "#S", "variableName": "S"},
+    {"@id": "#R", "variableName": "R"},
     {"@id": "#T出荷", "variableName": "T出荷"},
     {"@id": "#T検収", "variableName": "T検収"}
    ],
    "internalGraph": [
     {
-     "@id": "urn:node:出荷", "@type": "urn:mship:出荷",
+     "@id": "urn:node:出荷", "@type": "urn:mship:出荷+",
+     "urn:mship:引数": {
+      "@type": "urn:mship:出荷",
+      "node": {"@id": "#X"},
+      "urn:mship:商品": {"@id": "#Item"},
+      "urn:mship:出荷数": {"@id": "#S"},
+      "urn:mship:出荷済数": {"@id": "#Shipped"},
+      "urn:mship:要出荷数参照": {"@id": "#ToShip"}
+     },
      "urn:mship:agent": "urn:entity:サプライヤー",
-     "wam:truthValue": {"@id": "#T出荷"},
-     "urn:mship:商品": {"@id": "#Item"},
-     "urn:mship:出荷数": {"@id": "#S5"},
-     "urn:mship:出荷済数": {"@id": "#Shipped"},
-     "urn:mship:要出荷数参照": {"@id": "#ToShip"}
+     "wam:truthValue": {"@id": "#T出荷"}
     },
     {
-     "@id": "urn:node:検収", "@type": "urn:mship:検収",
+     "@id": "urn:node:検収", "@type": "urn:mship:検収+",
+     "urn:mship:引数": {
+      "@type": "urn:mship:検収",
+      "node": {"@id": "#Y"},
+      "urn:mship:商品": {"@id": "#Item"},
+      "urn:mship:納入数": {"@id": "#S"},
+      "urn:mship:返品数": {"@id": "#R"}
+     },
      "urn:mship:agent": "urn:entity:バイヤー",
-     "wam:truthValue": {"@id": "#T検収"},
-     "urn:mship:商品": {"@id": "#Item"},
-     "urn:mship:納入数": {"@id": "#S5"},
-     "urn:mship:返品数": {"@id": "#R5"}
+     "wam:truthValue": {"@id": "#T検収"}
     },
     {
      "@id": "urn:node:再帰", "@type": "urn:mship:出荷検収+",
      "urn:mship:引数": {
       "@type": "urn:mship:出荷検収",
+      "node": {"@id": "#Z"},
       "urn:mship:商品": {"@id": "#Item"},
-      "urn:mship:出荷済数": [{"@id": "#Shipped"}, {"@id": "#S5"}],
-      "urn:mship:要出荷数": [{"@id": "#ToShip"}, {"@id": "#R5"}]
+      "urn:mship:出荷済数": [{"@id": "#Shipped"}, {"@id": "#S"}],
+      "urn:mship:要出荷数": [{"@id": "#ToShip"}, {"@id": "#R"}]
      }
     },
-    {"@id": "urn:node:出荷検収+.継続.head#link1", "@type": "urn:mship:Then", "arg1": {"@id": "urn:node:出荷"}, "arg2": {"@id": "urn:node:検収"}},
-    {"@id": "urn:node:出荷検収+.継続.head#link2", "@type": "urn:mship:Then", "arg1": {"@id": "urn:node:出荷"}, "arg2": {"@id": "urn:node:再帰"}},
-    {"@id": "urn:node:出荷検収+.継続.head#geq", "@type": "urn:mship:Geq", "arg1": {"@id": "#ToShip"}, "arg2": [{"@id": "#Shipped"}, {"@id": "#S5"}]}
+    {"@id": "urn:node:出荷検収+.継続.link1", "@type": "urn:mship:Then", "arg1": {"@id": "urn:node:出荷"}, "arg2": {"@id": "urn:node:検収"}},
+    {"@id": "urn:node:出荷検収+.継続.link2", "@type": "urn:mship:Then", "arg1": {"@id": "urn:node:出荷"}, "arg2": {"@id": "urn:node:再帰"}}
    ]
   }
  ],
@@ -108,14 +153,8 @@
     {
      "@id": "urn:node:出荷検収+呼び出し", "@type": "urn:mship:出荷検収+",
      "urn:mship:引数": [
-      {
-       "@type": "urn:mship:出荷検収",
-       "urn:mship:商品": "えんぴつ", "urn:mship:出荷済数": 0, "urn:mship:要出荷数": 60
-      },
-      {
-       "@type": "urn:mship:出荷検収",
-       "urn:mship:商品": "消しゴム", "urn:mship:出荷済数": 0, "urn:mship:要出荷数": 100
-      }
+      {"@type": "urn:mship:出荷検収", "urn:mship:商品": "えんぴつ", "urn:mship:出荷済数": 0, "urn:mship:要出荷数": 60},
+      {"@type": "urn:mship:出荷検収", "urn:mship:商品": "消しゴム", "urn:mship:出荷済数": 0, "urn:mship:要出荷数": 100}
      ]
     }
    ]

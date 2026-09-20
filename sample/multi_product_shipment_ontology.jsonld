@@ -27,14 +27,20 @@
   {"@id": "urn:mship:要出荷数", "@type": "DatatypeProperty", "range": "nonNegativeInteger", "label": {"ja": "要出荷数", "en": "ToShip"}},
   {"@id": "urn:mship:出荷済数", "@type": "DatatypeProperty", "range": "nonNegativeInteger", "label": {"ja": "出荷済数", "en": "Shipped"}},
   {
-   "_comment": "出荷検収は実体を持たない——再帰のたびに値だけを運ぶ（単一商品版の出荷+検収と同じ設計。2026-09-20）。以前はurn:entity:出荷検収R2のような名前付きレコードへ出荷リンク・検収リンク・次リンクで繋いでいたが、静的データが尽きる2回目以降は永久に未解決のままになり、AIも状況の変化に気づけなかった（実測）。値そのもの（商品・出荷済数・要出荷数）を再帰の変数として渡せばエンティティは要らない。",
+   "_comment": "出荷検収は実体を持たない——再帰のたびに値だけを運ぶ（単一商品版の出荷+検収と同じ設計。2026-09-20）。以前はurn:entity:出荷検収R2のような名前付きレコードへ出荷リンク・検収リンク・次リンクで繋いでいたが、静的データが尽きる2回目以降は永久に未解決のままになり、AIも状況の変化に気づけなかった（実測）。出荷同一性・検収同一性・出荷検収同一性の3つは、この出荷検収が商品ごとに多重化するのに応じて一緒に多重化する同一性であり、本体の出荷+・検収+・再帰の出荷検収+へそれぞれ渡る——多重化するデータが複数のアトムノードとつながっており、その構造を保って多重化することが要である（橋田さんの節、2026-09-20）。値は素の参照（@typeを持たないノード参照）であり、パターンではない——パターンにするとその型の候補節が目印に対しても起動し、値の来ない孤立インスタンスができる（実測、2026-09-20）。",
    "@id": "urn:mship:出荷検収", "@type": "Class",
    "subClassOf": ["urn:ship:OtherAtom",
     {"@type": "Restriction", "onProperty": "urn:mship:商品", "minCardinality": 1, "maxCardinality": 1},
     {"@type": "Restriction", "onProperty": "urn:mship:出荷済数", "minCardinality": 1, "maxCardinality": 1},
-    {"@type": "Restriction", "onProperty": "urn:mship:要出荷数", "minCardinality": 1, "maxCardinality": 1}],
+    {"@type": "Restriction", "onProperty": "urn:mship:要出荷数", "minCardinality": 1, "maxCardinality": 1},
+    {"@type": "Restriction", "onProperty": "urn:mship:出荷同一性", "minCardinality": 0, "maxCardinality": 1},
+    {"@type": "Restriction", "onProperty": "urn:mship:検収同一性", "minCardinality": 0, "maxCardinality": 1},
+    {"@type": "Restriction", "onProperty": "urn:mship:出荷検収同一性", "minCardinality": 0, "maxCardinality": 1}],
    "label": {"ja": "出荷検収", "en": "ShipInspect"}
   },
+  {"@id": "urn:mship:出荷同一性", "@type": "ObjectProperty", "label": {"ja": "出荷同一性", "en": "ShipIdentity"}},
+  {"@id": "urn:mship:検収同一性", "@type": "ObjectProperty", "label": {"ja": "検収同一性", "en": "InspectIdentity"}},
+  {"@id": "urn:mship:出荷検収同一性", "@type": "ObjectProperty", "label": {"ja": "出荷検収同一性", "en": "ShipInspectIdentity"}},
   {
    "@id": "urn:mship:出荷検収+", "@type": "Class",
    "subClassOf": ["urn:ship:OtherAtom", {"@type": "Restriction", "onProperty": "urn:mship:引数", "minCardinality": 1, "maxCardinality": 9}],
@@ -49,16 +55,23 @@
    "range": "nonNegativeInteger", "label": {"ja": "要出荷数", "en": "ToShip (ref)"}
   },
   {
-   "_comment": "出荷はそれ自体がタスクである——単一商品版と同じ形（出荷を実体・引数の入れ子で包まない。2026-09-20）。以前は出荷（実体）と出荷+（帳票用の引数の入れ子）に分けていたが、実体を指す出荷リンクを廃したので分ける理由が無くなった。商品・出荷数は多値（商品ぶん）で、add/delで1件ずつ入れる——商品の並び順と同じ順で対応づく。",
+   "_comment": "出荷は制約ノードである——タスク（保留・完成確認・担当者）は出荷+が持ち、出荷はその`引数`に埋め込まれる（橋田さんの節、2026-09-20：埋め込まれたアトムノードは制約ノードなので保留タスクにはならない。タスクになり得るのは出荷+である）。",
    "@id": "urn:mship:出荷", "@type": "Class",
+   "subClassOf": ["urn:ship:OtherAtom",
+    {"@type": "Restriction", "onProperty": "urn:mship:商品", "minCardinality": 1, "maxCardinality": 1},
+    {"@type": "Restriction", "onProperty": "urn:mship:出荷数", "minCardinality": 0, "maxCardinality": 1},
+    {"@type": "Restriction", "onProperty": "urn:mship:出荷済数", "minCardinality": 1, "maxCardinality": 1},
+    {"@type": "Restriction", "onProperty": "urn:mship:要出荷数参照", "minCardinality": 1, "maxCardinality": 1}],
+   "label": {"ja": "出荷", "en": "Ship"}
+  },
+  {
+   "_comment": "出荷+はタスクである（保留・完成確認・担当者を持つ）。橋田さんの節（2026-09-20）どおり、`引数`に`出荷(出荷数:S,...)`を渡して呼ぶ——`出荷`自身の合成URI（`出荷検収`の`出荷同一性`から来る）に対して、`出荷`の候補節（`≧`）を実行する。",
+   "@id": "urn:mship:出荷+", "@type": "Class",
    "subClassOf": ["urn:ship:Task",
-    {"@type": "Restriction", "onProperty": "urn:mship:商品", "minCardinality": 1, "maxCardinality": 9},
-    {"@type": "Restriction", "onProperty": "urn:mship:出荷数", "minCardinality": 0, "maxCardinality": 9},
-    {"@type": "Restriction", "onProperty": "urn:mship:出荷済数", "minCardinality": 1, "maxCardinality": 9},
-    {"@type": "Restriction", "onProperty": "urn:mship:要出荷数参照", "minCardinality": 1, "maxCardinality": 9},
+    {"@type": "Restriction", "onProperty": "urn:mship:引数", "minCardinality": 1, "maxCardinality": 1},
     {"@type": "Restriction", "onProperty": "urn:mship:agent", "minCardinality": 1, "maxCardinality": 1},
     {"@type": "Restriction", "onProperty": "wam:completeByOkButton", "minCardinality": 0, "maxCardinality": 1}],
-   "label": {"ja": "出荷", "en": "Ship"}
+   "label": {"ja": "出荷+", "en": "ShipTask"}
   },
 
   {
@@ -69,15 +82,22 @@
   },
   {"@id": "urn:mship:返品数", "@type": "DatatypeProperty", "range": "nonNegativeInteger", "label": {"ja": "返品数", "en": "Returned"}},
   {
-   "_comment": "検収も出荷と同じ理由で、それ自体がタスクである（2026-09-20）。",
+   "_comment": "検収も出荷と同じ理由で制約ノードである——タスクは検収+が持つ（2026-09-20）。",
    "@id": "urn:mship:検収", "@type": "Class",
+   "subClassOf": ["urn:ship:OtherAtom",
+    {"@type": "Restriction", "onProperty": "urn:mship:商品", "minCardinality": 1, "maxCardinality": 1},
+    {"@type": "Restriction", "onProperty": "urn:mship:納入数", "minCardinality": 1, "maxCardinality": 1},
+    {"@type": "Restriction", "onProperty": "urn:mship:返品数", "minCardinality": 0, "maxCardinality": 1}],
+   "label": {"ja": "検収", "en": "Inspect"}
+  },
+  {
+   "_comment": "検収+はタスクである（2026-09-20）。",
+   "@id": "urn:mship:検収+", "@type": "Class",
    "subClassOf": ["urn:ship:Task",
-    {"@type": "Restriction", "onProperty": "urn:mship:商品", "minCardinality": 1, "maxCardinality": 9},
-    {"@type": "Restriction", "onProperty": "urn:mship:納入数", "minCardinality": 1, "maxCardinality": 9},
-    {"@type": "Restriction", "onProperty": "urn:mship:返品数", "minCardinality": 0, "maxCardinality": 9},
+    {"@type": "Restriction", "onProperty": "urn:mship:引数", "minCardinality": 1, "maxCardinality": 1},
     {"@type": "Restriction", "onProperty": "urn:mship:agent", "minCardinality": 1, "maxCardinality": 1},
     {"@type": "Restriction", "onProperty": "wam:completeByOkButton", "minCardinality": 0, "maxCardinality": 1}],
-   "label": {"ja": "検収", "en": "Inspect"}
+   "label": {"ja": "検収+", "en": "InspectTask"}
   },
 
   {"@id": "urn:mship:ゴール", "@type": "Class", "subClassOf": ["urn:ship:Goal"], "label": {"ja": "ゴール", "en": "Goal"}}
