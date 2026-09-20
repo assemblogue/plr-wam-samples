@@ -120,12 +120,15 @@
     {"@id": "#Y", "variableName": "Y"},
     {"@id": "#Z", "variableName": "Z"},
     {"@id": "#S5", "variableName": "S5"},
-    {"@id": "#R5", "variableName": "R5"}
+    {"@id": "#R5", "variableName": "R5"},
+    {"@id": "#T出荷", "variableName": "T出荷"},
+    {"@id": "#T検収", "variableName": "T検収"}
    ],
    "internalGraph": [
     {
      "@id": "urn:node:出荷", "@type": "urn:mship:出荷+",
      "urn:mship:agent": "urn:entity:サプライヤー",
+     "wam:truthValue": {"@id": "#T出荷"},
      "urn:mship:引数": {
       "@type": "urn:mship:出荷", "node": {"@id": "#X"},
       "urn:mship:商品": {"@id": "#Item"},
@@ -137,6 +140,7 @@
     {
      "@id": "urn:node:検収", "@type": "urn:mship:検収+",
      "urn:mship:agent": "urn:entity:バイヤー",
+     "wam:truthValue": {"@id": "#T検収"},
      "urn:mship:引数": {
       "@type": "urn:mship:検収", "node": {"@id": "#Y"},
       "urn:mship:商品": {"@id": "#Item"},
