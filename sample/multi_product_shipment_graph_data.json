@@ -13,9 +13,6 @@
     {"@id": "#S2", "variableName": "S2"},
     {"@id": "#Shipped2", "variableName": "Shipped2"},
     {"@id": "#ToShip2", "variableName": "ToShip2"}
-   ],
-   "internalGraph": [
-    {"@id": "urn:node:出荷.geq", "@type": "urn:mship:Geq", "arg1": {"@id": "#ToShip2"}, "arg2": [{"@id": "#Shipped2"}, {"@id": "#S2"}]}
    ]
   }
  ],
@@ -158,7 +155,8 @@
      }
     },
     {"@id": "urn:node:出荷検収+.継続.head#link1", "@type": "urn:mship:Then", "arg1": {"@id": "urn:node:出荷"}, "arg2": {"@id": "urn:node:検収"}},
-    {"@id": "urn:node:出荷検収+.継続.head#link2", "@type": "urn:mship:Then", "arg1": {"@id": "urn:node:出荷"}, "arg2": {"@id": "urn:node:再帰"}}
+    {"@id": "urn:node:出荷検収+.継続.head#link2", "@type": "urn:mship:Then", "arg1": {"@id": "urn:node:出荷"}, "arg2": {"@id": "urn:node:再帰"}},
+    {"@id": "urn:node:出荷検収+.継続.head#geq", "@type": "urn:mship:Geq", "arg1": {"@id": "#ToShip"}, "arg2": [{"@id": "#Shipped"}, {"@id": "#S5"}]}
    ]
   }
  ],
