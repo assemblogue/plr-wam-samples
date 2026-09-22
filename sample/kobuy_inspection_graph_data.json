@@ -166,5 +166,11 @@
    "@id": "urn:node:売上伝票.head",
    "@type": "urn:kinsp:売上伝票"
   }
+ ],
+ "urn:kinsp:赤伝票": [
+  {
+   "@id": "urn:node:赤伝票.head",
+   "@type": "urn:kinsp:赤伝票"
+  }
  ]
 }

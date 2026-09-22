@@ -21,6 +21,15 @@
    }
   },
   {
+   "_comment": "補償タスク述語を指すクラスレベル属性（TaskPolicyProjection が 'compensatesWith' という名で引く）。属性として宣言しておかないと classAttributeIdsOf が拾えない。",
+   "@id": "compensatesWith",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "補償タスク",
+    "en": "Compensates with"
+   }
+  },
+  {
    "@id": "urn:kinsp:Atom",
    "@type": "Class",
    "subClassOf": [
@@ -95,6 +104,28 @@
    "label": {
     "ja": "取消可能",
     "en": "urn:kinsp:Cancelable"
+   }
+  },
+  {
+   "@id": "urn:kinsp:Compensable",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Task"
+   ],
+   "label": {
+    "ja": "補償可能",
+    "en": "Compensable"
+   }
+  },
+  {
+   "@id": "urn:kinsp:NonCompensable",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Task"
+   ],
+   "label": {
+    "ja": "補償不可能",
+    "en": "Non compensable"
    }
   },
   {
@@ -339,11 +370,11 @@
    }
   },
   {
-   "_comment": "売上伝票は検収の結果として自動的に計上される（マニュアル §6.5.1）。担当者を持たないので人の操作を待たない——Then の後続として、検収が成立した時点で立つ。**取消可能である**——検収を引き戻せば、この伝票も一緒に巻き戻る。KOBUY が訂正・取消を赤伝票で表すのは DB の記録の仕方であって、ここでの取消はバックトラックそのものである（補償タスクは要らない）。",
+   "_comment": "売上伝票は検収の結果として自動的に計上される（マニュアル §6.5.1）。担当者を持たないので人の操作を待たない——Then の後続として、検収が成立した時点で立つ。**補償可能である**——計上は取り消せないので、打ち消すには赤伝票を立てる（マニュアル §6.5.5・§6.5.6：訂正も取消も赤伝票で行う）。検収を引き戻すと、バックトラック伝播がこの伝票をまたぐところで赤伝票が起きる。",
    "@id": "urn:kinsp:売上伝票",
    "@type": "Class",
    "subClassOf": [
-    "urn:kinsp:Cancelable",
+    "urn:kinsp:Compensable",
     {
      "@type": "Restriction",
      "onProperty": "urn:kinsp:検収数",
@@ -366,7 +397,8 @@
    "label": {
     "ja": "売上伝票",
     "en": "Sales slip"
-   }
+   },
+   "compensatesWith": "urn:kinsp:赤伝票"
   },
   {
    "@id": "urn:kinsp:検収フロー",
@@ -400,6 +432,36 @@
    "label": {
     "ja": "検収ゴール",
     "en": "Inspection goal"
+   }
+  },
+  {
+   "_comment": "赤伝票は売上伝票の補償タスクである。元の伝票の引数がそのままコピーされて渡る。",
+   "@id": "urn:kinsp:赤伝票",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Task",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:検収数",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:税込金額",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:消費税額",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "赤伝票",
+    "en": "Reversal slip"
    }
   }
  ]
