@@ -268,6 +268,12 @@
      "onProperty": "wam:completeByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:差戻し先",
+     "minCardinality": 0,
+     "maxCardinality": 1
     }
    ],
    "label": {
@@ -322,6 +328,15 @@
    }
   },
   {
+   "_comment": "承認者が差し戻す先——始点（注文）の真偽値を指す。**refersTo の下位にしてはならない**（`spec_exec.md`「差し戻し」：参照属性なら差し戻し不可Then として拒まれる）。",
+   "@id": "urn:kobuy:差戻し先",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "差戻し先",
+    "en": "Send back to"
+   }
+  },
+  {
    "_comment": "承認経路。**節は会社ごとに1本**で、頭部の会社で選ばれる（代替節。Tag: 3-E）。本体にその会社の承認の並びを Then で書く。エンジンから見れば普通の代替節であり、経路の形を知る仕組みは要らない。",
    "@id": "urn:kobuy:承認経路",
    "@type": "Class",
@@ -337,6 +352,12 @@
      "@type": "Restriction",
      "onProperty": "urn:kobuy:金額",
      "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:差戻し先",
+     "minCardinality": 0,
      "maxCardinality": 1
     }
    ],
