@@ -47,7 +47,9 @@
    "label": {"ja": "出荷検収+", "en": "ShipInspectPlus"}
   },
 
-  {"@id": "urn:mship:出荷数", "@type": "DatatypeProperty", "range": "positiveInteger", "label": {"ja": "出荷数", "en": "ShipCount"}},
+  {"@id": "urn:mship:出荷数", "@type": "DatatypeProperty", "range": "nonNegativeInteger",
+   "_comment": "0を許す。商品ごとに進み方が違うので、ある回で「この商品はもう出さない」と言えなければならない（単数商品の 個数 は positiveInteger のままでよい——商品が1つなら、出す分が無くなった時点で 完了 になり、次の出荷の欄自体が現れない）",
+   "label": {"ja": "出荷数", "en": "ShipCount"}},
   {
    "_comment": "出荷検収自身の要出荷数（urn:mship:要出荷数）は権威ある元の値だが、出荷から見た要出荷数はバイヤー側からの参照であり、サプライヤーは書き込めない——別の属性にしrefersToの下位属性として宣言する（橋田さん、2026-09-19）。",
    "@id": "urn:mship:要出荷数参照", "@type": "DatatypeProperty",
@@ -59,7 +61,8 @@
    "@id": "urn:mship:出荷", "@type": "Class",
    "subClassOf": ["urn:ship:OtherAtom",
     {"@type": "Restriction", "onProperty": "urn:mship:商品", "minCardinality": 1, "maxCardinality": 1},
-    {"@type": "Restriction", "onProperty": "urn:mship:出荷数", "minCardinality": 0, "maxCardinality": 1},
+    {"@type": "Restriction", "onProperty": "urn:mship:出荷数", "minCardinality": 1, "maxCardinality": 1,
+    "_comment": "必須。出荷数が nonNegativeInteger になったので「この回は0本」と書けるようになり、空のままにしておく理由が無くなった（省略可のままだと、欄が空でもOKが押せる）"},
     {"@type": "Restriction", "onProperty": "urn:mship:出荷済数", "minCardinality": 1, "maxCardinality": 1},
     {"@type": "Restriction", "onProperty": "urn:mship:要出荷数参照", "minCardinality": 1, "maxCardinality": 1}],
    "label": {"ja": "出荷", "en": "Ship"}
