@@ -1,0 +1,170 @@
+{
+ "_comment": "検収 → 売上伝票の自動計上。金額と消費税は組込述語で出す（× ÷ 端数処理）。単価100・出荷数50 で 50個を検収すると、税込5000円・消費税370円（5000/108*8 = 370.37… を切捨て）になる。",
+ "urn:kinsp:検収ゴール": [
+  {
+   "_comment": ":- 検収フロー(単価: 100, 出荷数: 50).",
+   "@id": "urn:node:検収ゴール.head",
+   "@type": "urn:kinsp:検収ゴール",
+   "internalGraph": [
+    {
+     "@id": "urn:node:検収フロー",
+     "@type": "urn:kinsp:検収フロー",
+     "urn:kinsp:単価": 100,
+     "urn:kinsp:出荷数": 50
+    }
+   ]
+  }
+ ],
+ "urn:kinsp:検収フロー": [
+  {
+   "@id": "urn:node:検収フロー.head",
+   "@type": "urn:kinsp:検収フロー",
+   "urn:kinsp:単価": {
+    "@id": "#P"
+   },
+   "urn:kinsp:出荷数": {
+    "@id": "#S"
+   },
+   "variables": [
+    {
+     "@id": "#P",
+     "variableName": "P"
+    },
+    {
+     "@id": "#S",
+     "variableName": "S"
+    },
+    {
+     "@id": "#N",
+     "variableName": "N"
+    },
+    {
+     "@id": "#G",
+     "variableName": "G"
+    },
+    {
+     "@id": "#Q",
+     "variableName": "Q"
+    },
+    {
+     "@id": "#R",
+     "variableName": "R"
+    },
+    {
+     "@id": "#T",
+     "variableName": "T"
+    }
+   ],
+   "internalGraph": [
+    {
+     "_comment": "バイヤーが検収数を入れる。取消可能タスクなので、あとで引き戻せる。",
+     "@id": "urn:node:検収",
+     "@type": "urn:kinsp:検収",
+     "urn:kinsp:検収数": {
+      "@id": "#N"
+     },
+     "urn:kinsp:agent": "urn:entity:バイヤー"
+    },
+    {
+     "_comment": "検収数は出荷数を超えられない。",
+     "@id": "urn:node:上限",
+     "@type": "urn:kinsp:Geq",
+     "arg1": {
+      "@id": "#S"
+     },
+     "arg2": {
+      "@id": "#N"
+     }
+    },
+    {
+     "_comment": "税込金額 = 検収数 × 単価。",
+     "@id": "urn:node:金額",
+     "@type": "urn:kinsp:Times",
+     "arg1": [
+      {
+       "@id": "#N"
+      },
+      {
+       "@id": "#P"
+      }
+     ],
+     "arg2": {
+      "@id": "#G"
+     }
+    },
+    {
+     "_comment": "消費税（マニュアル「商品の金額計算方法について」）。税込 ÷ 108 × 8 を切り捨てる。",
+     "@id": "urn:node:税抜へ割る",
+     "@type": "urn:kinsp:Divide",
+     "被除数": {
+      "@id": "#G"
+     },
+     "除数": 108,
+     "商": {
+      "@id": "#Q"
+     }
+    },
+    {
+     "@id": "urn:node:税率を掛ける",
+     "@type": "urn:kinsp:Times",
+     "arg1": [
+      {
+       "@id": "#Q"
+      },
+      8
+     ],
+     "arg2": {
+      "@id": "#R"
+     }
+    },
+    {
+     "@id": "urn:node:端数を処理する",
+     "@type": "urn:kinsp:Round",
+     "方式": "切捨て",
+     "値": {
+      "@id": "#R"
+     },
+     "結果": {
+      "@id": "#T"
+     }
+    },
+    {
+     "_comment": "検収が成立すると売上伝票が自動的に立つ（マニュアル §6.5.1）。担当者を持たないので人の操作は要らない。",
+     "@id": "urn:node:売上伝票",
+     "@type": "urn:kinsp:売上伝票",
+     "urn:kinsp:検収数": {
+      "@id": "#N"
+     },
+     "urn:kinsp:税込金額": {
+      "@id": "#G"
+     },
+     "urn:kinsp:消費税額": {
+      "@id": "#T"
+     }
+    },
+    {
+     "@id": "urn:node:検収フロー.head#link1",
+     "@type": "urn:kinsp:Then",
+     "arg1": {
+      "@id": "urn:node:検収"
+     },
+     "arg2": {
+      "@id": "urn:node:売上伝票"
+     }
+    }
+   ]
+  }
+ ],
+ "urn:kinsp:検収": [
+  {
+   "@id": "urn:node:検収.head",
+   "@type": "urn:kinsp:検収"
+  }
+ ],
+ "urn:kinsp:売上伝票": [
+  {
+   "@id": "urn:node:売上伝票.head",
+   "@type": "urn:kinsp:売上伝票"
+  }
+ ]
+}
