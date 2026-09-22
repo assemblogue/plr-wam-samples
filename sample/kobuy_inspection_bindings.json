@@ -1,8 +1,0 @@
-{
-  "_comment": "バイヤーが50個を検収する。税込5000円・消費税370円の売上伝票が自動的に立つ。",
-  "sessionId": "sess-kinsp",
-  "agentProperty": "urn:kinsp:agent",
-  "steps": [
-    {"task": "urn:node:検収", "values": {"urn:kinsp:検収数": 50}, "ok": true, "comment": "バイヤーが50個を検収"}
-  ]
-}
