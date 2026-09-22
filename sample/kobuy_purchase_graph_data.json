@@ -1,0 +1,273 @@
+{
+ "_comment": "KOBUY 購買のホーン節プログラム（追記207 の形式：ホーン節は『ノード1つ ＋ その内部グラフ』）と業務データ。**承認経路は会社ごとに1本の節**である。",
+ "urn:kobuy:購買ゴール": [
+  {
+   "_comment": ":- 購買(注文者: 山田, 会社: A社). ゴールは初期束縛を受け取れないので、定数を渡すだけの包み節にしてある。B社を試すときはここを B社 にする。",
+   "@id": "urn:node:購買ゴール.head",
+   "@type": "urn:kobuy:購買ゴール",
+   "internalGraph": [
+    {
+     "@id": "urn:node:購買",
+     "@type": "urn:kobuy:購買",
+     "urn:kobuy:注文者": "urn:entity:山田",
+     "urn:kobuy:会社": "urn:entity:A社"
+    }
+   ]
+  }
+ ],
+ "urn:kobuy:購買": [
+  {
+   "_comment": "購買(注文者:U, 会社:C) :- 注文(金額:Amount, agent:U) ├Then→ 承認経路(会社:C, 金額:Amount) └Then→ 発注, 利用者限度額(利用者:U, 限度額:L), ≧(L, Amount). **この節は会社が増えても変わらない。**",
+   "@id": "urn:node:購買.head",
+   "@type": "urn:kobuy:購買",
+   "urn:kobuy:注文者": {
+    "@id": "#U"
+   },
+   "urn:kobuy:会社": {
+    "@id": "#C"
+   },
+   "variables": [
+    {
+     "@id": "#U",
+     "variableName": "U"
+    },
+    {
+     "@id": "#C",
+     "variableName": "C"
+    },
+    {
+     "@id": "#Amount",
+     "variableName": "Amount"
+    },
+    {
+     "@id": "#Limit",
+     "variableName": "Limit"
+    }
+   ],
+   "internalGraph": [
+    {
+     "@id": "urn:node:注文",
+     "@type": "urn:kobuy:注文",
+     "urn:kobuy:金額": {
+      "@id": "#Amount"
+     },
+     "urn:kobuy:agent": {
+      "@id": "#U"
+     }
+    },
+    {
+     "_comment": "利用者ごとの限度額を引く（頭部だけ・本体が空のホーン節＝事実）。",
+     "@id": "urn:node:限度額を引く",
+     "@type": "urn:kobuy:利用者限度額",
+     "urn:kobuy:利用者": {
+      "@id": "#U"
+     },
+     "urn:kobuy:限度額": {
+      "@id": "#Limit"
+     }
+    },
+    {
+     "_comment": "限度額 ≧ 金額。制約ノードなので、どの節の本体にあっても連立で同じように効く。",
+     "@id": "urn:node:限度額チェック",
+     "@type": "urn:kobuy:Geq",
+     "arg1": {
+      "@id": "#Limit"
+     },
+     "arg2": {
+      "@id": "#Amount"
+     }
+    },
+    {
+     "@id": "urn:node:承認経路呼出",
+     "@type": "urn:kobuy:承認経路",
+     "urn:kobuy:会社": {
+      "@id": "#C"
+     },
+     "urn:kobuy:金額": {
+      "@id": "#Amount"
+     }
+    },
+    {
+     "@id": "urn:node:発注",
+     "@type": "urn:kobuy:発注",
+     "urn:kobuy:金額": {
+      "@id": "#Amount"
+     },
+     "urn:kobuy:agent": "urn:entity:サプライヤ"
+    },
+    {
+     "@id": "urn:node:購買.head#link1",
+     "@type": "urn:kobuy:Then",
+     "arg1": {
+      "@id": "urn:node:注文"
+     },
+     "arg2": {
+      "@id": "urn:node:承認経路呼出"
+     }
+    },
+    {
+     "@id": "urn:node:購買.head#link2",
+     "@type": "urn:kobuy:Then",
+     "arg1": {
+      "@id": "urn:node:承認経路呼出"
+     },
+     "arg2": {
+      "@id": "urn:node:発注"
+     }
+    }
+   ]
+  }
+ ],
+ "urn:kobuy:承認経路": [
+  {
+   "_comment": "**A社の節**。課長 → 部長 の2段。この節は A社 のスキーマに属する。",
+   "@id": "urn:node:承認経路.A社.head",
+   "@type": "urn:kobuy:承認経路",
+   "urn:kobuy:会社": "urn:entity:A社",
+   "urn:kobuy:金額": {
+    "@id": "#X"
+   },
+   "variables": [
+    {
+     "@id": "#X",
+     "variableName": "X"
+    }
+   ],
+   "internalGraph": [
+    {
+     "@id": "urn:node:A社.課長承認",
+     "@type": "urn:kobuy:承認",
+     "urn:kobuy:金額": {
+      "@id": "#X"
+     },
+     "urn:kobuy:agent": "urn:entity:A社課長"
+    },
+    {
+     "@id": "urn:node:A社.部長承認",
+     "@type": "urn:kobuy:承認",
+     "urn:kobuy:金額": {
+      "@id": "#X"
+     },
+     "urn:kobuy:agent": "urn:entity:A社部長"
+    },
+    {
+     "@id": "urn:node:承認経路.A社.head#link1",
+     "@type": "urn:kobuy:Then",
+     "arg1": {
+      "@id": "urn:node:A社.課長承認"
+     },
+     "arg2": {
+      "@id": "urn:node:A社.部長承認"
+     }
+    }
+   ]
+  },
+  {
+   "_comment": "**B社の節**。主任 → 課長 → 役員 の3段。段数も承認者も A社 と違うが、購買の節は共通のままである。",
+   "@id": "urn:node:承認経路.B社.head",
+   "@type": "urn:kobuy:承認経路",
+   "urn:kobuy:会社": "urn:entity:B社",
+   "urn:kobuy:金額": {
+    "@id": "#X"
+   },
+   "variables": [
+    {
+     "@id": "#X",
+     "variableName": "X"
+    }
+   ],
+   "internalGraph": [
+    {
+     "@id": "urn:node:B社.主任承認",
+     "@type": "urn:kobuy:承認",
+     "urn:kobuy:金額": {
+      "@id": "#X"
+     },
+     "urn:kobuy:agent": "urn:entity:B社主任"
+    },
+    {
+     "@id": "urn:node:B社.課長承認",
+     "@type": "urn:kobuy:承認",
+     "urn:kobuy:金額": {
+      "@id": "#X"
+     },
+     "urn:kobuy:agent": "urn:entity:B社課長"
+    },
+    {
+     "@id": "urn:node:B社.役員承認",
+     "@type": "urn:kobuy:承認",
+     "urn:kobuy:金額": {
+      "@id": "#X"
+     },
+     "urn:kobuy:agent": "urn:entity:B社役員"
+    },
+    {
+     "@id": "urn:node:承認経路.B社.head#link1",
+     "@type": "urn:kobuy:Then",
+     "arg1": {
+      "@id": "urn:node:B社.主任承認"
+     },
+     "arg2": {
+      "@id": "urn:node:B社.課長承認"
+     }
+    },
+    {
+     "@id": "urn:node:承認経路.B社.head#link2",
+     "@type": "urn:kobuy:Then",
+     "arg1": {
+      "@id": "urn:node:B社.課長承認"
+     },
+     "arg2": {
+      "@id": "urn:node:B社.役員承認"
+     }
+    }
+   ]
+  }
+ ],
+ "urn:kobuy:利用者限度額": [
+  {
+   "_comment": "業務データ（マニュアル §3.1.5「利用者限度額一覧」）。頭部だけ・本体が空のホーン節＝事実である。",
+   "@id": "urn:entity:限度額.山田",
+   "urn:kobuy:利用者": "urn:entity:山田",
+   "urn:kobuy:限度額": 500000
+  },
+  {
+   "@id": "urn:entity:限度額.鈴木",
+   "urn:kobuy:利用者": "urn:entity:鈴木",
+   "urn:kobuy:限度額": 100000
+  }
+ ],
+ "urn:kobuy:注文": [
+  {
+   "@id": "urn:node:注文.head",
+   "@type": "urn:kobuy:注文"
+  }
+ ],
+ "urn:kobuy:承認": [
+  {
+   "@id": "urn:node:承認.head",
+   "@type": "urn:kobuy:承認"
+  }
+ ],
+ "urn:kobuy:発注": [
+  {
+   "@id": "urn:node:発注.head",
+   "@type": "urn:kobuy:発注"
+  }
+ ],
+ "urn:kobuy:購買ゴールB": [
+  {
+   "_comment": ":- 購買(注文者: 鈴木, 会社: B社). **購買の節は A社 のときと同じものである。**違うのは承認経路の節が B社 のものに選ばれることだけで、段数は2段から3段になる。",
+   "@id": "urn:node:購買ゴールB.head",
+   "@type": "urn:kobuy:購買ゴールB",
+   "internalGraph": [
+    {
+     "@id": "urn:node:購買B",
+     "@type": "urn:kobuy:購買",
+     "urn:kobuy:注文者": "urn:entity:鈴木",
+     "urn:kobuy:会社": "urn:entity:B社"
+    }
+   ]
+  }
+ ]
+}
