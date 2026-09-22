@@ -1,0 +1,395 @@
+{
+ "_comment": "KOBUY 購買（注文 → 限度額チェック → 多段承認 → 発注）の例題。**承認経路は各社に1本の固有のホーン節である**（橋田さん）——バイヤーごとに段数も承認者も違い標準形が無いので、経路そのものを代替節として書く。各組織が自分のスキーマに自社の節を1本持ち、頭部の会社で選ばれる。共有される部分（注文・限度額・発注）の節は1組のままで、会社が増えても増えない。",
+ "@id": "urn:kobuy:ontology",
+ "@type": "Ontology",
+ "agentProperty": "urn:kobuy:agent",
+ "defines": [
+  {
+   "@id": "urn:kobuy:Template",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:isComplete",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "テンプレート",
+    "en": "Template"
+   }
+  },
+  {
+   "@id": "urn:kobuy:Atom",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kobuy:Template"
+   ],
+   "label": {
+    "ja": "アトムノード",
+    "en": "Atom"
+   }
+  },
+  {
+   "@id": "urn:kobuy:Task",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kobuy:Atom"
+   ],
+   "label": {
+    "ja": "タスクノード",
+    "en": "Task"
+   }
+  },
+  {
+   "@id": "urn:kobuy:Goal",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kobuy:Task"
+   ],
+   "label": {
+    "ja": "ゴール",
+    "en": "Goal"
+   }
+  },
+  {
+   "@id": "urn:kobuy:Constraint",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kobuy:Atom"
+   ],
+   "label": {
+    "ja": "制約ノード",
+    "en": "Constraint"
+   }
+  },
+  {
+   "@id": "urn:kobuy:OtherAtom",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kobuy:Atom"
+   ],
+   "label": {
+    "ja": "その他のアトムノード",
+    "en": "Other atom"
+   }
+  },
+  {
+   "@id": "wam:isComplete",
+   "@type": "DatatypeProperty",
+   "domain": "urn:kobuy:Template",
+   "range": "string",
+   "label": {
+    "ja": "完成",
+    "en": "Is complete"
+   }
+  },
+  {
+   "@id": "urn:kobuy:Person",
+   "@type": "Class",
+   "label": {
+    "ja": "人",
+    "en": "Person"
+   }
+  },
+  {
+   "@id": "urn:kobuy:agent",
+   "@type": "ObjectProperty",
+   "range": "urn:kobuy:Person",
+   "label": {
+    "ja": "担当者",
+    "en": "Agent"
+   }
+  },
+  {
+   "@id": "urn:kobuy:refersTo",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "参照",
+    "en": "RefersTo"
+   }
+  },
+  {
+   "@id": "urn:kobuy:Geq",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kobuy:Constraint"
+   ],
+   "builtInFunction": "≧",
+   "isConstraint": true,
+   "label": {
+    "ja": "≧",
+    "en": "AtLeast"
+   }
+  },
+  {
+   "@id": "urn:kobuy:Then",
+   "@type": "Class",
+   "linkKind": "then",
+   "label": {
+    "ja": "Then",
+    "en": "Then"
+   }
+  },
+  {
+   "@id": "arg1",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "第1引数",
+    "en": "Arg 1"
+   }
+  },
+  {
+   "@id": "arg2",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "第2引数",
+    "en": "Arg 2"
+   }
+  },
+  {
+   "@id": "urn:kobuy:注文者",
+   "@type": "ObjectProperty",
+   "range": "urn:kobuy:Person",
+   "label": {
+    "ja": "注文者",
+    "en": "Orderer"
+   }
+  },
+  {
+   "@id": "urn:kobuy:金額",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "金額",
+    "en": "Amount"
+   }
+  },
+  {
+   "@id": "urn:kobuy:限度額",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "限度額",
+    "en": "Limit"
+   }
+  },
+  {
+   "@id": "urn:kobuy:利用者",
+   "@type": "ObjectProperty",
+   "range": "urn:kobuy:Person",
+   "label": {
+    "ja": "利用者",
+    "en": "User"
+   }
+  },
+  {
+   "@id": "urn:kobuy:承認者",
+   "@type": "ObjectProperty",
+   "range": "urn:kobuy:Person",
+   "label": {
+    "ja": "承認者",
+    "en": "Approver"
+   }
+  },
+  {
+   "_comment": "利用者ごとの限度額（マニュアル §3.1.5「利用者限度額一覧」）。**業務データであってアトムノードではない**ので Atom の下位にしない——頭部だけ・本体が空のホーン節＝事実として引かれる。",
+   "@id": "urn:kobuy:利用者限度額",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:利用者",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:限度額",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "利用者限度額",
+    "en": "UserLimit"
+   }
+  },
+  {
+   "@id": "urn:kobuy:注文",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kobuy:Task",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:agent",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:completeByOkButton",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "注文",
+    "en": "Order"
+   }
+  },
+  {
+   "_comment": "承認は1段ぶんのタスク。担当者は経路のその段の承認者であり、ホーン節には書かれていない——データから流れてくる。",
+   "@id": "urn:kobuy:承認",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kobuy:Task",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:agent",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:completeByOkButton",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "承認",
+    "en": "Approve"
+   }
+  },
+  {
+   "@id": "urn:kobuy:発注",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kobuy:Task",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:agent",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:completeByOkButton",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "発注",
+    "en": "PlaceOrder"
+   }
+  },
+  {
+   "@id": "urn:kobuy:Company",
+   "@type": "Class",
+   "label": {
+    "ja": "会社",
+    "en": "Company"
+   }
+  },
+  {
+   "@id": "urn:kobuy:会社",
+   "@type": "ObjectProperty",
+   "range": "urn:kobuy:Company",
+   "label": {
+    "ja": "会社",
+    "en": "Company"
+   }
+  },
+  {
+   "_comment": "承認経路。**節は会社ごとに1本**で、頭部の会社で選ばれる（代替節。Tag: 3-E）。本体にその会社の承認の並びを Then で書く。エンジンから見れば普通の代替節であり、経路の形を知る仕組みは要らない。",
+   "@id": "urn:kobuy:承認経路",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kobuy:OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:会社",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "承認経路",
+    "en": "ApprovalRoute"
+   }
+  },
+  {
+   "@id": "urn:kobuy:購買",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kobuy:OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:注文者",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:会社",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "購買",
+    "en": "Purchase"
+   }
+  },
+  {
+   "@id": "urn:kobuy:購買ゴール",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kobuy:Goal"
+   ],
+   "label": {
+    "ja": "購買ゴール",
+    "en": "Purchase goal"
+   }
+  },
+  {
+   "@id": "urn:kobuy:購買ゴールB",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kobuy:Goal"
+   ],
+   "_comment": "B社の起動点。購買の節も承認の節も共有したまま、会社が違えば違う経路を辿ることを見せるためだけのもの。",
+   "label": {
+    "ja": "購買ゴール（B社）",
+    "en": "Purchase goal (B)"
+   }
+  }
+ ]
+}
