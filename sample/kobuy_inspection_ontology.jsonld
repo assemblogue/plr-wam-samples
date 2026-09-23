@@ -1,0 +1,468 @@
+{
+ "_comment": "KOBUY の検収 → 売上伝票の自動計上 → 検収取消 の例題。マニュアル §6.5.1「バイヤーが検収処理を実施した際に、その検収データを元に自動的に売上伝票が計上されます」を、Then の後続として書く。金額と消費税は組込述語（× ÷ 端数処理）で出す——消費税の計算式と端数処理はマニュアル「商品の金額計算方法について」のとおり。",
+ "@id": "urn:kinsp:ontology",
+ "@type": "Ontology",
+ "agentProperty": "urn:kinsp:agent",
+ "defines": [
+  {
+   "@id": "urn:kinsp:Template",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:isComplete",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "テンプレート",
+    "en": "Template"
+   }
+  },
+  {
+   "_comment": "補償タスク述語を指すクラスレベル属性（TaskPolicyProjection が 'compensatesWith' という名で引く）。属性として宣言しておかないと classAttributeIdsOf が拾えない。",
+   "@id": "compensatesWith",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "補償タスク",
+    "en": "Compensates with"
+   }
+  },
+  {
+   "@id": "urn:kinsp:Atom",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Template"
+   ],
+   "label": {
+    "ja": "アトムノード",
+    "en": "Atom"
+   }
+  },
+  {
+   "@id": "urn:kinsp:Task",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Atom"
+   ],
+   "label": {
+    "ja": "タスクノード",
+    "en": "Task"
+   }
+  },
+  {
+   "@id": "urn:kinsp:Goal",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Task"
+   ],
+   "label": {
+    "ja": "ゴール",
+    "en": "Goal"
+   }
+  },
+  {
+   "@id": "urn:kinsp:Constraint",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Atom"
+   ],
+   "label": {
+    "ja": "制約ノード",
+    "en": "Constraint"
+   }
+  },
+  {
+   "@id": "urn:kinsp:OtherAtom",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Atom"
+   ],
+   "label": {
+    "ja": "その他のアトムノード",
+    "en": "Other atom"
+   }
+  },
+  {
+   "@id": "wam:isComplete",
+   "@type": "DatatypeProperty",
+   "domain": "urn:kinsp:Template",
+   "range": "string",
+   "label": {
+    "ja": "完成",
+    "en": "Is complete"
+   }
+  },
+  {
+   "_comment": "取消可能性の3分類。検収は取消可能（マニュアル §3.2.7.1「検収取消」）。訂正は補償可能で、赤伝票を起こして打ち消す。",
+   "@id": "urn:kinsp:Cancelable",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Task"
+   ],
+   "label": {
+    "ja": "取消可能",
+    "en": "urn:kinsp:Cancelable"
+   }
+  },
+  {
+   "@id": "urn:kinsp:Compensable",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Task"
+   ],
+   "label": {
+    "ja": "補償可能",
+    "en": "Compensable"
+   }
+  },
+  {
+   "@id": "urn:kinsp:NonCompensable",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Task"
+   ],
+   "label": {
+    "ja": "補償不可能",
+    "en": "Non compensable"
+   }
+  },
+  {
+   "@id": "urn:kinsp:Person",
+   "@type": "Class",
+   "label": {
+    "ja": "人",
+    "en": "Person"
+   }
+  },
+  {
+   "@id": "urn:kinsp:agent",
+   "@type": "ObjectProperty",
+   "range": "urn:kinsp:Person",
+   "label": {
+    "ja": "担当者",
+    "en": "Agent"
+   }
+  },
+  {
+   "@id": "urn:kinsp:Geq",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Constraint"
+   ],
+   "builtInFunction": "≧",
+   "isConstraint": true,
+   "label": {
+    "ja": "≧",
+    "en": "AtLeast"
+   }
+  },
+  {
+   "@id": "urn:kinsp:Times",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Constraint"
+   ],
+   "builtInFunction": "×",
+   "isConstraint": true,
+   "label": {
+    "ja": "×",
+    "en": "Times"
+   }
+  },
+  {
+   "@id": "urn:kinsp:Divide",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Constraint"
+   ],
+   "builtInFunction": "÷",
+   "isConstraint": true,
+   "label": {
+    "ja": "÷",
+    "en": "Divide"
+   }
+  },
+  {
+   "@id": "urn:kinsp:Round",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Constraint"
+   ],
+   "builtInFunction": "端数処理",
+   "isConstraint": true,
+   "label": {
+    "ja": "端数処理",
+    "en": "Round"
+   }
+  },
+  {
+   "@id": "urn:kinsp:Then",
+   "@type": "Class",
+   "linkKind": "then",
+   "label": {
+    "ja": "Then",
+    "en": "Then"
+   }
+  },
+  {
+   "@id": "arg1",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "第1引数",
+    "en": "Arg 1"
+   }
+  },
+  {
+   "@id": "arg2",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "第2引数",
+    "en": "Arg 2"
+   }
+  },
+  {
+   "@id": "被除数",
+   "@type": "DatatypeProperty",
+   "range": "decimal",
+   "label": {
+    "ja": "被除数",
+    "en": "Dividend"
+   }
+  },
+  {
+   "@id": "除数",
+   "@type": "DatatypeProperty",
+   "range": "decimal",
+   "label": {
+    "ja": "除数",
+    "en": "Divisor"
+   }
+  },
+  {
+   "@id": "商",
+   "@type": "DatatypeProperty",
+   "range": "decimal",
+   "label": {
+    "ja": "商",
+    "en": "Quotient"
+   }
+  },
+  {
+   "@id": "方式",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": {
+    "ja": "方式",
+    "en": "Mode"
+   }
+  },
+  {
+   "@id": "値",
+   "@type": "DatatypeProperty",
+   "range": "decimal",
+   "label": {
+    "ja": "値",
+    "en": "Value"
+   }
+  },
+  {
+   "@id": "結果",
+   "@type": "DatatypeProperty",
+   "range": "decimal",
+   "label": {
+    "ja": "結果",
+    "en": "Result"
+   }
+  },
+  {
+   "@id": "urn:kinsp:単価",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "単価",
+    "en": "Unit price"
+   }
+  },
+  {
+   "@id": "urn:kinsp:出荷数",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "出荷数",
+    "en": "Shipped"
+   }
+  },
+  {
+   "@id": "urn:kinsp:検収数",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "検収数",
+    "en": "Accepted"
+   }
+  },
+  {
+   "@id": "urn:kinsp:税込金額",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "税込金額",
+    "en": "Gross"
+   }
+  },
+  {
+   "@id": "urn:kinsp:消費税額",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "消費税額",
+    "en": "Tax"
+   }
+  },
+  {
+   "@id": "urn:kinsp:税抜相当",
+   "@type": "DatatypeProperty",
+   "range": "decimal",
+   "label": {
+    "ja": "税抜相当",
+    "en": "Net (raw)"
+   }
+  },
+  {
+   "@id": "urn:kinsp:税額素",
+   "@type": "DatatypeProperty",
+   "range": "decimal",
+   "label": {
+    "ja": "端数処理前の税額",
+    "en": "Tax (raw)"
+   }
+  },
+  {
+   "_comment": "検収は取消可能タスクである（マニュアル §3.2.7.1「検収取消」）。担当はバイヤー。",
+   "@id": "urn:kinsp:検収",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:検収数",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:agent",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:completeByOkButton",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "検収",
+    "en": "Accept"
+   }
+  },
+  {
+   "_comment": "売上伝票は検収の結果として自動的に計上される（マニュアル §6.5.1）。担当者を持たないので人の操作を待たない——Then の後続として、検収が成立した時点で立つ。**補償可能である**——計上は取り消せないので、打ち消すには赤伝票を立てる（マニュアル §6.5.5・§6.5.6：訂正も取消も赤伝票で行う）。検収を引き戻すと、バックトラック伝播がこの伝票をまたぐところで赤伝票が起きる。",
+   "@id": "urn:kinsp:売上伝票",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Compensable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:検収数",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:税込金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:消費税額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "売上伝票",
+    "en": "Sales slip"
+   },
+   "compensatesWith": "urn:kinsp:赤伝票"
+  },
+  {
+   "@id": "urn:kinsp:検収フロー",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:単価",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:出荷数",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "検収フロー",
+    "en": "Inspection flow"
+   }
+  },
+  {
+   "@id": "urn:kinsp:検収ゴール",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Goal"
+   ],
+   "label": {
+    "ja": "検収ゴール",
+    "en": "Inspection goal"
+   }
+  },
+  {
+   "_comment": "赤伝票は売上伝票の補償タスクである。元の伝票の引数がそのままコピーされて渡る。",
+   "@id": "urn:kinsp:赤伝票",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Task",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:検収数",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:税込金額",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:消費税額",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "赤伝票",
+    "en": "Reversal slip"
+   }
+  }
+ ]
+}
