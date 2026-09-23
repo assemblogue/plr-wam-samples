@@ -1,6 +1,6 @@
 {
   "_comment": "ユーザが組織マスター・商品マスターに登録したデータ。エンジンから見ると、これは「頭部だけ・本体が空のホーン節（＝事実）が並んでいる」のと同じで、DB検索とホーン節の呼び出しは区別されない。",
-  "組織": [
+  "urn:wamtest:組織": [
     {
       "@id": "urn:entity:org-a",
       "組織.名称": "A商事",
@@ -12,7 +12,7 @@
       "組織.地域": "大阪"
     }
   ],
-  "商品": [
+  "urn:wamtest:商品": [
     {
       "@id": "urn:entity:item-paper",
       "商品.名称": "印刷用紙",
@@ -24,17 +24,17 @@
       "商品.単価": 32000
     }
   ],
-  "上司": [
+  "urn:wamtest:上司": [
     {
       "@id": "urn:entity:boss-m-b",
       "上司.構成員": "urn:entity:person-m",
       "上司.上司": "urn:entity:person-b"
     }
   ],
-  "購買検討": [
+  "urn:wamtest:購買検討": [
     {
       "@id": "urn:node:購買検討.head",
-      "@type": "購買検討",
+      "@type": "urn:wamtest:購買検討",
       "variables": [
         {
           "@id": "#T承認",
@@ -56,7 +56,7 @@
       "internalGraph": [
         {
           "@id": "urn:node:単価照会",
-          "@type": "商品",
+          "@type": "urn:wamtest:商品",
           "商品.名称": "印刷用紙",
           "商品.単価": {
             "@id": "#単価"
@@ -64,7 +64,7 @@
         },
         {
           "@id": "urn:node:発注先照会",
-          "@type": "組織",
+          "@type": "urn:wamtest:組織",
           "組織.地域": "大阪",
           "組織.名称": {
             "@id": "#発注先名"
@@ -72,7 +72,7 @@
         },
         {
           "@id": "urn:node:上司照会",
-          "@type": "上司",
+          "@type": "urn:wamtest:上司",
           "上司.構成員": "urn:entity:person-m",
           "上司.上司": {
             "@id": "#承認者"
@@ -80,7 +80,7 @@
         },
         {
           "@id": "urn:entity:master-shonin",
-          "@type": "承認",
+          "@type": "urn:wamtest:承認",
           "wam:truthValue": {
             "@id": "#T承認"
           }

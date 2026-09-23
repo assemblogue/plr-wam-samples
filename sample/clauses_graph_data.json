@@ -1,9 +1,9 @@
 {
   "_comment": "ホーン節（追記207 の新形式）。ホーン節は「ノード1つ ＋ その内部グラフ」である。",
-  "調達申請ワークフロー": [
+  "urn:wamtest:調達申請ワークフロー": [
     {
       "@id": "urn:node:chotatsu.head",
-      "@type": "調達申請ワークフロー",
+      "@type": "urn:wamtest:調達申請ワークフロー",
       "variables": [
         {
           "@id": "#T1",
@@ -21,21 +21,21 @@
       "internalGraph": [
         {
           "@id": "urn:node:sinsei-001",
-          "@type": "申請",
+          "@type": "urn:wamtest:申請",
           "wam:truthValue": {
             "@id": "#T1"
           }
         },
         {
           "@id": "urn:node:shonin-001",
-          "@type": "承認",
+          "@type": "urn:wamtest:承認",
           "wam:truthValue": {
             "@id": "#T2"
           }
         },
         {
           "@id": "urn:node:hacchu-001",
-          "@type": "発注",
+          "@type": "urn:wamtest:発注",
           "wam:truthValue": {
             "@id": "#T3"
           }
@@ -63,22 +63,22 @@
       ]
     }
   ],
-  "申請": [
+  "urn:wamtest:申請": [
     {
       "@id": "urn:node:申請.head",
-      "@type": "申請"
+      "@type": "urn:wamtest:申請"
     }
   ],
-  "承認": [
+  "urn:wamtest:承認": [
     {
       "@id": "urn:node:承認.head",
-      "@type": "承認"
+      "@type": "urn:wamtest:承認"
     }
   ],
-  "発注": [
+  "urn:wamtest:発注": [
     {
       "@id": "urn:node:発注.head",
-      "@type": "発注"
+      "@type": "urn:wamtest:発注"
     }
   ]
 }
