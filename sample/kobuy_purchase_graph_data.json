@@ -42,10 +42,6 @@
     {
      "@id": "#Limit",
      "variableName": "Limit"
-    },
-    {
-     "@id": "#T注文",
-     "variableName": "T注文"
     }
    ],
    "internalGraph": [
@@ -57,9 +53,6 @@
      },
      "urn:kobuy:agent": {
       "@id": "#U"
-     },
-     "wam:truthValue": {
-      "@id": "#T注文"
      }
     },
     {
@@ -92,9 +85,6 @@
      },
      "urn:kobuy:金額": {
       "@id": "#Amount"
-     },
-     "urn:kobuy:差戻し先": {
-      "@id": "#T注文"
      }
     },
     {
@@ -141,10 +131,6 @@
     {
      "@id": "#X",
      "variableName": "X"
-    },
-    {
-     "@id": "#B",
-     "variableName": "B"
     }
    ],
    "internalGraph": [
@@ -154,10 +140,7 @@
      "urn:kobuy:金額": {
       "@id": "#X"
      },
-     "urn:kobuy:agent": "urn:entity:A社課長",
-     "urn:kobuy:差戻し先": {
-      "@id": "#B"
-     }
+     "urn:kobuy:agent": "urn:entity:A社課長"
     },
     {
      "@id": "urn:node:A社.部長承認",
@@ -165,10 +148,7 @@
      "urn:kobuy:金額": {
       "@id": "#X"
      },
-     "urn:kobuy:agent": "urn:entity:A社部長",
-     "urn:kobuy:差戻し先": {
-      "@id": "#B"
-     }
+     "urn:kobuy:agent": "urn:entity:A社部長"
     },
     {
      "@id": "urn:node:承認経路.A社.head#link1",
@@ -180,10 +160,7 @@
       "@id": "urn:node:A社.部長承認"
      }
     }
-   ],
-   "urn:kobuy:差戻し先": {
-    "@id": "#B"
-   }
+   ]
   },
   {
    "_comment": "**B社の節**。主任 → 課長 → 役員 の3段。段数も承認者も A社 と違うが、購買の節は共通のままである。",
@@ -197,10 +174,6 @@
     {
      "@id": "#X",
      "variableName": "X"
-    },
-    {
-     "@id": "#B",
-     "variableName": "B"
     }
    ],
    "internalGraph": [
@@ -210,10 +183,7 @@
      "urn:kobuy:金額": {
       "@id": "#X"
      },
-     "urn:kobuy:agent": "urn:entity:B社主任",
-     "urn:kobuy:差戻し先": {
-      "@id": "#B"
-     }
+     "urn:kobuy:agent": "urn:entity:B社主任"
     },
     {
      "@id": "urn:node:B社.課長承認",
@@ -221,10 +191,7 @@
      "urn:kobuy:金額": {
       "@id": "#X"
      },
-     "urn:kobuy:agent": "urn:entity:B社課長",
-     "urn:kobuy:差戻し先": {
-      "@id": "#B"
-     }
+     "urn:kobuy:agent": "urn:entity:B社課長"
     },
     {
      "@id": "urn:node:B社.役員承認",
@@ -232,10 +199,7 @@
      "urn:kobuy:金額": {
       "@id": "#X"
      },
-     "urn:kobuy:agent": "urn:entity:B社役員",
-     "urn:kobuy:差戻し先": {
-      "@id": "#B"
-     }
+     "urn:kobuy:agent": "urn:entity:B社役員"
     },
     {
      "@id": "urn:node:承認経路.B社.head#link1",
@@ -257,10 +221,7 @@
       "@id": "urn:node:B社.役員承認"
      }
     }
-   ],
-   "urn:kobuy:差戻し先": {
-    "@id": "#B"
-   }
+   ]
   }
  ],
  "urn:kobuy:利用者限度額": [
