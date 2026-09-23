@@ -21,8 +21,8 @@
    }
   },
   {
-   "_comment": "補償タスク述語を指すクラスレベル属性（TaskPolicyProjection が 'compensatesWith' という名で引く）。属性として宣言しておかないと classAttributeIdsOf が拾えない。",
-   "@id": "compensatesWith",
+   "_comment": "補償タスク述語を指すクラスレベル属性。**完全なURIで書く**——JSON-LD の素の鍵（compensatesWith）は文脈に定義が無ければ保たれず、読めない（追記315）。",
+   "@id": "urn:kinsp:compensatesWith",
    "@type": "ObjectProperty",
    "label": {
     "ja": "補償タスク",
@@ -398,7 +398,7 @@
     "ja": "売上伝票",
     "en": "Sales slip"
    },
-   "compensatesWith": "urn:kinsp:赤伝票"
+   "urn:kinsp:compensatesWith": "urn:kinsp:赤伝票"
   },
   {
    "@id": "urn:kinsp:検収フロー",

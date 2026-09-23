@@ -1,8 +1,0 @@
-{
-  "_comment": "管理会社が締め処理を実行する。売上伝票明細4件から請求書2通ができる。",
-  "sessionId": "sess-kbil",
-  "agentProperty": "urn:kbil:agent",
-  "steps": [
-    {"task": "urn:node:締め処理", "ok": true, "comment": "管理会社が請求締め処理を実行"}
-  ]
-}
