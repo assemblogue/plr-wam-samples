@@ -1,0 +1,418 @@
+{
+ "_comment": "承認の仕方を金額で決める例題。100万円未満なら直属の上司が承認、100万円以上なら承認グループ（鈴木・山本・田中の3人）の多数決で承認する。**代替節が金額で選ばれ**、高額側は量化(quant) = majority で判定する（追記318）。",
+ "@id": "urn:kapp:ontology",
+ "@type": "Ontology",
+ "agentProperty": "urn:kapp:agent",
+ "defines": [
+  {
+   "@id": "urn:kapp:Template",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:isComplete",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "テンプレート",
+    "en": "Template"
+   }
+  },
+  {
+   "@id": "urn:kapp:Atom",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kapp:Template"
+   ],
+   "label": {
+    "ja": "アトムノード",
+    "en": "Atom"
+   }
+  },
+  {
+   "@id": "urn:kapp:Task",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kapp:Atom"
+   ],
+   "label": {
+    "ja": "タスクノード",
+    "en": "Task"
+   }
+  },
+  {
+   "@id": "urn:kapp:Goal",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kapp:Task"
+   ],
+   "label": {
+    "ja": "ゴール",
+    "en": "Goal"
+   }
+  },
+  {
+   "@id": "urn:kapp:Constraint",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kapp:Atom"
+   ],
+   "label": {
+    "ja": "制約ノード",
+    "en": "Constraint"
+   }
+  },
+  {
+   "@id": "urn:kapp:OtherAtom",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kapp:Atom"
+   ],
+   "label": {
+    "ja": "その他のアトムノード",
+    "en": "Other atom"
+   }
+  },
+  {
+   "@id": "wam:isComplete",
+   "@type": "DatatypeProperty",
+   "domain": "urn:kapp:Template",
+   "range": "string",
+   "label": {
+    "ja": "完成",
+    "en": "Is complete"
+   }
+  },
+  {
+   "@id": "urn:kapp:Person",
+   "@type": "Class",
+   "label": {
+    "ja": "人",
+    "en": "Person"
+   }
+  },
+  {
+   "@id": "urn:kapp:agent",
+   "@type": "ObjectProperty",
+   "range": "urn:kapp:Person",
+   "label": {
+    "ja": "担当者",
+    "en": "Agent"
+   }
+  },
+  {
+   "@id": "urn:kapp:refersTo",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "参照",
+    "en": "RefersTo"
+   }
+  },
+  {
+   "@id": "urn:kapp:Geq",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kapp:Constraint"
+   ],
+   "builtInFunction": "≧",
+   "isConstraint": true,
+   "label": {
+    "ja": "≧",
+    "en": "AtLeast"
+   }
+  },
+  {
+   "@id": "urn:kapp:Then",
+   "@type": "Class",
+   "linkKind": "then",
+   "label": {
+    "ja": "Then",
+    "en": "Then"
+   }
+  },
+  {
+   "@id": "arg1",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "第1引数",
+    "en": "Arg 1"
+   }
+  },
+  {
+   "@id": "arg2",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "第2引数",
+    "en": "Arg 2"
+   }
+  },
+  {
+   "@id": "urn:kapp:注文者",
+   "@type": "ObjectProperty",
+   "range": "urn:kapp:Person",
+   "label": {
+    "ja": "注文者",
+    "en": "Orderer"
+   }
+  },
+  {
+   "@id": "urn:kapp:金額",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "金額",
+    "en": "Amount"
+   }
+  },
+  {
+   "@id": "urn:kapp:承認者",
+   "@type": "ObjectProperty",
+   "range": "urn:kapp:Person",
+   "label": {
+    "ja": "承認者",
+    "en": "Approver"
+   }
+  },
+  {
+   "@id": "urn:kapp:注文",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kapp:Task",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kapp:金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kapp:agent",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:completeByOkButton",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "注文",
+    "en": "Order"
+   }
+  },
+  {
+   "_comment": "承認は1段ぶんのタスク。担当者は経路のその段の承認者であり、ホーン節には書かれていない——データから流れてくる。",
+   "@id": "urn:kapp:承認",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kapp:Task",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kapp:金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kapp:agent",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:completeByOkButton",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kapp:差戻し先",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "承認",
+    "en": "Approve"
+   }
+  },
+  {
+   "@id": "urn:kapp:発注",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kapp:Task",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kapp:金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kapp:agent",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:completeByOkButton",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "発注",
+    "en": "PlaceOrder"
+   }
+  },
+  {
+   "@id": "urn:kapp:購買",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kapp:OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kapp:注文者",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kapp:会社",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "購買",
+    "en": "Purchase"
+   }
+  },
+  {
+   "@id": "urn:kapp:購買ゴール",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kapp:Goal"
+   ],
+   "label": {
+    "ja": "購買ゴール",
+    "en": "Purchase goal"
+   }
+  },
+  {
+   "@id": "urn:kapp:Gt",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kapp:Constraint"
+   ],
+   "builtInFunction": ">",
+   "isConstraint": true,
+   "label": {
+    "ja": ">",
+    "en": "GreaterThan"
+   }
+  },
+  {
+   "_comment": "量化(quant)を書く属性。**ノードごとに書く**——同じ述語でも本体によって全員・過半数と書き分ける。値は \"all\" / \"majority\" / 整数 / 割合。",
+   "@id": "urn:kapp:quant",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": {
+    "ja": "量化",
+    "en": "Quantification"
+   }
+  },
+  {
+   "@id": "urn:kapp:グループ",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "グループ",
+    "en": "Group"
+   }
+  },
+  {
+   "@id": "urn:kapp:構成員",
+   "@type": "ObjectProperty",
+   "range": "urn:kapp:Person",
+   "label": {
+    "ja": "構成員",
+    "en": "Member"
+   }
+  },
+  {
+   "_comment": "誰がどのグループに属するか（業務データ）。頭部だけ・本体が空のホーン節＝事実である。",
+   "@id": "urn:kapp:所属",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kapp:構成員",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kapp:グループ",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "isConstraint": true,
+   "label": {
+    "ja": "所属",
+    "en": "Membership"
+   }
+  },
+  {
+   "_comment": "直属の上司（業務データ）。",
+   "@id": "urn:kapp:上司",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kapp:注文者",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kapp:承認者",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "上司",
+    "en": "Supervisor"
+   }
+  },
+  {
+   "_comment": "承認の仕方。**節は2本**で、金額で選ばれる（代替節。Tag: 3-E）。100万円未満なら直属の上司、100万円以上なら承認グループの多数決。",
+   "@id": "urn:kapp:承認の仕方",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kapp:OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kapp:金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kapp:注文者",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "承認の仕方",
+    "en": "ApprovalScheme"
+   }
+  }
+ ]
+}
