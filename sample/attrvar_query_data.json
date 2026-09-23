@@ -1,0 +1,31 @@
+{
+  "_comment": "明細の節（金額 = 単価 × 数量）と、数量・単価だけが入っている実体1件。金額は節が解いて実体の属性へ入る。",
+  "urn:aq:明細": [
+    {
+      "@id": "urn:node:明細.head",
+      "@type": "urn:aq:明細",
+      "variables": [
+        { "@id": "#Q", "variableName": "Q" },
+        { "@id": "#U", "variableName": "U" },
+        { "@id": "#A", "variableName": "A" }
+      ],
+      "urn:aq:数量": { "@id": "#Q" },
+      "urn:aq:単価": { "@id": "#U" },
+      "urn:aq:金額": { "@id": "#A" },
+      "internalGraph": [
+        {
+          "@id": "urn:node:金額を求める",
+          "@type": "urn:aq:積",
+          "arg1": [{ "@id": "#U" }, { "@id": "#Q" }],
+          "arg2": { "@id": "#A" }
+        }
+      ]
+    },
+    {
+      "@id": "urn:entity:line-1",
+      "@type": "urn:aq:明細",
+      "urn:aq:数量": 60,
+      "urn:aq:単価": 80
+    }
+  ]
+}
