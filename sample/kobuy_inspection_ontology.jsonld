@@ -21,7 +21,7 @@
    }
   },
   {
-   "_comment": "補償タスク述語を指すクラスレベル属性。**完全なURIで書く**——JSON-LD の素の鍵（compensatesWith）は文脈に定義が無ければ保たれず、読めない（追記315）。",
+   "_comment": "補償タスク述語を指すクラスレベル属性。**完全なURIで書く**——JSON-LD の素の鍵（compensatesWith）は文脈に定義が無ければ保たれず、読めない（追記317）。",
    "@id": "urn:kinsp:compensatesWith",
    "@type": "ObjectProperty",
    "label": {
