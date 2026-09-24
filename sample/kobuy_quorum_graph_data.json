@@ -1,0 +1,231 @@
+{
+ "_comment": "定足数と「締める」の例題（追記351）。購買(注文者:U) :- 注文(金額:A, agent:U) ├Then→ 承認の仕方(金額:A, 注文者:U) └Then→ 発注. 高額側は 所属(量化:決着割合超 0.5, 定足数:割合以上 0.8, 構成員:X, グループ:承認グループ), 承認(agent:X)。**3人中2人が承認して締めると、定足数8割に届かず不成立**になる（2/3 ≒ 0.667 < 0.8）。3人とも応答すれば成立しうる。",
+ "urn:kapp:購買ゴール": [
+  {
+   "_comment": ":- 購買(注文者: 山田). ゴールは初期束縛を受け取れないので、定数を渡すだけの包み節にしてある。",
+   "@id": "urn:node:購買ゴール.head",
+   "@type": "urn:kapp:購買ゴール",
+   "internalGraph": [
+    {
+     "@id": "urn:node:購買",
+     "@type": "urn:kapp:購買",
+     "urn:kapp:注文者": "urn:entity:山田"
+    }
+   ]
+  }
+ ],
+ "urn:kapp:購買": [
+  {
+   "@id": "urn:node:購買.head",
+   "@type": "urn:kapp:購買",
+   "urn:kapp:注文者": {
+    "@id": "#U"
+   },
+   "variables": [
+    {
+     "@id": "#U",
+     "variableName": "U"
+    },
+    {
+     "@id": "#A",
+     "variableName": "A"
+    }
+   ],
+   "internalGraph": [
+    {
+     "@id": "urn:node:注文",
+     "@type": "urn:kapp:注文",
+     "urn:kapp:金額": {
+      "@id": "#A"
+     },
+     "urn:kapp:agent": {
+      "@id": "#U"
+     }
+    },
+    {
+     "_comment": "**承認の仕方はここでは分からない。** 金額が決まってから代替節が選ばれる。",
+     "@id": "urn:node:承認の仕方呼出",
+     "@type": "urn:kapp:承認の仕方",
+     "urn:kapp:金額": {
+      "@id": "#A"
+     },
+     "urn:kapp:注文者": {
+      "@id": "#U"
+     }
+    },
+    {
+     "@id": "urn:node:発注",
+     "@type": "urn:kapp:発注",
+     "urn:kapp:金額": {
+      "@id": "#A"
+     },
+     "urn:kapp:agent": "urn:entity:サプライヤ"
+    },
+    {
+     "@id": "urn:node:購買.head#link1",
+     "@type": "urn:kapp:Then",
+     "arg1": {
+      "@id": "urn:node:注文"
+     },
+     "arg2": {
+      "@id": "urn:node:承認の仕方呼出"
+     }
+    },
+    {
+     "@id": "urn:node:購買.head#link2",
+     "@type": "urn:kapp:Then",
+     "arg1": {
+      "@id": "urn:node:承認の仕方呼出"
+     },
+     "arg2": {
+      "@id": "urn:node:発注"
+     }
+    }
+   ]
+  }
+ ],
+ "urn:kapp:承認の仕方": [
+  {
+   "_comment": "**100万円未満**——直属の上司が1人で承認する。",
+   "@id": "urn:node:承認の仕方.上司.head",
+   "@type": "urn:kapp:承認の仕方",
+   "urn:kapp:金額": {
+    "@id": "#A"
+   },
+   "urn:kapp:注文者": {
+    "@id": "#U"
+   },
+   "variables": [
+    {
+     "@id": "#A",
+     "variableName": "A"
+    },
+    {
+     "@id": "#U",
+     "variableName": "U"
+    },
+    {
+     "@id": "#B",
+     "variableName": "B"
+    }
+   ],
+   "internalGraph": [
+    {
+     "_comment": ">(1000000, 金額) ——「金額が100万円未満」を、引数を入れ替えて書く。",
+     "@id": "urn:node:小額",
+     "@type": "urn:kapp:Gt",
+     "arg1": 1000000,
+     "arg2": {
+      "@id": "#A"
+     }
+    },
+    {
+     "_comment": "直属の上司を引く（事実）。",
+     "@id": "urn:node:上司を引く",
+     "@type": "urn:kapp:上司",
+     "urn:kapp:注文者": {
+      "@id": "#U"
+     },
+     "urn:kapp:承認者": {
+      "@id": "#B"
+     }
+    },
+    {
+     "@id": "urn:node:上司承認",
+     "@type": "urn:kapp:承認",
+     "urn:kapp:金額": {
+      "@id": "#A"
+     },
+     "urn:kapp:agent": {
+      "@id": "#B"
+     }
+    }
+   ]
+  },
+  {
+   "_comment": "**100万円以上**——承認グループの投票。8割以上が応答しないと無効で、応答した人の過半数で可決する。",
+   "@id": "urn:node:承認の仕方.グループ.head",
+   "@type": "urn:kapp:承認の仕方",
+   "urn:kapp:金額": {
+    "@id": "#A"
+   },
+   "urn:kapp:注文者": {
+    "@id": "#U"
+   },
+   "variables": [
+    {
+     "@id": "#A",
+     "variableName": "A"
+    },
+    {
+     "@id": "#U",
+     "variableName": "U"
+    },
+    {
+     "@id": "#X",
+     "variableName": "X"
+    }
+   ],
+   "internalGraph": [
+    {
+     "@id": "urn:node:高額",
+     "@type": "urn:kapp:Geq",
+     "arg1": {
+      "@id": "#A"
+     },
+     "arg2": 1000000
+    },
+    {
+     "_comment": "**制限ノード。** 量化は「**応答した人**の過半数」（決着割合超 0.5）、定足数は「**全構成員の8割以上が応答**」（定足数割合以上 0.8）。⚠️ **決着を母数にするので、締めるまで確定しない**——`close urn:node:構成員を数える` で締める。",
+     "@id": "urn:node:構成員を数える",
+     "@type": "urn:kapp:所属",
+     "urn:kapp:構成員": {
+      "@id": "#X"
+     },
+     "urn:kapp:グループ": "urn:entity:承認グループ",
+     "urn:kapp:quantDecidedRatioGt": 0.5,
+     "urn:kapp:quorumRatioGeq": 0.8
+    },
+    {
+     "@id": "urn:node:グループ承認",
+     "@type": "urn:kapp:承認",
+     "urn:kapp:金額": {
+      "@id": "#A"
+     },
+     "urn:kapp:agent": {
+      "@id": "#X"
+     }
+    }
+   ]
+  }
+ ],
+ "urn:kapp:上司": [
+  {
+   "_comment": "業務データ。山田の直属の上司は佐藤。",
+   "@id": "urn:entity:上司.山田",
+   "@type": "urn:kapp:上司",
+   "urn:kapp:注文者": "urn:entity:山田",
+   "urn:kapp:承認者": "urn:entity:佐藤"
+  }
+ ],
+ "urn:kapp:所属": [
+  {
+   "@id": "urn:entity:所属.鈴木",
+   "@type": "urn:kapp:所属",
+   "urn:kapp:構成員": "urn:entity:鈴木",
+   "urn:kapp:グループ": "urn:entity:承認グループ"
+  },
+  {
+   "@id": "urn:entity:所属.山本",
+   "@type": "urn:kapp:所属",
+   "urn:kapp:構成員": "urn:entity:山本",
+   "urn:kapp:グループ": "urn:entity:承認グループ"
+  },
+  {
+   "@id": "urn:entity:所属.田中",
+   "@type": "urn:kapp:所属",
+   "urn:kapp:構成員": "urn:entity:田中",
+   "urn:kapp:グループ": "urn:entity:承認グループ"
+  }
+ ]
+}
