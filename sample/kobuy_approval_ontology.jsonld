@@ -317,21 +317,119 @@
    }
   },
   {
-   "_comment": "量化を書く属性（追記318・344・348）。**ノードごとに書く**——同じ述語でも本体によって全員・過半数と書き分ける。**直に書かず、下位属性で閾値の種類を表す**——`量化` の maxCardinality を1にすることで「1つの制限ノードに閾値は1つ」が構造として言える（`isComplete` と同じ手。追記249）。",
+   "_comment": "量化の族（追記318・344・348・349）。**ノードごとに書く**——同じ述語でも本体によって書き分ける。**直に書かず、下位属性で表す。** ⚠️ **ここに maxCardinality を付けてはならない**——閾値と定足数は**同時に成り立つ必要がある**（「8割が投票し、かつその過半数が賛成」）。排他性は中間層（量化:閾値 / 量化:定足数）が言う。",
    "@id": "urn:kapp:quant",
    "@type": "DatatypeProperty",
    "range": "string",
    "label": {
     "ja": "量化",
     "en": "Quantification"
-   },
-   "maxCardinality": 1
+   }
+  },
+  {
+   "_comment": "量化の閾値（追記344・349）。**分子は S（成立した候補）**。**maxCardinality 1 が排他を言う**——1つの制限ノードに閾値は1つ。「下位属性の値は上位属性の値」なので、2つ書けばここが2値になって違反する（`isComplete` と同じ手。追記249）。",
+   "@id": "urn:kapp:quantThreshold",
+   "@type": "DatatypeProperty",
+   "subPropertyOf": "urn:kapp:quant",
+   "maxCardinality": 1,
+   "label": {
+    "ja": "量化:閾値",
+    "en": "Quantification: threshold"
+   }
+  },
+  {
+   "_comment": "定足数（追記345・349）。**分子は D（決着した候補）、分母は N（全候補）**——「8割以上が投票しないと無効」がこれ。**定足数は新しい概念ではなく、N・D・S の組み合わせのもう1通りである**から、形は閾値と同じでよい。",
+   "@id": "urn:kapp:quantQuorum",
+   "@type": "DatatypeProperty",
+   "subPropertyOf": "urn:kapp:quant",
+   "maxCardinality": 1,
+   "label": {
+    "ja": "量化:定足数",
+    "en": "Quantification: quorum"
+   }
+  },
+  {
+   "_comment": "**決着した候補**すべてが成立。値は真のみ。",
+   "@id": "urn:kapp:quantDecidedAll",
+   "@type": "DatatypeProperty",
+   "subPropertyOf": "urn:kapp:quantThreshold",
+   "range": "boolean",
+   "label": {
+    "ja": "量化:決着全員",
+    "en": "Quantification: all decided"
+   }
+  },
+  {
+   "_comment": "**決着した候補のうち**その割合以上。⚠️ 締めるまで決まらない。",
+   "@id": "urn:kapp:quantDecidedRatioGeq",
+   "@type": "DatatypeProperty",
+   "subPropertyOf": "urn:kapp:quantThreshold",
+   "range": "double",
+   "label": {
+    "ja": "量化:決着割合以上",
+    "en": "Quantification: decided ratio (Geq)"
+   }
+  },
+  {
+   "_comment": "**決着した候補のうち**その割合超。⚠️ 締めるまで決まらない。",
+   "@id": "urn:kapp:quantDecidedRatioGt",
+   "@type": "DatatypeProperty",
+   "subPropertyOf": "urn:kapp:quantThreshold",
+   "range": "double",
+   "label": {
+    "ja": "量化:決着割合超",
+    "en": "Quantification: decided ratio (Gt)"
+   }
+  },
+  {
+   "_comment": "n件以上が決着していること。",
+   "@id": "urn:kapp:quorumCount",
+   "@type": "DatatypeProperty",
+   "subPropertyOf": "urn:kapp:quantQuorum",
+   "range": "integer",
+   "label": {
+    "ja": "量化:定足数個数",
+    "en": "Quorum: count"
+   }
+  },
+  {
+   "_comment": "全候補が決着していること。値は真のみ。",
+   "@id": "urn:kapp:quorumAll",
+   "@type": "DatatypeProperty",
+   "subPropertyOf": "urn:kapp:quantQuorum",
+   "range": "boolean",
+   "label": {
+    "ja": "量化:定足数全員",
+    "en": "Quorum: all"
+   }
+  },
+  {
+   "_comment": "決着した割合がその値以上。「8割以上が投票」がこれ。",
+   "@id": "urn:kapp:quorumRatioGeq",
+   "@type": "DatatypeProperty",
+   "subPropertyOf": "urn:kapp:quantQuorum",
+   "range": "double",
+   "label": {
+    "ja": "量化:定足数割合以上",
+    "en": "Quorum: ratio (Geq)"
+   }
+  },
+  {
+   "_comment": "決着した割合がその値超。",
+   "@id": "urn:kapp:quorumRatioGt",
+   "@type": "DatatypeProperty",
+   "subPropertyOf": "urn:kapp:quantQuorum",
+   "range": "double",
+   "label": {
+    "ja": "量化:定足数割合超",
+    "en": "Quorum: ratio (Gt)"
+   }
   },
   {
    "_comment": "n件以上（Geq）。整数なので「n件超」は「n+1件以上」と書ける。",
    "@id": "urn:kapp:quantCount",
    "@type": "DatatypeProperty",
-   "subPropertyOf": "urn:kapp:quant",
+   "subPropertyOf": "urn:kapp:quantThreshold",
    "range": "integer",
    "label": {
     "ja": "量化:個数",
@@ -342,7 +440,7 @@
    "_comment": "全件。**値は真のみ**——量化しないなら属性ごと省く。⚠️ 候補が0件なら真（空虚な真）であり、割合100%とは違う。",
    "@id": "urn:kapp:quantAll",
    "@type": "DatatypeProperty",
-   "subPropertyOf": "urn:kapp:quant",
+   "subPropertyOf": "urn:kapp:quantThreshold",
    "range": "boolean",
    "label": {
     "ja": "量化:全員",
@@ -353,7 +451,7 @@
    "_comment": "その割合**以上**。",
    "@id": "urn:kapp:quantRatioGeq",
    "@type": "DatatypeProperty",
-   "subPropertyOf": "urn:kapp:quant",
+   "subPropertyOf": "urn:kapp:quantThreshold",
    "range": "double",
    "label": {
     "ja": "量化:割合以上",
@@ -364,7 +462,7 @@
    "_comment": "その割合**超**。**過半数は `0.5`** である（追記346——過半数は狭義の割合の特別な場合にすぎない）。",
    "@id": "urn:kapp:quantRatioGt",
    "@type": "DatatypeProperty",
-   "subPropertyOf": "urn:kapp:quant",
+   "subPropertyOf": "urn:kapp:quantThreshold",
    "range": "double",
    "label": {
     "ja": "量化:割合超",
