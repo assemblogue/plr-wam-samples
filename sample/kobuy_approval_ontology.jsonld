@@ -317,13 +317,58 @@
    }
   },
   {
-   "_comment": "量化(quant)を書く属性。**ノードごとに書く**——同じ述語でも本体によって全員・過半数と書き分ける。値は \"all\" / \"majority\" / 整数 / 割合。",
+   "_comment": "量化を書く属性（追記318・344・348）。**ノードごとに書く**——同じ述語でも本体によって全員・過半数と書き分ける。**直に書かず、下位属性で閾値の種類を表す**——`量化` の maxCardinality を1にすることで「1つの制限ノードに閾値は1つ」が構造として言える（`isComplete` と同じ手。追記249）。",
    "@id": "urn:kapp:quant",
    "@type": "DatatypeProperty",
    "range": "string",
    "label": {
     "ja": "量化",
     "en": "Quantification"
+   },
+   "maxCardinality": 1
+  },
+  {
+   "_comment": "n件以上（Geq）。整数なので「n件超」は「n+1件以上」と書ける。",
+   "@id": "urn:kapp:quantCount",
+   "@type": "DatatypeProperty",
+   "subPropertyOf": "urn:kapp:quant",
+   "range": "integer",
+   "label": {
+    "ja": "量化:個数",
+    "en": "Quantification: count"
+   }
+  },
+  {
+   "_comment": "全件。**値は真のみ**——量化しないなら属性ごと省く。⚠️ 候補が0件なら真（空虚な真）であり、割合100%とは違う。",
+   "@id": "urn:kapp:quantAll",
+   "@type": "DatatypeProperty",
+   "subPropertyOf": "urn:kapp:quant",
+   "range": "boolean",
+   "label": {
+    "ja": "量化:全員",
+    "en": "Quantification: all"
+   }
+  },
+  {
+   "_comment": "その割合**以上**。",
+   "@id": "urn:kapp:quantRatioGeq",
+   "@type": "DatatypeProperty",
+   "subPropertyOf": "urn:kapp:quant",
+   "range": "double",
+   "label": {
+    "ja": "量化:割合以上",
+    "en": "Quantification: ratio (Geq)"
+   }
+  },
+  {
+   "_comment": "その割合**超**。**過半数は `0.5`** である（追記346——過半数は狭義の割合の特別な場合にすぎない）。",
+   "@id": "urn:kapp:quantRatioGt",
+   "@type": "DatatypeProperty",
+   "subPropertyOf": "urn:kapp:quant",
+   "range": "double",
+   "label": {
+    "ja": "量化:割合超",
+    "en": "Quantification: ratio (Gt)"
    }
   },
   {
