@@ -1,0 +1,36 @@
+{
+  "_comment": "S社。注文6個に対して8個を出荷しようとして失敗する筋（≧ の制約が効く）。",
+  "sessionId": "sess-kord-over",
+  "agentProperty": "urn:kord:agent",
+  "steps": [
+    {
+      "task": "urn:node:注文",
+      "values": {
+        "urn:kord:注文数": 6,
+        "urn:kord:単価": 100
+      },
+      "ok": true,
+      "comment": "6個を注文"
+    },
+    {
+      "task": "urn:node:受注受付",
+      "ok": true
+    },
+    {
+      "task": "urn:node:S社.納期回答",
+      "values": {
+        "urn:kord:納入予定日": "2026-10-05"
+      },
+      "ok": true
+    },
+    {
+      "task": "urn:node:S社.出荷",
+      "values": {
+        "urn:kord:出荷数": 8,
+        "urn:kord:出荷日": "2026-10-07"
+      },
+      "ok": true,
+      "comment": "8個を出荷しようとする——注文数6を超えるので失敗する"
+    }
+  ]
+}

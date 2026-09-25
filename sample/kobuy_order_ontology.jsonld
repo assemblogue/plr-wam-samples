@@ -1,0 +1,545 @@
+{
+ "_comment": "KOBUY の 受注 → 納期回答 → 出荷 → 検収 の例題（例題④）。サプライヤ用マニュアル §3.2.1「受注機能」・§3.2.2「出荷機能」。担当者がバイヤー → サプライヤ → バイヤー と組織をまたいで移ること、「納期未回答出荷可能区分」（§3.2.2.1）が企業ごとの代替節になること、出荷取消（§3.2.2.2）が引き戻しで書けることを確かめる。",
+ "@id": "urn:kord:ontology",
+ "@type": "Ontology",
+ "agentProperty": "urn:kord:agent",
+ "defines": [
+  {
+   "@id": "urn:kord:Template",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:isComplete",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "テンプレート",
+    "en": "Template"
+   }
+  },
+  {
+   "@id": "urn:kord:Atom",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kord:Template"
+   ],
+   "label": {
+    "ja": "アトムノード",
+    "en": "Atom"
+   }
+  },
+  {
+   "@id": "urn:kord:Task",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kord:Atom"
+   ],
+   "label": {
+    "ja": "タスクノード",
+    "en": "Task"
+   }
+  },
+  {
+   "@id": "urn:kord:Goal",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kord:Task"
+   ],
+   "label": {
+    "ja": "ゴール",
+    "en": "Goal"
+   }
+  },
+  {
+   "@id": "urn:kord:Constraint",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kord:Atom"
+   ],
+   "label": {
+    "ja": "制約ノード",
+    "en": "Constraint"
+   }
+  },
+  {
+   "@id": "urn:kord:OtherAtom",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kord:Atom"
+   ],
+   "label": {
+    "ja": "その他のアトムノード",
+    "en": "Other atom"
+   }
+  },
+  {
+   "@id": "wam:isComplete",
+   "@type": "DatatypeProperty",
+   "domain": "urn:kord:Template",
+   "range": "string",
+   "label": {
+    "ja": "完成",
+    "en": "Is complete"
+   }
+  },
+  {
+   "@id": "urn:kord:Cancelable",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kord:Task"
+   ],
+   "label": {
+    "ja": "取消可能",
+    "en": "Cancelable"
+   }
+  },
+  {
+   "@id": "urn:kord:Compensable",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kord:Task"
+   ],
+   "label": {
+    "ja": "補償可能",
+    "en": "Compensable"
+   }
+  },
+  {
+   "@id": "urn:kord:NonCompensable",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kord:Task"
+   ],
+   "label": {
+    "ja": "補償不可能",
+    "en": "Non compensable"
+   }
+  },
+  {
+   "@id": "urn:kord:Person",
+   "@type": "Class",
+   "subClassOf": [],
+   "label": {
+    "ja": "人",
+    "en": "Person"
+   }
+  },
+  {
+   "@id": "urn:kord:Company",
+   "@type": "Class",
+   "subClassOf": [],
+   "label": {
+    "ja": "企業",
+    "en": "Company"
+   }
+  },
+  {
+   "@id": "urn:kord:agent",
+   "@type": "ObjectProperty",
+   "range": "urn:kord:Person",
+   "label": {
+    "ja": "担当者",
+    "en": "Agent"
+   }
+  },
+  {
+   "@id": "urn:kord:Geq",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kord:Constraint"
+   ],
+   "label": {
+    "ja": "≧",
+    "en": "AtLeast"
+   },
+   "builtInFunction": "≧",
+   "isConstraint": true
+  },
+  {
+   "@id": "urn:kord:Times",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kord:Constraint"
+   ],
+   "label": {
+    "ja": "×",
+    "en": "Times"
+   },
+   "builtInFunction": "×",
+   "isConstraint": true
+  },
+  {
+   "@id": "urn:kord:Then",
+   "@type": "Class",
+   "linkKind": "then",
+   "label": {
+    "ja": "Then",
+    "en": "Then"
+   }
+  },
+  {
+   "@id": "arg1",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "第1引数",
+    "en": "Arg 1"
+   }
+  },
+  {
+   "@id": "arg2",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "第2引数",
+    "en": "Arg 2"
+   }
+  },
+  {
+   "@id": "urn:kord:注文数",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "注文数",
+    "en": "Ordered quantity"
+   }
+  },
+  {
+   "@id": "urn:kord:数量",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "数量",
+    "en": "Quantity"
+   }
+  },
+  {
+   "@id": "urn:kord:出荷数",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "出荷数",
+    "en": "Shipped quantity"
+   }
+  },
+  {
+   "@id": "urn:kord:単価",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "単価",
+    "en": "Unit price"
+   }
+  },
+  {
+   "@id": "urn:kord:税込金額",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "税込金額",
+    "en": "Gross amount"
+   }
+  },
+  {
+   "@id": "urn:kord:納入予定日",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": {
+    "ja": "納入予定日",
+    "en": "Promised delivery date"
+   }
+  },
+  {
+   "@id": "urn:kord:出荷日",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": {
+    "ja": "出荷日",
+    "en": "Shipping date"
+   }
+  },
+  {
+   "@id": "urn:kord:企業",
+   "@type": "ObjectProperty",
+   "range": "urn:kord:Company",
+   "label": {
+    "ja": "企業",
+    "en": "Company"
+   }
+  },
+  {
+   "@id": "urn:kord:注文",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kord:Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:注文数",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:単価",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:agent",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:completeByOkButton",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "注文",
+    "en": "Order"
+   },
+   "_comment": "バイヤーが注文する。サプライヤ側から見た受注の元である（マニュアル §3.2.1.1「バイヤーからの注文通知」）。"
+  },
+  {
+   "@id": "urn:kord:受注受付",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kord:Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:注文数",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:agent",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:completeByOkButton",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "受注受付",
+    "en": "Order acceptance"
+   },
+   "_comment": "サプライヤが受注を受け付ける（§3.2.1.2）。取消可能——§3.2.1.5「注文された商品のキャンセルを行う」がある。"
+  },
+  {
+   "@id": "urn:kord:納期回答",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kord:Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:数量",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:単価",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:納入予定日",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:agent",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:completeByOkButton",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "納期回答",
+    "en": "Delivery date reply"
+   },
+   "_comment": "サプライヤが単価・数量・納入予定日を設定する（§3.2.1.3）。"
+  },
+  {
+   "@id": "urn:kord:出荷",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kord:Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:出荷数",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:出荷日",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:agent",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:completeByOkButton",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "出荷",
+    "en": "Shipment"
+   },
+   "_comment": "サプライヤが出荷処理を行う（§3.2.2.1）。取消可能——§3.2.2.2「出荷処理済明細を未出荷状態に戻す」がある。"
+  },
+  {
+   "@id": "urn:kord:検収",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kord:Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:出荷数",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:税込金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:agent",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:completeByOkButton",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "検収",
+    "en": "Acceptance"
+   },
+   "_comment": "バイヤーが検収する（バイヤー用マニュアル §3.2.7）。ここで担当がサプライヤからバイヤーへ戻る。"
+  },
+  {
+   "@id": "urn:kord:納品段取り",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kord:OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:企業",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:注文数",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:単価",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:出荷数",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:出荷日",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "納品段取り",
+    "en": "Delivery arrangement"
+   },
+   "_comment": "企業ごとに1本の節がある。「納期未回答出荷可能区分」が企業情報の設定である（§3.2.2.1）ため、納期回答を挟むかどうかは企業で決まる。承認経路（例題①）と同じ形である。"
+  },
+  {
+   "@id": "urn:kord:受注フロー",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kord:OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:注文数",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:単価",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:企業",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "受注フロー",
+    "en": "Order flow"
+   }
+  },
+  {
+   "@id": "urn:kord:受注ゴール",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kord:Goal"
+   ],
+   "label": {
+    "ja": "受注ゴール",
+    "en": "Order goal"
+   }
+  },
+  {
+   "@id": "urn:kord:受注ゴールT",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kord:Goal"
+   ],
+   "label": {
+    "ja": "受注ゴール（T社）",
+    "en": "Order goal (company T)"
+   }
+  }
+ ]
+}

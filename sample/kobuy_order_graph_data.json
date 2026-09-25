@@ -1,0 +1,343 @@
+{
+ "_comment": "例題④ 受注・納期回答・出荷。注文6個・単価100円。S社は納期回答を挟み、T社は「納期未回答出荷可能区分＝可能」（§3.2.2.1）なので出荷へ直行する。納品段取りの節だけが違い、受注フローの節は共通である。",
+ "urn:kord:受注ゴール": [
+  {
+   "_comment": ":- 受注フロー(企業: S社). **注文数と単価は書かない**——バイヤーが注文の欄に入れる。",
+   "@id": "urn:node:受注ゴール.head",
+   "@type": "urn:kord:受注ゴール",
+   "internalGraph": [
+    {
+     "@id": "urn:node:受注フロー",
+     "@type": "urn:kord:受注フロー",
+     "urn:kord:企業": "urn:entity:S社"
+    }
+   ]
+  }
+ ],
+ "urn:kord:受注ゴールT": [
+  {
+   "_comment": ":- 受注フロー(企業: T社). **注文数と単価は書かない**——バイヤーが注文の欄に入れる。",
+   "@id": "urn:node:受注ゴールT.head",
+   "@type": "urn:kord:受注ゴールT",
+   "internalGraph": [
+    {
+     "@id": "urn:node:受注フローT",
+     "@type": "urn:kord:受注フロー",
+     "urn:kord:企業": "urn:entity:T社"
+    }
+   ]
+  }
+ ],
+ "urn:kord:受注フロー": [
+  {
+   "_comment": "受注フロー(注文数:Q, 単価:P, 企業:C) :- 注文 →Then→ 受注受付 →Then→ 納品段取り(企業:C) →Then→ 検収, ≧(Q, N), ×(N, P, G). **この節は企業が増えても変わらない。**",
+   "@id": "urn:node:受注フロー.head",
+   "@type": "urn:kord:受注フロー",
+   "urn:kord:注文数": {
+    "@id": "#Q"
+   },
+   "urn:kord:単価": {
+    "@id": "#P"
+   },
+   "urn:kord:企業": {
+    "@id": "#C"
+   },
+   "variables": [
+    {
+     "@id": "#Q",
+     "variableName": "Q"
+    },
+    {
+     "@id": "#P",
+     "variableName": "P"
+    },
+    {
+     "@id": "#C",
+     "variableName": "C"
+    },
+    {
+     "@id": "#N",
+     "variableName": "N"
+    },
+    {
+     "@id": "#SD",
+     "variableName": "SD"
+    },
+    {
+     "@id": "#G",
+     "variableName": "G"
+    }
+   ],
+   "internalGraph": [
+    {
+     "_comment": "バイヤーが注文する（§3.2.1.1）。",
+     "@id": "urn:node:注文",
+     "@type": "urn:kord:注文",
+     "urn:kord:注文数": {
+      "@id": "#Q"
+     },
+     "urn:kord:単価": {
+      "@id": "#P"
+     },
+     "urn:kord:agent": "urn:entity:バイヤー山田"
+    },
+    {
+     "_comment": "サプライヤが受注を受け付ける（§3.2.1.2）。**ここで担当がバイヤーからサプライヤへ移る。**",
+     "@id": "urn:node:受注受付",
+     "@type": "urn:kord:受注受付",
+     "urn:kord:注文数": {
+      "@id": "#Q"
+     },
+     "urn:kord:agent": "urn:entity:サプライヤ営業"
+    },
+    {
+     "_comment": "企業ごとに1本の節を選ぶ。出荷数と出荷日はこの呼出で受け取る。",
+     "@id": "urn:node:納品段取り呼出",
+     "@type": "urn:kord:納品段取り",
+     "urn:kord:企業": {
+      "@id": "#C"
+     },
+     "urn:kord:注文数": {
+      "@id": "#Q"
+     },
+     "urn:kord:単価": {
+      "@id": "#P"
+     },
+     "urn:kord:出荷数": {
+      "@id": "#N"
+     },
+     "urn:kord:出荷日": {
+      "@id": "#SD"
+     }
+    },
+    {
+     "_comment": "出荷数は注文数を超えられない。担当者には出荷数の欄が [0, 6] の整数として見える。",
+     "@id": "urn:node:出荷数上限",
+     "@type": "urn:kord:Geq",
+     "arg1": {
+      "@id": "#Q"
+     },
+     "arg2": {
+      "@id": "#N"
+     }
+    },
+    {
+     "_comment": "税込金額 = 出荷数 × 単価（§3.2.1.3.1 ①）。",
+     "@id": "urn:node:金額",
+     "@type": "urn:kord:Times",
+     "arg1": [
+      {
+       "@id": "#N"
+      },
+      {
+       "@id": "#P"
+      }
+     ],
+     "arg2": {
+      "@id": "#G"
+     }
+    },
+    {
+     "_comment": "バイヤーが検収する。**ここで担当がサプライヤからバイヤーへ戻る。**",
+     "@id": "urn:node:検収",
+     "@type": "urn:kord:検収",
+     "urn:kord:出荷数": {
+      "@id": "#N"
+     },
+     "urn:kord:税込金額": {
+      "@id": "#G"
+     },
+     "urn:kord:agent": "urn:entity:バイヤー山田"
+    },
+    {
+     "@id": "urn:node:受注フロー.head#link1",
+     "@type": "urn:kord:Then",
+     "arg1": {
+      "@id": "urn:node:注文"
+     },
+     "arg2": {
+      "@id": "urn:node:受注受付"
+     }
+    },
+    {
+     "@id": "urn:node:受注フロー.head#link2",
+     "@type": "urn:kord:Then",
+     "arg1": {
+      "@id": "urn:node:受注受付"
+     },
+     "arg2": {
+      "@id": "urn:node:納品段取り呼出"
+     }
+    },
+    {
+     "@id": "urn:node:受注フロー.head#link3",
+     "@type": "urn:kord:Then",
+     "arg1": {
+      "@id": "urn:node:納品段取り呼出"
+     },
+     "arg2": {
+      "@id": "urn:node:検収"
+     }
+    }
+   ]
+  }
+ ],
+ "urn:kord:納品段取り": [
+  {
+   "_comment": "**S社の節。** 納期未回答出荷可能区分が「不可」——納期回答（§3.2.1.3）を経てから出荷する（§3.2.2.1「出荷処理のされていない納期回答済の受注明細」）。",
+   "@id": "urn:node:納品段取り.S社.head",
+   "@type": "urn:kord:納品段取り",
+   "urn:kord:企業": "urn:entity:S社",
+   "urn:kord:注文数": {
+    "@id": "#Q"
+   },
+   "urn:kord:単価": {
+    "@id": "#P"
+   },
+   "urn:kord:出荷数": {
+    "@id": "#N"
+   },
+   "urn:kord:出荷日": {
+    "@id": "#SD"
+   },
+   "variables": [
+    {
+     "@id": "#Q",
+     "variableName": "Q"
+    },
+    {
+     "@id": "#P",
+     "variableName": "P"
+    },
+    {
+     "@id": "#N",
+     "variableName": "N"
+    },
+    {
+     "@id": "#SD",
+     "variableName": "SD"
+    },
+    {
+     "@id": "#D",
+     "variableName": "D"
+    }
+   ],
+   "internalGraph": [
+    {
+     "@id": "urn:node:S社.納期回答",
+     "@type": "urn:kord:納期回答",
+     "urn:kord:数量": {
+      "@id": "#Q"
+     },
+     "urn:kord:単価": {
+      "@id": "#P"
+     },
+     "urn:kord:納入予定日": {
+      "@id": "#D"
+     },
+     "urn:kord:agent": "urn:entity:サプライヤ営業"
+    },
+    {
+     "@id": "urn:node:S社.出荷",
+     "@type": "urn:kord:出荷",
+     "urn:kord:出荷数": {
+      "@id": "#N"
+     },
+     "urn:kord:出荷日": {
+      "@id": "#SD"
+     },
+     "urn:kord:agent": "urn:entity:サプライヤ倉庫"
+    },
+    {
+     "@id": "urn:node:納品段取り.S社.head#link1",
+     "@type": "urn:kord:Then",
+     "arg1": {
+      "@id": "urn:node:S社.納期回答"
+     },
+     "arg2": {
+      "@id": "urn:node:S社.出荷"
+     }
+    }
+   ]
+  },
+  {
+   "_comment": "**T社の節。** 納期未回答出荷可能区分が「可能」（§3.2.2.1。管理会社のみ変更できる企業情報の項目）——納期回答を待たずに出荷する。**受注フローの節は S社 と同じである。**",
+   "@id": "urn:node:納品段取り.T社.head",
+   "@type": "urn:kord:納品段取り",
+   "urn:kord:企業": "urn:entity:T社",
+   "urn:kord:注文数": {
+    "@id": "#Q"
+   },
+   "urn:kord:単価": {
+    "@id": "#P"
+   },
+   "urn:kord:出荷数": {
+    "@id": "#N"
+   },
+   "urn:kord:出荷日": {
+    "@id": "#SD"
+   },
+   "variables": [
+    {
+     "@id": "#Q",
+     "variableName": "Q"
+    },
+    {
+     "@id": "#P",
+     "variableName": "P"
+    },
+    {
+     "@id": "#N",
+     "variableName": "N"
+    },
+    {
+     "@id": "#SD",
+     "variableName": "SD"
+    }
+   ],
+   "internalGraph": [
+    {
+     "@id": "urn:node:T社.出荷",
+     "@type": "urn:kord:出荷",
+     "urn:kord:出荷数": {
+      "@id": "#N"
+     },
+     "urn:kord:出荷日": {
+      "@id": "#SD"
+     },
+     "urn:kord:agent": "urn:entity:サプライヤ倉庫"
+    }
+   ]
+  }
+ ],
+ "urn:kord:注文": [
+  {
+   "@id": "urn:node:注文.head",
+   "@type": "urn:kord:注文"
+  }
+ ],
+ "urn:kord:受注受付": [
+  {
+   "@id": "urn:node:受注受付.head",
+   "@type": "urn:kord:受注受付"
+  }
+ ],
+ "urn:kord:納期回答": [
+  {
+   "@id": "urn:node:納期回答.head",
+   "@type": "urn:kord:納期回答"
+  }
+ ],
+ "urn:kord:出荷": [
+  {
+   "@id": "urn:node:出荷.head",
+   "@type": "urn:kord:出荷"
+  }
+ ],
+ "urn:kord:検収": [
+  {
+   "@id": "urn:node:検収.head",
+   "@type": "urn:kord:検収"
+  }
+ ]
+}

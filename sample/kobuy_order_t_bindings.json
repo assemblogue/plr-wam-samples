@@ -1,0 +1,35 @@
+{
+  "_comment": "T社。納期未回答出荷可能区分が「可能」なので納期回答が無い。納品段取りの節だけが違い、受注フローの節は S社 と同じである。",
+  "sessionId": "sess-kord-t",
+  "agentProperty": "urn:kord:agent",
+  "steps": [
+    {
+      "task": "urn:node:注文",
+      "values": {
+        "urn:kord:注文数": 6,
+        "urn:kord:単価": 100
+      },
+      "ok": true,
+      "comment": "バイヤー山田が6個を注文"
+    },
+    {
+      "task": "urn:node:受注受付",
+      "ok": true,
+      "comment": "サプライヤ営業が受注受付"
+    },
+    {
+      "task": "urn:node:T社.出荷",
+      "values": {
+        "urn:kord:出荷数": 6,
+        "urn:kord:出荷日": "2026-10-07"
+      },
+      "ok": true,
+      "comment": "納期回答を待たずに出荷"
+    },
+    {
+      "task": "urn:node:検収",
+      "ok": true,
+      "comment": "バイヤー山田が検収"
+    }
+  ]
+}
