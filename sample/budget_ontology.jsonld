@@ -1,0 +1,269 @@
+{
+ "_comment": "【検証用】多値属性はホーン節のアトムノードが持ち、その値がチャネルの要素である。山田の予算の 調達 に、山田が実行した調達が並ぶ。新しい調達を足すと、既存分との合計が限度額に掛かる。",
+ "@id": "urn:bud:ontology",
+ "@type": "Ontology",
+ "defines": [
+  {
+   "@id": "urn:bud:Template",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:isComplete",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "テンプレート",
+    "en": "Template"
+   }
+  },
+  {
+   "@id": "urn:bud:Atom",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:bud:Template"
+   ],
+   "label": {
+    "ja": "アトムノード",
+    "en": "Atom"
+   }
+  },
+  {
+   "@id": "urn:bud:Task",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:bud:Atom"
+   ],
+   "label": {
+    "ja": "タスクノード",
+    "en": "Task"
+   }
+  },
+  {
+   "@id": "urn:bud:Constraint",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:bud:Atom"
+   ],
+   "label": {
+    "ja": "制約ノード",
+    "en": "Constraint"
+   }
+  },
+  {
+   "@id": "urn:bud:OtherAtom",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:bud:Atom"
+   ],
+   "label": {
+    "ja": "その他のアトムノード",
+    "en": "Other atom"
+   }
+  },
+  {
+   "@id": "wam:isComplete",
+   "@type": "DatatypeProperty",
+   "domain": "urn:bud:Template",
+   "range": "string",
+   "label": {
+    "ja": "完成",
+    "en": "Is complete"
+   }
+  },
+  {
+   "@id": "urn:bud:Person",
+   "@type": "Class",
+   "subClassOf": [],
+   "label": {
+    "ja": "人",
+    "en": "Person"
+   }
+  },
+  {
+   "@id": "urn:bud:Geq",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:bud:Constraint"
+   ],
+   "label": {
+    "ja": "≧",
+    "en": "AtLeast"
+   },
+   "builtInFunction": "≧",
+   "isConstraint": true
+  },
+  {
+   "@id": "arg1",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "第1引数",
+    "en": "Arg 1"
+   }
+  },
+  {
+   "@id": "arg2",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "第2引数",
+    "en": "Arg 2"
+   }
+  },
+  {
+   "@id": "urn:bud:案件",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": {
+    "ja": "案件",
+    "en": "Case"
+   }
+  },
+  {
+   "@id": "urn:bud:金額",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "金額",
+    "en": "Amount"
+   }
+  },
+  {
+   "@id": "urn:bud:限度額",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "限度額",
+    "en": "Limit"
+   }
+  },
+  {
+   "@id": "urn:bud:利用者",
+   "@type": "ObjectProperty",
+   "range": "urn:bud:Person",
+   "label": {
+    "ja": "利用者",
+    "en": "User"
+   }
+  },
+  {
+   "@id": "urn:bud:調達",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:bud:OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:bud:案件",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:bud:金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "調達",
+    "en": "Procurement"
+   },
+   "_comment": "実行された調達。チャネルの要素である。"
+  },
+  {
+   "@id": "urn:bud:調達一覧",
+   "@type": "ObjectProperty",
+   "range": "urn:bud:調達",
+   "label": {
+    "ja": "調達",
+    "en": "Procurements"
+   }
+  },
+  {
+   "@id": "urn:bud:予算",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:bud:OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:bud:利用者",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:bud:限度額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:bud:調達一覧",
+     "minCardinality": 0
+    }
+   ],
+   "label": {
+    "ja": "予算",
+    "en": "Budget"
+   },
+   "_comment": "利用者ごとの予算。多値属性 調達 の値がチャネルの要素（山田が実行した調達）である。"
+  },
+  {
+   "@id": "urn:bud:予算チェック",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:bud:Task"
+   ],
+   "label": {
+    "ja": "予算チェック",
+    "en": "Budget check"
+   }
+  },
+  {
+   "@id": "urn:bud:agent",
+   "@type": "ObjectProperty",
+   "range": "urn:bud:Person",
+   "label": {
+    "ja": "担当者",
+    "en": "Agent"
+   }
+  },
+  {
+   "@id": "urn:bud:起案",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:bud:Task",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:bud:案件",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:bud:金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:bud:agent",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:completeByOkButton",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "起案",
+    "en": "Draft"
+   }
+  }
+ ],
+ "agentProperty": "urn:bud:agent"
+}

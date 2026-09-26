@@ -1,0 +1,103 @@
+{
+ "_comment": "山田の予算には、既に実行された調達A（30万）が入っている。",
+ "urn:bud:予算": [
+  {
+   "@id": "urn:entity:予算.山田",
+   "urn:bud:利用者": "urn:entity:山田",
+   "urn:bud:限度額": 500000,
+   "urn:bud:調達一覧": [
+    "urn:entity:調達.A"
+   ]
+  }
+ ],
+ "urn:bud:調達": [
+  {
+   "@id": "urn:entity:調達.A",
+   "urn:bud:案件": "A",
+   "urn:bud:金額": 300000
+  },
+  {
+   "_comment": "調達(案件: N, 金額: X) :- 起案(案件: N, 金額: X, 担当者: 山田).  予算の要素になった調達は、それぞれ山田の起案として走る（追記237：要素は制約ノード）。",
+   "@id": "urn:node:調達.head",
+   "@type": "urn:bud:調達",
+   "urn:bud:案件": {
+    "@id": "#N"
+   },
+   "urn:bud:金額": {
+    "@id": "#X"
+   },
+   "variables": [
+    {
+     "@id": "#N",
+     "variableName": "N"
+    },
+    {
+     "@id": "#X",
+     "variableName": "X"
+    }
+   ],
+   "internalGraph": [
+    {
+     "@id": "urn:node:起案",
+     "@type": "urn:bud:起案",
+     "urn:bud:案件": {
+      "@id": "#N"
+     },
+     "urn:bud:金額": {
+      "@id": "#X"
+     },
+     "urn:bud:agent": "urn:entity:山田"
+    }
+   ]
+  }
+ ],
+ "urn:bud:予算チェック": [
+  {
+   "_comment": "予算チェック() :- 予算(利用者: 山田, 限度額: L, 調達: 調達(金額: X)), ≧(L, X).  X は山田の調達の金額を集めた多値で、≧ はその和に掛かる。",
+   "@id": "urn:node:予算チェック.head",
+   "@type": "urn:bud:予算チェック",
+   "variables": [
+    {
+     "@id": "#L",
+     "variableName": "L"
+    },
+    {
+     "@id": "#X",
+     "variableName": "X"
+    }
+   ],
+   "internalGraph": [
+    {
+     "@id": "urn:node:山田の予算",
+     "@type": "urn:bud:予算",
+     "urn:bud:利用者": "urn:entity:山田",
+     "urn:bud:限度額": {
+      "@id": "#L"
+     },
+     "urn:bud:調達一覧": {
+      "@type": "urn:bud:調達",
+      "urn:bud:金額": {
+       "@id": "#X"
+      }
+     }
+    },
+    {
+     "@id": "urn:node:限度額チェック",
+     "@type": "urn:bud:Geq",
+     "arg1": {
+      "@id": "#L"
+     },
+     "arg2": {
+      "@id": "#X"
+     }
+    }
+   ]
+  }
+ ],
+ "urn:bud:起案": [
+  {
+   "@id": "urn:node:起案.head",
+   "@type": "urn:bud:起案"
+  }
+ ]
+}
