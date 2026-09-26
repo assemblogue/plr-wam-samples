@@ -1,5 +1,5 @@
 {
- "_comment": "KOBUY の 受注 → 納期回答 → 出荷 → 検収 の例題（例題④）。サプライヤ用マニュアル §3.2.1「受注機能」・§3.2.2「出荷機能」。担当者がバイヤー → サプライヤ → バイヤー と組織をまたいで移ること、「納期未回答出荷可能区分」（§3.2.2.1）が企業ごとの代替節になること、出荷取消（§3.2.2.2）が引き戻しで書けることを確かめる。",
+ "_comment": "KOBUY の 受注 → 納期回答 → 出荷 → 検収 の例題（例題④）。サプライヤ用マニュアル §3.2.1「受注機能」・§3.2.2「出荷機能」。担当者がバイヤー → サプライヤ → バイヤー と組織をまたいで移ること、「納期未回答出荷可能区分」（§3.2.2.1）が企業ごとの代替節になること、出荷取消（§3.2.2.2）が引き戻しで書けることを確かめる。 追記R368 のチャネルのモデルも当てる——チャネルはチャネル設定をちょうど1つ指し、チャネル設定の下位チャネル設定に応じて下位チャネルができる。バイヤーのチャネルが受注フローを持ち、サプライヤの下位チャネルが受注受付・納期回答・出荷を受け持つ。",
  "@id": "urn:kord:ontology",
  "@type": "Ontology",
  "agentProperty": "urn:kord:agent",
@@ -116,6 +116,24 @@
    "label": {
     "ja": "補償不可能",
     "en": "Non compensable"
+   }
+  },
+  {
+   "@id": "urn:kord:Channel",
+   "@type": "Class",
+   "label": {
+    "ja": "チャネル",
+    "en": "Channel"
+   }
+  },
+  {
+   "_comment": "ゴール節の頭部が持つチャネルの引数（追記263）。エンジンにはこの属性idだけを注入する。",
+   "@id": "urn:kord:channel",
+   "@type": "ObjectProperty",
+   "range": "urn:kord:Channel",
+   "label": {
+    "ja": "チャネル",
+    "en": "Channel"
    }
   },
   {
@@ -523,7 +541,13 @@
    "@id": "urn:kord:受注ゴール",
    "@type": "Class",
    "subClassOf": [
-    "urn:kord:Goal"
+    "urn:kord:Goal",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:channel",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
    ],
    "label": {
     "ja": "受注ゴール",
@@ -534,12 +558,19 @@
    "@id": "urn:kord:受注ゴールT",
    "@type": "Class",
    "subClassOf": [
-    "urn:kord:Goal"
+    "urn:kord:Goal",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kord:channel",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
    ],
    "label": {
     "ja": "受注ゴール（T社）",
     "en": "Order goal (company T)"
    }
   }
- ]
+ ],
+ "channelProperty": "urn:kord:channel"
 }

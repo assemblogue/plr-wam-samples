@@ -2,6 +2,30 @@
   "_comment": "T社。納期未回答出荷可能区分が「可能」なので納期回答が無い。納品段取りの節だけが違い、受注フローの節は S社 と同じである。",
   "sessionId": "sess-kord-t",
   "agentProperty": "urn:kord:agent",
+  "channelProperty": "urn:kord:channel",
+  "channelSettings": {
+    "urn:setting:受注": {
+      "includesTask": [
+        "urn:kord:受注フロー",
+        "urn:kord:注文",
+        "urn:kord:検収"
+      ],
+      "subChannelSchema": [
+        "urn:setting:サプライヤ"
+      ]
+    },
+    "urn:setting:サプライヤ": {
+      "includesTask": [
+        "urn:kord:受注受付",
+        "urn:kord:納品段取り",
+        "urn:kord:納期回答",
+        "urn:kord:出荷"
+      ]
+    }
+  },
+  "channels": {
+    "urn:channel:バイヤー": "urn:setting:受注"
+  },
   "steps": [
     {
       "task": "urn:node:注文",

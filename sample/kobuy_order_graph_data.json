@@ -11,7 +11,8 @@
      "@type": "urn:kord:受注フロー",
      "urn:kord:企業": "urn:entity:S社"
     }
-   ]
+   ],
+   "urn:kord:channel": "urn:channel:バイヤー"
   }
  ],
  "urn:kord:受注ゴールT": [
@@ -25,7 +26,8 @@
      "@type": "urn:kord:受注フロー",
      "urn:kord:企業": "urn:entity:T社"
     }
-   ]
+   ],
+   "urn:kord:channel": "urn:channel:バイヤー"
   }
  ],
  "urn:kord:受注フロー": [

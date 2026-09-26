@@ -2,6 +2,30 @@
   "_comment": "S社。注文6個に対して8個を出荷しようとして失敗する筋（≧ の制約が効く）。",
   "sessionId": "sess-kord-over",
   "agentProperty": "urn:kord:agent",
+  "channelProperty": "urn:kord:channel",
+  "channelSettings": {
+    "urn:setting:受注": {
+      "includesTask": [
+        "urn:kord:受注フロー",
+        "urn:kord:注文",
+        "urn:kord:検収"
+      ],
+      "subChannelSchema": [
+        "urn:setting:サプライヤ"
+      ]
+    },
+    "urn:setting:サプライヤ": {
+      "includesTask": [
+        "urn:kord:受注受付",
+        "urn:kord:納品段取り",
+        "urn:kord:納期回答",
+        "urn:kord:出荷"
+      ]
+    }
+  },
+  "channels": {
+    "urn:channel:バイヤー": "urn:setting:受注"
+  },
   "steps": [
     {
       "task": "urn:node:注文",
