@@ -1,0 +1,70 @@
+{
+  "_comment": "順序②: 案件順に片付ける（A → B → C → D → E）。順序①と担当者の動く順は違うが、**最終状態は同じ**になるはずである。",
+  "sessionId": "sess-inbox-2",
+  "agentProperty": "urn:inbox:agent",
+  "steps": [
+    {
+      "task": "urn:node:起案",
+      "nth": 1,
+      "values": {
+        "urn:inbox:金額": 300000
+      },
+      "ok": true,
+      "comment": "山田: 起案A に30万"
+    },
+    {
+      "task": "urn:node:承認",
+      "nth": 1,
+      "ok": true,
+      "comment": "鈴木: 承認A"
+    },
+    {
+      "task": "urn:node:起案",
+      "nth": 2,
+      "values": {
+        "urn:inbox:金額": 800000
+      },
+      "ok": true,
+      "comment": "佐藤: 起案B に80万"
+    },
+    {
+      "task": "urn:node:承認",
+      "nth": 2,
+      "ok": true,
+      "comment": "鈴木: 承認B"
+    },
+    {
+      "task": "urn:node:起案",
+      "nth": 3,
+      "values": {
+        "urn:inbox:金額": 150000
+      },
+      "ok": true,
+      "comment": "山田: 起案C に15万"
+    },
+    {
+      "task": "urn:node:承認",
+      "nth": 3,
+      "ok": true,
+      "comment": "田中: 承認C"
+    },
+    {
+      "task": "urn:node:検収作業",
+      "nth": 1,
+      "values": {
+        "urn:inbox:数量": 5
+      },
+      "ok": true,
+      "comment": "佐藤: 検収D"
+    },
+    {
+      "task": "urn:node:検収作業",
+      "nth": 2,
+      "values": {
+        "urn:inbox:数量": 10
+      },
+      "ok": true,
+      "comment": "山田: 検収E"
+    }
+  ]
+}

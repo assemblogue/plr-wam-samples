@@ -1,0 +1,237 @@
+{
+ "_comment": "Then が無いので5案件は並行に立つ。各案件の中だけが 起案→承認 の順である。",
+ "urn:inbox:受信箱ゴール": [
+  {
+   "_comment": "調達3件＋検収2件。山田は 起案A・起案C・検収E の3つを抱える（業務種別をまたぐ）。鈴木は 承認A・承認B の2件。",
+   "@id": "urn:node:受信箱ゴール.head",
+   "@type": "urn:inbox:受信箱ゴール",
+   "variables": [
+    {
+     "@id": "#L",
+     "variableName": "L"
+    },
+    {
+     "@id": "#XA",
+     "variableName": "XA"
+    },
+    {
+     "@id": "#XB",
+     "variableName": "XB"
+    },
+    {
+     "@id": "#XC",
+     "variableName": "XC"
+    }
+   ],
+   "internalGraph": [
+    {
+     "@id": "urn:node:限度額を引く",
+     "@type": "urn:inbox:利用者限度額",
+     "urn:inbox:利用者": "urn:entity:山田",
+     "urn:inbox:限度額": {
+      "@id": "#L"
+     }
+    },
+    {
+     "@id": "urn:node:調達A",
+     "@type": "urn:inbox:調達",
+     "urn:inbox:案件": "A",
+     "urn:inbox:起案者": "urn:entity:山田",
+     "urn:inbox:承認者": "urn:entity:鈴木",
+     "urn:inbox:金額": {
+      "@id": "#XA"
+     }
+    },
+    {
+     "@id": "urn:node:調達B",
+     "@type": "urn:inbox:調達",
+     "urn:inbox:案件": "B",
+     "urn:inbox:起案者": "urn:entity:佐藤",
+     "urn:inbox:承認者": "urn:entity:鈴木",
+     "urn:inbox:金額": {
+      "@id": "#XB"
+     }
+    },
+    {
+     "@id": "urn:node:調達C",
+     "@type": "urn:inbox:調達",
+     "urn:inbox:案件": "C",
+     "urn:inbox:起案者": "urn:entity:山田",
+     "urn:inbox:承認者": "urn:entity:田中",
+     "urn:inbox:金額": {
+      "@id": "#XC"
+     }
+    },
+    {
+     "@id": "urn:node:検収D",
+     "@type": "urn:inbox:検収",
+     "urn:inbox:案件": "D",
+     "urn:inbox:検収者": "urn:entity:佐藤"
+    },
+    {
+     "@id": "urn:node:検収E",
+     "@type": "urn:inbox:検収",
+     "urn:inbox:案件": "E",
+     "urn:inbox:検収者": "urn:entity:山田"
+    },
+    {
+     "_comment": "**案件をまたぐ制約。** 山田の限度額 ≧ 案件A＋案件C の合計。案件B は佐藤なので入らない。",
+     "@id": "urn:node:山田の限度額チェック",
+     "@type": "urn:inbox:Geq",
+     "arg1": {
+      "@id": "#L"
+     },
+     "arg2": [
+      {
+       "@id": "#XA"
+      },
+      {
+       "@id": "#XC"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "urn:inbox:調達": [
+  {
+   "_comment": "調達(案件:N, 起案者:U, 承認者:V, 金額:X) :- 起案 --Then--> 承認.",
+   "@id": "urn:node:調達.head",
+   "@type": "urn:inbox:調達",
+   "urn:inbox:案件": {
+    "@id": "#N"
+   },
+   "urn:inbox:起案者": {
+    "@id": "#U"
+   },
+   "urn:inbox:承認者": {
+    "@id": "#W"
+   },
+   "urn:inbox:金額": {
+    "@id": "#X"
+   },
+   "variables": [
+    {
+     "@id": "#N",
+     "variableName": "N"
+    },
+    {
+     "@id": "#U",
+     "variableName": "U"
+    },
+    {
+     "@id": "#W",
+     "variableName": "W"
+    },
+    {
+     "@id": "#X",
+     "variableName": "X"
+    }
+   ],
+   "internalGraph": [
+    {
+     "@id": "urn:node:起案",
+     "@type": "urn:inbox:起案",
+     "urn:inbox:案件": {
+      "@id": "#N"
+     },
+     "urn:inbox:金額": {
+      "@id": "#X"
+     },
+     "urn:inbox:agent": {
+      "@id": "#U"
+     }
+    },
+    {
+     "@id": "urn:node:承認",
+     "@type": "urn:inbox:承認",
+     "urn:inbox:案件": {
+      "@id": "#N"
+     },
+     "urn:inbox:金額": {
+      "@id": "#X"
+     },
+     "urn:inbox:agent": {
+      "@id": "#W"
+     }
+    },
+    {
+     "@id": "urn:node:調達.head#link1",
+     "@type": "urn:inbox:Then",
+     "arg1": {
+      "@id": "urn:node:起案"
+     },
+     "arg2": {
+      "@id": "urn:node:承認"
+     }
+    }
+   ]
+  }
+ ],
+ "urn:inbox:検収": [
+  {
+   "@id": "urn:node:検収.head",
+   "@type": "urn:inbox:検収",
+   "urn:inbox:案件": {
+    "@id": "#N"
+   },
+   "urn:inbox:検収者": {
+    "@id": "#U"
+   },
+   "variables": [
+    {
+     "@id": "#N",
+     "variableName": "N"
+    },
+    {
+     "@id": "#U",
+     "variableName": "U"
+    },
+    {
+     "@id": "#Q",
+     "variableName": "Q"
+    }
+   ],
+   "internalGraph": [
+    {
+     "@id": "urn:node:検収作業",
+     "@type": "urn:inbox:検収作業",
+     "urn:inbox:案件": {
+      "@id": "#N"
+     },
+     "urn:inbox:数量": {
+      "@id": "#Q"
+     },
+     "urn:inbox:agent": {
+      "@id": "#U"
+     }
+    }
+   ]
+  }
+ ],
+ "urn:inbox:利用者限度額": [
+  {
+   "@id": "urn:entity:限度額.山田",
+   "urn:inbox:利用者": "urn:entity:山田",
+   "urn:inbox:限度額": 500000
+  }
+ ],
+ "urn:inbox:起案": [
+  {
+   "@id": "urn:node:起案.head",
+   "@type": "urn:inbox:起案"
+  }
+ ],
+ "urn:inbox:承認": [
+  {
+   "@id": "urn:node:承認.head",
+   "@type": "urn:inbox:承認"
+  }
+ ],
+ "urn:inbox:検収作業": [
+  {
+   "@id": "urn:node:検収作業.head",
+   "@type": "urn:inbox:検収作業"
+  }
+ ]
+}

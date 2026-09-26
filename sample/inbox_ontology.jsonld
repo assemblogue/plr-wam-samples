@@ -1,0 +1,414 @@
+{
+ "_comment": "例題⑤ 担当者の受信箱。調達3案件と検収2案件が同時に走り、4人が自分のぶんを片付ける。1人が複数案件・複数業務種別をまたぐ。山田の限度額は案件をまたいで効く（多値の合計に掛かる制約）。",
+ "@id": "urn:inbox:ontology",
+ "@type": "Ontology",
+ "agentProperty": "urn:inbox:agent",
+ "defines": [
+  {
+   "@id": "urn:inbox:Template",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:isComplete",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "テンプレート",
+    "en": "Template"
+   }
+  },
+  {
+   "@id": "urn:inbox:Atom",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:inbox:Template"
+   ],
+   "label": {
+    "ja": "アトムノード",
+    "en": "Atom"
+   }
+  },
+  {
+   "@id": "urn:inbox:Task",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:inbox:Atom"
+   ],
+   "label": {
+    "ja": "タスクノード",
+    "en": "Task"
+   }
+  },
+  {
+   "@id": "urn:inbox:Constraint",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:inbox:Atom"
+   ],
+   "label": {
+    "ja": "制約ノード",
+    "en": "Constraint"
+   }
+  },
+  {
+   "@id": "urn:inbox:OtherAtom",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:inbox:Atom"
+   ],
+   "label": {
+    "ja": "その他のアトムノード",
+    "en": "Other atom"
+   }
+  },
+  {
+   "@id": "wam:isComplete",
+   "@type": "DatatypeProperty",
+   "domain": "urn:inbox:Template",
+   "range": "string",
+   "label": {
+    "ja": "完成",
+    "en": "Is complete"
+   }
+  },
+  {
+   "@id": "urn:inbox:Cancelable",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:inbox:Task"
+   ],
+   "label": {
+    "ja": "取消可能",
+    "en": "Cancelable"
+   }
+  },
+  {
+   "@id": "urn:inbox:Person",
+   "@type": "Class",
+   "subClassOf": [],
+   "label": {
+    "ja": "人",
+    "en": "Person"
+   }
+  },
+  {
+   "@id": "urn:inbox:agent",
+   "@type": "ObjectProperty",
+   "range": "urn:inbox:Person",
+   "label": {
+    "ja": "担当者",
+    "en": "Agent"
+   }
+  },
+  {
+   "@id": "urn:inbox:Geq",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:inbox:Constraint"
+   ],
+   "label": {
+    "ja": "≧",
+    "en": "AtLeast"
+   },
+   "builtInFunction": "≧",
+   "isConstraint": true
+  },
+  {
+   "@id": "urn:inbox:Then",
+   "@type": "Class",
+   "linkKind": "then",
+   "label": {
+    "ja": "Then",
+    "en": "Then"
+   }
+  },
+  {
+   "@id": "arg1",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "第1引数",
+    "en": "Arg 1"
+   }
+  },
+  {
+   "@id": "arg2",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "第2引数",
+    "en": "Arg 2"
+   }
+  },
+  {
+   "@id": "urn:inbox:案件",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": {
+    "ja": "案件",
+    "en": "Case"
+   }
+  },
+  {
+   "@id": "urn:inbox:金額",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "金額",
+    "en": "Amount"
+   }
+  },
+  {
+   "@id": "urn:inbox:限度額",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "限度額",
+    "en": "Limit"
+   }
+  },
+  {
+   "@id": "urn:inbox:数量",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "数量",
+    "en": "Quantity"
+   }
+  },
+  {
+   "@id": "urn:inbox:利用者",
+   "@type": "ObjectProperty",
+   "range": "urn:inbox:Person",
+   "label": {
+    "ja": "利用者",
+    "en": "User"
+   }
+  },
+  {
+   "@id": "urn:inbox:起案者",
+   "@type": "ObjectProperty",
+   "range": "urn:inbox:Person",
+   "label": {
+    "ja": "起案者",
+    "en": "Drafter"
+   }
+  },
+  {
+   "@id": "urn:inbox:承認者",
+   "@type": "ObjectProperty",
+   "range": "urn:inbox:Person",
+   "label": {
+    "ja": "承認者",
+    "en": "Approver"
+   }
+  },
+  {
+   "@id": "urn:inbox:検収者",
+   "@type": "ObjectProperty",
+   "range": "urn:inbox:Person",
+   "label": {
+    "ja": "検収者",
+    "en": "Inspector"
+   }
+  },
+  {
+   "@id": "urn:inbox:起案",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:inbox:Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:inbox:案件",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:inbox:金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:inbox:agent",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:completeByOkButton",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "起案",
+    "en": "Draft"
+   }
+  },
+  {
+   "@id": "urn:inbox:承認",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:inbox:Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:inbox:案件",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:inbox:金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:inbox:agent",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:completeByOkButton",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "承認",
+    "en": "Approve"
+   }
+  },
+  {
+   "@id": "urn:inbox:検収作業",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:inbox:Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:inbox:案件",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:inbox:数量",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:inbox:agent",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:completeByOkButton",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "検収",
+    "en": "Inspect"
+   }
+  },
+  {
+   "@id": "urn:inbox:調達",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:inbox:OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:inbox:案件",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:inbox:起案者",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:inbox:承認者",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:inbox:金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "調達",
+    "en": "Procurement"
+   }
+  },
+  {
+   "@id": "urn:inbox:検収",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:inbox:OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:inbox:案件",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:inbox:検収者",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "検収",
+    "en": "Acceptance"
+   }
+  },
+  {
+   "@id": "urn:inbox:利用者限度額",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:inbox:OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:inbox:利用者",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:inbox:限度額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "利用者限度額",
+    "en": "User limit"
+   }
+  },
+  {
+   "@id": "urn:inbox:受信箱ゴール",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:inbox:Task"
+   ],
+   "label": {
+    "ja": "受信箱ゴール",
+    "en": "Inbox goal"
+   }
+  }
+ ]
+}

@@ -1,0 +1,70 @@
+{
+  "_comment": "順序①: 山田が自分の3件（起案A・起案C・検収E）を先に片付け、次に佐藤、最後に承認者たち。⚠️ nth は「記録された順」で、OKを押し終えたものも数に残る——起案は A=1・B=2・C=3 で固定である。",
+  "sessionId": "sess-inbox-1",
+  "agentProperty": "urn:inbox:agent",
+  "steps": [
+    {
+      "task": "urn:node:起案",
+      "nth": 1,
+      "values": {
+        "urn:inbox:金額": 300000
+      },
+      "ok": true,
+      "comment": "山田: 起案A に30万"
+    },
+    {
+      "task": "urn:node:起案",
+      "nth": 3,
+      "values": {
+        "urn:inbox:金額": 150000
+      },
+      "ok": true,
+      "comment": "山田: 起案C に15万（A と合わせて45万。限度額50万以内）"
+    },
+    {
+      "task": "urn:node:検収作業",
+      "nth": 2,
+      "values": {
+        "urn:inbox:数量": 10
+      },
+      "ok": true,
+      "comment": "山田: 検収E"
+    },
+    {
+      "task": "urn:node:起案",
+      "nth": 2,
+      "values": {
+        "urn:inbox:金額": 800000
+      },
+      "ok": true,
+      "comment": "佐藤: 起案B に80万（佐藤には限度額の制約が掛からない）"
+    },
+    {
+      "task": "urn:node:検収作業",
+      "nth": 1,
+      "values": {
+        "urn:inbox:数量": 5
+      },
+      "ok": true,
+      "comment": "佐藤: 検収D"
+    },
+    {
+      "task": "urn:node:承認",
+      "nth": 1,
+      "ok": true,
+      "comment": "鈴木: 承認A"
+    },
+    {
+      "task": "urn:node:承認",
+      "nth": 2,
+      "ok": true,
+      "comment": "田中: 承認C"
+    },
+    {
+      "task": "urn:node:承認",
+      "nth": 3,
+      "ok": true,
+      "comment": "鈴木: 承認B"
+    }
+  ]
+}

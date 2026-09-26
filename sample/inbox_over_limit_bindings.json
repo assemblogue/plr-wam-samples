@@ -1,0 +1,25 @@
+{
+  "_comment": "限度額超過の筋: 山田が案件Aに30万、案件Cに30万を起案する。合計60万で限度額50万を超えるので、後から押したほうが失敗する。**案件をまたぐ制約が効いていることの確認。**",
+  "sessionId": "sess-inbox-over",
+  "agentProperty": "urn:inbox:agent",
+  "steps": [
+    {
+      "task": "urn:node:起案",
+      "nth": 1,
+      "values": {
+        "urn:inbox:金額": 300000
+      },
+      "ok": true,
+      "comment": "山田: 起案A に30万"
+    },
+    {
+      "task": "urn:node:起案",
+      "nth": 3,
+      "values": {
+        "urn:inbox:金額": 300000
+      },
+      "ok": true,
+      "comment": "山田: 起案C に30万 → 合計60万で限度額超過"
+    }
+  ]
+}
