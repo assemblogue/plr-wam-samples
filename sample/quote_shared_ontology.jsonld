@@ -115,7 +115,8 @@
         {
           "@type": "Restriction",
           "onProperty": "urn:quote:lineItem",
-          "minCardinality": 1
+          "minCardinality": 1,
+          "maxCardinality": 99
         },
         {
           "@type": "Restriction",
