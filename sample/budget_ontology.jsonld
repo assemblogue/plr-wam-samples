@@ -1,5 +1,5 @@
 {
- "_comment": "【検証用】多値属性はホーン節のアトムノードが持ち、その値がチャネルの要素である。山田の予算の 調達 に、山田が実行した調達が並ぶ。新しい調達を足すと、既存分との合計が限度額に掛かる。",
+ "_comment": "【検証用】多値属性はホーン節のアトムノードが持ち、その値がチャネルの要素である。山田の予算の 調達 に、山田が実行した調達が並ぶ。新しい調達を足すと、既存分との合計が限度額に掛かる。 追記R373: 済んだ起案はチャネル（山田のチャネル）に入り、調達のノードの内部グラフに現れる。解き直しで済んだ調達を実行し直さない判定はこれを見る。",
  "@id": "urn:bud:ontology",
  "@type": "Ontology",
  "defines": [
@@ -213,7 +213,13 @@
    "@id": "urn:bud:予算チェック",
    "@type": "Class",
    "subClassOf": [
-    "urn:bud:Task"
+    "urn:bud:Task",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:bud:channel",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
    ],
    "label": {
     "ja": "予算チェック",
@@ -263,7 +269,37 @@
     "ja": "起案",
     "en": "Draft"
    }
+  },
+  {
+   "@id": "urn:bud:Channel",
+   "@type": "Class",
+   "label": {
+    "ja": "チャネル",
+    "en": "Channel"
+   }
+  },
+  {
+   "_comment": "ゴール節の頭部が持つチャネルの引数（追記263）。",
+   "@id": "urn:bud:channel",
+   "@type": "ObjectProperty",
+   "range": "urn:bud:Channel",
+   "label": {
+    "ja": "チャネル",
+    "en": "Channel"
+   }
   }
  ],
- "agentProperty": "urn:bud:agent"
+ "agentProperty": "urn:bud:agent",
+ "channelProperty": "urn:bud:channel",
+ "channelSettings": {
+  "urn:setting:予算": {
+   "includesTask": [
+    "urn:bud:予算チェック",
+    "urn:bud:起案"
+   ]
+  }
+ },
+ "channels": {
+  "urn:channel:山田": "urn:setting:予算"
+ }
 }
