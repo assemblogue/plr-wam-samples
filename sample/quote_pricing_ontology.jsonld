@@ -1,0 +1,657 @@
+{
+ "_comment": "見積書の明細で、単価と掛率を KOBUY の価格設定の優先順位（購買マニュアル（サプライヤ）§3.1.6.4）で求める例題。商品はチャネル（商品マスターDB）から照合し、その単価を元単価とする。",
+ "@id": "urn:qp:ontology",
+ "@type": "Ontology",
+ "defines": [
+  {
+   "@id": "urn:qp:Template",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:isComplete",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "テンプレート",
+    "en": "Template"
+   }
+  },
+  {
+   "@id": "urn:qp:Atom",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:qp:Template"
+   ],
+   "label": {
+    "ja": "アトムノード",
+    "en": "Atom"
+   }
+  },
+  {
+   "@id": "urn:qp:Task",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:qp:Atom"
+   ],
+   "label": {
+    "ja": "タスクノード",
+    "en": "Task"
+   }
+  },
+  {
+   "@id": "urn:qp:Constraint",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:qp:Atom"
+   ],
+   "label": {
+    "ja": "制約ノード",
+    "en": "Constraint"
+   }
+  },
+  {
+   "@id": "urn:qp:OtherAtom",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:qp:Atom"
+   ],
+   "label": {
+    "ja": "その他のアトムノード",
+    "en": "Other atom"
+   }
+  },
+  {
+   "@id": "urn:qp:Goal",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:qp:Task"
+   ],
+   "label": {
+    "ja": "ゴール",
+    "en": "Goal"
+   }
+  },
+  {
+   "@id": "urn:qp:Equals",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:qp:Constraint"
+   ],
+   "builtInFunction": "=",
+   "isConstraint": true,
+   "label": {
+    "ja": "＝",
+    "en": "Equals"
+   }
+  },
+  {
+   "@id": "urn:qp:Times",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:qp:Constraint"
+   ],
+   "builtInFunction": "×",
+   "isConstraint": true,
+   "label": {
+    "ja": "×",
+    "en": "Times"
+   }
+  },
+  {
+   "_comment": "見積書。明細の金額を集めて総額を出す。",
+   "@id": "urn:qp:見積書",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:qp:Goal",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:明細一覧",
+     "minCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:総額",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "見積書",
+    "en": "Quote"
+   }
+  },
+  {
+   "_comment": "明細。商品（チャネルの商品マスターDB）とバイヤーから単価と掛率を求め、金額 = 単価 × 掛率 × 数量。",
+   "@id": "urn:qp:明細",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:qp:Constraint",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:商品",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:バイヤー",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:数量",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:単価",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:掛率",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:金額",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "明細",
+    "en": "Quote line"
+   }
+  },
+  {
+   "_comment": "商品マスターDB（チャネル）のレコード。単価は掛率を掛ける元の単価（定価）である。",
+   "@id": "urn:qp:商品",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:名前",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:単価",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "商品",
+    "en": "Product"
+   }
+  },
+  {
+   "@id": "urn:qp:カテゴリ",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:名前",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "商品カテゴリ",
+    "en": "Category"
+   }
+  },
+  {
+   "@id": "urn:qp:バイヤー",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:名前",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "バイヤー",
+    "en": "Buyer"
+   }
+  },
+  {
+   "_comment": "購買マニュアル（サプライヤ）§3.1.6.4 の優先順位で、単価と掛率を求める。実際の単価は 単価 × 掛率。",
+   "@id": "urn:qp:単価・掛率",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:qp:OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:商品",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:バイヤー",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:元単価",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:単価",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:掛率",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "単価・掛率",
+    "en": "Price and rate"
+   }
+  },
+  {
+   "@id": "urn:qp:上位カテゴリ",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:qp:OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:対象",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:カテゴリ",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "上位カテゴリ",
+    "en": "Ancestor category"
+   }
+  },
+  {
+   "_comment": "チャネルのレコード。対象（商品またはカテゴリ）の直上のカテゴリ。",
+   "@id": "urn:qp:直上カテゴリ",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:対象",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:カテゴリ",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "直上カテゴリ",
+    "en": "Parent category"
+   }
+  },
+  {
+   "_comment": "① 商品単位・バイヤー指定有・単価",
+   "@id": "urn:qp:商品・バイヤー・単価",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:商品",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:バイヤー",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:単価",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "商品・バイヤー・単価",
+    "en": "Product-buyer price"
+   }
+  },
+  {
+   "_comment": "① 商品単位・バイヤー指定有・掛率",
+   "@id": "urn:qp:商品・バイヤー・掛率",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:商品",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:バイヤー",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:掛率",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "商品・バイヤー・掛率",
+    "en": "Product-buyer rate"
+   }
+  },
+  {
+   "_comment": "② 商品単位・バイヤー指定無・単価",
+   "@id": "urn:qp:商品・単価",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:商品",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:単価",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "商品・単価",
+    "en": "Product price"
+   }
+  },
+  {
+   "_comment": "② 商品単位・バイヤー指定無・掛率",
+   "@id": "urn:qp:商品・掛率",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:商品",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:掛率",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "商品・掛率",
+    "en": "Product rate"
+   }
+  },
+  {
+   "_comment": "③ 商品カテゴリ単位・バイヤー指定有",
+   "@id": "urn:qp:カテゴリ・バイヤー・掛率",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:カテゴリ",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:バイヤー",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:掛率",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "カテゴリ・バイヤー・掛率",
+    "en": "Category-buyer rate"
+   }
+  },
+  {
+   "_comment": "④ 商品カテゴリ単位・バイヤー指定無",
+   "@id": "urn:qp:カテゴリ・掛率",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:カテゴリ",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:掛率",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "カテゴリ・掛率",
+    "en": "Category rate"
+   }
+  },
+  {
+   "_comment": "⑤ バイヤー単位・バイヤー指定有",
+   "@id": "urn:qp:バイヤー・掛率",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:バイヤー",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:掛率",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "バイヤー・掛率",
+    "en": "Buyer rate"
+   }
+  },
+  {
+   "_comment": "⑥ バイヤー単位・バイヤー指定無",
+   "@id": "urn:qp:全体掛率",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:掛率",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "全体掛率",
+    "en": "Rate for all buyers"
+   }
+  },
+  {
+   "@id": "urn:qp:明細一覧",
+   "@type": "ObjectProperty",
+   "range": "urn:qp:明細",
+   "label": {
+    "ja": "明細",
+    "en": "Lines"
+   }
+  },
+  {
+   "@id": "urn:qp:総額",
+   "@type": "DatatypeProperty",
+   "range": "decimal",
+   "label": {
+    "ja": "総額",
+    "en": "Total"
+   }
+  },
+  {
+   "@id": "urn:qp:商品",
+   "@type": "ObjectProperty",
+   "range": "urn:qp:商品",
+   "label": {
+    "ja": "商品",
+    "en": "Product"
+   }
+  },
+  {
+   "@id": "urn:qp:バイヤー",
+   "@type": "ObjectProperty",
+   "range": "urn:qp:バイヤー",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:名前",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "バイヤー",
+    "en": "Buyer"
+   }
+  },
+  {
+   "@id": "urn:qp:数量",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "数量",
+    "en": "Quantity"
+   }
+  },
+  {
+   "@id": "urn:qp:単価",
+   "@type": "DatatypeProperty",
+   "range": "decimal",
+   "label": {
+    "ja": "単価",
+    "en": "Unit price"
+   }
+  },
+  {
+   "@id": "urn:qp:元単価",
+   "@type": "DatatypeProperty",
+   "range": "decimal",
+   "label": {
+    "ja": "元単価",
+    "en": "Base unit price"
+   }
+  },
+  {
+   "@id": "urn:qp:掛率",
+   "@type": "DatatypeProperty",
+   "range": "decimal",
+   "label": {
+    "ja": "掛率",
+    "en": "Rate"
+   }
+  },
+  {
+   "@id": "urn:qp:金額",
+   "@type": "DatatypeProperty",
+   "range": "decimal",
+   "label": {
+    "ja": "金額",
+    "en": "Amount"
+   }
+  },
+  {
+   "@id": "urn:qp:名前",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": {
+    "ja": "名前",
+    "en": "Name"
+   }
+  },
+  {
+   "@id": "urn:qp:対象",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "対象",
+    "en": "Subject"
+   }
+  },
+  {
+   "@id": "urn:qp:カテゴリ",
+   "@type": "ObjectProperty",
+   "range": "urn:qp:カテゴリ",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:qp:名前",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "カテゴリ",
+    "en": "Category"
+   }
+  },
+  {
+   "_comment": "アトムノードの once（最初の解で確定し、バックトラックしない）。既定は false。追記R384。",
+   "@id": "wam:once",
+   "@type": "DatatypeProperty",
+   "range": "boolean",
+   "label": {
+    "ja": "once",
+    "en": "Once"
+   }
+  },
+  {
+   "@id": "wam:isComplete",
+   "@type": "DatatypeProperty",
+   "domain": "urn:qp:Template",
+   "range": "string",
+   "label": {
+    "ja": "完成",
+    "en": "Is complete"
+   }
+  }
+ ]
+}
