@@ -32,7 +32,7 @@
  "urn:mship:出荷+": [
   {
    "@id": "urn:node:出荷+.head", "@type": "urn:mship:出荷+",
-   "urn:mship:引数": {
+   "urn:mship:出荷+引数": {
     "@type": "urn:mship:出荷",
     "urn:mship:出荷数": {"@id": "#S5"},
     "urn:mship:出荷済数": {"@id": "#Shipped5"},
@@ -52,7 +52,7 @@
  "urn:mship:検収+": [
   {
    "@id": "urn:node:検収+.head", "@type": "urn:mship:検収+",
-   "urn:mship:引数": {
+   "urn:mship:検収+引数": {
     "@type": "urn:mship:検収",
     "urn:mship:納入数": {"@id": "#S7"},
     "urn:mship:返品数": {"@id": "#R7"}
@@ -67,7 +67,7 @@
  "urn:mship:出荷検収+": [
   {
    "@id": "urn:node:出荷検収+.完了.head", "@type": "urn:mship:出荷検収+",
-   "urn:mship:引数": {
+   "urn:mship:出荷検収+引数": {
     "@type": "urn:mship:出荷検収",
     "urn:mship:商品": {"@id": "#Item0"},
     "urn:mship:出荷済数": {"@id": "#Shipped0"},
@@ -84,7 +84,7 @@
   },
   {
    "@id": "urn:node:出荷検収+.継続.head", "@type": "urn:mship:出荷検収+",
-   "urn:mship:引数": {
+   "urn:mship:出荷検収+引数": {
     "@type": "urn:mship:出荷検収",
     "urn:mship:商品": {"@id": "#Item"},
     "urn:mship:出荷済数": {"@id": "#Shipped"},
@@ -108,7 +108,7 @@
    "internalGraph": [
     {
      "@id": "urn:node:出荷", "@type": "urn:mship:出荷+",
-     "urn:mship:引数": {
+     "urn:mship:出荷+引数": {
       "@type": "urn:mship:出荷",
       "node": {"@id": "#X"},
       "urn:mship:商品": {"@id": "#Item"},
@@ -121,7 +121,7 @@
     },
     {
      "@id": "urn:node:検収", "@type": "urn:mship:検収+",
-     "urn:mship:引数": {
+     "urn:mship:検収+引数": {
       "@type": "urn:mship:検収",
       "node": {"@id": "#Y"},
       "urn:mship:商品": {"@id": "#Item"},
@@ -133,7 +133,7 @@
     },
     {
      "@id": "urn:node:再帰", "@type": "urn:mship:出荷検収+",
-     "urn:mship:引数": {
+     "urn:mship:出荷検収+引数": {
       "@type": "urn:mship:出荷検収",
       "node": {"@id": "#Z"},
       "urn:mship:商品": {"@id": "#Item"},
@@ -152,7 +152,7 @@
    "internalGraph": [
     {
      "@id": "urn:node:出荷検収+呼び出し", "@type": "urn:mship:出荷検収+",
-     "urn:mship:引数": [
+     "urn:mship:出荷検収+引数": [
       {"@type": "urn:mship:出荷検収", "urn:mship:商品": "えんぴつ", "urn:mship:出荷済数": 0, "urn:mship:要出荷数": 60},
       {"@type": "urn:mship:出荷検収", "urn:mship:商品": "消しゴム", "urn:mship:出荷済数": 0, "urn:mship:要出荷数": 100}
      ]
