@@ -197,13 +197,13 @@
           "@type": "Restriction",
           "onProperty": "urn:ship:出荷済数",
           "minCardinality": 1,
-          "_comment": "多値。再帰で [Shipped, S] のように渡す——値は構文上リスト、意味の上でその和（追記R385）"
+          "maxCardinality": 1
         },
         {
           "@type": "Restriction",
           "onProperty": "urn:ship:要出荷数",
           "minCardinality": 1,
-          "_comment": "多値。再帰で [Shipped, S] のように渡す——値は構文上リスト、意味の上でその和（追記R385）"
+          "maxCardinality": 1
         }
       ],
       "label": {
