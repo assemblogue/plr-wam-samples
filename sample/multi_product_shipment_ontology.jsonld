@@ -71,7 +71,7 @@
    "_comment": "出荷+はタスクである（保留・完成確認・担当者を持つ）。橋田さんの節（2026-09-20）どおり、`引数`に`出荷(出荷数:S,...)`を渡して呼ぶ——`出荷`自身の合成URI（`出荷検収`の`出荷同一性`から来る）に対して、`出荷`の候補節（`≧`）を実行する。",
    "@id": "urn:mship:出荷+", "@type": "Class",
    "subClassOf": ["urn:ship:Task",
-    {"@type": "Restriction", "onProperty": "urn:mship:引数", "minCardinality": 1, "maxCardinality": 9},
+    {"@type": "Restriction", "onProperty": "urn:mship:引数", "minCardinality": 1, "maxCardinality": 1},
     {"@type": "Restriction", "onProperty": "urn:mship:agent", "minCardinality": 1, "maxCardinality": 1},
     {"@type": "Restriction", "onProperty": "wam:completeByOkButton", "minCardinality": 0, "maxCardinality": 1}],
    "label": {"ja": "出荷+", "en": "ShipTask"}
@@ -97,7 +97,7 @@
    "_comment": "検収+はタスクである（2026-09-20）。",
    "@id": "urn:mship:検収+", "@type": "Class",
    "subClassOf": ["urn:ship:Task",
-    {"@type": "Restriction", "onProperty": "urn:mship:引数", "minCardinality": 1, "maxCardinality": 9},
+    {"@type": "Restriction", "onProperty": "urn:mship:引数", "minCardinality": 1, "maxCardinality": 1},
     {"@type": "Restriction", "onProperty": "urn:mship:agent", "minCardinality": 1, "maxCardinality": 1},
     {"@type": "Restriction", "onProperty": "wam:completeByOkButton", "minCardinality": 0, "maxCardinality": 1}],
    "label": {"ja": "検収+", "en": "InspectTask"}
