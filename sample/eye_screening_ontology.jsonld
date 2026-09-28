@@ -1,0 +1,533 @@
+{
+ "_comment": "視覚検査（3歳児健診）の例題。判定と結果はどれも**制約ノード**で、ユーザは9つの欄のどれにでも入力できる——入れた欄から、他の欄の範囲が絞られる（逆向きにも効く）。**値は言及されているものしかない。**屈折・眼位は所見の多値で、**所見が無いことは空の多値 `[]` を入れて表す**（未入力とは別。確定ではなく、ふつうの値としていつでも変えられる）。視力は boolean（真＝弱視疑い）。",
+ "@id": "urn:eye:ontology",
+ "@type": "Ontology",
+ "agentProperty": "urn:eye:agent",
+ "defines": [
+  {
+   "@id": "urn:eye:Template",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:isComplete",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "テンプレート"
+   }
+  },
+  {
+   "@id": "urn:eye:Atom",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:eye:Template"
+   ],
+   "label": {
+    "ja": "アトムノード"
+   }
+  },
+  {
+   "@id": "urn:eye:Task",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:eye:Atom"
+   ],
+   "label": {
+    "ja": "タスクノード"
+   }
+  },
+  {
+   "@id": "urn:eye:Goal",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:eye:Task"
+   ],
+   "label": {
+    "ja": "ゴール"
+   }
+  },
+  {
+   "@id": "urn:eye:Constraint",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:eye:Atom"
+   ],
+   "label": {
+    "ja": "制約ノード"
+   }
+  },
+  {
+   "@id": "wam:isComplete",
+   "@type": "DatatypeProperty",
+   "domain": "urn:eye:Template",
+   "range": "string",
+   "label": {
+    "ja": "完成"
+   }
+  },
+  {
+   "@id": "urn:eye:Person",
+   "@type": "Class",
+   "subClassOf": [],
+   "label": {
+    "ja": "人"
+   }
+  },
+  {
+   "@id": "urn:eye:agent",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "担当者"
+   },
+   "range": "urn:eye:Person"
+  },
+  {
+   "@id": "urn:eye:agentWithOK",
+   "@type": "ObjectProperty",
+   "subPropertyOf": "urn:eye:agent",
+   "range": "urn:eye:Person",
+   "label": {
+    "ja": "担当者"
+   }
+  },
+  {
+   "@id": "urn:eye:count",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:eye:Constraint"
+   ],
+   "label": {
+    "ja": "count"
+   },
+   "builtInFunction": "count",
+   "isConstraint": true,
+   "_comment": "**arg の多値がすべてリテラル値のときに、その個数を val とする**（追記K358）。多値は要素まで降りて数える。"
+  },
+  {
+   "@id": "urn:eye:Gt",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:eye:Constraint"
+   ],
+   "label": {
+    "ja": ">"
+   },
+   "builtInFunction": ">",
+   "isConstraint": true
+  },
+  {
+   "@id": "urn:eye:Subset",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:eye:Constraint"
+   ],
+   "label": {
+    "ja": "⊆"
+   },
+   "builtInFunction": "⊆",
+   "isConstraint": true,
+   "_comment": "**arg1 の要素がすべて arg2 の要素か**（追記K358）。判定だけで値を入れない。"
+  },
+  {
+   "@id": "arg",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "対象"
+   }
+  },
+  {
+   "@id": "val",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "個数"
+   }
+  },
+  {
+   "@id": "arg1",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "第1引数"
+   }
+  },
+  {
+   "@id": "arg2",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "第2引数"
+   }
+  },
+  {
+   "@id": "urn:eye:屈折所見",
+   "@type": "Class",
+   "subClassOf": [],
+   "label": {
+    "ja": "屈折所見"
+   }
+  },
+  {
+   "@id": "urn:eye:眼位所見",
+   "@type": "Class",
+   "subClassOf": [],
+   "label": {
+    "ja": "眼位所見"
+   }
+  },
+  {
+   "@id": "urn:eye:判定値",
+   "@type": "Class",
+   "subClassOf": [],
+   "label": {
+    "ja": "判定値"
+   }
+  },
+  {
+   "@id": "urn:eye:結果値",
+   "@type": "Class",
+   "subClassOf": [],
+   "label": {
+    "ja": "結果値"
+   }
+  },
+  {
+   "@id": "urn:eye:屈折検査右",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "屈折検査(右)"
+   },
+   "range": "urn:eye:屈折所見"
+  },
+  {
+   "@id": "urn:eye:屈折検査左",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "屈折検査(左)"
+   },
+   "range": "urn:eye:屈折所見"
+  },
+  {
+   "@id": "urn:eye:視力検査右",
+   "@type": "DatatypeProperty",
+   "label": {
+    "ja": "視力検査(右) 弱視疑い"
+   },
+   "range": "boolean"
+  },
+  {
+   "@id": "urn:eye:視力検査左",
+   "@type": "DatatypeProperty",
+   "label": {
+    "ja": "視力検査(左) 弱視疑い"
+   },
+   "range": "boolean"
+  },
+  {
+   "@id": "urn:eye:眼位検査",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "眼位検査"
+   },
+   "range": "urn:eye:眼位所見"
+  },
+  {
+   "@id": "urn:eye:屈折検査判定値",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "屈折検査判定"
+   },
+   "range": "urn:eye:判定値"
+  },
+  {
+   "@id": "urn:eye:視力検査判定値",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "視力検査判定"
+   },
+   "range": "urn:eye:判定値"
+  },
+  {
+   "@id": "urn:eye:眼位検査判定値",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "眼位検査判定"
+   },
+   "range": "urn:eye:判定値"
+  },
+  {
+   "@id": "urn:eye:結果",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "結果"
+   },
+   "range": "urn:eye:結果値"
+  },
+  {
+   "@id": "urn:eye:右",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "右"
+   },
+   "range": "urn:eye:屈折所見"
+  },
+  {
+   "@id": "urn:eye:左",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "左"
+   },
+   "range": "urn:eye:屈折所見"
+  },
+  {
+   "@id": "urn:eye:視力右",
+   "@type": "DatatypeProperty",
+   "label": {
+    "ja": "右"
+   },
+   "range": "boolean"
+  },
+  {
+   "@id": "urn:eye:視力左",
+   "@type": "DatatypeProperty",
+   "label": {
+    "ja": "左"
+   },
+   "range": "boolean"
+  },
+  {
+   "@id": "urn:eye:眼位",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "眼位"
+   },
+   "range": "urn:eye:眼位所見"
+  },
+  {
+   "@id": "urn:eye:判定",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "判定"
+   },
+   "range": "urn:eye:判定値"
+  },
+  {
+   "@id": "urn:eye:屈折",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "屈折"
+   },
+   "range": "urn:eye:判定値"
+  },
+  {
+   "@id": "urn:eye:視力",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "視力"
+   },
+   "range": "urn:eye:判定値"
+  },
+  {
+   "@id": "urn:eye:眼位判定",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "眼位判定"
+   },
+   "range": "urn:eye:判定値"
+  },
+  {
+   "@id": "urn:eye:結果値の欄",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "結果"
+   },
+   "range": "urn:eye:結果値"
+  },
+  {
+   "@id": "urn:eye:視覚検査",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:eye:Goal",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:eye:屈折検査右",
+     "minCardinality": 0,
+     "maxCardinality": 3
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:eye:屈折検査左",
+     "minCardinality": 0,
+     "maxCardinality": 3
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:eye:視力検査右",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:eye:視力検査左",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:eye:眼位検査",
+     "minCardinality": 0,
+     "maxCardinality": 4
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:eye:屈折検査判定値",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:eye:視力検査判定値",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:eye:眼位検査判定値",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:eye:結果",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:eye:agentWithOK",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "視覚検査"
+   }
+  },
+  {
+   "@id": "urn:eye:屈折検査判定",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:eye:Constraint",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:eye:右",
+     "minCardinality": 0,
+     "maxCardinality": 3
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:eye:左",
+     "minCardinality": 0,
+     "maxCardinality": 3
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:eye:判定",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "屈折検査判定"
+   },
+   "isConstraint": true
+  },
+  {
+   "@id": "urn:eye:視力検査判定",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:eye:Constraint",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:eye:視力右",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:eye:視力左",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:eye:判定",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "視力検査判定"
+   },
+   "isConstraint": true
+  },
+  {
+   "@id": "urn:eye:眼位検査判定",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:eye:Constraint",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:eye:眼位",
+     "minCardinality": 0,
+     "maxCardinality": 4
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:eye:判定",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "眼位検査判定"
+   },
+   "isConstraint": true
+  },
+  {
+   "@id": "urn:eye:結果判定",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:eye:Constraint",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:eye:屈折",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:eye:視力",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:eye:眼位判定",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:eye:結果値の欄",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "結果判定"
+   },
+   "isConstraint": true
+  }
+ ]
+}
