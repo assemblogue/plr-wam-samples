@@ -85,6 +85,15 @@
    "range": "urn:eye:Person"
   },
   {
+   "@id": "urn:eye:agentWithOK",
+   "@type": "ObjectProperty",
+   "subPropertyOf": "urn:eye:agent",
+   "range": "urn:eye:Person",
+   "label": {
+    "ja": "担当者"
+   }
+  },
+  {
    "@id": "urn:eye:count",
    "@type": "Class",
    "subClassOf": [
@@ -395,14 +404,8 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "urn:eye:agent",
+     "onProperty": "urn:eye:agentWithOK",
      "minCardinality": 1,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "wam:completeByOkButton",
-     "minCardinality": 0,
      "maxCardinality": 1
     }
    ],

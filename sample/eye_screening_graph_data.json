@@ -32,7 +32,7 @@
    "urn:eye:結果": {
     "@id": "#結果"
    },
-   "urn:eye:agent": {
+   "urn:eye:agentWithOK": {
     "@id": "#担当者"
    },
    "variables": [
@@ -173,7 +173,7 @@
    "_comment": "受診票1件。ユーザはここの9つの欄に入力する。",
    "@id": "urn:entity:受診票",
    "@type": "urn:eye:視覚検査",
-   "urn:eye:agent": "urn:entity:保健師"
+   "urn:eye:agentWithOK": "urn:entity:保健師"
   }
  ],
  "urn:eye:屈折検査判定": [
