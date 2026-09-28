@@ -426,176 +426,62 @@
   {
    "@id": "urn:entity:結果判定.0",
    "@type": "urn:eye:結果判定",
-   "urn:eye:屈折": "urn:eye:異常あり",
-   "urn:eye:視力": "urn:eye:異常あり",
-   "urn:eye:眼位判定": "urn:eye:異常あり",
-   "urn:eye:結果値の欄": "urn:eye:既医療"
-  },
-  {
-   "@id": "urn:entity:結果判定.1",
-   "@type": "urn:eye:結果判定",
-   "urn:eye:屈折": "urn:eye:異常あり",
-   "urn:eye:視力": "urn:eye:異常あり",
-   "urn:eye:眼位判定": "urn:eye:異常あり",
-   "urn:eye:結果値の欄": "urn:eye:要精密"
-  },
-  {
-   "@id": "urn:entity:結果判定.2",
-   "@type": "urn:eye:結果判定",
-   "urn:eye:屈折": "urn:eye:異常あり",
-   "urn:eye:視力": "urn:eye:異常あり",
-   "urn:eye:眼位判定": "urn:eye:異常なし",
-   "urn:eye:結果値の欄": "urn:eye:既医療"
-  },
-  {
-   "@id": "urn:entity:結果判定.3",
-   "@type": "urn:eye:結果判定",
-   "urn:eye:屈折": "urn:eye:異常あり",
-   "urn:eye:視力": "urn:eye:異常あり",
-   "urn:eye:眼位判定": "urn:eye:異常なし",
-   "urn:eye:結果値の欄": "urn:eye:要精密"
-  },
-  {
-   "@id": "urn:entity:結果判定.4",
-   "@type": "urn:eye:結果判定",
-   "urn:eye:屈折": "urn:eye:異常あり",
-   "urn:eye:視力": "urn:eye:異常なし",
-   "urn:eye:眼位判定": "urn:eye:異常あり",
-   "urn:eye:結果値の欄": "urn:eye:既医療"
-  },
-  {
-   "@id": "urn:entity:結果判定.5",
-   "@type": "urn:eye:結果判定",
-   "urn:eye:屈折": "urn:eye:異常あり",
-   "urn:eye:視力": "urn:eye:異常なし",
-   "urn:eye:眼位判定": "urn:eye:異常あり",
-   "urn:eye:結果値の欄": "urn:eye:要精密"
-  },
-  {
-   "@id": "urn:entity:結果判定.6",
-   "@type": "urn:eye:結果判定",
-   "urn:eye:屈折": "urn:eye:異常あり",
-   "urn:eye:視力": "urn:eye:異常なし",
-   "urn:eye:眼位判定": "urn:eye:異常なし",
-   "urn:eye:結果値の欄": "urn:eye:既医療"
-  },
-  {
-   "@id": "urn:entity:結果判定.7",
-   "@type": "urn:eye:結果判定",
-   "urn:eye:屈折": "urn:eye:異常あり",
-   "urn:eye:視力": "urn:eye:異常なし",
-   "urn:eye:眼位判定": "urn:eye:異常なし",
-   "urn:eye:結果値の欄": "urn:eye:要精密"
-  },
-  {
-   "@id": "urn:entity:結果判定.8",
-   "@type": "urn:eye:結果判定",
-   "urn:eye:屈折": "urn:eye:異常なし",
-   "urn:eye:視力": "urn:eye:異常あり",
-   "urn:eye:眼位判定": "urn:eye:異常あり",
-   "urn:eye:結果値の欄": "urn:eye:既医療"
-  },
-  {
-   "@id": "urn:entity:結果判定.9",
-   "@type": "urn:eye:結果判定",
-   "urn:eye:屈折": "urn:eye:異常なし",
-   "urn:eye:視力": "urn:eye:異常あり",
-   "urn:eye:眼位判定": "urn:eye:異常あり",
-   "urn:eye:結果値の欄": "urn:eye:要精密"
-  },
-  {
-   "@id": "urn:entity:結果判定.10",
-   "@type": "urn:eye:結果判定",
-   "urn:eye:屈折": "urn:eye:異常なし",
-   "urn:eye:視力": "urn:eye:異常あり",
-   "urn:eye:眼位判定": "urn:eye:異常なし",
-   "urn:eye:結果値の欄": "urn:eye:既医療"
-  },
-  {
-   "@id": "urn:entity:結果判定.11",
-   "@type": "urn:eye:結果判定",
-   "urn:eye:屈折": "urn:eye:異常なし",
-   "urn:eye:視力": "urn:eye:異常あり",
-   "urn:eye:眼位判定": "urn:eye:異常なし",
-   "urn:eye:結果値の欄": "urn:eye:要精密"
-  },
-  {
-   "@id": "urn:entity:結果判定.12",
-   "@type": "urn:eye:結果判定",
-   "urn:eye:屈折": "urn:eye:異常なし",
-   "urn:eye:視力": "urn:eye:異常なし",
-   "urn:eye:眼位判定": "urn:eye:異常あり",
-   "urn:eye:結果値の欄": "urn:eye:既医療"
-  },
-  {
-   "@id": "urn:entity:結果判定.13",
-   "@type": "urn:eye:結果判定",
-   "urn:eye:屈折": "urn:eye:異常なし",
-   "urn:eye:視力": "urn:eye:異常なし",
-   "urn:eye:眼位判定": "urn:eye:異常あり",
-   "urn:eye:結果値の欄": "urn:eye:要精密"
-  },
-  {
-   "@id": "urn:entity:結果判定.14",
-   "@type": "urn:eye:結果判定",
    "urn:eye:屈折": "urn:eye:異常なし",
    "urn:eye:視力": "urn:eye:異常なし",
    "urn:eye:眼位判定": "urn:eye:異常なし",
    "urn:eye:結果値の欄": "urn:eye:異常なし"
   },
   {
-   "@id": "urn:entity:結果判定.15",
+   "@id": "urn:entity:結果判定.1",
    "@type": "urn:eye:結果判定",
-   "urn:eye:屈折": "urn:eye:異常なし",
-   "urn:eye:視力": "urn:eye:異常なし",
-   "urn:eye:眼位判定": "urn:eye:検査評価できず",
-   "urn:eye:結果値の欄": "urn:eye:検査評価できず"
+   "urn:eye:屈折": "urn:eye:異常あり",
+   "urn:eye:結果値の欄": "urn:eye:既医療"
   },
   {
-   "@id": "urn:entity:結果判定.16",
+   "@id": "urn:entity:結果判定.2",
    "@type": "urn:eye:結果判定",
-   "urn:eye:屈折": "urn:eye:異常なし",
-   "urn:eye:視力": "urn:eye:検査評価できず",
-   "urn:eye:眼位判定": "urn:eye:異常なし",
-   "urn:eye:結果値の欄": "urn:eye:検査評価できず"
+   "urn:eye:屈折": "urn:eye:異常あり",
+   "urn:eye:結果値の欄": "urn:eye:要精密"
   },
   {
-   "@id": "urn:entity:結果判定.17",
+   "@id": "urn:entity:結果判定.3",
    "@type": "urn:eye:結果判定",
-   "urn:eye:屈折": "urn:eye:異常なし",
-   "urn:eye:視力": "urn:eye:検査評価できず",
-   "urn:eye:眼位判定": "urn:eye:検査評価できず",
-   "urn:eye:結果値の欄": "urn:eye:検査評価できず"
+   "urn:eye:視力": "urn:eye:異常あり",
+   "urn:eye:結果値の欄": "urn:eye:既医療"
   },
   {
-   "@id": "urn:entity:結果判定.18",
+   "@id": "urn:entity:結果判定.4",
+   "@type": "urn:eye:結果判定",
+   "urn:eye:視力": "urn:eye:異常あり",
+   "urn:eye:結果値の欄": "urn:eye:要精密"
+  },
+  {
+   "@id": "urn:entity:結果判定.5",
+   "@type": "urn:eye:結果判定",
+   "urn:eye:眼位判定": "urn:eye:異常あり",
+   "urn:eye:結果値の欄": "urn:eye:既医療"
+  },
+  {
+   "@id": "urn:entity:結果判定.6",
+   "@type": "urn:eye:結果判定",
+   "urn:eye:眼位判定": "urn:eye:異常あり",
+   "urn:eye:結果値の欄": "urn:eye:要精密"
+  },
+  {
+   "@id": "urn:entity:結果判定.7",
    "@type": "urn:eye:結果判定",
    "urn:eye:屈折": "urn:eye:検査評価できず",
-   "urn:eye:視力": "urn:eye:異常なし",
-   "urn:eye:眼位判定": "urn:eye:異常なし",
    "urn:eye:結果値の欄": "urn:eye:検査評価できず"
   },
   {
-   "@id": "urn:entity:結果判定.19",
+   "@id": "urn:entity:結果判定.8",
    "@type": "urn:eye:結果判定",
-   "urn:eye:屈折": "urn:eye:検査評価できず",
-   "urn:eye:視力": "urn:eye:異常なし",
-   "urn:eye:眼位判定": "urn:eye:検査評価できず",
-   "urn:eye:結果値の欄": "urn:eye:検査評価できず"
-  },
-  {
-   "@id": "urn:entity:結果判定.20",
-   "@type": "urn:eye:結果判定",
-   "urn:eye:屈折": "urn:eye:検査評価できず",
    "urn:eye:視力": "urn:eye:検査評価できず",
-   "urn:eye:眼位判定": "urn:eye:異常なし",
    "urn:eye:結果値の欄": "urn:eye:検査評価できず"
   },
   {
-   "@id": "urn:entity:結果判定.21",
+   "@id": "urn:entity:結果判定.9",
    "@type": "urn:eye:結果判定",
-   "urn:eye:屈折": "urn:eye:検査評価できず",
-   "urn:eye:視力": "urn:eye:検査評価できず",
    "urn:eye:眼位判定": "urn:eye:検査評価できず",
    "urn:eye:結果値の欄": "urn:eye:検査評価できず"
   }
