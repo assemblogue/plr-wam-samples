@@ -36,7 +36,13 @@
    "@id": "urn:eye:Task",
    "@type": "Class",
    "subClassOf": [
-    "urn:eye:Atom"
+    "urn:eye:Atom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:eye:agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
    ],
    "label": {
     "ja": "タスクノード"

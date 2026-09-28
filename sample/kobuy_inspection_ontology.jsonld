@@ -2,6 +2,11 @@
  "_comment": "KOBUY の検収 → 売上伝票の自動計上 → 検収取消 の例題。マニュアル §6.5.1「バイヤーが検収処理を実施した際に、その検収データを元に自動的に売上伝票が計上されます」を、Then の後続として書く。金額と消費税は組込述語（× ÷ 端数処理）で出す——消費税の計算は KOBUY の Wiki「消費税計算について」のとおり——明細ごとに計算し、端数処理の方式（切り捨て／四捨五入）と計算パターン（①／②）はサプライヤごとに決まっている。",
  "@id": "urn:kinsp:ontology",
  "@type": "Ontology",
+ "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
+ "ontoG": [
+  "urn:kinsp:消費税の計算例",
+  "urn:kinsp:検収ゴール"
+ ],
  "agentProperty": "urn:kinsp:agent",
  "defines": [
   {
@@ -49,17 +54,6 @@
    "label": {
     "ja": "タスクノード",
     "en": "Task"
-   }
-  },
-  {
-   "@id": "urn:kinsp:Goal",
-   "@type": "Class",
-   "subClassOf": [
-    "urn:kinsp:Task"
-   ],
-   "label": {
-    "ja": "ゴール",
-    "en": "Goal"
    }
   },
   {
@@ -604,7 +598,7 @@
    "@id": "urn:kinsp:消費税の計算例",
    "@type": "Class",
    "subClassOf": [
-    "urn:kinsp:Goal",
+    "urn:kinsp:Task",
     {
      "@type": "Restriction",
      "onProperty": "urn:kinsp:計算例一覧",
@@ -661,7 +655,7 @@
    "@id": "urn:kinsp:検収ゴール",
    "@type": "Class",
    "subClassOf": [
-    "urn:kinsp:Goal"
+    "urn:kinsp:Task"
    ],
    "label": {
     "ja": "検収ゴール",
