@@ -2,6 +2,8 @@
  "_comment": "KOBUY の請求締め処理（マニュアル §6.6.1）を、組込述語 帳票集約 ひとつで書く例題。spec_builtin.md「組込タスク述語 帳票集約」の例がそのままこの業務である——売上伝票明細を 締日・請求先・差出人・部門・任意コード ごとにまとめ、まとまりごとに請求書を1通作る。",
  "@id": "urn:kbil:ontology",
  "@type": "Ontology",
+ "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
+ "ontoG": ["urn:kbil:請求締めゴール"],
  "agentProperty": "urn:kbil:agent",
  "defines": [
   {"@id": "urn:kbil:Template", "@type": "Class",
@@ -9,7 +11,6 @@
    "label": {"ja": "テンプレート", "en": "Template"}},
   {"@id": "urn:kbil:Atom", "@type": "Class", "subClassOf": ["urn:kbil:Template"], "label": {"ja": "アトムノード", "en": "Atom"}},
   {"@id": "urn:kbil:Task", "@type": "Class", "subClassOf": ["urn:kbil:Atom"], "label": {"ja": "タスクノード", "en": "Task"}},
-  {"@id": "urn:kbil:Goal", "@type": "Class", "subClassOf": ["urn:kbil:Task"], "label": {"ja": "ゴール", "en": "Goal"}},
   {"@id": "urn:kbil:Constraint", "@type": "Class", "subClassOf": ["urn:kbil:Atom"], "label": {"ja": "制約ノード", "en": "Constraint"}},
   {"@id": "urn:kbil:OtherAtom", "@type": "Class", "subClassOf": ["urn:kbil:Atom"], "label": {"ja": "その他のアトムノード", "en": "Other atom"}},
   {"@id": "wam:isComplete", "@type": "DatatypeProperty", "domain": "urn:kbil:Template", "range": "string", "label": {"ja": "完成", "en": "Is complete"}},
@@ -48,6 +49,6 @@
    "subClassOf": ["urn:kbil:OtherAtom",
     {"@type": "Restriction", "onProperty": "urn:kbil:締日", "minCardinality": 1, "maxCardinality": 1}],
    "label": {"ja": "請求締め", "en": "Billing close"}},
-  {"@id": "urn:kbil:請求締めゴール", "@type": "Class", "subClassOf": ["urn:kbil:Goal"], "label": {"ja": "請求締めゴール", "en": "Billing close goal"}}
+  {"@id": "urn:kbil:請求締めゴール", "@type": "Class", "subClassOf": ["urn:kbil:Task"], "label": {"ja": "請求締めゴール", "en": "Billing close goal"}}
  ]
 }

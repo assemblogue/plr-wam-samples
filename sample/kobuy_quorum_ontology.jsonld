@@ -2,6 +2,10 @@
  "_comment": "**定足数と「締める」の例題**（追記345・349・351）。承認グループ（鈴木・山本・田中の3人）で、**8割以上が応答しないと無効**、応答した人の過半数で可決、とする。⚠️ **3人の8割は3人である**（2/3 ≒ 0.667 < 0.8）——2人が承認しただけでは決まらず、`close` で締めると**定足数未達で不成立**になる。量化は `量化:決着割合超 0.5`（応答した人の過半数）、定足数は `量化:定足数割合以上 0.8`。",
  "@id": "urn:kapp:ontology",
  "@type": "Ontology",
+ "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
+ "ontoG": [
+  "urn:kapp:購買ゴール"
+ ],
  "agentProperty": "urn:kapp:agent",
  "defines": [
   {
@@ -40,17 +44,6 @@
    "label": {
     "ja": "タスクノード",
     "en": "Task"
-   }
-  },
-  {
-   "@id": "urn:kapp:Goal",
-   "@type": "Class",
-   "subClassOf": [
-    "urn:kapp:Task"
-   ],
-   "label": {
-    "ja": "ゴール",
-    "en": "Goal"
    }
   },
   {
@@ -296,7 +289,7 @@
    "@id": "urn:kapp:購買ゴール",
    "@type": "Class",
    "subClassOf": [
-    "urn:kapp:Goal"
+    "urn:kapp:Task"
    ],
    "label": {
     "ja": "購買ゴール",
