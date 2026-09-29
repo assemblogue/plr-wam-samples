@@ -1,6 +1,10 @@
 {
   "@id": "urn:quote:ontology",
   "@type": "Ontology",
+  "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
+  "ontoG": [
+    "urn:quote:QuoteRecord"
+  ],
   "_comment": "見積書デモの**共有データ版**。**2本の明細が同じ納品先を指す**——`urn:quote:lineDestination` は `refersTo` の下位ではないので、納品先は**共有ノード**である（`spec_exec.md`「共有ノードに達するノードは、完成を求め直す」。追記230・246・250）。⚠️ **商品では共有にならない**——`lineProduct` は `refersTo` の下位なので、参照を共有しても完成は伝播しない。",
   "agentProperty": "urn:quote:agent",
   "defines": [
@@ -18,17 +22,6 @@
       "label": {
         "ja": "テンプレート",
         "en": "Template"
-      }
-    },
-    {
-      "@id": "urn:quote:Goal",
-      "@type": "Class",
-      "subClassOf": [
-        "urn:quote:Task"
-      ],
-      "label": {
-        "ja": "ゴール",
-        "en": "Goal"
       }
     },
     {
@@ -110,7 +103,7 @@
       "@id": "urn:quote:QuoteRecord",
       "@type": "Class",
       "subClassOf": [
-        "urn:quote:Goal",
+        "urn:quote:Task",
         "urn:quote:Cancelable",
         {
           "@type": "Restriction",
