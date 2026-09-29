@@ -260,7 +260,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeOrSuspendByOkButton",
+     "onProperty": "wam:completeByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
