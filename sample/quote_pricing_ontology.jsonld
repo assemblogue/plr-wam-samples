@@ -2,10 +2,6 @@
  "_comment": "見積書の明細で、単価と掛率を KOBUY の価格設定の優先順位（購買マニュアル（サプライヤ）§3.1.6.4）で求める例題。商品はチャネル（商品マスターDB）から照合し、その単価を元単価とする。",
  "@id": "urn:qp:ontology",
  "@type": "Ontology",
- "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
- "ontoG": [
-  "urn:qp:見積書"
- ],
  "defines": [
   {
    "@id": "urn:qp:Template",
@@ -68,6 +64,17 @@
    }
   },
   {
+   "@id": "urn:qp:Goal",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:qp:Task"
+   ],
+   "label": {
+    "ja": "ゴール",
+    "en": "Goal"
+   }
+  },
+  {
    "@id": "urn:qp:Equals",
    "@type": "Class",
    "subClassOf": [
@@ -98,7 +105,7 @@
    "@id": "urn:qp:見積書",
    "@type": "Class",
    "subClassOf": [
-    "urn:qp:Task",
+    "urn:qp:Goal",
     {
      "@type": "Restriction",
      "onProperty": "urn:qp:明細一覧",
