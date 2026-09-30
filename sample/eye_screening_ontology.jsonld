@@ -49,6 +49,16 @@
    }
   },
   {
+   "@id": "urn:eye:Cancelable",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:eye:Task"
+   ],
+   "label": {
+    "ja": "取消可能タスク"
+   }
+  },
+  {
    "@id": "urn:eye:Constraint",
    "@type": "Class",
    "subClassOf": [
@@ -464,7 +474,7 @@
    "@id": "urn:eye:視覚検査",
    "@type": "Class",
    "subClassOf": [
-    "urn:eye:Task",
+    "urn:eye:Cancelable",
     {
      "@type": "Restriction",
      "onProperty": "urn:eye:屈折検査右",
