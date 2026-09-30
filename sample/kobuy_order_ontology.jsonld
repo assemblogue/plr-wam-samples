@@ -110,7 +110,7 @@
     "urn:kord:Task"
    ],
    "label": {
-    "ja": "取消可能",
+    "ja": "取消可能タスク",
     "en": "Cancelable"
    }
   },
@@ -121,19 +121,19 @@
     "urn:kord:Task"
    ],
    "label": {
-    "ja": "補償可能",
+    "ja": "補償可能タスク",
     "en": "Compensable"
    }
   },
   {
-   "@id": "urn:kord:NonCompensable",
+   "@id": "urn:kord:Incompensable",
    "@type": "Class",
    "subClassOf": [
     "urn:kord:Task"
    ],
    "label": {
-    "ja": "補償不可能",
-    "en": "Non compensable"
+    "ja": "補償不能タスク",
+    "en": "Incompensable"
    }
   },
   {

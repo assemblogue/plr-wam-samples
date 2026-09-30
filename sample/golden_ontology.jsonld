@@ -72,10 +72,10 @@
       "@id": "urn:golden:Cancelable",
       "@type": "Class",
       "subClassOf": [
-        "urn:golden:Atom"
+        "urn:golden:Task"
       ],
       "label": {
-        "ja": "取消可能",
+        "ja": "取消可能タスク",
         "en": "Cancelable"
       }
     },
@@ -83,10 +83,10 @@
       "@id": "urn:golden:Compensable",
       "@type": "Class",
       "subClassOf": [
-        "urn:golden:Atom"
+        "urn:golden:Task"
       ],
       "label": {
-        "ja": "補償可能",
+        "ja": "補償可能タスク",
         "en": "Compensable"
       }
     },

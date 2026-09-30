@@ -73,11 +73,11 @@
       "@id": "urn:quote:Cancelable",
       "@type": "Class",
       "subClassOf": [
-        "urn:quote:Atom"
+        "urn:quote:Task"
       ],
       "_comment": "取消可能タスクのマーカークラス（`spec_kg.md`「決定: Template の下位クラス構成」）。判定は TaskPolicyProjection が isSubClassOf で行う——ハーネスが文字列で持たない。",
       "label": {
-        "ja": "取消可能",
+        "ja": "取消可能タスク",
         "en": "Cancelable"
       }
     },
@@ -151,7 +151,6 @@
       "@type": "Class",
       "subClassOf": [
         "urn:quote:Constraint",
-        "urn:quote:Cancelable",
         {
           "@type": "Restriction",
           "onProperty": "urn:quote:lineQuantity",

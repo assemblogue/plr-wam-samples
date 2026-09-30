@@ -96,8 +96,8 @@
     "urn:kinsp:Task"
    ],
    "label": {
-    "ja": "取消可能",
-    "en": "urn:kinsp:Cancelable"
+    "ja": "取消可能タスク",
+    "en": "Cancelable"
    }
   },
   {
@@ -107,19 +107,19 @@
     "urn:kinsp:Task"
    ],
    "label": {
-    "ja": "補償可能",
+    "ja": "補償可能タスク",
     "en": "Compensable"
    }
   },
   {
-   "@id": "urn:kinsp:NonCompensable",
+   "@id": "urn:kinsp:Incompensable",
    "@type": "Class",
    "subClassOf": [
     "urn:kinsp:Task"
    ],
    "label": {
-    "ja": "補償不可能",
-    "en": "Non compensable"
+    "ja": "補償不能タスク",
+    "en": "Incompensable"
    }
   },
   {
