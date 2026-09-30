@@ -238,7 +238,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeByOkButton",
+     "onProperty": "wam:completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -273,7 +273,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeByOkButton",
+     "onProperty": "wam:completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -308,7 +308,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeByOkButton",
+     "onProperty": "wam:completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
