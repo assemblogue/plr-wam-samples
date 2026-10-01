@@ -1,5 +1,5 @@
 {
-  "_comment": "請求締め処理。売上伝票明細4件（tut.md「帳票集約: 請求書生成の具体例」と同じ）から請求書2通を作る。①②③は共通部分が一致し1通に、④は請求先が違うので別の1通になる。",
+  "_comment": "請求締め処理。売上伝票明細4件（tut.md「帳票集約: 請求書生成の具体例」と同じ）を 締日・請求先・差出人・部門・任意コード で分類し、まとまりごとに請求書を1通作る。①②③は5つが一致し1通に、④は請求先が違うので別の1通になる。部門・任意コードはどれも空で、空どうしは一致する。",
 
   "urn:kbil:請求締めゴール": [
     {
@@ -45,10 +45,10 @@
   ],
 
   "_aggregationPatterns": [
-    {"_comment": "共通: まとめの単位。請求:未 は非変数なので絞り込みの条件になる。",
+    {"_comment": "共通: まとめの単位（分類の鍵）。請求:未 は非変数なので絞り込みの条件になる。5つの変数の値の組1つが、まとまり1つである。値が無いことも1つの値として数える。",
      "uri": "p:common", "type": "売上伝票明細", "variable": "Line",
      "attributes": {"請求": "未", "締日": {"var": "Date"}, "請求先": {"var": "BillTo"},
-                    "差出人": {"var": "Sender"}}},
+                    "差出人": {"var": "Sender"}, "部門": {"var": "Dept"}, "任意コード": {"var": "Code"}}},
     {"_comment": "個別: 同じ売上伝票明細（ノードの変数 Line を共有）の別の部分。まとめても1件ずつ残る。",
      "uri": "p:individual", "type": "売上伝票明細", "variable": "Line",
      "attributes": {"商品ID": {"var": "ItemID"}, "商品名": {"var": "ItemName"}, "数量": {"var": "Number"}}},
@@ -56,6 +56,7 @@
      "attributes": {"商品ID": {"var": "ItemID"}, "商品名": {"var": "ItemName"}, "数量": {"var": "Number"}}},
     {"uri": "p:header", "type": "請求書",
      "attributes": {"締日": {"var": "Date"}, "請求先": {"var": "BillTo"}, "差出人": {"var": "Sender"},
+                    "部門": {"var": "Dept"}, "任意コード": {"var": "Code"},
                     "明細": {"ref": "p:detail"}}},
     {"uri": "p:integrated", "type": "統合",
      "attributes": {"ヘッダ": {"ref": "p:header"}, "明細": {"ref": "p:detail"}}}
