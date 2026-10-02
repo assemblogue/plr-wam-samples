@@ -2,10 +2,6 @@
  "_comment": "いろいろな単一化を1つの流れに入れた例題（追記R385〜R387）。下位クラスのノードがパターンに当たる、属性階層での対応づけと置き換え、整数性や値域がクラスの属性での代替節の選択、数の多値は和。",
  "@id": "urn:uv:ontology",
  "@type": "Ontology",
- "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
- "ontoG": [
-  "urn:uv:発注書"
- ],
  "defines": [
   {
    "@id": "urn:uv:Template",
@@ -53,6 +49,16 @@
    ],
    "label": {
     "ja": "その他のアトムノード"
+   }
+  },
+  {
+   "@id": "urn:uv:Goal",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:uv:Task"
+   ],
+   "label": {
+    "ja": "ゴール"
    }
   },
   {
@@ -175,7 +181,7 @@
    "@id": "urn:uv:発注書",
    "@type": "Class",
    "subClassOf": [
-    "urn:uv:Task",
+    "urn:uv:Goal",
     {
      "@type": "Restriction",
      "onProperty": "urn:uv:明細一覧",
