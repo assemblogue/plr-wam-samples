@@ -81,7 +81,7 @@
     "urn:inbox:Task"
    ],
    "label": {
-    "ja": "取消可能",
+    "ja": "取消可能タスク",
     "en": "Cancelable"
    }
   },
@@ -238,7 +238,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeByOkButton",
+     "onProperty": "wam:completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -273,7 +273,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeByOkButton",
+     "onProperty": "wam:completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -308,7 +308,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeByOkButton",
+     "onProperty": "wam:completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
