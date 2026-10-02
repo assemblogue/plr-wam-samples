@@ -1,10 +1,6 @@
 {
   "@id": "urn:quote:ontology",
   "@type": "Ontology",
-  "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
-  "ontoG": [
-    "urn:quote:CreateQuote"
-  ],
   "_comment": "見積書デモ。クラスid・属性idは ASCII の絶対URI（changelog 追記181）。range のデータ型名は接頭辞なしで書く（xsd: を付けると解決されない）。 単価（unitPrice）は Product の属性であって LineItem の欄ではない。したがって set_value の対象として存在せず、人も AI も書けない。",
   "defines": [
     {
@@ -21,6 +17,17 @@
       "label": {
         "ja": "テンプレート",
         "en": "Template"
+      }
+    },
+    {
+      "@id": "urn:quote:Goal",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Task"
+      ],
+      "label": {
+        "ja": "ゴール",
+        "en": "Goal"
       }
     },
     {
@@ -88,7 +95,7 @@
       "@id": "urn:quote:CreateQuote",
       "@type": "Class",
       "subClassOf": [
-        "urn:quote:Task",
+        "urn:quote:Goal",
         {
           "@type": "Restriction",
           "onProperty": "urn:quote:total",
@@ -130,7 +137,7 @@
         },
         {
           "@type": "Restriction",
-          "onProperty": "wam:completeOrSuspendByOkButton",
+          "onProperty": "wam:completeByOkButton",
           "minCardinality": 0,
           "maxCardinality": 1
         }
@@ -181,7 +188,7 @@
         },
         {
           "@type": "Restriction",
-          "onProperty": "wam:completeOrSuspendByOkButton",
+          "onProperty": "wam:completeByOkButton",
           "minCardinality": 0,
           "maxCardinality": 1
         }
@@ -360,18 +367,6 @@
       "label": {
         "ja": "完成（OKボタン）",
         "en": "Complete by OK button"
-      }
-    },
-    {
-      "_comment": "中断ありの OK ボタンによる完成（3値。偽＝未完成、真＝完成したが未押下、ユーザ＝その人が押した）。**いつでも押せ、配下が未完成のうちに押すと中断になる**（追記K383・K384）。押したのが完成の確認か中断かは配下の凍結の印が答える。**この属性を宣言することが「中断ありの OK ボタンを持つ」の宣言である。**",
-      "@id": "wam:completeOrSuspendByOkButton",
-      "@type": "DatatypeProperty",
-      "domain": "urn:quote:Template",
-      "range": "string",
-      "subPropertyOf": "wam:isComplete",
-      "label": {
-        "ja": "完成（中断ありのOKボタン）",
-        "en": "Complete or suspend by OK button"
       }
     }
   ]
