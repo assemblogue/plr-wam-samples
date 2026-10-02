@@ -1,13 +1,12 @@
 {
  "@id": "urn:mship:ontology",
  "@type": "Ontology",
- "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
- "ontoG": ["urn:mship:ゴール"],
  "agentProperty": "urn:mship:agent",
  "defines": [
   {"@id": "urn:ship:Template", "@type": "Class",
    "subClassOf": [{"@type": "Restriction", "onProperty": "wam:isComplete", "minCardinality": 0, "maxCardinality": 1}],
    "label": {"ja": "テンプレート", "en": "Template"}},
+  {"@id": "urn:ship:Goal", "@type": "Class", "subClassOf": ["urn:ship:Task"], "label": {"ja": "ゴール", "en": "Goal"}},
   {"@id": "urn:ship:Atom", "@type": "Class", "subClassOf": ["urn:ship:Template"], "label": {"ja": "アトムノード", "en": "Atom"}},
   {"@id": "urn:ship:Task", "@type": "Class", "subClassOf": ["urn:ship:Atom"], "label": {"ja": "タスクノード", "en": "Task"}},
   {"@id": "urn:ship:Constraint", "@type": "Class", "subClassOf": ["urn:ship:Atom"], "label": {"ja": "制約ノード", "en": "Constraint"}},
@@ -82,7 +81,7 @@
    "subClassOf": ["urn:ship:Task",
     {"@type": "Restriction", "onProperty": "urn:mship:出荷+引数", "minCardinality": 1},
     {"@type": "Restriction", "onProperty": "urn:mship:agent", "minCardinality": 1, "maxCardinality": 1},
-    {"@type": "Restriction", "onProperty": "wam:completeOrSuspendByOkButton", "minCardinality": 0, "maxCardinality": 1}],
+    {"@type": "Restriction", "onProperty": "wam:completeByOkButton", "minCardinality": 0, "maxCardinality": 1}],
    "label": {"ja": "出荷+", "en": "ShipTask"}
   },
 
@@ -108,10 +107,10 @@
    "subClassOf": ["urn:ship:Task",
     {"@type": "Restriction", "onProperty": "urn:mship:検収+引数", "minCardinality": 1},
     {"@type": "Restriction", "onProperty": "urn:mship:agent", "minCardinality": 1, "maxCardinality": 1},
-    {"@type": "Restriction", "onProperty": "wam:completeOrSuspendByOkButton", "minCardinality": 0, "maxCardinality": 1}],
+    {"@type": "Restriction", "onProperty": "wam:completeByOkButton", "minCardinality": 0, "maxCardinality": 1}],
    "label": {"ja": "検収+", "en": "InspectTask"}
   },
 
-  {"@id": "urn:mship:ゴール", "@type": "Class", "subClassOf": ["urn:ship:Task"], "label": {"ja": "ゴール", "en": "Goal"}}
+  {"@id": "urn:mship:ゴール", "@type": "Class", "subClassOf": ["urn:ship:Goal"], "label": {"ja": "ゴール", "en": "Goal"}}
  ]
 }
