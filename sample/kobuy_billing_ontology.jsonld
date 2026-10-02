@@ -27,7 +27,7 @@
   {"@id": "統合", "@type": "ObjectProperty", "label": {"ja": "統合", "en": "Integrated"}},
 
   {
-   "_comment": "組込タスク述語。引数は 共通・個別・統合 の3つで、いずれもパターン（項）を節の中にそのまま書く（cardinality は1。追記K411）。",
+   "_comment": "組込タスク述語。引数は 共通・個別・統合 の3つで、いずれもパターンのノードURIを指す（cardinality は1）。パターンは _aggregationPatterns に置く。",
    "@id": "urn:kbil:帳票集約", "@type": "Class",
    "builtInFunction": "帳票集約",
    "subClassOf": ["urn:kbil:Task",
@@ -49,10 +49,6 @@
    "subClassOf": ["urn:kbil:OtherAtom",
     {"@type": "Restriction", "onProperty": "urn:kbil:締日", "minCardinality": 1, "maxCardinality": 1}],
    "label": {"ja": "請求締め", "en": "Billing close"}},
-  {"_comment": "帳票の型。クラスidは素の名前で、オントロジーでは #名前 と書く（PLR の書き方。データの @type は 売上伝票明細 のまま）。",
-   "@id": "#売上伝票明細", "@type": "Class", "label": {"ja": "売上伝票明細", "en": "Sales slip line"}},
-  {"@id": "#請求書", "@type": "Class", "label": {"ja": "請求書", "en": "Invoice"}},
-  {"@id": "#請求明細", "@type": "Class", "label": {"ja": "請求明細", "en": "Invoice line"}},
   {"@id": "urn:kbil:請求締めゴール", "@type": "Class", "subClassOf": ["urn:kbil:Task"], "label": {"ja": "請求締めゴール", "en": "Billing close goal"}}
  ]
 }
