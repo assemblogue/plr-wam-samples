@@ -1,8 +1,8 @@
 {
- "_comment": "検収 → 売上伝票の自動計上。金額と消費税は組込述語で出す（× ÷ 端数処理）。単価100・出荷数50 で 50個を検収すると、税込5000円・消費税370円（5000/108*8 = 370.37… を切捨て）になる。",
+ "_comment": "検収 → 売上伝票の自動計上。消費税は 消費税計算 で出す（KOBUY の Wiki「消費税計算について」）。Kobuy（切り捨て・パターン①）で税込単価100・出荷数50 のとき、50個を検収すると税込5000円・消費税370円（5000 × 8 ÷ 108 = 370.37… を切り捨て）・税抜4630円になる。消費税の計算例 には Wiki の計算例4つを並べてある。",
  "urn:kinsp:検収ゴール": [
   {
-   "_comment": ":- 検収フロー(単価: 100, 出荷数: 50).",
+   "_comment": ":- 検収フロー(サプライヤ: Kobuy, 単価: 100, 単価区分: 税込, 税率: 8, 出荷数: 50).",
    "@id": "urn:node:検収ゴール.head",
    "@type": "urn:kinsp:検収ゴール",
    "internalGraph": [
@@ -10,7 +10,10 @@
      "@id": "urn:node:検収フロー",
      "@type": "urn:kinsp:検収フロー",
      "urn:kinsp:単価": 100,
-     "urn:kinsp:出荷数": 50
+     "urn:kinsp:出荷数": 50,
+     "urn:kinsp:サプライヤ": "urn:entity:kobuy",
+     "urn:kinsp:単価区分": "税込",
+     "urn:kinsp:税率": 8
     }
    ]
   }
@@ -39,20 +42,32 @@
      "variableName": "N"
     },
     {
-     "@id": "#G",
-     "variableName": "G"
+     "@id": "#M",
+     "variableName": "M"
     },
     {
-     "@id": "#Q",
-     "variableName": "Q"
+     "@id": "#K",
+     "variableName": "K"
     },
     {
-     "@id": "#R",
-     "variableName": "R"
+     "@id": "#U",
+     "variableName": "U"
+    },
+    {
+     "@id": "#X",
+     "variableName": "X"
+    },
+    {
+     "@id": "#E",
+     "variableName": "E"
     },
     {
      "@id": "#T",
      "variableName": "T"
+    },
+    {
+     "@id": "#G",
+     "variableName": "G"
     }
    ],
    "internalGraph": [
@@ -77,55 +92,35 @@
      }
     },
     {
-     "_comment": "税込金額 = 検収数 × 単価。",
-     "@id": "urn:node:金額",
-     "@type": "urn:kinsp:Times",
-     "arg1": [
-      {
-       "@id": "#N"
-      },
-      {
-       "@id": "#P"
-      }
-     ],
-     "arg2": {
-      "@id": "#G"
-     }
-    },
-    {
-     "_comment": "消費税（マニュアル「商品の金額計算方法について」）。税込 ÷ 108 × 8 を切り捨てる。",
-     "@id": "urn:node:税抜へ割る",
-     "@type": "urn:kinsp:Divide",
-     "被除数": {
-      "@id": "#G"
+     "_comment": "消費税は明細ごとに計算する（Wiki「Kobuyでの消費税計算方法」）。端数処理の方式と計算パターンはサプライヤが持っている。",
+     "@id": "urn:node:消費税計算",
+     "@type": "urn:kinsp:消費税計算",
+     "urn:kinsp:単価": {
+      "@id": "#P"
      },
-     "除数": 108,
-     "商": {
-      "@id": "#Q"
-     }
-    },
-    {
-     "@id": "urn:node:税率を掛ける",
-     "@type": "urn:kinsp:Times",
-     "arg1": [
-      {
-       "@id": "#Q"
-      },
-      8
-     ],
-     "arg2": {
-      "@id": "#R"
-     }
-    },
-    {
-     "@id": "urn:node:端数を処理する",
-     "@type": "urn:kinsp:Round",
-     "方式": "切捨て",
-     "値": {
-      "@id": "#R"
+     "urn:kinsp:数量": {
+      "@id": "#N"
      },
-     "結果": {
+     "urn:kinsp:税率": {
+      "@id": "#X"
+     },
+     "urn:kinsp:端数処理": {
+      "@id": "#M"
+     },
+     "urn:kinsp:計算パターン": {
+      "@id": "#K"
+     },
+     "urn:kinsp:単価区分": {
+      "@id": "#U"
+     },
+     "urn:kinsp:税抜金額": {
+      "@id": "#E"
+     },
+     "urn:kinsp:消費税額": {
       "@id": "#T"
+     },
+     "urn:kinsp:税込金額": {
+      "@id": "#G"
      }
     },
     {
@@ -134,6 +129,9 @@
      "@type": "urn:kinsp:売上伝票",
      "urn:kinsp:検収数": {
       "@id": "#N"
+     },
+     "urn:kinsp:税抜金額": {
+      "@id": "#E"
      },
      "urn:kinsp:税込金額": {
       "@id": "#G"
@@ -152,7 +150,22 @@
       "@id": "urn:node:売上伝票"
      }
     }
-   ]
+   ],
+   "urn:kinsp:サプライヤ": {
+    "@type": "urn:kinsp:サプライヤ",
+    "urn:kinsp:端数処理": {
+     "@id": "#M"
+    },
+    "urn:kinsp:計算パターン": {
+     "@id": "#K"
+    }
+   },
+   "urn:kinsp:単価区分": {
+    "@id": "#U"
+   },
+   "urn:kinsp:税率": {
+    "@id": "#X"
+   }
   }
  ],
  "urn:kinsp:検収": [
@@ -171,6 +184,566 @@
   {
    "@id": "urn:node:赤伝票.head",
    "@type": "urn:kinsp:赤伝票"
+  }
+ ],
+ "urn:kinsp:消費税計算": [
+  {
+   "_comment": "単価が税抜・パターン①: 税抜 = 単価 × 数量、消費税 = 端数処理(税抜 × 税率 ÷ 100)、税込 = 税抜 + 消費税（組込述語 +）。例: 257 × 7 = 1,799、1,799 × 0.08 = 143.92 → 143、1,942。",
+   "@id": "urn:node:消費税計算1.head",
+   "@type": "urn:kinsp:消費税計算",
+   "variables": [
+    {
+     "@id": "#P",
+     "variableName": "P"
+    },
+    {
+     "@id": "#N",
+     "variableName": "N"
+    },
+    {
+     "@id": "#X",
+     "variableName": "X"
+    },
+    {
+     "@id": "#M",
+     "variableName": "M"
+    },
+    {
+     "@id": "#E",
+     "variableName": "E"
+    },
+    {
+     "@id": "#T",
+     "variableName": "T"
+    },
+    {
+     "@id": "#G",
+     "variableName": "G"
+    },
+    {
+     "@id": "#EX",
+     "variableName": "EX"
+    },
+    {
+     "@id": "#R",
+     "variableName": "R"
+    }
+   ],
+   "urn:kinsp:単価": {
+    "@id": "#P"
+   },
+   "urn:kinsp:数量": {
+    "@id": "#N"
+   },
+   "urn:kinsp:税率": {
+    "@id": "#X"
+   },
+   "urn:kinsp:端数処理": {
+    "@id": "#M"
+   },
+   "urn:kinsp:計算パターン": "①",
+   "urn:kinsp:単価区分": "税抜",
+   "urn:kinsp:税抜金額": {
+    "@id": "#E"
+   },
+   "urn:kinsp:消費税額": {
+    "@id": "#T"
+   },
+   "urn:kinsp:税込金額": {
+    "@id": "#G"
+   },
+   "internalGraph": [
+    {
+     "@id": "urn:node:消費税計算1.税抜",
+     "@type": "urn:kinsp:Times",
+     "arg1": [
+      {
+       "@id": "#P"
+      },
+      {
+       "@id": "#N"
+      }
+     ],
+     "arg2": {
+      "@id": "#E"
+     }
+    },
+    {
+     "@id": "urn:node:消費税計算1.税率を掛ける",
+     "@type": "urn:kinsp:Times",
+     "arg1": [
+      {
+       "@id": "#E"
+      },
+      {
+       "@id": "#X"
+      }
+     ],
+     "arg2": {
+      "@id": "#EX"
+     }
+    },
+    {
+     "@id": "urn:node:消費税計算1.百で割る",
+     "@type": "urn:kinsp:Divide",
+     "被除数": {
+      "@id": "#EX"
+     },
+     "除数": 100,
+     "商": {
+      "@id": "#R"
+     }
+    },
+    {
+     "@id": "urn:node:消費税計算1.端数",
+     "@type": "urn:kinsp:Round",
+     "方式": {
+      "@id": "#M"
+     },
+     "値": {
+      "@id": "#R"
+     },
+     "結果": {
+      "@id": "#T"
+     }
+    },
+    {
+     "@id": "urn:node:消費税計算1.税込",
+     "@type": "urn:kinsp:Plus",
+     "arg1": [
+      {
+       "@id": "#E"
+      },
+      {
+       "@id": "#T"
+      }
+     ],
+     "arg2": {
+      "@id": "#G"
+     }
+    }
+   ]
+  },
+  {
+   "_comment": "単価が税抜・パターン②: 1個の消費税 = 端数処理(単価 × 税率 ÷ 100)、消費税 = 1個の消費税 × 数量。例: アマゾン（四捨五入）257 × 0.08 = 20.56 → 21、21 × 3 = 63、税込 771 + 63 = 834。",
+   "@id": "urn:node:消費税計算2.head",
+   "@type": "urn:kinsp:消費税計算",
+   "variables": [
+    {
+     "@id": "#P",
+     "variableName": "P"
+    },
+    {
+     "@id": "#N",
+     "variableName": "N"
+    },
+    {
+     "@id": "#X",
+     "variableName": "X"
+    },
+    {
+     "@id": "#M",
+     "variableName": "M"
+    },
+    {
+     "@id": "#E",
+     "variableName": "E"
+    },
+    {
+     "@id": "#T",
+     "variableName": "T"
+    },
+    {
+     "@id": "#G",
+     "variableName": "G"
+    },
+    {
+     "@id": "#PX",
+     "variableName": "PX"
+    },
+    {
+     "@id": "#R1",
+     "variableName": "R1"
+    },
+    {
+     "@id": "#T1",
+     "variableName": "T1"
+    }
+   ],
+   "urn:kinsp:単価": {
+    "@id": "#P"
+   },
+   "urn:kinsp:数量": {
+    "@id": "#N"
+   },
+   "urn:kinsp:税率": {
+    "@id": "#X"
+   },
+   "urn:kinsp:端数処理": {
+    "@id": "#M"
+   },
+   "urn:kinsp:計算パターン": "②",
+   "urn:kinsp:単価区分": "税抜",
+   "urn:kinsp:税抜金額": {
+    "@id": "#E"
+   },
+   "urn:kinsp:消費税額": {
+    "@id": "#T"
+   },
+   "urn:kinsp:税込金額": {
+    "@id": "#G"
+   },
+   "internalGraph": [
+    {
+     "@id": "urn:node:消費税計算2.税抜",
+     "@type": "urn:kinsp:Times",
+     "arg1": [
+      {
+       "@id": "#P"
+      },
+      {
+       "@id": "#N"
+      }
+     ],
+     "arg2": {
+      "@id": "#E"
+     }
+    },
+    {
+     "@id": "urn:node:消費税計算2.税率を掛ける",
+     "@type": "urn:kinsp:Times",
+     "arg1": [
+      {
+       "@id": "#P"
+      },
+      {
+       "@id": "#X"
+      }
+     ],
+     "arg2": {
+      "@id": "#PX"
+     }
+    },
+    {
+     "@id": "urn:node:消費税計算2.百で割る",
+     "@type": "urn:kinsp:Divide",
+     "被除数": {
+      "@id": "#PX"
+     },
+     "除数": 100,
+     "商": {
+      "@id": "#R1"
+     }
+    },
+    {
+     "@id": "urn:node:消費税計算2.端数",
+     "@type": "urn:kinsp:Round",
+     "方式": {
+      "@id": "#M"
+     },
+     "値": {
+      "@id": "#R1"
+     },
+     "結果": {
+      "@id": "#T1"
+     }
+    },
+    {
+     "@id": "urn:node:消費税計算2.数量を掛ける",
+     "@type": "urn:kinsp:Times",
+     "arg1": [
+      {
+       "@id": "#T1"
+      },
+      {
+       "@id": "#N"
+      }
+     ],
+     "arg2": {
+      "@id": "#T"
+     }
+    },
+    {
+     "@id": "urn:node:消費税計算2.税込",
+     "@type": "urn:kinsp:Plus",
+     "arg1": [
+      {
+       "@id": "#E"
+      },
+      {
+       "@id": "#T"
+      }
+     ],
+     "arg2": {
+      "@id": "#G"
+     }
+    }
+   ]
+  },
+  {
+   "_comment": "単価が税込: 税込 = 単価 × 数量、消費税 = 端数処理(税込 × 税率 ÷ (税率 + 100))、税抜 = 税込 − 消費税（+ で 税込 と −消費税 を足す）。例: 1,799 × 8 ÷ 108 = 133.25… → 133、1,666。パターン②のサプライヤは KOBUY に取り込むとき税込単価に直すので（Wiki）、税込ではパターンを問わない。",
+   "@id": "urn:node:消費税計算3.head",
+   "@type": "urn:kinsp:消費税計算",
+   "variables": [
+    {
+     "@id": "#P",
+     "variableName": "P"
+    },
+    {
+     "@id": "#N",
+     "variableName": "N"
+    },
+    {
+     "@id": "#X",
+     "variableName": "X"
+    },
+    {
+     "@id": "#M",
+     "variableName": "M"
+    },
+    {
+     "@id": "#K",
+     "variableName": "K"
+    },
+    {
+     "@id": "#E",
+     "variableName": "E"
+    },
+    {
+     "@id": "#T",
+     "variableName": "T"
+    },
+    {
+     "@id": "#G",
+     "variableName": "G"
+    },
+    {
+     "@id": "#GX",
+     "variableName": "GX"
+    },
+    {
+     "@id": "#D",
+     "variableName": "D"
+    },
+    {
+     "@id": "#R",
+     "variableName": "R"
+    },
+    {
+     "@id": "#NT",
+     "variableName": "NT"
+    }
+   ],
+   "urn:kinsp:単価": {
+    "@id": "#P"
+   },
+   "urn:kinsp:数量": {
+    "@id": "#N"
+   },
+   "urn:kinsp:税率": {
+    "@id": "#X"
+   },
+   "urn:kinsp:端数処理": {
+    "@id": "#M"
+   },
+   "urn:kinsp:計算パターン": {
+    "@id": "#K"
+   },
+   "urn:kinsp:単価区分": "税込",
+   "urn:kinsp:税抜金額": {
+    "@id": "#E"
+   },
+   "urn:kinsp:消費税額": {
+    "@id": "#T"
+   },
+   "urn:kinsp:税込金額": {
+    "@id": "#G"
+   },
+   "internalGraph": [
+    {
+     "@id": "urn:node:消費税計算3.税込",
+     "@type": "urn:kinsp:Times",
+     "arg1": [
+      {
+       "@id": "#P"
+      },
+      {
+       "@id": "#N"
+      }
+     ],
+     "arg2": {
+      "@id": "#G"
+     }
+    },
+    {
+     "@id": "urn:node:消費税計算3.税率を掛ける",
+     "@type": "urn:kinsp:Times",
+     "arg1": [
+      {
+       "@id": "#G"
+      },
+      {
+       "@id": "#X"
+      }
+     ],
+     "arg2": {
+      "@id": "#GX"
+     }
+    },
+    {
+     "@id": "urn:node:消費税計算3.税率に百を足す",
+     "@type": "urn:kinsp:Plus",
+     "arg1": [
+      {
+       "@id": "#X"
+      },
+      100
+     ],
+     "arg2": {
+      "@id": "#D"
+     }
+    },
+    {
+     "@id": "urn:node:消費税計算3.割る",
+     "@type": "urn:kinsp:Divide",
+     "被除数": {
+      "@id": "#GX"
+     },
+     "除数": {
+      "@id": "#D"
+     },
+     "商": {
+      "@id": "#R"
+     }
+    },
+    {
+     "@id": "urn:node:消費税計算3.端数",
+     "@type": "urn:kinsp:Round",
+     "方式": {
+      "@id": "#M"
+     },
+     "値": {
+      "@id": "#R"
+     },
+     "結果": {
+      "@id": "#T"
+     }
+    },
+    {
+     "@id": "urn:node:消費税計算3.負の税",
+     "@type": "urn:kinsp:Times",
+     "arg1": [
+      {
+       "@id": "#T"
+      },
+      -1
+     ],
+     "arg2": {
+      "@id": "#NT"
+     }
+    },
+    {
+     "@id": "urn:node:消費税計算3.税抜",
+     "@type": "urn:kinsp:Plus",
+     "arg1": [
+      {
+       "@id": "#G"
+      },
+      {
+       "@id": "#NT"
+      }
+     ],
+     "arg2": {
+      "@id": "#E"
+     }
+    }
+   ]
+  },
+  {
+   "_comment": "Wiki の計算例。1: 税抜・切り捨て・① 257×7。2: 税込・切り捨て 257×7。3: アマゾン（税抜・四捨五入・②）257×3。4: Kobuy 登録サプライヤ（税抜・①）257×3——Wiki の結果 833 は四捨五入で出る（切り捨てなら 832）。",
+   "@id": "urn:entity:tax-ex-1",
+   "urn:kinsp:単価": 257,
+   "urn:kinsp:数量": 7,
+   "urn:kinsp:税率": 8,
+   "urn:kinsp:端数処理": "切捨て",
+   "urn:kinsp:計算パターン": "①",
+   "urn:kinsp:単価区分": "税抜"
+  },
+  {
+   "@id": "urn:entity:tax-ex-2",
+   "urn:kinsp:単価": 257,
+   "urn:kinsp:数量": 7,
+   "urn:kinsp:税率": 8,
+   "urn:kinsp:端数処理": "切捨て",
+   "urn:kinsp:計算パターン": "①",
+   "urn:kinsp:単価区分": "税込"
+  },
+  {
+   "@id": "urn:entity:tax-ex-3",
+   "urn:kinsp:単価": 257,
+   "urn:kinsp:数量": 3,
+   "urn:kinsp:税率": 8,
+   "urn:kinsp:端数処理": "四捨五入",
+   "urn:kinsp:計算パターン": "②",
+   "urn:kinsp:単価区分": "税抜"
+  },
+  {
+   "@id": "urn:entity:tax-ex-4",
+   "urn:kinsp:単価": 257,
+   "urn:kinsp:数量": 3,
+   "urn:kinsp:税率": 8,
+   "urn:kinsp:端数処理": "四捨五入",
+   "urn:kinsp:計算パターン": "①",
+   "urn:kinsp:単価区分": "税抜"
+  }
+ ],
+ "urn:kinsp:消費税の計算例": [
+  {
+   "_comment": "消費税の計算例(計算例一覧: 消費税計算(税込金額: G)).  パターンが各行へ分配され、各行の 消費税計算 の節が解かれる。",
+   "@id": "urn:node:消費税の計算例.head",
+   "@type": "urn:kinsp:消費税の計算例",
+   "variables": [
+    {
+     "@id": "#G",
+     "variableName": "G"
+    }
+   ],
+   "urn:kinsp:計算例一覧": {
+    "@type": "urn:kinsp:消費税計算",
+    "urn:kinsp:税込金額": {
+     "@id": "#G"
+    }
+   }
+  },
+  {
+   "@id": "urn:entity:tax-examples",
+   "urn:kinsp:計算例一覧": [
+    "urn:entity:tax-ex-1",
+    "urn:entity:tax-ex-2",
+    "urn:entity:tax-ex-3",
+    "urn:entity:tax-ex-4"
+   ]
+  }
+ ],
+ "urn:kinsp:サプライヤ": [
+  {
+   "_comment": "Wiki「各外部連携の端数処理について」の表から3社。",
+   "@id": "urn:entity:kobuy",
+   "urn:kinsp:名前": "Kobuy",
+   "urn:kinsp:端数処理": "切捨て",
+   "urn:kinsp:計算パターン": "①"
+  },
+  {
+   "@id": "urn:entity:monotaro",
+   "urn:kinsp:名前": "モノタロウ",
+   "urn:kinsp:端数処理": "四捨五入",
+   "urn:kinsp:計算パターン": "①"
+  },
+  {
+   "@id": "urn:entity:askul",
+   "urn:kinsp:名前": "アスクル",
+   "urn:kinsp:端数処理": "切捨て",
+   "urn:kinsp:計算パターン": "②"
   }
  ]
 }
