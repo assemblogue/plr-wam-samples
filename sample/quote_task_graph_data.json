@@ -206,21 +206,5 @@
       ],
       "_comment": "見積書作成。商品マスターDBから単価を引き、人が数量を入れると 明細金額が × で定まり、総額が明細金額の和として定まる。"
     }
-  ],
-  "urn:quote:PickItem": [
-    {
-      "_comment": "商品を選ぶタスクの、頭部だけの節。本体の無いタスクも節を持つ（追記R474）",
-      "@id": "urn:node:PickItem.head-only",
-      "@type": "urn:quote:PickItem",
-      "variables": []
-    }
-  ],
-  "urn:quote:LineItem": [
-    {
-      "_comment": "明細のタスクの、頭部だけの節。本体の無いタスクも節を持つ（追記R474）",
-      "@id": "urn:node:LineItem.head-only",
-      "@type": "urn:quote:LineItem",
-      "variables": []
-    }
   ]
 }
