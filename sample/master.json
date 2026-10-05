@@ -87,5 +87,13 @@
         }
       ]
     }
+  ],
+  "urn:wamtest:承認": [
+    {
+      "_comment": "承認の、頭部だけの節。本体の無いタスクも節を持つ（追記R474）",
+      "@id": "urn:node:承認.head-only",
+      "@type": "urn:wamtest:承認",
+      "variables": []
+    }
   ]
 }
