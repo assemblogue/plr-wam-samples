@@ -3,6 +3,10 @@
  "@id": "urn:kinsp:ontology",
  "@type": "Ontology",
  "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
+ "ontoG": [
+  "urn:kinsp:消費税の計算例",
+  "urn:kinsp:検収ゴール"
+ ],
  "agentProperty": "urn:kinsp:agent",
  "defines": [
   {

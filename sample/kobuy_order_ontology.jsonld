@@ -3,8 +3,35 @@
  "@id": "urn:kord:ontology",
  "@type": "Ontology",
  "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
+ "ontoG": [
+  "urn:kord:受注ゴール",
+  "urn:kord:受注ゴールT"
+ ],
  "agentProperty": "urn:kord:agent",
  "channelProperty": "urn:kord:channel",
+ "channelSettings": {
+  "urn:setting:受注": {
+   "includesTask": [
+    "urn:kord:受注フロー",
+    "urn:kord:注文",
+    "urn:kord:検収"
+   ],
+   "subChannelSchema": [
+    "urn:setting:サプライヤ"
+   ]
+  },
+  "urn:setting:サプライヤ": {
+   "includesTask": [
+    "urn:kord:受注受付",
+    "urn:kord:納品段取り",
+    "urn:kord:納期回答",
+    "urn:kord:出荷"
+   ]
+  }
+ },
+ "channels": {
+  "urn:channel:バイヤー": "urn:setting:受注"
+ },
  "defines": [
   {
    "@id": "urn:kord:Template",
@@ -233,26 +260,6 @@
    }
   },
   {
-   "@id": "urn:kord:refersTo",
-   "@type": "ObjectProperty",
-   "_comment": "参照属性の上位属性。この下位の属性の欄は、既存の実体を指すか、ほかの欄に既にある値と単一化するだけで、新しい値は入れられない（追記R517）",
-   "label": {
-    "ja": "参照",
-    "en": "RefersTo"
-   }
-  },
-  {
-   "@id": "urn:kord:納入数",
-   "@type": "DatatypeProperty",
-   "subPropertyOf": "urn:kord:refersTo",
-   "range": "nonNegativeInteger",
-   "_comment": "検収から見た出荷数。サプライヤの出荷の 出荷数 を、受け取る側のバイヤーが読む値なので refersTo の下位属性である——バイヤーは書けない（追記R516・R517）",
-   "label": {
-    "ja": "納入数",
-    "en": "Delivered quantity"
-   }
-  },
-  {
    "@id": "urn:kord:単価",
    "@type": "DatatypeProperty",
    "range": "nonNegativeInteger",
@@ -448,7 +455,7 @@
     "urn:kord:Cancelable",
     {
      "@type": "Restriction",
-     "onProperty": "urn:kord:納入数",
+     "onProperty": "urn:kord:出荷数",
      "minCardinality": 1,
      "maxCardinality": 1
     },
