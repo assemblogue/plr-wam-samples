@@ -1,6 +1,7 @@
 {
   "@id": "urn:quote:pattern-ontology",
   "@type": "Ontology",
+  "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
   "_comment": "パターンで集計する見積書。クラスid・属性idは ASCII（追記181）。lineProduct は refersTo の下位属性なので、明細の担当者の書き込み権限は商品ノードへ及ばない（spec_ops.md『担当ユーザは N から refersTo 以外の属性を辿って到達できる範囲に書き込み権限を持つ』）。",
   "defines": [
     {
@@ -9,17 +10,6 @@
       "label": {
         "ja": "テンプレート",
         "en": "Template"
-      }
-    },
-    {
-      "@id": "urn:quote:Goal",
-      "@type": "Class",
-      "subClassOf": [
-        "urn:quote:Task"
-      ],
-      "label": {
-        "ja": "ゴール",
-        "en": "Goal"
       }
     },
     {
@@ -79,7 +69,7 @@
       "@id": "urn:quote:QuoteTotal",
       "@type": "Class",
       "subClassOf": [
-        "urn:quote:Goal",
+        "urn:quote:Task",
         {
           "@type": "Restriction",
           "onProperty": "urn:quote:total",
