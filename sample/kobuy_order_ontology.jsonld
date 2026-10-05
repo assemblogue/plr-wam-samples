@@ -2,6 +2,11 @@
  "_comment": "KOBUY の 受注 → 納期回答 → 出荷 → 検収 の例題（例題④）。サプライヤ用マニュアル §3.2.1「受注機能」・§3.2.2「出荷機能」。担当者がバイヤー → サプライヤ → バイヤー と組織をまたいで移ること、「納期未回答出荷可能区分」（§3.2.2.1）が企業ごとの代替節になること、出荷取消（§3.2.2.2）が引き戻しで書けることを確かめる。 追記R368 のチャネルのモデルも当てる——チャネルはチャネル設定をちょうど1つ指し、チャネル設定の下位チャネル設定に応じて下位チャネルができる。バイヤーのチャネルが受注フローを持ち、サプライヤの下位チャネルが受注受付・納期回答・出荷を受け持つ。",
  "@id": "urn:kord:ontology",
  "@type": "Ontology",
+ "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
+ "ontoG": [
+  "urn:kord:受注ゴール",
+  "urn:kord:受注ゴールT"
+ ],
  "agentProperty": "urn:kord:agent",
  "channelProperty": "urn:kord:channel",
  "channelSettings": {
@@ -67,17 +72,6 @@
    }
   },
   {
-   "@id": "urn:kord:Goal",
-   "@type": "Class",
-   "subClassOf": [
-    "urn:kord:Task"
-   ],
-   "label": {
-    "ja": "ゴール",
-    "en": "Goal"
-   }
-  },
-  {
    "@id": "urn:kord:Constraint",
    "@type": "Class",
    "subClassOf": [
@@ -116,7 +110,7 @@
     "urn:kord:Task"
    ],
    "label": {
-    "ja": "取消可能",
+    "ja": "取消可能タスク",
     "en": "Cancelable"
    }
   },
@@ -127,19 +121,19 @@
     "urn:kord:Task"
    ],
    "label": {
-    "ja": "補償可能",
+    "ja": "補償可能タスク",
     "en": "Compensable"
    }
   },
   {
-   "@id": "urn:kord:NonCompensable",
+   "@id": "urn:kord:Incompensable",
    "@type": "Class",
    "subClassOf": [
     "urn:kord:Task"
    ],
    "label": {
-    "ja": "補償不可能",
-    "en": "Non compensable"
+    "ja": "補償不能タスク",
+    "en": "Incompensable"
    }
   },
   {
@@ -335,7 +329,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeByOkButton",
+     "onProperty": "wam:completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -365,7 +359,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeByOkButton",
+     "onProperty": "wam:completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -407,7 +401,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeByOkButton",
+     "onProperty": "wam:completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -443,7 +437,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeByOkButton",
+     "onProperty": "wam:completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -479,7 +473,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeByOkButton",
+     "onProperty": "wam:completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -565,7 +559,7 @@
    "@id": "urn:kord:受注ゴール",
    "@type": "Class",
    "subClassOf": [
-    "urn:kord:Goal",
+    "urn:kord:Task",
     {
      "@type": "Restriction",
      "onProperty": "urn:kord:channel",
@@ -582,7 +576,7 @@
    "@id": "urn:kord:受注ゴールT",
    "@type": "Class",
    "subClassOf": [
-    "urn:kord:Goal",
+    "urn:kord:Task",
     {
      "@type": "Restriction",
      "onProperty": "urn:kord:channel",
