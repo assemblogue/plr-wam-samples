@@ -1,250 +1,42 @@
 {
  "_comment": "発注書1件・明細3本。鉛筆（文具）24本は箱単位2箱・社内、付箋（文具）25枚は割り切れずばら・外注、煎餅（食品）40枚は箱単位2箱・社内。総額 1200 + 2000 + 1200 = 4400。",
- "ONTO2": [
+ "urn:uv:発注書": [
   {
-   "_comment": "ワークプレース。ホーン節はその onto7 の値である（実際の系と同じ形。追記R474・K439）",
-   "@id": "urn:wamtest:workplace.unification_variety_graph_data",
-   "@type": "ONTO2",
-   "onto7": [
+   "_comment": "発注書(明細一覧: 明細(金額: A), 総額: T) :- ＝(T, A).",
+   "@id": "urn:node:発注書.head",
+   "@type": "urn:uv:発注書",
+   "variables": [
     {
-     "_comment": "発注書(明細一覧: 明細(金額: A), 総額: T) :- ＝(T, A).",
-     "@id": "urn:node:発注書.head",
-     "@type": "urn:uv:発注書",
-     "variables": [
-      {
-       "@id": "#T",
-       "variableName": "T"
-      },
-      {
-       "@id": "#A",
-       "variableName": "A"
-      }
-     ],
-     "urn:uv:明細一覧": {
-      "@type": "urn:uv:明細",
-      "urn:uv:金額": {
-       "@id": "#A"
-      }
-     },
-     "urn:uv:総額": {
+     "@id": "#T",
+     "variableName": "T"
+    },
+    {
+     "@id": "#A",
+     "variableName": "A"
+    }
+   ],
+   "urn:uv:明細一覧": {
+    "@type": "urn:uv:明細",
+    "urn:uv:金額": {
+     "@id": "#A"
+    }
+   },
+   "urn:uv:総額": {
+    "@id": "#T"
+   },
+   "internalGraph": [
+    {
+     "@id": "urn:node:発注書.総額",
+     "@type": "urn:uv:Equals",
+     "arg1": {
       "@id": "#T"
      },
-     "internalGraph": [
-      {
-       "@id": "urn:node:発注書.総額",
-       "@type": "urn:uv:Equals",
-       "arg1": {
-        "@id": "#T"
-       },
-       "arg2": {
-        "@id": "#A"
-       }
-      }
-     ]
-    },
-    {
-     "_comment": "明細(品目: 品目(入数: N), 担当: W, 数量: Q, 値: P, 金額: A, 区分: K, 箱数: B, 手配: H) :- 梱包(数量: Q, 入数: N, 区分: K, 箱数: B), ×([P, Q], A), 手配先(担当: W, 手配: H).",
-     "@id": "urn:node:明細.head",
-     "@type": "urn:uv:明細",
-     "variables": [
-      {
-       "@id": "#N",
-       "variableName": "N"
-      },
-      {
-       "@id": "#W",
-       "variableName": "W"
-      },
-      {
-       "@id": "#Q",
-       "variableName": "Q"
-      },
-      {
-       "@id": "#P",
-       "variableName": "P"
-      },
-      {
-       "@id": "#A",
-       "variableName": "A"
-      },
-      {
-       "@id": "#K",
-       "variableName": "K"
-      },
-      {
-       "@id": "#B",
-       "variableName": "B"
-      },
-      {
-       "@id": "#H",
-       "variableName": "H"
-      }
-     ],
-     "urn:uv:品目": {
-      "@type": "urn:uv:品目",
-      "urn:uv:入数": {
-       "@id": "#N"
-      }
-     },
-     "urn:uv:担当": {
-      "@id": "#W"
-     },
-     "urn:uv:数量": {
-      "@id": "#Q"
-     },
-     "urn:uv:値": {
-      "@id": "#P"
-     },
-     "urn:uv:金額": {
+     "arg2": {
       "@id": "#A"
-     },
-     "urn:uv:区分": {
-      "@id": "#K"
-     },
-     "urn:uv:箱数": {
-      "@id": "#B"
-     },
-     "urn:uv:手配": {
-      "@id": "#H"
-     },
-     "internalGraph": [
-      {
-       "@id": "urn:node:明細.梱包",
-       "@type": "urn:uv:梱包",
-       "urn:uv:数量": {
-        "@id": "#Q"
-       },
-       "urn:uv:入数": {
-        "@id": "#N"
-       },
-       "urn:uv:区分": {
-        "@id": "#K"
-       },
-       "urn:uv:箱数": {
-        "@id": "#B"
-       }
-      },
-      {
-       "@id": "urn:node:明細.金額",
-       "@type": "urn:uv:Times",
-       "arg1": [
-        {
-         "@id": "#P"
-        },
-        {
-         "@id": "#Q"
-        }
-       ],
-       "arg2": {
-        "@id": "#A"
-       }
-      },
-      {
-       "@id": "urn:node:明細.手配先",
-       "@type": "urn:uv:手配先",
-       "urn:uv:担当": {
-        "@id": "#W"
-       },
-       "urn:uv:手配": {
-        "@id": "#H"
-       }
-      }
-     ]
-    },
-    {
-     "_comment": "梱包(数量: Q, 入数: N, 区分: 箱単位, 箱数: B) :- ÷(被除数: Q, 除数: N, 商: B).  箱数は非負整数——割り切れなければ入らない。",
-     "@id": "urn:node:梱包1.head",
-     "@type": "urn:uv:梱包",
-     "variables": [
-      {
-       "@id": "#Q",
-       "variableName": "Q"
-      },
-      {
-       "@id": "#N",
-       "variableName": "N"
-      },
-      {
-       "@id": "#B",
-       "variableName": "B"
-      }
-     ],
-     "urn:uv:数量": {
-      "@id": "#Q"
-     },
-     "urn:uv:入数": {
-      "@id": "#N"
-     },
-     "urn:uv:区分": "箱単位",
-     "urn:uv:箱数": {
-      "@id": "#B"
-     },
-     "internalGraph": [
-      {
-       "@id": "urn:node:梱包1.箱数",
-       "@type": "urn:uv:Divide",
-       "被除数": {
-        "@id": "#Q"
-       },
-       "除数": {
-        "@id": "#N"
-       },
-       "商": {
-        "@id": "#B"
-       }
-      }
-     ]
-    },
-    {
-     "_comment": "梱包(数量: Q, 区分: ばら, 箱数: 0).",
-     "@id": "urn:node:梱包2.head",
-     "@type": "urn:uv:梱包",
-     "variables": [
-      {
-       "@id": "#Q",
-       "variableName": "Q"
-      }
-     ],
-     "urn:uv:数量": {
-      "@id": "#Q"
-     },
-     "urn:uv:区分": "ばら",
-     "urn:uv:箱数": 0
-    },
-    {
-     "_comment": "手配先(社内担当: W, 手配: 社内).  社内担当の値域は社員。",
-     "@id": "urn:node:手配先1.head",
-     "@type": "urn:uv:手配先",
-     "variables": [
-      {
-       "@id": "#W",
-       "variableName": "W"
-      }
-     ],
-     "urn:uv:社内担当": {
-      "@id": "#W"
-     },
-     "urn:uv:手配": "社内"
-    },
-    {
-     "_comment": "手配先(外注先: W, 手配: 外注).  外注先の値域は取引先。",
-     "@id": "urn:node:手配先2.head",
-     "@type": "urn:uv:手配先",
-     "variables": [
-      {
-       "@id": "#W",
-       "variableName": "W"
-      }
-     ],
-     "urn:uv:外注先": {
-      "@id": "#W"
-     },
-     "urn:uv:手配": "外注"
+     }
     }
    ]
-  }
- ],
- "urn:uv:発注書": [
+  },
   {
    "@id": "urn:entity:order-1",
    "urn:uv:明細一覧": [
@@ -255,6 +47,115 @@
   }
  ],
  "urn:uv:明細": [
+  {
+   "_comment": "明細(品目: 品目(入数: N), 担当: W, 数量: Q, 値: P, 金額: A, 区分: K, 箱数: B, 手配: H) :- 梱包(数量: Q, 入数: N, 区分: K, 箱数: B), ×([P, Q], A), 手配先(担当: W, 手配: H).",
+   "@id": "urn:node:明細.head",
+   "@type": "urn:uv:明細",
+   "variables": [
+    {
+     "@id": "#N",
+     "variableName": "N"
+    },
+    {
+     "@id": "#W",
+     "variableName": "W"
+    },
+    {
+     "@id": "#Q",
+     "variableName": "Q"
+    },
+    {
+     "@id": "#P",
+     "variableName": "P"
+    },
+    {
+     "@id": "#A",
+     "variableName": "A"
+    },
+    {
+     "@id": "#K",
+     "variableName": "K"
+    },
+    {
+     "@id": "#B",
+     "variableName": "B"
+    },
+    {
+     "@id": "#H",
+     "variableName": "H"
+    }
+   ],
+   "urn:uv:品目": {
+    "@type": "urn:uv:品目",
+    "urn:uv:入数": {
+     "@id": "#N"
+    }
+   },
+   "urn:uv:担当": {
+    "@id": "#W"
+   },
+   "urn:uv:数量": {
+    "@id": "#Q"
+   },
+   "urn:uv:値": {
+    "@id": "#P"
+   },
+   "urn:uv:金額": {
+    "@id": "#A"
+   },
+   "urn:uv:区分": {
+    "@id": "#K"
+   },
+   "urn:uv:箱数": {
+    "@id": "#B"
+   },
+   "urn:uv:手配": {
+    "@id": "#H"
+   },
+   "internalGraph": [
+    {
+     "@id": "urn:node:明細.梱包",
+     "@type": "urn:uv:梱包",
+     "urn:uv:数量": {
+      "@id": "#Q"
+     },
+     "urn:uv:入数": {
+      "@id": "#N"
+     },
+     "urn:uv:区分": {
+      "@id": "#K"
+     },
+     "urn:uv:箱数": {
+      "@id": "#B"
+     }
+    },
+    {
+     "@id": "urn:node:明細.金額",
+     "@type": "urn:uv:Times",
+     "arg1": [
+      {
+       "@id": "#P"
+      },
+      {
+       "@id": "#Q"
+      }
+     ],
+     "arg2": {
+      "@id": "#A"
+     }
+    },
+    {
+     "@id": "urn:node:明細.手配先",
+     "@type": "urn:uv:手配先",
+     "urn:uv:担当": {
+      "@id": "#W"
+     },
+     "urn:uv:手配": {
+      "@id": "#H"
+     }
+    }
+   ]
+  },
   {
    "_comment": "鉛筆（文具・12本入り）24本。24 ÷ 12 = 2 箱。担当は社員。",
    "@id": "urn:entity:line-1",
@@ -278,6 +179,100 @@
    "urn:uv:担当": "urn:entity:suzuki",
    "urn:uv:数量": 40,
    "urn:uv:価格": 30
+  }
+ ],
+ "urn:uv:梱包": [
+  {
+   "_comment": "梱包(数量: Q, 入数: N, 区分: 箱単位, 箱数: B) :- ÷(被除数: Q, 除数: N, 商: B).  箱数は非負整数——割り切れなければ入らない。",
+   "@id": "urn:node:梱包1.head",
+   "@type": "urn:uv:梱包",
+   "variables": [
+    {
+     "@id": "#Q",
+     "variableName": "Q"
+    },
+    {
+     "@id": "#N",
+     "variableName": "N"
+    },
+    {
+     "@id": "#B",
+     "variableName": "B"
+    }
+   ],
+   "urn:uv:数量": {
+    "@id": "#Q"
+   },
+   "urn:uv:入数": {
+    "@id": "#N"
+   },
+   "urn:uv:区分": "箱単位",
+   "urn:uv:箱数": {
+    "@id": "#B"
+   },
+   "internalGraph": [
+    {
+     "@id": "urn:node:梱包1.箱数",
+     "@type": "urn:uv:Divide",
+     "被除数": {
+      "@id": "#Q"
+     },
+     "除数": {
+      "@id": "#N"
+     },
+     "商": {
+      "@id": "#B"
+     }
+    }
+   ]
+  },
+  {
+   "_comment": "梱包(数量: Q, 区分: ばら, 箱数: 0).",
+   "@id": "urn:node:梱包2.head",
+   "@type": "urn:uv:梱包",
+   "variables": [
+    {
+     "@id": "#Q",
+     "variableName": "Q"
+    }
+   ],
+   "urn:uv:数量": {
+    "@id": "#Q"
+   },
+   "urn:uv:区分": "ばら",
+   "urn:uv:箱数": 0
+  }
+ ],
+ "urn:uv:手配先": [
+  {
+   "_comment": "手配先(社内担当: W, 手配: 社内).  社内担当の値域は社員。",
+   "@id": "urn:node:手配先1.head",
+   "@type": "urn:uv:手配先",
+   "variables": [
+    {
+     "@id": "#W",
+     "variableName": "W"
+    }
+   ],
+   "urn:uv:社内担当": {
+    "@id": "#W"
+   },
+   "urn:uv:手配": "社内"
+  },
+  {
+   "_comment": "手配先(外注先: W, 手配: 外注).  外注先の値域は取引先。",
+   "@id": "urn:node:手配先2.head",
+   "@type": "urn:uv:手配先",
+   "variables": [
+    {
+     "@id": "#W",
+     "variableName": "W"
+    }
+   ],
+   "urn:uv:外注先": {
+    "@id": "#W"
+   },
+   "urn:uv:手配": "外注"
   }
  ],
  "urn:uv:文具": [
