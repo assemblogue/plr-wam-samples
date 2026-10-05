@@ -55,6 +55,9 @@
             {
               "@id": "urn:entity:master-shonin",
               "@type": "urn:wamtest:承認",
+              "agent": {
+                "@id": "#承認者"
+              },
               "wam:truthValue": {
                 "@id": "#T承認"
               }
