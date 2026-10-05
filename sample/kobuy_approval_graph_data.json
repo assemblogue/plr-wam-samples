@@ -1,211 +1,199 @@
 {
  "_comment": "承認の仕方を金額で決める例題。購買(注文者:U) :- 注文(金額:A, agent:U) ├Then→ 承認の仕方(金額:A, 注文者:U) └Then→ 発注. 承認の仕方は**代替節が2本**で、金額で選ばれる——(1) >(1000000, A) なら 上司(注文者:U, 承認者:B), 承認(agent:B)。(2) ≧(A, 1000000) なら 所属(量化:majority, 構成員:X, グループ:承認グループ), 承認(agent:X)。(2) の所属は制限ノードで、量化は `量化:割合超 0.5` ＝ 過半数（3人なら2人。追記346・348）である。",
- "ONTO2": [
+ "urn:kapp:購買ゴール": [
   {
-   "_comment": "ワークプレース。ホーン節はその onto7 の値である（実際の系と同じ形。追記R474・K439）",
-   "@id": "urn:wamtest:workplace.kobuy_approval_graph_data",
-   "@type": "ONTO2",
-   "onto7": [
+   "_comment": ":- 購買(注文者: 山田). ゴールは初期束縛を受け取れないので、定数を渡すだけの包み節にしてある。",
+   "@id": "urn:node:購買ゴール.head",
+   "@type": "urn:kapp:購買ゴール",
+   "internalGraph": [
     {
-     "@id": "urn:node:購買.head",
+     "@id": "urn:node:購買",
      "@type": "urn:kapp:購買",
-     "urn:kapp:注文者": {
-      "@id": "#U"
-     },
-     "variables": [
-      {
-       "@id": "#U",
-       "variableName": "U"
-      },
-      {
-       "@id": "#A",
-       "variableName": "A"
-      }
-     ],
-     "internalGraph": [
-      {
-       "@id": "urn:node:注文",
-       "@type": "urn:kapp:注文",
-       "urn:kapp:金額": {
-        "@id": "#A"
-       },
-       "urn:kapp:agent": {
-        "@id": "#U"
-       }
-      },
-      {
-       "_comment": "**承認の仕方はここでは分からない。** 金額が決まってから代替節が選ばれる。",
-       "@id": "urn:node:承認の仕方呼出",
-       "@type": "urn:kapp:承認の仕方",
-       "urn:kapp:金額": {
-        "@id": "#A"
-       },
-       "urn:kapp:注文者": {
-        "@id": "#U"
-       }
-      },
-      {
-       "@id": "urn:node:発注",
-       "@type": "urn:kapp:発注",
-       "urn:kapp:金額": {
-        "@id": "#A"
-       },
-       "urn:kapp:agent": "urn:entity:サプライヤ"
-      },
-      {
-       "@id": "urn:node:購買.head#link1",
-       "@type": "urn:kapp:Then",
-       "arg1": {
-        "@id": "urn:node:注文"
-       },
-       "arg2": {
-        "@id": "urn:node:承認の仕方呼出"
-       }
-      },
-      {
-       "@id": "urn:node:購買.head#link2",
-       "@type": "urn:kapp:Then",
-       "arg1": {
-        "@id": "urn:node:承認の仕方呼出"
-       },
-       "arg2": {
-        "@id": "urn:node:発注"
-       }
-      }
-     ]
+     "urn:kapp:注文者": "urn:entity:山田"
+    }
+   ]
+  }
+ ],
+ "urn:kapp:購買": [
+  {
+   "@id": "urn:node:購買.head",
+   "@type": "urn:kapp:購買",
+   "urn:kapp:注文者": {
+    "@id": "#U"
+   },
+   "variables": [
+    {
+     "@id": "#U",
+     "variableName": "U"
     },
     {
-     "_comment": "**100万円未満**——直属の上司が1人で承認する。",
-     "@id": "urn:node:承認の仕方.上司.head",
-     "@type": "urn:kapp:承認の仕方",
-     "urn:kapp:金額": {
-      "@id": "#A"
-     },
-     "urn:kapp:注文者": {
-      "@id": "#U"
-     },
-     "variables": [
-      {
-       "@id": "#A",
-       "variableName": "A"
-      },
-      {
-       "@id": "#U",
-       "variableName": "U"
-      },
-      {
-       "@id": "#B",
-       "variableName": "B"
-      }
-     ],
-     "internalGraph": [
-      {
-       "_comment": ">(1000000, 金額) ——「金額が100万円未満」を、引数を入れ替えて書く。",
-       "@id": "urn:node:小額",
-       "@type": "urn:kapp:Gt",
-       "arg1": 1000000,
-       "arg2": {
-        "@id": "#A"
-       }
-      },
-      {
-       "_comment": "直属の上司を引く（事実）。",
-       "@id": "urn:node:上司を引く",
-       "@type": "urn:kapp:上司",
-       "urn:kapp:注文者": {
-        "@id": "#U"
-       },
-       "urn:kapp:承認者": {
-        "@id": "#B"
-       }
-      },
-      {
-       "@id": "urn:node:上司承認",
-       "@type": "urn:kapp:承認",
-       "urn:kapp:金額": {
-        "@id": "#A"
-       },
-       "urn:kapp:agent": {
-        "@id": "#B"
-       }
-      }
-     ]
-    },
-    {
-     "_comment": "**100万円以上**——承認グループの多数決。量化 `量化:割合超 0.5` は過半数（3人なら2人）。",
-     "@id": "urn:node:承認の仕方.グループ.head",
-     "@type": "urn:kapp:承認の仕方",
-     "urn:kapp:金額": {
-      "@id": "#A"
-     },
-     "urn:kapp:注文者": {
-      "@id": "#U"
-     },
-     "variables": [
-      {
-       "@id": "#A",
-       "variableName": "A"
-      },
-      {
-       "@id": "#U",
-       "variableName": "U"
-      },
-      {
-       "@id": "#X",
-       "variableName": "X"
-      }
-     ],
-     "internalGraph": [
-      {
-       "@id": "urn:node:高額",
-       "@type": "urn:kapp:Geq",
-       "arg1": {
-        "@id": "#A"
-       },
-       "arg2": 1000000
-      },
-      {
-       "_comment": "**制限ノード**。この解（＝グループの構成員）ごとに主要作用域を実行し、成功が過半数かで決める。",
-       "@id": "urn:node:構成員を数える",
-       "@type": "urn:kapp:所属",
-       "urn:kapp:quantRatioGt": 0.5,
-       "urn:kapp:構成員": {
-        "@id": "#X"
-       },
-       "urn:kapp:グループ": "urn:entity:承認グループ"
-      },
-      {
-       "@id": "urn:node:グループ承認",
-       "@type": "urn:kapp:承認",
-       "urn:kapp:金額": {
-        "@id": "#A"
-       },
-       "urn:kapp:agent": {
-        "@id": "#X"
-       }
-      }
-     ]
+     "@id": "#A",
+     "variableName": "A"
     }
    ],
-   "ontoC": [
+   "internalGraph": [
     {
-     "_comment": "チャネル設定。ゴール節はその ontoG の値である（追記R488）",
-     "@id": "urn:wamtest:設定.kobuy_approval_graph_data",
-     "@type": "ONTOc",
-     "ontoG": [
-      {
-       "_comment": ":- 購買(注文者: 山田). ゴールは初期束縛を受け取れないので、定数を渡すだけの包み節にしてある。",
-       "@id": "urn:node:購買ゴール.head",
-       "@type": "urn:kapp:購買ゴール",
-       "internalGraph": [
-        {
-         "@id": "urn:node:購買",
-         "@type": "urn:kapp:購買",
-         "urn:kapp:注文者": "urn:entity:山田"
-        }
-       ]
-      }
-     ]
+     "@id": "urn:node:注文",
+     "@type": "urn:kapp:注文",
+     "urn:kapp:金額": {
+      "@id": "#A"
+     },
+     "urn:kapp:agent": {
+      "@id": "#U"
+     }
+    },
+    {
+     "_comment": "**承認の仕方はここでは分からない。** 金額が決まってから代替節が選ばれる。",
+     "@id": "urn:node:承認の仕方呼出",
+     "@type": "urn:kapp:承認の仕方",
+     "urn:kapp:金額": {
+      "@id": "#A"
+     },
+     "urn:kapp:注文者": {
+      "@id": "#U"
+     }
+    },
+    {
+     "@id": "urn:node:発注",
+     "@type": "urn:kapp:発注",
+     "urn:kapp:金額": {
+      "@id": "#A"
+     },
+     "urn:kapp:agent": "urn:entity:サプライヤ"
+    },
+    {
+     "@id": "urn:node:購買.head#link1",
+     "@type": "urn:kapp:Then",
+     "arg1": {
+      "@id": "urn:node:注文"
+     },
+     "arg2": {
+      "@id": "urn:node:承認の仕方呼出"
+     }
+    },
+    {
+     "@id": "urn:node:購買.head#link2",
+     "@type": "urn:kapp:Then",
+     "arg1": {
+      "@id": "urn:node:承認の仕方呼出"
+     },
+     "arg2": {
+      "@id": "urn:node:発注"
+     }
+    }
+   ]
+  }
+ ],
+ "urn:kapp:承認の仕方": [
+  {
+   "_comment": "**100万円未満**——直属の上司が1人で承認する。",
+   "@id": "urn:node:承認の仕方.上司.head",
+   "@type": "urn:kapp:承認の仕方",
+   "urn:kapp:金額": {
+    "@id": "#A"
+   },
+   "urn:kapp:注文者": {
+    "@id": "#U"
+   },
+   "variables": [
+    {
+     "@id": "#A",
+     "variableName": "A"
+    },
+    {
+     "@id": "#U",
+     "variableName": "U"
+    },
+    {
+     "@id": "#B",
+     "variableName": "B"
+    }
+   ],
+   "internalGraph": [
+    {
+     "_comment": ">(1000000, 金額) ——「金額が100万円未満」を、引数を入れ替えて書く。",
+     "@id": "urn:node:小額",
+     "@type": "urn:kapp:Gt",
+     "arg1": 1000000,
+     "arg2": {
+      "@id": "#A"
+     }
+    },
+    {
+     "_comment": "直属の上司を引く（事実）。",
+     "@id": "urn:node:上司を引く",
+     "@type": "urn:kapp:上司",
+     "urn:kapp:注文者": {
+      "@id": "#U"
+     },
+     "urn:kapp:承認者": {
+      "@id": "#B"
+     }
+    },
+    {
+     "@id": "urn:node:上司承認",
+     "@type": "urn:kapp:承認",
+     "urn:kapp:金額": {
+      "@id": "#A"
+     },
+     "urn:kapp:agent": {
+      "@id": "#B"
+     }
+    }
+   ]
+  },
+  {
+   "_comment": "**100万円以上**——承認グループの多数決。量化 `量化:割合超 0.5` は過半数（3人なら2人）。",
+   "@id": "urn:node:承認の仕方.グループ.head",
+   "@type": "urn:kapp:承認の仕方",
+   "urn:kapp:金額": {
+    "@id": "#A"
+   },
+   "urn:kapp:注文者": {
+    "@id": "#U"
+   },
+   "variables": [
+    {
+     "@id": "#A",
+     "variableName": "A"
+    },
+    {
+     "@id": "#U",
+     "variableName": "U"
+    },
+    {
+     "@id": "#X",
+     "variableName": "X"
+    }
+   ],
+   "internalGraph": [
+    {
+     "@id": "urn:node:高額",
+     "@type": "urn:kapp:Geq",
+     "arg1": {
+      "@id": "#A"
+     },
+     "arg2": 1000000
+    },
+    {
+     "_comment": "**制限ノード**。この解（＝グループの構成員）ごとに主要作用域を実行し、成功が過半数かで決める。",
+     "@id": "urn:node:構成員を数える",
+     "@type": "urn:kapp:所属",
+     "urn:kapp:quantRatioGt": 0.5,
+     "urn:kapp:構成員": {
+      "@id": "#X"
+     },
+     "urn:kapp:グループ": "urn:entity:承認グループ"
+    },
+    {
+     "@id": "urn:node:グループ承認",
+     "@type": "urn:kapp:承認",
+     "urn:kapp:金額": {
+      "@id": "#A"
+     },
+     "urn:kapp:agent": {
+      "@id": "#X"
+     }
     }
    ]
   }
