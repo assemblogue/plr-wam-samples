@@ -63,6 +63,7 @@
       "@id": "urn:pr:直上カテゴリ",
       "@type": "Class",
       "subClassOf": [
+        "#Task",
         {
           "@type": "Restriction",
           "onProperty": "urn:pr:対象",
@@ -74,17 +75,31 @@
           "onProperty": "urn:pr:カテゴリ",
           "minCardinality": 0,
           "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "#agent",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "wam:completeByOkButton",
+          "minCardinality": 0,
+          "maxCardinality": 1
         }
       ],
       "label": {
         "ja": "直上カテゴリ",
         "en": "Parent category"
-      }
+      },
+      "_comment": "マスターのレコード（R488）——マスターのチャネル設定の登録の節（頭部だけのゴール節）で作るタスクで、本体では existing を付けて検索する（追記R528）。"
     },
     {
       "@id": "urn:pr:商品・バイヤー・単価",
       "@type": "Class",
       "subClassOf": [
+        "#Task",
         {
           "@type": "Restriction",
           "onProperty": "urn:pr:商品",
@@ -100,6 +115,18 @@
         {
           "@type": "Restriction",
           "onProperty": "urn:pr:単価",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "#agent",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "wam:completeByOkButton",
           "minCardinality": 0,
           "maxCardinality": 1
         }
@@ -107,12 +134,14 @@
       "label": {
         "ja": "商品・バイヤー・単価",
         "en": "Product/buyer unit price"
-      }
+      },
+      "_comment": "マスターのレコード（R488）——マスターのチャネル設定の登録の節（頭部だけのゴール節）で作るタスクで、本体では existing を付けて検索する（追記R528）。"
     },
     {
       "@id": "urn:pr:商品・単価",
       "@type": "Class",
       "subClassOf": [
+        "#Task",
         {
           "@type": "Restriction",
           "onProperty": "urn:pr:商品",
@@ -122,6 +151,18 @@
         {
           "@type": "Restriction",
           "onProperty": "urn:pr:単価",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "#agent",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "wam:completeByOkButton",
           "minCardinality": 0,
           "maxCardinality": 1
         }
@@ -129,12 +170,14 @@
       "label": {
         "ja": "商品・単価",
         "en": "Product unit price"
-      }
+      },
+      "_comment": "マスターのレコード（R488）——マスターのチャネル設定の登録の節（頭部だけのゴール節）で作るタスクで、本体では existing を付けて検索する（追記R528）。"
     },
     {
       "@id": "urn:pr:カテゴリ・バイヤー・掛率",
       "@type": "Class",
       "subClassOf": [
+        "#Task",
         {
           "@type": "Restriction",
           "onProperty": "urn:pr:カテゴリ",
@@ -150,6 +193,18 @@
         {
           "@type": "Restriction",
           "onProperty": "urn:pr:掛率",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "#agent",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "wam:completeByOkButton",
           "minCardinality": 0,
           "maxCardinality": 1
         }
@@ -157,12 +212,14 @@
       "label": {
         "ja": "カテゴリ・バイヤー・掛率",
         "en": "Category/buyer rate"
-      }
+      },
+      "_comment": "マスターのレコード（R488）——マスターのチャネル設定の登録の節（頭部だけのゴール節）で作るタスクで、本体では existing を付けて検索する（追記R528）。"
     },
     {
       "@id": "urn:pr:カテゴリ・掛率",
       "@type": "Class",
       "subClassOf": [
+        "#Task",
         {
           "@type": "Restriction",
           "onProperty": "urn:pr:カテゴリ",
@@ -174,17 +231,31 @@
           "onProperty": "urn:pr:掛率",
           "minCardinality": 0,
           "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "#agent",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "wam:completeByOkButton",
+          "minCardinality": 0,
+          "maxCardinality": 1
         }
       ],
       "label": {
         "ja": "カテゴリ・掛率",
         "en": "Category rate"
-      }
+      },
+      "_comment": "マスターのレコード（R488）——マスターのチャネル設定の登録の節（頭部だけのゴール節）で作るタスクで、本体では existing を付けて検索する（追記R528）。"
     },
     {
       "@id": "urn:pr:商品・バイヤー・掛率",
       "@type": "Class",
       "subClassOf": [
+        "#Task",
         {
           "@type": "Restriction",
           "onProperty": "urn:pr:商品",
@@ -202,17 +273,31 @@
           "onProperty": "urn:pr:掛率",
           "minCardinality": 0,
           "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "#agent",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "wam:completeByOkButton",
+          "minCardinality": 0,
+          "maxCardinality": 1
         }
       ],
       "label": {
         "ja": "商品・バイヤー・掛率",
         "en": "Product/buyer rate"
-      }
+      },
+      "_comment": "マスターのレコード（R488）——マスターのチャネル設定の登録の節（頭部だけのゴール節）で作るタスクで、本体では existing を付けて検索する（追記R528）。"
     },
     {
       "@id": "urn:pr:商品・掛率",
       "@type": "Class",
       "subClassOf": [
+        "#Task",
         {
           "@type": "Restriction",
           "onProperty": "urn:pr:商品",
@@ -224,17 +309,31 @@
           "onProperty": "urn:pr:掛率",
           "minCardinality": 0,
           "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "#agent",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "wam:completeByOkButton",
+          "minCardinality": 0,
+          "maxCardinality": 1
         }
       ],
       "label": {
         "ja": "商品・掛率",
         "en": "Product rate"
-      }
+      },
+      "_comment": "マスターのレコード（R488）——マスターのチャネル設定の登録の節（頭部だけのゴール節）で作るタスクで、本体では existing を付けて検索する（追記R528）。"
     },
     {
       "@id": "urn:pr:商品マスター",
       "@type": "Class",
       "subClassOf": [
+        "#Task",
         {
           "@type": "Restriction",
           "onProperty": "urn:pr:商品",
@@ -246,12 +345,25 @@
           "onProperty": "urn:pr:単価",
           "minCardinality": 0,
           "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "#agent",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        },
+        {
+          "@type": "Restriction",
+          "onProperty": "wam:completeByOkButton",
+          "minCardinality": 0,
+          "maxCardinality": 1
         }
       ],
       "label": {
         "ja": "商品マスター",
         "en": "Product master"
-      }
+      },
+      "_comment": "マスターのレコード（R488）——マスターのチャネル設定の登録の節（頭部だけのゴール節）で作るタスクで、本体では existing を付けて検索する（追記R528）。"
     },
     {
       "@id": "urn:pr:商品",
@@ -306,6 +418,24 @@
         "ja": "掛率",
         "en": "Rate"
       }
+    },
+    {
+      "@id": "#Task",
+      "@type": "Class",
+      "_comment": "足した——マスターのレコードはタスクである（R488・R528）",
+      "label": "タスク"
+    },
+    {
+      "@id": "#agent",
+      "@type": "ObjectProperty",
+      "_comment": "足した——マスターのレコードの担当者（R488・R528）",
+      "label": "担当者"
+    },
+    {
+      "@id": "urn:pr:人",
+      "@type": "Class",
+      "_comment": "足した——人もレコードとして置く（追記R529）",
+      "label": "人"
     }
   ]
 }
