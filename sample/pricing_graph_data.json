@@ -1,37 +1,14 @@
 {
   "_comment": "ホーン節（追記207 の新形式）。ホーン節は「ノード1つ ＋ その内部グラフ」である。",
-  "urn:pr:単価・掛率": [
+  "ONTO2": [
     {
-      "@id": "urn:node:単価掛率1.head-1",
-      "@type": "urn:pr:単価・掛率",
-      "urn:pr:商品": {
-        "@id": "#Item"
-      },
-      "urn:pr:バイヤー": {
-        "@id": "#Buyer"
-      },
-      "urn:pr:単価": {
-        "@id": "#Price"
-      },
-      "urn:pr:掛率": 1,
-      "variables": [
+      "_comment": "ワークプレース。ホーン節はその onto7 の値である（実際の系と同じ形。追記R474・K439）",
+      "@id": "urn:wamtest:workplace.pricing_graph_data",
+      "@type": "ONTO2",
+      "onto7": [
         {
-          "@id": "#Buyer",
-          "variableName": "Buyer"
-        },
-        {
-          "@id": "#Item",
-          "variableName": "Item"
-        },
-        {
-          "@id": "#Price",
-          "variableName": "Price"
-        }
-      ],
-      "internalGraph": [
-        {
-          "@id": "urn:node:商品バイヤー単価-2",
-          "@type": "urn:pr:商品・バイヤー・単価",
+          "@id": "urn:node:単価掛率1.head-1",
+          "@type": "urn:pr:単価・掛率",
           "urn:pr:商品": {
             "@id": "#Item"
           },
@@ -40,335 +17,643 @@
           },
           "urn:pr:単価": {
             "@id": "#Price"
-          }
-        }
-      ]
-    },
-    {
-      "@id": "urn:node:単価掛率2.head-3",
-      "@type": "urn:pr:単価・掛率",
-      "urn:pr:商品": {
-        "@id": "#Item"
-      },
-      "urn:pr:単価": {
-        "@id": "#Price"
-      },
-      "urn:pr:掛率": 1,
-      "variables": [
-        {
-          "@id": "#Item",
-          "variableName": "Item"
+          },
+          "urn:pr:掛率": 1,
+          "variables": [
+            {
+              "@id": "#Buyer",
+              "variableName": "Buyer"
+            },
+            {
+              "@id": "#Item",
+              "variableName": "Item"
+            },
+            {
+              "@id": "#Price",
+              "variableName": "Price"
+            }
+          ],
+          "internalGraph": [
+            {
+              "@id": "urn:node:商品バイヤー単価-2",
+              "@type": "urn:pr:商品・バイヤー・単価",
+              "urn:pr:商品": {
+                "@id": "#Item"
+              },
+              "urn:pr:バイヤー": {
+                "@id": "#Buyer"
+              },
+              "urn:pr:単価": {
+                "@id": "#Price"
+              },
+              "wam:existing": true,
+              "_comment": "**existing**——マスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。"
+            }
+          ]
         },
         {
-          "@id": "#Price",
-          "variableName": "Price"
-        }
-      ],
-      "internalGraph": [
-        {
-          "@id": "urn:node:商品単価-4",
-          "@type": "urn:pr:商品・単価",
+          "@id": "urn:node:単価掛率2.head-3",
+          "@type": "urn:pr:単価・掛率",
           "urn:pr:商品": {
             "@id": "#Item"
           },
           "urn:pr:単価": {
             "@id": "#Price"
-          }
-        }
-      ]
-    },
-    {
-      "@id": "urn:node:単価掛率3.head-5",
-      "@type": "urn:pr:単価・掛率",
-      "urn:pr:商品": {
-        "@id": "#Item"
-      },
-      "urn:pr:バイヤー": {
-        "@id": "#Buyer"
-      },
-      "urn:pr:単価": 0,
-      "urn:pr:掛率": {
-        "@id": "#Ratio"
-      },
-      "variables": [
-        {
-          "@id": "#Buyer",
-          "variableName": "Buyer"
+          },
+          "urn:pr:掛率": 1,
+          "variables": [
+            {
+              "@id": "#Item",
+              "variableName": "Item"
+            },
+            {
+              "@id": "#Price",
+              "variableName": "Price"
+            }
+          ],
+          "internalGraph": [
+            {
+              "@id": "urn:node:商品単価-4",
+              "@type": "urn:pr:商品・単価",
+              "urn:pr:商品": {
+                "@id": "#Item"
+              },
+              "urn:pr:単価": {
+                "@id": "#Price"
+              },
+              "wam:existing": true,
+              "_comment": "**existing**——マスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。"
+            }
+          ]
         },
         {
-          "@id": "#Item",
-          "variableName": "Item"
+          "@id": "urn:node:単価掛率3.head-5",
+          "@type": "urn:pr:単価・掛率",
+          "urn:pr:商品": {
+            "@id": "#Item"
+          },
+          "urn:pr:バイヤー": {
+            "@id": "#Buyer"
+          },
+          "urn:pr:単価": 0,
+          "urn:pr:掛率": {
+            "@id": "#Ratio"
+          },
+          "variables": [
+            {
+              "@id": "#Buyer",
+              "variableName": "Buyer"
+            },
+            {
+              "@id": "#Item",
+              "variableName": "Item"
+            },
+            {
+              "@id": "#ItemCat",
+              "variableName": "ItemCat"
+            },
+            {
+              "@id": "#Ratio",
+              "variableName": "Ratio"
+            }
+          ],
+          "internalGraph": [
+            {
+              "@id": "urn:node:上位カテゴリ-6",
+              "@type": "urn:pr:上位カテゴリ",
+              "urn:pr:対象": {
+                "@id": "#Item"
+              },
+              "urn:pr:カテゴリ": {
+                "@id": "#ItemCat"
+              }
+            },
+            {
+              "@id": "urn:node:カテゴリバイヤー掛率-7",
+              "@type": "urn:pr:カテゴリ・バイヤー・掛率",
+              "urn:pr:カテゴリ": {
+                "@id": "#ItemCat"
+              },
+              "urn:pr:バイヤー": {
+                "@id": "#Buyer"
+              },
+              "urn:pr:掛率": {
+                "@id": "#Ratio"
+              },
+              "wam:existing": true,
+              "_comment": "**existing**——マスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。"
+            }
+          ]
         },
         {
-          "@id": "#ItemCat",
-          "variableName": "ItemCat"
+          "@id": "urn:node:単価掛率4.head-8",
+          "@type": "urn:pr:単価・掛率",
+          "urn:pr:商品": {
+            "@id": "#Item"
+          },
+          "urn:pr:単価": 0,
+          "urn:pr:掛率": {
+            "@id": "#Ratio"
+          },
+          "variables": [
+            {
+              "@id": "#Item",
+              "variableName": "Item"
+            },
+            {
+              "@id": "#ItemCat",
+              "variableName": "ItemCat"
+            },
+            {
+              "@id": "#Ratio",
+              "variableName": "Ratio"
+            }
+          ],
+          "internalGraph": [
+            {
+              "@id": "urn:node:上位カテゴリ-9",
+              "@type": "urn:pr:上位カテゴリ",
+              "urn:pr:対象": {
+                "@id": "#Item"
+              },
+              "urn:pr:カテゴリ": {
+                "@id": "#ItemCat"
+              }
+            },
+            {
+              "@id": "urn:node:カテゴリ掛率-10",
+              "@type": "urn:pr:カテゴリ・掛率",
+              "urn:pr:カテゴリ": {
+                "@id": "#ItemCat"
+              },
+              "urn:pr:掛率": {
+                "@id": "#Ratio"
+              },
+              "wam:existing": true,
+              "_comment": "**existing**——マスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。"
+            }
+          ]
         },
         {
-          "@id": "#Ratio",
-          "variableName": "Ratio"
-        }
-      ],
-      "internalGraph": [
+          "@id": "urn:node:単価掛率5.head-11",
+          "@type": "urn:pr:単価・掛率",
+          "urn:pr:商品": {
+            "@id": "#Item"
+          },
+          "urn:pr:バイヤー": {
+            "@id": "#Buyer"
+          },
+          "urn:pr:単価": 0,
+          "urn:pr:掛率": {
+            "@id": "#Ratio"
+          },
+          "variables": [
+            {
+              "@id": "#Buyer",
+              "variableName": "Buyer"
+            },
+            {
+              "@id": "#Item",
+              "variableName": "Item"
+            },
+            {
+              "@id": "#Ratio",
+              "variableName": "Ratio"
+            }
+          ],
+          "internalGraph": [
+            {
+              "@id": "urn:node:商品バイヤー掛率-12",
+              "@type": "urn:pr:商品・バイヤー・掛率",
+              "urn:pr:商品": {
+                "@id": "#Item"
+              },
+              "urn:pr:バイヤー": {
+                "@id": "#Buyer"
+              },
+              "urn:pr:掛率": {
+                "@id": "#Ratio"
+              },
+              "wam:existing": true,
+              "_comment": "**existing**——マスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。"
+            }
+          ]
+        },
         {
-          "@id": "urn:node:上位カテゴリ-6",
+          "@id": "urn:node:単価掛率6.head-13",
+          "@type": "urn:pr:単価・掛率",
+          "urn:pr:商品": {
+            "@id": "#Item"
+          },
+          "urn:pr:単価": 0,
+          "urn:pr:掛率": {
+            "@id": "#Ratio"
+          },
+          "variables": [
+            {
+              "@id": "#Item",
+              "variableName": "Item"
+            },
+            {
+              "@id": "#Ratio",
+              "variableName": "Ratio"
+            }
+          ],
+          "internalGraph": [
+            {
+              "@id": "urn:node:商品掛率-14",
+              "@type": "urn:pr:商品・掛率",
+              "urn:pr:商品": {
+                "@id": "#Item"
+              },
+              "urn:pr:掛率": {
+                "@id": "#Ratio"
+              },
+              "wam:existing": true,
+              "_comment": "**existing**——マスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。"
+            }
+          ]
+        },
+        {
+          "@id": "urn:node:単価掛率7.head-15",
+          "@type": "urn:pr:単価・掛率",
+          "urn:pr:商品": {
+            "@id": "#Item"
+          },
+          "urn:pr:単価": {
+            "@id": "#Price"
+          },
+          "urn:pr:掛率": 1,
+          "variables": [
+            {
+              "@id": "#Item",
+              "variableName": "Item"
+            },
+            {
+              "@id": "#Price",
+              "variableName": "Price"
+            }
+          ],
+          "internalGraph": [
+            {
+              "@id": "urn:node:商品マスター-16",
+              "@type": "urn:pr:商品マスター",
+              "urn:pr:商品": {
+                "@id": "#Item"
+              },
+              "urn:pr:単価": {
+                "@id": "#Price"
+              },
+              "wam:existing": true,
+              "_comment": "**existing**——マスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。"
+            }
+          ]
+        },
+        {
+          "@id": "urn:node:上位カテゴリ1.head-17",
           "@type": "urn:pr:上位カテゴリ",
           "urn:pr:対象": {
             "@id": "#Item"
           },
           "urn:pr:カテゴリ": {
             "@id": "#ItemCat"
-          }
-        },
-        {
-          "@id": "urn:node:カテゴリバイヤー掛率-7",
-          "@type": "urn:pr:カテゴリ・バイヤー・掛率",
-          "urn:pr:カテゴリ": {
-            "@id": "#ItemCat"
           },
-          "urn:pr:バイヤー": {
-            "@id": "#Buyer"
-          },
-          "urn:pr:掛率": {
-            "@id": "#Ratio"
-          }
-        }
-      ]
-    },
-    {
-      "@id": "urn:node:単価掛率4.head-8",
-      "@type": "urn:pr:単価・掛率",
-      "urn:pr:商品": {
-        "@id": "#Item"
-      },
-      "urn:pr:単価": 0,
-      "urn:pr:掛率": {
-        "@id": "#Ratio"
-      },
-      "variables": [
-        {
-          "@id": "#Item",
-          "variableName": "Item"
+          "variables": [
+            {
+              "@id": "#Item",
+              "variableName": "Item"
+            },
+            {
+              "@id": "#ItemCat",
+              "variableName": "ItemCat"
+            }
+          ],
+          "internalGraph": [
+            {
+              "@id": "urn:node:直上カテゴリ-18",
+              "@type": "urn:pr:直上カテゴリ",
+              "urn:pr:対象": {
+                "@id": "#Item"
+              },
+              "urn:pr:カテゴリ": {
+                "@id": "#ItemCat"
+              },
+              "wam:existing": true,
+              "_comment": "**existing**——マスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。"
+            }
+          ]
         },
         {
-          "@id": "#ItemCat",
-          "variableName": "ItemCat"
-        },
-        {
-          "@id": "#Ratio",
-          "variableName": "Ratio"
-        }
-      ],
-      "internalGraph": [
-        {
-          "@id": "urn:node:上位カテゴリ-9",
+          "@id": "urn:node:上位カテゴリ2.head-19",
           "@type": "urn:pr:上位カテゴリ",
           "urn:pr:対象": {
             "@id": "#Item"
           },
           "urn:pr:カテゴリ": {
             "@id": "#ItemCat"
-          }
-        },
-        {
-          "@id": "urn:node:カテゴリ掛率-10",
-          "@type": "urn:pr:カテゴリ・掛率",
-          "urn:pr:カテゴリ": {
-            "@id": "#ItemCat"
           },
-          "urn:pr:掛率": {
-            "@id": "#Ratio"
-          }
-        }
-      ]
-    },
-    {
-      "@id": "urn:node:単価掛率5.head-11",
-      "@type": "urn:pr:単価・掛率",
-      "urn:pr:商品": {
-        "@id": "#Item"
-      },
-      "urn:pr:バイヤー": {
-        "@id": "#Buyer"
-      },
-      "urn:pr:単価": 0,
-      "urn:pr:掛率": {
-        "@id": "#Ratio"
-      },
-      "variables": [
-        {
-          "@id": "#Buyer",
-          "variableName": "Buyer"
-        },
-        {
-          "@id": "#Item",
-          "variableName": "Item"
-        },
-        {
-          "@id": "#Ratio",
-          "variableName": "Ratio"
+          "variables": [
+            {
+              "@id": "#IC",
+              "variableName": "IC"
+            },
+            {
+              "@id": "#Item",
+              "variableName": "Item"
+            },
+            {
+              "@id": "#ItemCat",
+              "variableName": "ItemCat"
+            }
+          ],
+          "internalGraph": [
+            {
+              "@id": "urn:node:直上カテゴリ-20",
+              "@type": "urn:pr:直上カテゴリ",
+              "urn:pr:対象": {
+                "@id": "#Item"
+              },
+              "urn:pr:カテゴリ": {
+                "@id": "#IC"
+              },
+              "wam:existing": true,
+              "_comment": "**existing**——マスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。"
+            },
+            {
+              "@id": "urn:node:上位カテゴリ再帰-21",
+              "@type": "urn:pr:上位カテゴリ",
+              "urn:pr:対象": {
+                "@id": "#IC"
+              },
+              "urn:pr:カテゴリ": {
+                "@id": "#ItemCat"
+              }
+            }
+          ]
         }
       ],
-      "internalGraph": [
+      "ontoC": [
         {
-          "@id": "urn:node:商品バイヤー掛率-12",
-          "@type": "urn:pr:商品・バイヤー・掛率",
-          "urn:pr:商品": {
-            "@id": "#Item"
-          },
-          "urn:pr:バイヤー": {
-            "@id": "#Buyer"
-          },
-          "urn:pr:掛率": {
-            "@id": "#Ratio"
-          }
-        }
-      ]
-    },
-    {
-      "@id": "urn:node:単価掛率6.head-13",
-      "@type": "urn:pr:単価・掛率",
-      "urn:pr:商品": {
-        "@id": "#Item"
-      },
-      "urn:pr:単価": 0,
-      "urn:pr:掛率": {
-        "@id": "#Ratio"
-      },
-      "variables": [
-        {
-          "@id": "#Item",
-          "variableName": "Item"
-        },
-        {
-          "@id": "#Ratio",
-          "variableName": "Ratio"
-        }
-      ],
-      "internalGraph": [
-        {
-          "@id": "urn:node:商品掛率-14",
-          "@type": "urn:pr:商品・掛率",
-          "urn:pr:商品": {
-            "@id": "#Item"
-          },
-          "urn:pr:掛率": {
-            "@id": "#Ratio"
-          }
-        }
-      ]
-    },
-    {
-      "@id": "urn:node:単価掛率7.head-15",
-      "@type": "urn:pr:単価・掛率",
-      "urn:pr:商品": {
-        "@id": "#Item"
-      },
-      "urn:pr:単価": {
-        "@id": "#Price"
-      },
-      "urn:pr:掛率": 1,
-      "variables": [
-        {
-          "@id": "#Item",
-          "variableName": "Item"
-        },
-        {
-          "@id": "#Price",
-          "variableName": "Price"
-        }
-      ],
-      "internalGraph": [
-        {
-          "@id": "urn:node:商品マスター-16",
-          "@type": "urn:pr:商品マスター",
-          "urn:pr:商品": {
-            "@id": "#Item"
-          },
-          "urn:pr:単価": {
-            "@id": "#Price"
-          }
+          "_comment": "マスターのチャネル設定。マスターのレコードは、この登録の節（頭部だけのゴール節）で作る（R488）",
+          "@id": "urn:pr:設定.マスター",
+          "@type": "ONTOc",
+          "onto0": "マスター",
+          "ontoG": [
+            {
+              "_comment": "商品・バイヤー・単価 の登録",
+              "@id": "urn:node:商品・バイヤー・単価.登録",
+              "@type": "urn:pr:商品・バイヤー・単価",
+              "urn:pr:商品": {
+                "@id": "#V0"
+              },
+              "urn:pr:バイヤー": {
+                "@id": "#V1"
+              },
+              "urn:pr:単価": {
+                "@id": "#V2"
+              },
+              "agent": {
+                "@id": "#M"
+              },
+              "variables": [
+                {
+                  "@id": "#V0",
+                  "variableName": "V0"
+                },
+                {
+                  "@id": "#V1",
+                  "variableName": "V1"
+                },
+                {
+                  "@id": "#V2",
+                  "variableName": "V2"
+                },
+                {
+                  "@id": "#M",
+                  "variableName": "M"
+                }
+              ]
+            },
+            {
+              "_comment": "商品・単価 の登録",
+              "@id": "urn:node:商品・単価.登録",
+              "@type": "urn:pr:商品・単価",
+              "urn:pr:商品": {
+                "@id": "#V0"
+              },
+              "urn:pr:単価": {
+                "@id": "#V1"
+              },
+              "agent": {
+                "@id": "#M"
+              },
+              "variables": [
+                {
+                  "@id": "#V0",
+                  "variableName": "V0"
+                },
+                {
+                  "@id": "#V1",
+                  "variableName": "V1"
+                },
+                {
+                  "@id": "#M",
+                  "variableName": "M"
+                }
+              ]
+            },
+            {
+              "_comment": "カテゴリ・バイヤー・掛率 の登録",
+              "@id": "urn:node:カテゴリ・バイヤー・掛率.登録",
+              "@type": "urn:pr:カテゴリ・バイヤー・掛率",
+              "urn:pr:カテゴリ": {
+                "@id": "#V0"
+              },
+              "urn:pr:バイヤー": {
+                "@id": "#V1"
+              },
+              "urn:pr:掛率": {
+                "@id": "#V2"
+              },
+              "agent": {
+                "@id": "#M"
+              },
+              "variables": [
+                {
+                  "@id": "#V0",
+                  "variableName": "V0"
+                },
+                {
+                  "@id": "#V1",
+                  "variableName": "V1"
+                },
+                {
+                  "@id": "#V2",
+                  "variableName": "V2"
+                },
+                {
+                  "@id": "#M",
+                  "variableName": "M"
+                }
+              ]
+            },
+            {
+              "_comment": "カテゴリ・掛率 の登録",
+              "@id": "urn:node:カテゴリ・掛率.登録",
+              "@type": "urn:pr:カテゴリ・掛率",
+              "urn:pr:カテゴリ": {
+                "@id": "#V0"
+              },
+              "urn:pr:掛率": {
+                "@id": "#V1"
+              },
+              "agent": {
+                "@id": "#M"
+              },
+              "variables": [
+                {
+                  "@id": "#V0",
+                  "variableName": "V0"
+                },
+                {
+                  "@id": "#V1",
+                  "variableName": "V1"
+                },
+                {
+                  "@id": "#M",
+                  "variableName": "M"
+                }
+              ]
+            },
+            {
+              "_comment": "商品・バイヤー・掛率 の登録",
+              "@id": "urn:node:商品・バイヤー・掛率.登録",
+              "@type": "urn:pr:商品・バイヤー・掛率",
+              "urn:pr:商品": {
+                "@id": "#V0"
+              },
+              "urn:pr:バイヤー": {
+                "@id": "#V1"
+              },
+              "urn:pr:掛率": {
+                "@id": "#V2"
+              },
+              "agent": {
+                "@id": "#M"
+              },
+              "variables": [
+                {
+                  "@id": "#V0",
+                  "variableName": "V0"
+                },
+                {
+                  "@id": "#V1",
+                  "variableName": "V1"
+                },
+                {
+                  "@id": "#V2",
+                  "variableName": "V2"
+                },
+                {
+                  "@id": "#M",
+                  "variableName": "M"
+                }
+              ]
+            },
+            {
+              "_comment": "商品・掛率 の登録",
+              "@id": "urn:node:商品・掛率.登録",
+              "@type": "urn:pr:商品・掛率",
+              "urn:pr:商品": {
+                "@id": "#V0"
+              },
+              "urn:pr:掛率": {
+                "@id": "#V1"
+              },
+              "agent": {
+                "@id": "#M"
+              },
+              "variables": [
+                {
+                  "@id": "#V0",
+                  "variableName": "V0"
+                },
+                {
+                  "@id": "#V1",
+                  "variableName": "V1"
+                },
+                {
+                  "@id": "#M",
+                  "variableName": "M"
+                }
+              ]
+            },
+            {
+              "_comment": "商品マスター の登録",
+              "@id": "urn:node:商品マスター.登録",
+              "@type": "urn:pr:商品マスター",
+              "urn:pr:商品": {
+                "@id": "#V0"
+              },
+              "urn:pr:単価": {
+                "@id": "#V1"
+              },
+              "agent": {
+                "@id": "#M"
+              },
+              "variables": [
+                {
+                  "@id": "#V0",
+                  "variableName": "V0"
+                },
+                {
+                  "@id": "#V1",
+                  "variableName": "V1"
+                },
+                {
+                  "@id": "#M",
+                  "variableName": "M"
+                }
+              ]
+            },
+            {
+              "_comment": "直上カテゴリ の登録",
+              "@id": "urn:node:直上カテゴリ.登録",
+              "@type": "urn:pr:直上カテゴリ",
+              "urn:pr:対象": {
+                "@id": "#V0"
+              },
+              "urn:pr:カテゴリ": {
+                "@id": "#V1"
+              },
+              "agent": {
+                "@id": "#M"
+              },
+              "variables": [
+                {
+                  "@id": "#V0",
+                  "variableName": "V0"
+                },
+                {
+                  "@id": "#V1",
+                  "variableName": "V1"
+                },
+                {
+                  "@id": "#M",
+                  "variableName": "M"
+                }
+              ]
+            }
+          ]
         }
       ]
     }
   ],
-  "urn:pr:上位カテゴリ": [
+  "Person": [
     {
-      "@id": "urn:node:上位カテゴリ1.head-17",
-      "@type": "urn:pr:上位カテゴリ",
-      "urn:pr:対象": {
-        "@id": "#Item"
-      },
-      "urn:pr:カテゴリ": {
-        "@id": "#ItemCat"
-      },
-      "variables": [
-        {
-          "@id": "#Item",
-          "variableName": "Item"
-        },
-        {
-          "@id": "#ItemCat",
-          "variableName": "ItemCat"
-        }
-      ],
-      "internalGraph": [
-        {
-          "@id": "urn:node:直上カテゴリ-18",
-          "@type": "urn:pr:直上カテゴリ",
-          "urn:pr:対象": {
-            "@id": "#Item"
-          },
-          "urn:pr:カテゴリ": {
-            "@id": "#ItemCat"
-          }
-        }
-      ]
-    },
-    {
-      "@id": "urn:node:上位カテゴリ2.head-19",
-      "@type": "urn:pr:上位カテゴリ",
-      "urn:pr:対象": {
-        "@id": "#Item"
-      },
-      "urn:pr:カテゴリ": {
-        "@id": "#ItemCat"
-      },
-      "variables": [
-        {
-          "@id": "#IC",
-          "variableName": "IC"
-        },
-        {
-          "@id": "#Item",
-          "variableName": "Item"
-        },
-        {
-          "@id": "#ItemCat",
-          "variableName": "ItemCat"
-        }
-      ],
-      "internalGraph": [
-        {
-          "@id": "urn:node:直上カテゴリ-20",
-          "@type": "urn:pr:直上カテゴリ",
-          "urn:pr:対象": {
-            "@id": "#Item"
-          },
-          "urn:pr:カテゴリ": {
-            "@id": "#IC"
-          }
-        },
-        {
-          "@id": "urn:node:上位カテゴリ再帰-21",
-          "@type": "urn:pr:上位カテゴリ",
-          "urn:pr:対象": {
-            "@id": "#IC"
-          },
-          "urn:pr:カテゴリ": {
-            "@id": "#ItemCat"
-          }
-        }
-      ]
+      "_comment": "人もレコードとして置く（追記R529）",
+      "@id": "urn:entity:admin",
+      "@type": "Person"
     }
   ]
 }
