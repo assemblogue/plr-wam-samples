@@ -1,7 +1,6 @@
 {
   "@id": "urn:quote:ontology",
   "@type": "Ontology",
-  "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
   "_comment": "見積書デモの**共有データ版**。**2本の明細が同じ納品先を指す**——`urn:quote:lineDestination` は `refersTo` の下位ではないので、納品先は**共有ノード**である（`spec_exec.md`「共有ノードに達するノードは、完成を求め直す」。追記230・246・250）。⚠️ **商品では共有にならない**——`lineProduct` は `refersTo` の下位なので、参照を共有しても完成は伝播しない。",
   "agentProperty": "urn:quote:agent",
   "defines": [
@@ -19,6 +18,17 @@
       "label": {
         "ja": "テンプレート",
         "en": "Template"
+      }
+    },
+    {
+      "@id": "urn:quote:Goal",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Task"
+      ],
+      "label": {
+        "ja": "ゴール",
+        "en": "Goal"
       }
     },
     {
@@ -70,11 +80,11 @@
       "@id": "urn:quote:Cancelable",
       "@type": "Class",
       "subClassOf": [
-        "urn:quote:Task"
+        "urn:quote:Atom"
       ],
       "_comment": "取消可能タスクのマーカークラス（`spec_kg.md`「決定: Template の下位クラス構成」）。判定は TaskPolicyProjection が isSubClassOf で行う——ハーネスが文字列で持たない。",
       "label": {
-        "ja": "取消可能タスク",
+        "ja": "取消可能",
         "en": "Cancelable"
       }
     },
@@ -100,7 +110,7 @@
       "@id": "urn:quote:QuoteRecord",
       "@type": "Class",
       "subClassOf": [
-        "urn:quote:Task",
+        "urn:quote:Goal",
         "urn:quote:Cancelable",
         {
           "@type": "Restriction",
@@ -115,7 +125,7 @@
         },
         {
           "@type": "Restriction",
-          "onProperty": "wam:completeOrSuspendByOkButton",
+          "onProperty": "wam:completeByOkButton",
           "minCardinality": 0,
           "maxCardinality": 1
         },
@@ -148,6 +158,7 @@
       "@type": "Class",
       "subClassOf": [
         "urn:quote:Constraint",
+        "urn:quote:Cancelable",
         {
           "@type": "Restriction",
           "onProperty": "urn:quote:lineQuantity",
@@ -354,18 +365,6 @@
       "label": {
         "ja": "完成（OKボタン）",
         "en": "Complete by OK button"
-      }
-    },
-    {
-      "_comment": "中断ありの OK ボタンによる完成（3値。偽＝未完成、真＝完成したが未押下、ユーザ＝その人が押した）。**いつでも押せ、配下が未完成のうちに押すと中断になる**（追記K383・K384）。押したのが完成の確認か中断かは配下の凍結の印が答える。**この属性を宣言することが「中断ありの OK ボタンを持つ」の宣言である。**",
-      "@id": "wam:completeOrSuspendByOkButton",
-      "@type": "DatatypeProperty",
-      "domain": "urn:quote:Template",
-      "range": "string",
-      "subPropertyOf": "wam:isComplete",
-      "label": {
-        "ja": "完成（中断ありのOKボタン）",
-        "en": "Complete or suspend by OK button"
       }
     },
     {
