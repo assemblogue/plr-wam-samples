@@ -1,7 +1,7 @@
 {
   "_comment": "順序②: 案件順に片付ける（A → B → C → D → E）。順序①と担当者の動く順は違うが、**最終状態は同じ**になるはずである。",
   "sessionId": "sess-inbox-2",
-  "agentProperty": "agent",
+  "agentProperty": "urn:inbox:agent",
   "steps": [
     {
       "task": "urn:node:起案",
