@@ -3,9 +3,6 @@
  "@id": "urn:qp:ontology",
  "@type": "Ontology",
  "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
- "ontoG": [
-  "urn:qp:見積書"
- ],
  "defines": [
   {
    "@id": "urn:qp:Template",
