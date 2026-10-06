@@ -137,6 +137,12 @@
      "onProperty": "urn:kobuy:発注先",
      "minCardinality": 1,
      "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agentWithOK",
+     "minCardinality": 0,
+     "maxCardinality": 1
     }
    ],
    "label": "発注"
