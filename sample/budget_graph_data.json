@@ -1,104 +1,125 @@
 {
- "_comment": "山田の予算には、既に実行された調達A（30万）が入っている。",
+ "_comment": "山田の予算（限度額 50万）。調達A（30万）は済んでいる。調達C は山田が起案を始めたところで、金額はまだ無い。調達C を起動すると、予算の 調達一覧 の検索で A の 30万と C 自身の金額が集まり、C の金額に入れられるのは 20万までになる（追記R487・R494）。ゴールのレコードは、ハーネスが調達の型の最初のレコードを取るので、調達C を先に置く。",
+ "ONTO2": [
+  {
+   "_comment": "ワークプレース。ゴールでない節は onto7、ゴール節はチャネル設定の ontoG にある（追記R474・R488）",
+   "@id": "urn:wamtest:workplace.budget_graph_data",
+   "@type": "ONTO2",
+   "onto7": [
+    {
+     "@id": "urn:node:起案.head",
+     "@type": "urn:bud:起案"
+    }
+   ],
+   "ontoC": [
+    {
+     "@id": "urn:wamtest:設定.調達",
+     "@type": "ONTOc",
+     "ontoG": [
+      {
+       "_comment": "調達(案件: N, 金額: X, agent: U) :- 起案(agent: U, 案件: N, 金額: X), 予算(利用者: U, 限度額: L, 調達一覧: 調達(金額: Y)), ≧(L, Y).  調達一覧 は refersTo の下位なので、既にある調達のレコードを検索して金額 Y を集める（追記R487）。起案中のこの調達のレコードも一覧に入っているので、その金額 X は Y の中で1回だけ数える——≧ に X を別に足さない（追記R494 の「二重に数えない書き方」）。",
+       "@id": "urn:node:調達.head",
+       "@type": "urn:bud:調達",
+       "urn:bud:案件": {
+        "@id": "#N"
+       },
+       "urn:bud:金額": {
+        "@id": "#X"
+       },
+       "urn:bud:agent": {
+        "@id": "#U"
+       },
+       "variables": [
+        {
+         "@id": "#N",
+         "variableName": "N"
+        },
+        {
+         "@id": "#X",
+         "variableName": "X"
+        },
+        {
+         "@id": "#U",
+         "variableName": "U"
+        },
+        {
+         "@id": "#L",
+         "variableName": "L"
+        },
+        {
+         "@id": "#Y",
+         "variableName": "Y"
+        }
+       ],
+       "internalGraph": [
+        {
+         "@id": "urn:node:起案",
+         "@type": "urn:bud:起案",
+         "urn:bud:agent": {
+          "@id": "#U"
+         },
+         "urn:bud:案件": {
+          "@id": "#N"
+         },
+         "urn:bud:金額": {
+          "@id": "#X"
+         }
+        },
+        {
+         "@id": "urn:node:予算参照",
+         "@type": "urn:bud:予算",
+         "urn:bud:利用者": {
+          "@id": "#U"
+         },
+         "urn:bud:限度額": {
+          "@id": "#L"
+         },
+         "urn:bud:調達一覧": {
+          "@type": "urn:bud:調達",
+          "urn:bud:金額": {
+           "@id": "#Y"
+          }
+         }
+        },
+        {
+         "@id": "urn:node:限度額チェック",
+         "@type": "urn:bud:Geq",
+         "arg1": {
+          "@id": "#L"
+         },
+         "arg2": {
+          "@id": "#Y"
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
  "urn:bud:予算": [
   {
    "@id": "urn:entity:予算.山田",
    "urn:bud:利用者": "urn:entity:山田",
    "urn:bud:限度額": 500000,
    "urn:bud:調達一覧": [
-    "urn:entity:調達.A"
+    "urn:entity:調達.A",
+    "urn:entity:調達.C"
    ]
   }
  ],
  "urn:bud:調達": [
   {
-   "@id": "urn:entity:調達.A",
-   "urn:bud:案件": "A",
-   "urn:bud:金額": 300000
+   "@id": "urn:entity:調達.C",
+   "urn:bud:案件": "C",
+   "urn:bud:agent": "urn:entity:山田"
   },
   {
-   "_comment": "調達(案件: N, 金額: X) :- 起案(案件: N, 金額: X, 担当者: 山田).  予算の要素になった調達は、それぞれ山田の起案として走る（追記237：要素は制約ノード）。",
-   "@id": "urn:node:調達.head",
-   "@type": "urn:bud:調達",
-   "urn:bud:案件": {
-    "@id": "#N"
-   },
-   "urn:bud:金額": {
-    "@id": "#X"
-   },
-   "variables": [
-    {
-     "@id": "#N",
-     "variableName": "N"
-    },
-    {
-     "@id": "#X",
-     "variableName": "X"
-    }
-   ],
-   "internalGraph": [
-    {
-     "@id": "urn:node:起案",
-     "@type": "urn:bud:起案",
-     "urn:bud:案件": {
-      "@id": "#N"
-     },
-     "urn:bud:金額": {
-      "@id": "#X"
-     },
-     "urn:bud:agent": "urn:entity:山田"
-    }
-   ]
-  }
- ],
- "urn:bud:予算チェック": [
-  {
-   "_comment": "予算チェック() :- 予算(利用者: 山田, 限度額: L, 調達: 調達(金額: X)), ≧(L, X).  X は山田の調達の金額を集めた多値で、≧ はその和に掛かる。",
-   "@id": "urn:node:予算チェック.head",
-   "@type": "urn:bud:予算チェック",
-   "variables": [
-    {
-     "@id": "#L",
-     "variableName": "L"
-    },
-    {
-     "@id": "#X",
-     "variableName": "X"
-    }
-   ],
-   "internalGraph": [
-    {
-     "@id": "urn:node:山田の予算",
-     "@type": "urn:bud:予算",
-     "urn:bud:利用者": "urn:entity:山田",
-     "urn:bud:限度額": {
-      "@id": "#L"
-     },
-     "urn:bud:調達一覧": {
-      "@type": "urn:bud:調達",
-      "urn:bud:金額": {
-       "@id": "#X"
-      }
-     }
-    },
-    {
-     "@id": "urn:node:限度額チェック",
-     "@type": "urn:bud:Geq",
-     "arg1": {
-      "@id": "#L"
-     },
-     "arg2": {
-      "@id": "#X"
-     }
-    }
-   ],
-   "urn:bud:channel": "urn:channel:山田"
-  }
- ],
- "urn:bud:起案": [
-  {
-   "@id": "urn:node:起案.head",
-   "@type": "urn:bud:起案"
+   "@id": "urn:entity:調達.A",
+   "urn:bud:案件": "A",
+   "urn:bud:金額": 300000,
+   "urn:bud:agent": "urn:entity:山田"
   }
  ]
 }
