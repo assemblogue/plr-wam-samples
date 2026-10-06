@@ -1,217 +1,91 @@
 {
- "_comment": "ユーザが組織マスター・商品マスターに登録したデータ。エンジンから見ると、これは「頭部だけ・本体が空のホーン節（＝事実）が並んでいる」のと同じで、DB検索とホーン節の呼び出しは区別されない。",
- "ONTO2": [
-  {
-   "_comment": "ワークプレース。ホーン節はその onto7 の値である（実際の系と同じ形。追記R474・K439）",
-   "@id": "urn:wamtest:workplace.master",
-   "@type": "ONTO2",
-   "onto7": [
+  "_comment": "ユーザが組織マスター・商品マスターに登録したデータ。エンジンから見ると、これは「頭部だけ・本体が空のホーン節（＝事実）が並んでいる」のと同じで、DB検索とホーン節の呼び出しは区別されない。",
+  "urn:wamtest:組織": [
     {
-     "@id": "urn:node:購買検討.head",
-     "@type": "urn:wamtest:購買検討",
-     "variables": [
-      {
-       "@id": "#T承認",
-       "variableName": "T承認"
-      },
-      {
-       "@id": "#単価",
-       "variableName": "単価"
-      },
-      {
-       "@id": "#承認者",
-       "variableName": "承認者"
-      },
-      {
-       "@id": "#発注先名",
-       "variableName": "発注先名"
-      }
-     ],
-     "internalGraph": [
-      {
-       "@id": "urn:node:単価照会",
-       "@type": "urn:wamtest:商品",
-       "商品.名称": "印刷用紙",
-       "商品.単価": {
-        "@id": "#単価"
-       },
-       "wam:existing": true,
-       "_comment": "**existing**——マスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。"
-      },
-      {
-       "@id": "urn:node:発注先照会",
-       "@type": "urn:wamtest:組織",
-       "組織.地域": "大阪",
-       "組織.名称": {
-        "@id": "#発注先名"
-       },
-       "wam:existing": true,
-       "_comment": "**existing**——マスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。"
-      },
-      {
-       "@id": "urn:node:上司照会",
-       "@type": "urn:wamtest:上司",
-       "上司.構成員": "urn:entity:person-m",
-       "上司.上司": {
-        "@id": "#承認者"
-       },
-       "wam:existing": true,
-       "_comment": "**existing**——マスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。"
-      },
-      {
-       "@id": "urn:entity:master-shonin",
-       "@type": "urn:wamtest:承認",
-       "agent": {
-        "@id": "#承認者"
-       },
-       "wam:truthValue": {
-        "@id": "#T承認"
-       }
-      }
-     ]
+      "@id": "urn:entity:org-a",
+      "組織.名称": "A商事",
+      "組織.地域": "東京"
     },
     {
-     "_comment": "承認の、頭部だけの節。本体の無いタスクも節を持つ（追記R474）",
-     "@id": "urn:node:承認.head-only",
-     "@type": "urn:wamtest:承認",
-     "variables": []
+      "@id": "urn:entity:org-b",
+      "組織.名称": "B物産",
+      "組織.地域": "大阪"
     }
-   ],
-   "ontoC": [
+  ],
+  "urn:wamtest:商品": [
     {
-     "_comment": "マスターのチャネル設定。マスターのレコードは、この登録の節（頭部だけのゴール節）で作る（R488）",
-     "@id": "urn:wamtest:設定.マスター",
-     "@type": "ONTOc",
-     "onto0": "マスター",
-     "ontoG": [
-      {
-       "_comment": "商品 の登録",
-       "@id": "urn:node:商品.登録",
-       "@type": "urn:wamtest:商品",
-       "商品.名称": {
-        "@id": "#V0"
-       },
-       "商品.単価": {
-        "@id": "#V1"
-       },
-       "agent": {
-        "@id": "#M"
-       },
-       "variables": [
-        {
-         "@id": "#V0",
-         "variableName": "V0"
-        },
-        {
-         "@id": "#V1",
-         "variableName": "V1"
-        },
-        {
-         "@id": "#M",
-         "variableName": "M"
-        }
-       ]
-      },
-      {
-       "_comment": "組織 の登録",
-       "@id": "urn:node:組織.登録",
-       "@type": "urn:wamtest:組織",
-       "組織.名称": {
-        "@id": "#V0"
-       },
-       "組織.地域": {
-        "@id": "#V1"
-       },
-       "agent": {
-        "@id": "#M"
-       },
-       "variables": [
-        {
-         "@id": "#V0",
-         "variableName": "V0"
-        },
-        {
-         "@id": "#V1",
-         "variableName": "V1"
-        },
-        {
-         "@id": "#M",
-         "variableName": "M"
-        }
-       ]
-      },
-      {
-       "_comment": "上司 の登録",
-       "@id": "urn:node:上司.登録",
-       "@type": "urn:wamtest:上司",
-       "上司.構成員": {
-        "@id": "#V0"
-       },
-       "上司.上司": {
-        "@id": "#V1"
-       },
-       "agent": {
-        "@id": "#M"
-       },
-       "variables": [
-        {
-         "@id": "#V0",
-         "variableName": "V0"
-        },
-        {
-         "@id": "#V1",
-         "variableName": "V1"
-        },
-        {
-         "@id": "#M",
-         "variableName": "M"
-        }
-       ]
-      }
-     ]
+      "@id": "urn:entity:item-paper",
+      "商品.名称": "印刷用紙",
+      "商品.単価": 500
+    },
+    {
+      "@id": "urn:entity:item-desk",
+      "商品.名称": "デスク",
+      "商品.単価": 32000
     }
-   ]
-  }
- ],
- "urn:wamtest:組織": [
-  {
-   "@id": "urn:entity:org-a",
-   "組織.名称": "A商事",
-   "組織.地域": "東京",
-   "agent": "urn:entity:admin",
-   "wam:completeByOkButton": "urn:entity:admin"
-  },
-  {
-   "@id": "urn:entity:org-b",
-   "組織.名称": "B物産",
-   "組織.地域": "大阪",
-   "agent": "urn:entity:admin",
-   "wam:completeByOkButton": "urn:entity:admin"
-  }
- ],
- "urn:wamtest:商品": [
-  {
-   "@id": "urn:entity:item-paper",
-   "商品.名称": "印刷用紙",
-   "商品.単価": 500,
-   "agent": "urn:entity:admin",
-   "wam:completeByOkButton": "urn:entity:admin"
-  },
-  {
-   "@id": "urn:entity:item-desk",
-   "商品.名称": "デスク",
-   "商品.単価": 32000,
-   "agent": "urn:entity:admin",
-   "wam:completeByOkButton": "urn:entity:admin"
-  }
- ],
- "urn:wamtest:上司": [
-  {
-   "@id": "urn:entity:boss-m-b",
-   "上司.構成員": "urn:entity:person-m",
-   "上司.上司": "urn:entity:person-b",
-   "agent": "urn:entity:admin",
-   "wam:completeByOkButton": "urn:entity:admin"
-  }
- ]
+  ],
+  "urn:wamtest:上司": [
+    {
+      "@id": "urn:entity:boss-m-b",
+      "上司.構成員": "urn:entity:person-m",
+      "上司.上司": "urn:entity:person-b"
+    }
+  ],
+  "urn:wamtest:購買検討": [
+    {
+      "@id": "urn:node:購買検討.head",
+      "@type": "urn:wamtest:購買検討",
+      "variables": [
+        {
+          "@id": "#T承認",
+          "variableName": "T承認"
+        },
+        {
+          "@id": "#単価",
+          "variableName": "単価"
+        },
+        {
+          "@id": "#承認者",
+          "variableName": "承認者"
+        },
+        {
+          "@id": "#発注先名",
+          "variableName": "発注先名"
+        }
+      ],
+      "internalGraph": [
+        {
+          "@id": "urn:node:単価照会",
+          "@type": "urn:wamtest:商品",
+          "商品.名称": "印刷用紙",
+          "商品.単価": {
+            "@id": "#単価"
+          }
+        },
+        {
+          "@id": "urn:node:発注先照会",
+          "@type": "urn:wamtest:組織",
+          "組織.地域": "大阪",
+          "組織.名称": {
+            "@id": "#発注先名"
+          }
+        },
+        {
+          "@id": "urn:node:上司照会",
+          "@type": "urn:wamtest:上司",
+          "上司.構成員": "urn:entity:person-m",
+          "上司.上司": {
+            "@id": "#承認者"
+          }
+        },
+        {
+          "@id": "urn:entity:master-shonin",
+          "@type": "urn:wamtest:承認",
+          "wam:truthValue": {
+            "@id": "#T承認"
+          }
+        }
+      ]
+    }
+  ]
 }
