@@ -2,7 +2,6 @@
  "_comment": "承認の仕方を金額で決める例題。100万円未満なら直属の上司が承認、100万円以上なら承認グループ（鈴木・山本・田中の3人）の多数決で承認する。**代替節が金額で選ばれ**、高額側は量化(quant) = majority で判定する（追記318）。",
  "@id": "urn:kapp:ontology",
  "@type": "Ontology",
- "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
  "agentProperty": "urn:kapp:agent",
  "defines": [
   {
@@ -41,6 +40,17 @@
    "label": {
     "ja": "タスクノード",
     "en": "Task"
+   }
+  },
+  {
+   "@id": "urn:kapp:Goal",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kapp:Task"
+   ],
+   "label": {
+    "ja": "ゴール",
+    "en": "Goal"
    }
   },
   {
@@ -184,7 +194,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeOrSuspendByOkButton",
+     "onProperty": "wam:completeByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -214,7 +224,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeOrSuspendByOkButton",
+     "onProperty": "wam:completeByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     },
@@ -249,7 +259,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeOrSuspendByOkButton",
+     "onProperty": "wam:completeByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -286,7 +296,7 @@
    "@id": "urn:kapp:購買ゴール",
    "@type": "Class",
    "subClassOf": [
-    "urn:kapp:Task"
+    "urn:kapp:Goal"
    ],
    "label": {
     "ja": "購買ゴール",
@@ -477,11 +487,10 @@
    }
   },
   {
-   "_comment": "誰がどのグループに属するか（業務データ）。頭部だけ・本体が空のホーン節＝事実である。 マスターのレコード（R488）——マスターのチャネル設定の登録の節（頭部だけのゴール節）で作るタスクで、本体では existing を付けて検索する（追記R528）。",
+   "_comment": "誰がどのグループに属するか（業務データ）。頭部だけ・本体が空のホーン節＝事実である。",
    "@id": "urn:kapp:所属",
    "@type": "Class",
    "subClassOf": [
-    "urn:kapp:Task",
     {
      "@type": "Restriction",
      "onProperty": "urn:kapp:構成員",
@@ -493,31 +502,19 @@
      "onProperty": "urn:kapp:グループ",
      "minCardinality": 1,
      "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:kapp:agent",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "wam:completeByOkButton",
-     "minCardinality": 0,
-     "maxCardinality": 1
     }
    ],
+   "isConstraint": true,
    "label": {
     "ja": "所属",
     "en": "Membership"
    }
   },
   {
-   "_comment": "直属の上司（業務データ）。 マスターのレコード（R488）——マスターのチャネル設定の登録の節（頭部だけのゴール節）で作るタスクで、本体では existing を付けて検索する（追記R528）。",
+   "_comment": "直属の上司（業務データ）。",
    "@id": "urn:kapp:上司",
    "@type": "Class",
    "subClassOf": [
-    "urn:kapp:Task",
     {
      "@type": "Restriction",
      "onProperty": "urn:kapp:注文者",
@@ -528,18 +525,6 @@
      "@type": "Restriction",
      "onProperty": "urn:kapp:承認者",
      "minCardinality": 1,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:kapp:agent",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "wam:completeByOkButton",
-     "minCardinality": 0,
      "maxCardinality": 1
     }
    ],
