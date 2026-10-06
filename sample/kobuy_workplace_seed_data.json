@@ -1,0 +1,646 @@
+{
+ "_comment": "doc/wam/examples/kobuy_workplace_data.json のデータを、tool/convert_workplace.py で型ごとに並べたもの。入れ子のノードは入れ子のまま（TaskAccess+ はチャネルのノードの中）。レコードの内部グラフ（途中の状態）は外した——ハーネスで動かして作る（追記R459）。kobuy_workplace.jsonld のワークプレースを使うデータの例（チャネルとレコード）。新エディタの画面を試すためのもの。説明は doc/wam/workplace_example.md。_ で始まる鍵は説明のための注記。 登録済みのチャネル・マスター・組織マスターの要素は、担当者が OK を押したもの（wam:completeByOkButton）である——担当者を持つタスクノードなので、それを指す側の完成は、それが完成していることを見る（追記R522・R525）。 人は Profile.xlsx で定義されたクラス Person のレコードである（追記R531）。",
+ "Person": [
+  {
+   "@id": "urn:person:田中",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:山田",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:鈴木",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:太木",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:管理者",
+   "@type": "Person"
+  }
+ ],
+ "ONTOc1": [
+  {
+   "_comment": "田中の分割チャネル（名前なし）。購買の設定の基幹業務（購買）が入る。チャネル設定と起案者が同じものは1つだけ（spec_ops.md 追記R450）。表示名はチャネル設定の名前「購買」",
+   "@id": "urn:channel:購買.田中",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:kobuy:設定.購買"
+   },
+   "agentWithOK": {
+    "@id": "urn:person:田中"
+   },
+   "_initiator": {
+    "@id": "urn:person:田中"
+   },
+   "wam:completeByOkButton": {
+    "@id": "urn:person:田中"
+   },
+   "_autoCreated": true,
+   "_note": "rendAutoCreate で作った。OK はシステムが田中として押し、そのことをログに残す（追記R435）"
+  },
+  {
+   "_comment": "名前付きのトークのチャネル。購買の設定のトーク型業務（相談）が入る",
+   "@id": "urn:channel:備品の相談",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:kobuy:設定.購買"
+   },
+   "onto0": "備品の相談",
+   "agentWithOK": {
+    "@id": "urn:person:太木"
+   },
+   "_initiator": {
+    "@id": "urn:person:太木"
+   },
+   "wam:completeByOkButton": {
+    "@id": "urn:person:太木"
+   },
+   "TaskAccess+": [
+    {
+     "_comment": "相談を書けるのは総務部、読めるのは既定（このチャネルの全タスクの担当者＝総務部）。taskUser+ を書かないので既定になる（追記R439）",
+     "@type": "TaskAccess+",
+     "channel": {
+      "@id": "urn:channel:備品の相談",
+      "onto0": "備品の相談"
+     },
+     "task": {
+      "@id": "urn:kobuy:相談"
+     },
+     "taskAgent+": [
+      {
+       "@id": "urn:org:グループ.総務部"
+      }
+     ],
+     "agentWithOK": {
+      "@id": "urn:person:太木"
+     },
+     "wam:completeByOkButton": {
+      "@id": "urn:person:太木"
+     }
+    }
+   ]
+  },
+  {
+   "@id": "urn:channel:商品マスター",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:kobuy:設定.商品マスター"
+   },
+   "onto0": "商品マスター",
+   "agentWithOK": {
+    "@id": "urn:person:管理者"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者"
+   },
+   "TaskAccess+": [
+    {
+     "@type": "TaskAccess+",
+     "channel": {
+      "@id": "urn:channel:商品マスター",
+      "onto0": "商品マスター"
+     },
+     "task": {
+      "@id": "urn:kobuy:商品C"
+     },
+     "taskAgent+": [
+      {
+       "@id": "urn:org:役職.購買担当"
+      }
+     ],
+     "taskUser+": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agentWithOK": {
+      "@id": "urn:person:管理者"
+     }
+    },
+    {
+     "@type": "TaskAccess+",
+     "channel": {
+      "@id": "urn:channel:商品マスター",
+      "onto0": "商品マスター"
+     },
+     "task": {
+      "@id": "urn:kobuy:取引先C"
+     },
+     "taskAgent+": [
+      {
+       "@id": "urn:org:役職.購買担当"
+      }
+     ],
+     "taskUser+": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agentWithOK": {
+      "@id": "urn:person:管理者"
+     }
+    }
+   ],
+   "_comment": "マスターデータのチャネル。書けるのは購買担当、読めるのは全構成員（spec_ops.md 追記R455）。作れるのは管理者",
+   "wam:completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "_comment": "勘定科目マスターのチャネル。チャネル設定 設定.勘定科目マスター は担当者を定義で決めないので、チャネルを作るときに TaskAccess+ で、書けるのは購買担当、読めるのは全構成員と決める（追記R500）",
+   "@id": "urn:channel:勘定科目マスター",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:kobuy:設定.勘定科目マスター"
+   },
+   "onto0": "勘定科目マスター",
+   "agentWithOK": {
+    "@id": "urn:person:管理者"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者"
+   },
+   "wam:completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "TaskAccess+": [
+    {
+     "@type": "TaskAccess+",
+     "channel": {
+      "@id": "urn:channel:勘定科目マスター",
+      "onto0": "勘定科目マスター"
+     },
+     "task": {
+      "@id": "urn:kobuy:勘定科目C"
+     },
+     "taskAgent+": [
+      {
+       "@id": "urn:org:役職.購買担当"
+      }
+     ],
+     "taskUser+": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agentWithOK": {
+      "@id": "urn:person:管理者"
+     }
+    }
+   ]
+  },
+  {
+   "@id": "urn:channel:組織マスター",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:system:設定.組織マスター"
+   },
+   "onto0": "A社 組織マスター",
+   "agentWithOK": {
+    "@id": "urn:person:管理者"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者"
+   },
+   "TaskAccess+": [
+    {
+     "@type": "TaskAccess+",
+     "channel": {
+      "@id": "urn:channel:組織マスター",
+      "onto0": "A社 組織マスター"
+     },
+     "task": {
+      "@id": "urn:system:役職"
+     },
+     "taskAgent+": [
+      {
+       "@id": "urn:person:管理者"
+      }
+     ],
+     "taskUser+": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agentWithOK": {
+      "@id": "urn:person:管理者"
+     }
+    },
+    {
+     "@type": "TaskAccess+",
+     "channel": {
+      "@id": "urn:channel:組織マスター",
+      "onto0": "A社 組織マスター"
+     },
+     "task": {
+      "@id": "urn:system:グループ"
+     },
+     "taskAgent+": [
+      {
+       "@id": "urn:person:管理者"
+      }
+     ],
+     "taskUser+": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agentWithOK": {
+      "@id": "urn:person:管理者"
+     }
+    },
+    {
+     "@type": "TaskAccess+",
+     "channel": {
+      "@id": "urn:channel:組織マスター",
+      "onto0": "A社 組織マスター"
+     },
+     "task": {
+      "@id": "urn:system:構成員"
+     },
+     "taskAgent+": [
+      {
+       "@id": "urn:person:管理者"
+      }
+     ],
+     "taskUser+": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agentWithOK": {
+      "@id": "urn:person:管理者"
+     }
+    }
+   ],
+   "wam:completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  }
+ ],
+ "urn:kobuy:購買": [
+  {
+   "_comment": "田中の購買。ハーネス（plr_console/tool/wam_test）で実際に動かして作った——注文（明細2行、183,000円）を田中が確定し、課長の承認を山田が確定した。部長の承認は入力待ちで、まだ保管先に無い（起動したタスクはエンジンの中にあり、最初にデータを書くか OK を押したときに保管先へ書かれる。追記K431）。発注はまだ立っていない。トレイルは同じファイルの区画 wam:trail にある（追記R459・R460）。どのノードがどのアトムノードの実体かはトレイルの dbWrites が答える",
+   "@id": "urn:record:購買-0001",
+   "@type": "urn:kobuy:購買",
+   "inChannel": {
+    "@id": "urn:channel:購買.田中"
+   },
+   "urn:kobuy:件名": "会議室のプロジェクタ",
+   "agentWithOK": {
+    "@id": "urn:person:田中"
+   },
+   "_initiator": {
+    "@id": "urn:person:田中"
+   }
+  }
+ ],
+ "urn:kobuy:相談": [
+  {
+   "@id": "urn:record:相談-0001",
+   "@type": "urn:kobuy:相談",
+   "inChannel": {
+    "@id": "urn:channel:備品の相談"
+   },
+   "_initiator": {
+    "@id": "urn:person:太木"
+   },
+   "agentWithOK": {
+    "@id": "urn:person:太木"
+   },
+   "urn:kobuy:本文": "プロジェクタは X200 と X300 のどちらがよいでしょうか",
+   "urn:kobuy:関連する購買": {
+    "@id": "urn:record:購買-0001"
+   }
+  }
+ ],
+ "urn:kobuy:商品C": [
+  {
+   "@id": "urn:product:プロジェクタ-X200",
+   "@type": "urn:kobuy:商品C",
+   "urn:kobuy:商品名": "プロジェクタ X200",
+   "urn:kobuy:商品単価": 180000,
+   "urn:kobuy:仕入先": {
+    "@id": "urn:kobuy:佐藤商事"
+   },
+   "inChannel": {
+    "@id": "urn:channel:商品マスター"
+   },
+   "_initiator": {
+    "@id": "urn:person:太木"
+   },
+   "agentWithOK": {
+    "@id": "urn:person:太木"
+   },
+   "wam:completeByOkButton": {
+    "@id": "urn:person:太木"
+   }
+  },
+  {
+   "@id": "urn:product:HDMIケーブル-3m",
+   "@type": "urn:kobuy:商品C",
+   "urn:kobuy:商品名": "HDMI ケーブル 3m",
+   "urn:kobuy:商品単価": 1500,
+   "urn:kobuy:仕入先": {
+    "@id": "urn:kobuy:佐藤商事"
+   },
+   "inChannel": {
+    "@id": "urn:channel:商品マスター"
+   },
+   "_initiator": {
+    "@id": "urn:person:太木"
+   },
+   "agentWithOK": {
+    "@id": "urn:person:太木"
+   },
+   "wam:completeByOkButton": {
+    "@id": "urn:person:太木"
+   }
+  }
+ ],
+ "urn:kobuy:取引先C": [
+  {
+   "@id": "urn:kobuy:佐藤商事",
+   "@type": "urn:kobuy:取引先C",
+   "urn:kobuy:取引先名": "佐藤商事",
+   "inChannel": {
+    "@id": "urn:channel:商品マスター"
+   },
+   "_initiator": {
+    "@id": "urn:person:太木"
+   },
+   "agentWithOK": {
+    "@id": "urn:person:太木"
+   },
+   "wam:completeByOkButton": {
+    "@id": "urn:person:太木"
+   }
+  }
+ ],
+ "urn:kobuy:勘定科目C": [
+  {
+   "@id": "urn:account:5201",
+   "@type": "urn:kobuy:勘定科目C",
+   "urn:kobuy:科目コード": "5201",
+   "urn:kobuy:科目名": "消耗品費",
+   "inChannel": {
+    "@id": "urn:channel:勘定科目マスター"
+   },
+   "_initiator": {
+    "@id": "urn:person:太木"
+   },
+   "agentWithOK": {
+    "@id": "urn:person:太木"
+   },
+   "wam:completeByOkButton": {
+    "@id": "urn:person:太木"
+   }
+  },
+  {
+   "@id": "urn:account:5202",
+   "@type": "urn:kobuy:勘定科目C",
+   "urn:kobuy:科目コード": "5202",
+   "urn:kobuy:科目名": "備品費",
+   "inChannel": {
+    "@id": "urn:channel:勘定科目マスター"
+   },
+   "_initiator": {
+    "@id": "urn:person:太木"
+   },
+   "agentWithOK": {
+    "@id": "urn:person:太木"
+   },
+   "wam:completeByOkButton": {
+    "@id": "urn:person:太木"
+   }
+  },
+  {
+   "@id": "urn:account:5203",
+   "@type": "urn:kobuy:勘定科目C",
+   "urn:kobuy:科目コード": "5203",
+   "urn:kobuy:科目名": "通信費",
+   "inChannel": {
+    "@id": "urn:channel:勘定科目マスター"
+   },
+   "_initiator": {
+    "@id": "urn:person:太木"
+   },
+   "agentWithOK": {
+    "@id": "urn:person:太木"
+   },
+   "wam:completeByOkButton": {
+    "@id": "urn:person:太木"
+   }
+  }
+ ],
+ "urn:system:構成員": [
+  {
+   "@id": "urn:org:構成員.田中",
+   "@type": "urn:system:構成員",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "人": {
+    "@id": "urn:person:田中"
+   },
+   "publicフォルダ": "https://example.invalid/田中/public",
+   "公開鍵": "…",
+   "agentWithOK": {
+    "@id": "urn:person:管理者"
+   },
+   "wam:completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:org:構成員.山田",
+   "@type": "urn:system:構成員",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "人": {
+    "@id": "urn:person:山田"
+   },
+   "publicフォルダ": "https://example.invalid/山田/public",
+   "公開鍵": "…",
+   "agentWithOK": {
+    "@id": "urn:person:管理者"
+   },
+   "wam:completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:org:構成員.鈴木",
+   "@type": "urn:system:構成員",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "人": {
+    "@id": "urn:person:鈴木"
+   },
+   "publicフォルダ": "https://example.invalid/鈴木/public",
+   "公開鍵": "…",
+   "agentWithOK": {
+    "@id": "urn:person:管理者"
+   },
+   "wam:completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:org:構成員.太木",
+   "@type": "urn:system:構成員",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "人": {
+    "@id": "urn:person:太木"
+   },
+   "publicフォルダ": "https://example.invalid/太木/public",
+   "公開鍵": "…",
+   "agentWithOK": {
+    "@id": "urn:person:管理者"
+   },
+   "wam:completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:org:構成員.管理者",
+   "@type": "urn:system:構成員",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "人": {
+    "@id": "urn:person:管理者"
+   },
+   "publicフォルダ": "https://example.invalid/管理者/public",
+   "公開鍵": "…",
+   "agentWithOK": {
+    "@id": "urn:person:管理者"
+   },
+   "wam:completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  }
+ ],
+ "urn:system:役職": [
+  {
+   "@id": "urn:org:役職.課長",
+   "@type": "urn:system:役職",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "名前": "購買課 課長",
+   "就任者": [
+    {
+     "@id": "urn:person:山田"
+    }
+   ],
+   "agentWithOK": {
+    "@id": "urn:person:管理者"
+   },
+   "wam:completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:org:役職.部長",
+   "@type": "urn:system:役職",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "名前": "総務部 部長",
+   "就任者": [
+    {
+     "@id": "urn:person:鈴木"
+    }
+   ],
+   "agentWithOK": {
+    "@id": "urn:person:管理者"
+   },
+   "wam:completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:org:役職.購買担当",
+   "@type": "urn:system:役職",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "名前": "購買担当",
+   "就任者": [
+    {
+     "@id": "urn:person:太木"
+    }
+   ],
+   "agentWithOK": {
+    "@id": "urn:person:管理者"
+   },
+   "wam:completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  }
+ ],
+ "urn:system:グループ": [
+  {
+   "@id": "urn:org:グループ.総務部",
+   "@type": "urn:system:グループ",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "名前": "総務部",
+   "メンバー": [
+    {
+     "@id": "urn:person:太木"
+    },
+    {
+     "@id": "urn:org:役職.部長"
+    }
+   ],
+   "agentWithOK": {
+    "@id": "urn:person:管理者"
+   },
+   "wam:completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:org:グループ.全構成員",
+   "@type": "urn:system:グループ",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "名前": "全構成員",
+   "メンバー": [
+    {
+     "@id": "urn:person:田中"
+    },
+    {
+     "@id": "urn:person:山田"
+    },
+    {
+     "@id": "urn:person:鈴木"
+    },
+    {
+     "@id": "urn:person:太木"
+    },
+    {
+     "@id": "urn:person:管理者"
+    }
+   ],
+   "agentWithOK": {
+    "@id": "urn:person:管理者"
+   },
+   "wam:completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  }
+ ]
+}
