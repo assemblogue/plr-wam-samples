@@ -11,9 +11,7 @@
     {
       "@id": "urn:e:dc1",
       "urn:pr:対象": "鉛筆4B",
-      "urn:pr:カテゴリ": "鉛筆",
-      "agent": "urn:entity:admin",
-      "wam:completeByOkButton": "urn:entity:admin"
+      "urn:pr:カテゴリ": "鉛筆"
     }
   ],
   "urn:pr:カテゴリ・バイヤー・掛率": [
@@ -21,9 +19,7 @@
       "@id": "urn:e:cb2",
       "urn:pr:カテゴリ": "鉛筆",
       "urn:pr:バイヤー": "佐藤商店",
-      "urn:pr:掛率": 0.6,
-      "agent": "urn:entity:admin",
-      "wam:completeByOkButton": "urn:entity:admin"
+      "urn:pr:掛率": 0.6
     }
   ]
 }
