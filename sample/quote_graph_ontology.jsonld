@@ -1,7 +1,8 @@
 {
   "@id": "urn:quote:ontology",
   "@type": "Ontology",
-  "_comment": "見積書デモ（追記207 の新形式 ＋ 追記205 のパターン）。**ホーン節に明細は1個しか書かれていない。** 相手が多値ならパターンは各要素へ分配され、パターン中の変数は要素ごとの結果を多値へ収集する——だから明細が何本あっても金額が多値に集まり、組込述語 = がその和を総額に入れる。builtInFunction / isConstraint / linkKind と完成の制限（wam:complete か wam:completeByOkButton）は、ホーン節を知識グラフから組み立てるためのクラスレベル宣言である。 ⚠️ 明細（QuoteLine）は**制約ノードだがユーザ作成制約ノードではない**——見積書の節の頭部の引数に埋め込まれているので制約ノードであり（追記237）、ユーザ作成データではなくホーン節に現れるのでユーザ作成制約ノードの定義には当たらない（追記223）。扱いは同じである。金額は明細の節が入れる：要素ごとの計算は分配の中ではできないので（追記205）、要素の側に置く。",
+  "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
+  "_comment": "見積書デモ（追記207 の新形式 ＋ 追記205 のパターン）。**ホーン節に明細は1個しか書かれていない。** 相手が多値ならパターンは各要素へ分配され、パターン中の変数は要素ごとの結果を多値へ収集する——だから明細が何本あっても金額が多値に集まり、組込述語 = がその和を総額に入れる。builtInFunction / isConstraint と完成の制限（wam:complete か wam:completeByOkButton）は、ホーン節を知識グラフから組み立てるためのクラスレベル宣言である。 ⚠️ 明細（QuoteLine）は**制約ノードだがユーザ作成制約ノードではない**——見積書の節の頭部の引数に埋め込まれているので制約ノードであり（追記237）、ユーザ作成データではなくホーン節に現れるのでユーザ作成制約ノードの定義には当たらない（追記223）。扱いは同じである。金額は明細の節が入れる：要素ごとの計算は分配の中ではできないので（追記205）、要素の側に置く。",
   "agentProperty": "urn:quote:agent",
   "defines": [
     {
@@ -18,17 +19,6 @@
       "label": {
         "ja": "テンプレート",
         "en": "Template"
-      }
-    },
-    {
-      "@id": "urn:quote:Goal",
-      "@type": "Class",
-      "subClassOf": [
-        "urn:quote:Task"
-      ],
-      "label": {
-        "ja": "ゴール",
-        "en": "Goal"
       }
     },
     {
@@ -80,11 +70,11 @@
       "@id": "urn:quote:Cancelable",
       "@type": "Class",
       "subClassOf": [
-        "urn:quote:Atom"
+        "urn:quote:Task"
       ],
       "_comment": "取消可能タスクのマーカークラス（`spec_kg.md`「決定: Template の下位クラス構成」）。判定は TaskPolicyProjection が isSubClassOf で行う——ハーネスが文字列で持たない。",
       "label": {
-        "ja": "取消可能",
+        "ja": "取消可能タスク",
         "en": "Cancelable"
       }
     },
@@ -110,7 +100,7 @@
       "@id": "urn:quote:QuoteRecord",
       "@type": "Class",
       "subClassOf": [
-        "urn:quote:Goal",
+        "urn:quote:Task",
         "urn:quote:Cancelable",
         {
           "@type": "Restriction",
@@ -125,7 +115,7 @@
         },
         {
           "@type": "Restriction",
-          "onProperty": "wam:completeByOkButton",
+          "onProperty": "wam:completeOrSuspendByOkButton",
           "minCardinality": 0,
           "maxCardinality": 1
         },
@@ -158,7 +148,6 @@
       "@type": "Class",
       "subClassOf": [
         "urn:quote:Constraint",
-        "urn:quote:Cancelable",
         {
           "@type": "Restriction",
           "onProperty": "urn:quote:lineQuantity",
@@ -417,6 +406,18 @@
       "label": {
         "ja": "完成（OKボタン）",
         "en": "Complete by OK button"
+      }
+    },
+    {
+      "_comment": "中断ありの OK ボタンによる完成（3値。偽＝未完成、真＝完成したが未押下、ユーザ＝その人が押した）。**いつでも押せ、配下が未完成のうちに押すと中断になる**（追記K383・K384）。押したのが完成の確認か中断かは配下の凍結の印が答える。**この属性を宣言することが「中断ありの OK ボタンを持つ」の宣言である。**",
+      "@id": "wam:completeOrSuspendByOkButton",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:Template",
+      "range": "string",
+      "subPropertyOf": "wam:isComplete",
+      "label": {
+        "ja": "完成（中断ありのOKボタン）",
+        "en": "Complete or suspend by OK button"
       }
     }
   ]
