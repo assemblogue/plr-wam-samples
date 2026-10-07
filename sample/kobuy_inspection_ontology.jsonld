@@ -1,8 +1,7 @@
 {
- "_comment": "KOBUY の検収 → 売上伝票の自動計上 → 検収取消 の例題。マニュアル §6.5.1「バイヤーが検収処理を実施した際に、その検収データを元に自動的に売上伝票が計上されます」を、Then の後続として書く。金額と消費税は組込述語（× ÷ 端数処理）で出す——消費税の計算は KOBUY の Wiki「消費税計算について」のとおり——明細ごとに計算し、端数処理の方式（切り捨て／四捨五入）と計算パターン（①／②）はサプライヤごとに決まっている。",
+ "_comment": "KOBUY の検収 → 売上伝票の自動計上 → 検収取消 の例題。マニュアル §6.5.1「バイヤーが検収処理を実施した際に、その検収データを元に自動的に売上伝票が計上されます」を、Then の後続として書く。金額と消費税は組込述語（× ÷ 端数処理）で出す——消費税の計算式と端数処理はマニュアル「商品の金額計算方法について」のとおり。",
  "@id": "urn:kinsp:ontology",
  "@type": "Ontology",
- "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
  "agentProperty": "urn:kinsp:agent",
  "defines": [
   {
@@ -53,6 +52,17 @@
    }
   },
   {
+   "@id": "urn:kinsp:Goal",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Task"
+   ],
+   "label": {
+    "ja": "ゴール",
+    "en": "Goal"
+   }
+  },
+  {
    "@id": "urn:kinsp:Constraint",
    "@type": "Class",
    "subClassOf": [
@@ -92,8 +102,8 @@
     "urn:kinsp:Task"
    ],
    "label": {
-    "ja": "取消可能タスク",
-    "en": "Cancelable"
+    "ja": "取消可能",
+    "en": "urn:kinsp:Cancelable"
    }
   },
   {
@@ -103,19 +113,19 @@
     "urn:kinsp:Task"
    ],
    "label": {
-    "ja": "補償可能タスク",
+    "ja": "補償可能",
     "en": "Compensable"
    }
   },
   {
-   "@id": "urn:kinsp:Incompensable",
+   "@id": "urn:kinsp:NonCompensable",
    "@type": "Class",
    "subClassOf": [
     "urn:kinsp:Task"
    ],
    "label": {
-    "ja": "補償不能タスク",
-    "en": "Incompensable"
+    "ja": "補償不可能",
+    "en": "Non compensable"
    }
   },
   {
@@ -162,19 +172,6 @@
    }
   },
   {
-   "@id": "urn:kinsp:Plus",
-   "@type": "Class",
-   "subClassOf": [
-    "urn:kinsp:Constraint"
-   ],
-   "builtInFunction": "+",
-   "isConstraint": true,
-   "label": {
-    "ja": "+",
-    "en": "Plus"
-   }
-  },
-  {
    "@id": "urn:kinsp:Divide",
    "@type": "Class",
    "subClassOf": [
@@ -203,6 +200,7 @@
   {
    "@id": "urn:kinsp:Then",
    "@type": "Class",
+   "linkKind": "then",
    "label": {
     "ja": "Then",
     "en": "Then"
@@ -324,91 +322,6 @@
    }
   },
   {
-   "@id": "urn:kinsp:税抜金額",
-   "@type": "DatatypeProperty",
-   "range": "nonNegativeInteger",
-   "label": {
-    "ja": "税抜金額",
-    "en": "Net"
-   }
-  },
-  {
-   "@id": "urn:kinsp:数量",
-   "@type": "DatatypeProperty",
-   "range": "nonNegativeInteger",
-   "label": {
-    "ja": "数量",
-    "en": "Quantity"
-   }
-  },
-  {
-   "_comment": "消費税率（%）。8 や 10。",
-   "@id": "urn:kinsp:税率",
-   "@type": "DatatypeProperty",
-   "range": "positiveInteger",
-   "label": {
-    "ja": "消費税率(%)",
-    "en": "Tax rate (%)"
-   }
-  },
-  {
-   "_comment": "商品単価が税抜か税込か。「税抜」か「税込」。",
-   "@id": "urn:kinsp:単価区分",
-   "@type": "DatatypeProperty",
-   "range": "string",
-   "label": {
-    "ja": "単価区分",
-    "en": "Price basis"
-   }
-  },
-  {
-   "_comment": "消費税の端数処理の方式。組込述語 端数処理 の方式名（「切捨て」か「四捨五入」）。サプライヤごとに決まっている。",
-   "@id": "urn:kinsp:端数処理",
-   "@type": "DatatypeProperty",
-   "range": "string",
-   "label": {
-    "ja": "端数処理",
-    "en": "Rounding"
-   }
-  },
-  {
-   "_comment": "消費税の計算パターン。①は 端数処理(単価 × 数量 × 税率)、②は 端数処理(単価 × 税率) × 数量。サプライヤごとに決まっている。",
-   "@id": "urn:kinsp:計算パターン",
-   "@type": "DatatypeProperty",
-   "range": "string",
-   "label": {
-    "ja": "計算パターン",
-    "en": "Tax pattern"
-   }
-  },
-  {
-   "@id": "urn:kinsp:名前",
-   "@type": "DatatypeProperty",
-   "range": "string",
-   "label": {
-    "ja": "名前",
-    "en": "Name"
-   }
-  },
-  {
-   "@id": "urn:kinsp:サプライヤ",
-   "@type": "ObjectProperty",
-   "range": "urn:kinsp:サプライヤ",
-   "label": {
-    "ja": "サプライヤ",
-    "en": "Supplier"
-   }
-  },
-  {
-   "@id": "urn:kinsp:計算例一覧",
-   "@type": "ObjectProperty",
-   "range": "urn:kinsp:消費税計算",
-   "label": {
-    "ja": "計算例",
-    "en": "Examples"
-   }
-  },
-  {
    "@id": "urn:kinsp:税抜相当",
    "@type": "DatatypeProperty",
    "range": "decimal",
@@ -446,7 +359,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeOrSuspendByOkButton",
+     "onProperty": "wam:completeByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -479,12 +392,6 @@
      "onProperty": "urn:kinsp:消費税額",
      "minCardinality": 1,
      "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:kinsp:税抜金額",
-     "minCardinality": 1,
-     "maxCardinality": 1
     }
    ],
    "label": {
@@ -492,118 +399,6 @@
     "en": "Sales slip"
    },
    "urn:kinsp:compensatesWith": "urn:kinsp:赤伝票"
-  },
-  {
-   "_comment": "サプライヤ。消費税の端数処理の方式と計算パターンを持つ（Wiki「各外部連携の端数処理について」の表）。",
-   "@id": "urn:kinsp:サプライヤ",
-   "@type": "Class",
-   "subClassOf": [
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:kinsp:名前",
-     "minCardinality": 1,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:kinsp:端数処理",
-     "minCardinality": 1,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:kinsp:計算パターン",
-     "minCardinality": 1,
-     "maxCardinality": 1
-    }
-   ],
-   "label": {
-    "ja": "サプライヤ",
-    "en": "Supplier"
-   }
-  },
-  {
-   "_comment": "明細1行の消費税を計算する（Wiki「Kobuyでの消費税計算方法」）。単価区分と計算パターンで代替節が選ばれる。税抜・税込・消費税のどれも整数（円）。",
-   "@id": "urn:kinsp:消費税計算",
-   "@type": "Class",
-   "subClassOf": [
-    "urn:kinsp:OtherAtom",
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:kinsp:単価",
-     "minCardinality": 1,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:kinsp:数量",
-     "minCardinality": 1,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:kinsp:税率",
-     "minCardinality": 1,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:kinsp:端数処理",
-     "minCardinality": 1,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:kinsp:計算パターン",
-     "minCardinality": 1,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:kinsp:単価区分",
-     "minCardinality": 1,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:kinsp:税抜金額",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:kinsp:消費税額",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:kinsp:税込金額",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    }
-   ],
-   "label": {
-    "ja": "消費税計算",
-    "en": "Tax calculation"
-   }
-  },
-  {
-   "_comment": "Wiki の計算例を並べるためのゴール。計算例一覧の各行が 消費税計算 のノードで、その節が解かれて税抜・消費税・税込が入る。",
-   "@id": "urn:kinsp:消費税の計算例",
-   "@type": "Class",
-   "subClassOf": [
-    "urn:kinsp:Task",
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:kinsp:計算例一覧",
-     "minCardinality": 1
-    }
-   ],
-   "label": {
-    "ja": "消費税の計算例",
-    "en": "Tax examples"
-   }
   },
   {
    "@id": "urn:kinsp:検収フロー",
@@ -621,24 +416,6 @@
      "onProperty": "urn:kinsp:出荷数",
      "minCardinality": 1,
      "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:kinsp:サプライヤ",
-     "minCardinality": 1,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:kinsp:単価区分",
-     "minCardinality": 1,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:kinsp:税率",
-     "minCardinality": 1,
-     "maxCardinality": 1
     }
    ],
    "label": {
@@ -650,7 +427,7 @@
    "@id": "urn:kinsp:検収ゴール",
    "@type": "Class",
    "subClassOf": [
-    "urn:kinsp:Task"
+    "urn:kinsp:Goal"
    ],
    "label": {
     "ja": "検収ゴール",
@@ -678,12 +455,6 @@
     {
      "@type": "Restriction",
      "onProperty": "urn:kinsp:消費税額",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:kinsp:税抜金額",
      "minCardinality": 0,
      "maxCardinality": 1
     }
