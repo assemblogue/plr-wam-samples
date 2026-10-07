@@ -1,250 +1,180 @@
 {
- "@id": "urn:wamtest:ontology",
- "@type": "Ontology",
- "defines": [
-  {
-   "@id": "urn:wamtest:Task",
-   "@type": "Class",
-   "subClassOf": [
+  "@id": "urn:wamtest:ontology",
+  "@type": "Ontology",
+  "defines": [
     {
-     "@type": "Restriction",
-     "onProperty": "wam:isComplete",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    }
-   ],
-   "label": {
-    "ja": "タスクノード",
-    "en": "Task"
-   }
-  },
-  {
-   "@id": "urn:wamtest:Constraint",
-   "@type": "Class",
-   "label": {
-    "ja": "制約ノード",
-    "en": "Constraint"
-   }
-  },
-  {
-   "@id": "urn:wamtest:申請",
-   "@type": "Class",
-   "subClassOf": [
-    "urn:wamtest:Task"
-   ],
-   "label": {
-    "ja": "申請",
-    "en": "Request"
-   }
-  },
-  {
-   "@id": "urn:wamtest:承認",
-   "@type": "Class",
-   "subClassOf": [
-    "urn:wamtest:Task",
-    {
-     "@type": "Restriction",
-     "onProperty": "wam:completeOrSuspendByOkButton",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    }
-   ],
-   "label": {
-    "ja": "承認",
-    "en": "Approval"
-   }
-  },
-  {
-   "@id": "urn:wamtest:発注",
-   "@type": "Class",
-   "subClassOf": [
-    "urn:wamtest:Task"
-   ],
-   "label": {
-    "ja": "発注",
-    "en": "Order"
-   }
-  },
-  {
-   "@id": "urn:wamtest:調達申請ワークフロー",
-   "@type": "Class",
-   "label": {
-    "ja": "調達申請ワークフロー",
-    "en": "Procurement workflow"
-   }
-  },
-  {
-   "@id": "urn:wamtest:Then",
-   "@type": "Class",
-   "_comment": "リンクは属性ではなくクラスである。arg1 が始点、arg2 が終点。",
-   "label": {
-    "ja": "Then",
-    "en": "Then"
-   },
-   "subClassOf": [
-    "#Then"
-   ]
-  },
-  {
-   "@id": "urn:wamtest:Else",
-   "@type": "Class",
-   "label": {
-    "ja": "Else",
-    "en": "Else"
-   },
-   "subClassOf": [
-    "#Else"
-   ]
-  },
-  {
-   "@id": "arg1",
-   "@type": "ObjectProperty",
-   "label": {
-    "ja": "第1引数",
-    "en": "Arg 1"
-   }
-  },
-  {
-   "@id": "arg2",
-   "@type": "ObjectProperty",
-   "label": {
-    "ja": "第2引数",
-    "en": "Arg 2"
-   }
-  },
-  {
-   "_comment": "完成の属性の上位属性（追記249）。complete と completeByOkButton はどちらもこれの下位属性であり、cardinality を1以下にすることで「いずれか一方しか使えない」が表される。",
-   "@id": "wam:isComplete",
-   "@type": "DatatypeProperty",
-   "domain": "urn:wamtest:Task",
-   "range": "string",
-   "label": {
-    "ja": "完成",
-    "en": "Is complete"
-   }
-  },
-  {
-   "_comment": "OKボタンを持たないノードの完成（2値）。",
-   "@id": "wam:complete",
-   "@type": "DatatypeProperty",
-   "domain": "urn:wamtest:Task",
-   "range": "boolean",
-   "subPropertyOf": "wam:isComplete",
-   "label": {
-    "ja": "完成",
-    "en": "Complete"
-   }
-  },
-  {
-   "_comment": "OKボタンによる完成（3値。偽＝未完成、真＝完成したが未押下、ユーザ＝その人が確認した）。**この属性を宣言することが「OKボタンを持つ」の宣言である**（追記249。completionMode は使わない）。",
-   "@id": "wam:completeByOkButton",
-   "@type": "DatatypeProperty",
-   "domain": "urn:wamtest:Task",
-   "range": "string",
-   "subPropertyOf": "wam:isComplete",
-   "label": {
-    "ja": "完成（OKボタン）",
-    "en": "Complete by OK button"
-   }
-  },
-  {
-   "_comment": "中断ありの OK ボタンによる完成（3値。偽＝未完成、真＝完成したが未押下、ユーザ＝その人が押した）。**いつでも押せ、配下が未完成のうちに押すと中断になる**（追記K383・K384）。押したのが完成の確認か中断かは配下の凍結の印が答える。**この属性を宣言することが「中断ありの OK ボタンを持つ」の宣言である。**",
-   "@id": "wam:completeOrSuspendByOkButton",
-   "@type": "DatatypeProperty",
-   "domain": "urn:wamtest:Task",
-   "range": "string",
-   "subPropertyOf": "wam:isComplete",
-   "label": {
-    "ja": "完成（中断ありのOKボタン）",
-    "en": "Complete or suspend by OK button"
-   }
-  },
-  {
-   "@id": "urn:wamtest:購買検討",
-   "@type": "Class",
-   "label": {
-    "ja": "購買検討",
-    "en": "購買検討"
-   }
-  },
-  {
-   "@id": "urn:wamtest:商品",
-   "@type": "Class",
-   "label": {
-    "ja": "商品",
-    "en": "商品"
-   },
-   "subClassOf": [
-    "urn:wamtest:Task",
-    {
-     "@type": "Restriction",
-     "onProperty": "#agent",
-     "minCardinality": 0,
-     "maxCardinality": 1
+      "@id": "urn:wamtest:Task",
+      "@type": "Class",
+      "subClassOf": [
+        {
+          "@type": "Restriction",
+          "onProperty": "wam:isComplete",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "タスクノード",
+        "en": "Task"
+      }
     },
     {
-     "@type": "Restriction",
-     "onProperty": "wam:completeByOkButton",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    }
-   ],
-   "_comment": "マスターのレコード（R488）——マスターのチャネル設定の登録の節（頭部だけのゴール節）で作るタスクで、本体では existing を付けて検索する（追記R528）。"
-  },
-  {
-   "@id": "urn:wamtest:組織",
-   "@type": "Class",
-   "label": {
-    "ja": "組織",
-    "en": "組織"
-   },
-   "subClassOf": [
-    "urn:wamtest:Task",
-    {
-     "@type": "Restriction",
-     "onProperty": "#agent",
-     "minCardinality": 0,
-     "maxCardinality": 1
+      "@id": "urn:wamtest:Constraint",
+      "@type": "Class",
+      "label": {
+        "ja": "制約ノード",
+        "en": "Constraint"
+      }
     },
     {
-     "@type": "Restriction",
-     "onProperty": "wam:completeByOkButton",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    }
-   ],
-   "_comment": "マスターのレコード（R488）——マスターのチャネル設定の登録の節（頭部だけのゴール節）で作るタスクで、本体では existing を付けて検索する（追記R528）。"
-  },
-  {
-   "@id": "urn:wamtest:上司",
-   "@type": "Class",
-   "label": {
-    "ja": "上司",
-    "en": "上司"
-   },
-   "subClassOf": [
-    "urn:wamtest:Task",
-    {
-     "@type": "Restriction",
-     "onProperty": "#agent",
-     "minCardinality": 0,
-     "maxCardinality": 1
+      "@id": "urn:wamtest:申請",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:wamtest:Task"
+      ],
+      "label": {
+        "ja": "申請",
+        "en": "Request"
+      }
     },
     {
-     "@type": "Restriction",
-     "onProperty": "wam:completeByOkButton",
-     "minCardinality": 0,
-     "maxCardinality": 1
+      "@id": "urn:wamtest:承認",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:wamtest:Task",
+        {
+          "@type": "Restriction",
+          "onProperty": "wam:completeByOkButton",
+          "minCardinality": 0,
+          "maxCardinality": 1
+        }
+      ],
+      "label": {
+        "ja": "承認",
+        "en": "Approval"
+      }
+    },
+    {
+      "@id": "urn:wamtest:発注",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:wamtest:Task"
+      ],
+      "label": {
+        "ja": "発注",
+        "en": "Order"
+      }
+    },
+    {
+      "@id": "urn:wamtest:調達申請ワークフロー",
+      "@type": "Class",
+      "label": {
+        "ja": "調達申請ワークフロー",
+        "en": "Procurement workflow"
+      }
+    },
+    {
+      "@id": "urn:wamtest:Then",
+      "@type": "Class",
+      "linkKind": "then",
+      "_comment": "リンクは属性ではなくクラスである。arg1 が始点、arg2 が終点。",
+      "label": {
+        "ja": "Then",
+        "en": "Then"
+      }
+    },
+    {
+      "@id": "urn:wamtest:Else",
+      "@type": "Class",
+      "linkKind": "else",
+      "label": {
+        "ja": "Else",
+        "en": "Else"
+      }
+    },
+    {
+      "@id": "arg1",
+      "@type": "ObjectProperty",
+      "label": {
+        "ja": "第1引数",
+        "en": "Arg 1"
+      }
+    },
+    {
+      "@id": "arg2",
+      "@type": "ObjectProperty",
+      "label": {
+        "ja": "第2引数",
+        "en": "Arg 2"
+      }
+    },
+    {
+      "_comment": "完成の属性の上位属性（追記249）。complete と completeByOkButton はどちらもこれの下位属性であり、cardinality を1以下にすることで「いずれか一方しか使えない」が表される。",
+      "@id": "wam:isComplete",
+      "@type": "DatatypeProperty",
+      "domain": "urn:wamtest:Task",
+      "range": "string",
+      "label": {
+        "ja": "完成",
+        "en": "Is complete"
+      }
+    },
+    {
+      "_comment": "OKボタンを持たないノードの完成（2値）。",
+      "@id": "wam:complete",
+      "@type": "DatatypeProperty",
+      "domain": "urn:wamtest:Task",
+      "range": "boolean",
+      "subPropertyOf": "wam:isComplete",
+      "label": {
+        "ja": "完成",
+        "en": "Complete"
+      }
+    },
+    {
+      "_comment": "OKボタンによる完成（3値。偽＝未完成、真＝完成したが未押下、ユーザ＝その人が確認した）。**この属性を宣言することが「OKボタンを持つ」の宣言である**（追記249。completionMode は使わない）。",
+      "@id": "wam:completeByOkButton",
+      "@type": "DatatypeProperty",
+      "domain": "urn:wamtest:Task",
+      "range": "string",
+      "subPropertyOf": "wam:isComplete",
+      "label": {
+        "ja": "完成（OKボタン）",
+        "en": "Complete by OK button"
+      }
+    },
+    {
+      "@id": "urn:wamtest:購買検討",
+      "@type": "Class",
+      "label": {
+        "ja": "購買検討",
+        "en": "購買検討"
+      }
+    },
+    {
+      "@id": "urn:wamtest:商品",
+      "@type": "Class",
+      "label": {
+        "ja": "商品",
+        "en": "商品"
+      }
+    },
+    {
+      "@id": "urn:wamtest:組織",
+      "@type": "Class",
+      "label": {
+        "ja": "組織",
+        "en": "組織"
+      }
+    },
+    {
+      "@id": "urn:wamtest:上司",
+      "@type": "Class",
+      "label": {
+        "ja": "上司",
+        "en": "上司"
+      }
     }
-   ],
-   "_comment": "マスターのレコード（R488）——マスターのチャネル設定の登録の節（頭部だけのゴール節）で作るタスクで、本体では existing を付けて検索する（追記R528）。"
-  },
-  {
-   "@id": "#Person",
-   "@type": "Class",
-   "_comment": "Profile.xlsx で定義されたクラス Person。人もレコードとして置く（追記R529・R531）",
-   "label": "人"
-  }
- ],
- "_comment": "購買検討（商品マスターDB照会）のオントロジー。ontology.jsonld と同じ内容に、承認の完成確認の宣言を足したもの。⚠️ 新形式では完成/完成確認は**クラスの宣言**なので（spec_exec.md）、同じクラスのノードで使い分けられない。clauses.json の調達申請は承認に完成確認を持たせないので、オントロジーを分けてある。"
+  ],
+  "_comment": "購買検討（商品マスターDB照会）のオントロジー。ontology.jsonld と同じ内容に、承認の完成確認の宣言を足したもの。⚠️ 新形式では完成/完成確認は**クラスの宣言**なので（spec_exec.md）、同じクラスのノードで使い分けられない。clauses.json の調達申請は承認に完成確認を持たせないので、オントロジーを分けてある。"
 }

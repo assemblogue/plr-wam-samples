@@ -2,7 +2,6 @@
  "_comment": "KOBUY 購買（注文 → 限度額チェック → 多段承認 → 発注）の例題。**承認経路は各社に1本の固有のホーン節である**（橋田さん）——バイヤーごとに段数も承認者も違い標準形が無いので、経路そのものを代替節として書く。各組織が自分のスキーマに自社の節を1本持ち、頭部の会社で選ばれる。共有される部分（注文・限度額・発注）の節は1組のままで、会社が増えても増えない。",
  "@id": "urn:kobuy:ontology",
  "@type": "Ontology",
- "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
  "agentProperty": "urn:kobuy:agent",
  "defines": [
   {
@@ -44,6 +43,17 @@
    }
   },
   {
+   "@id": "urn:kobuy:Goal",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kobuy:Task"
+   ],
+   "label": {
+    "ja": "ゴール",
+    "en": "Goal"
+   }
+  },
+  {
    "@id": "urn:kobuy:Constraint",
    "@type": "Class",
    "subClassOf": [
@@ -81,10 +91,7 @@
    "label": {
     "ja": "人",
     "en": "Person"
-   },
-   "subClassOf": [
-    "#Person"
-   ]
+   }
   },
   {
    "@id": "urn:kobuy:agent",
@@ -93,10 +100,7 @@
    "label": {
     "ja": "担当者",
     "en": "Agent"
-   },
-   "subPropertyOf": [
-    "#agent"
-   ]
+   }
   },
   {
    "@id": "urn:kobuy:refersTo",
@@ -122,13 +126,11 @@
   {
    "@id": "urn:kobuy:Then",
    "@type": "Class",
+   "linkKind": "then",
    "label": {
     "ja": "Then",
     "en": "Then"
-   },
-   "subClassOf": [
-    "#Then"
-   ]
+   }
   },
   {
    "@id": "arg1",
@@ -233,7 +235,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeOrSuspendByOkButton",
+     "onProperty": "wam:completeByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -263,7 +265,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeOrSuspendByOkButton",
+     "onProperty": "wam:completeByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     },
@@ -298,7 +300,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeOrSuspendByOkButton",
+     "onProperty": "wam:completeByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -391,7 +393,7 @@
    "@id": "urn:kobuy:購買ゴール",
    "@type": "Class",
    "subClassOf": [
-    "urn:kobuy:Task"
+    "urn:kobuy:Goal"
    ],
    "label": {
     "ja": "購買ゴール",
@@ -402,7 +404,7 @@
    "@id": "urn:kobuy:購買ゴールB",
    "@type": "Class",
    "subClassOf": [
-    "urn:kobuy:Task"
+    "urn:kobuy:Goal"
    ],
    "_comment": "B社の起動点。購買の節も承認の節も共有したまま、会社が違えば違う経路を辿ることを見せるためだけのもの。",
    "label": {
