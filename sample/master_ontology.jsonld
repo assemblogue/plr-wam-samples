@@ -44,7 +44,7 @@
         "urn:wamtest:Task",
         {
           "@type": "Restriction",
-          "onProperty": "wam:completeByOkButton",
+          "onProperty": "wam:completeOrSuspendByOkButton",
           "minCardinality": 0,
           "maxCardinality": 1
         }
@@ -141,6 +141,18 @@
       "label": {
         "ja": "完成（OKボタン）",
         "en": "Complete by OK button"
+      }
+    },
+    {
+      "_comment": "中断ありの OK ボタンによる完成（3値。偽＝未完成、真＝完成したが未押下、ユーザ＝その人が押した）。**いつでも押せ、配下が未完成のうちに押すと中断になる**（追記K383・K384）。押したのが完成の確認か中断かは配下の凍結の印が答える。**この属性を宣言することが「中断ありの OK ボタンを持つ」の宣言である。**",
+      "@id": "wam:completeOrSuspendByOkButton",
+      "@type": "DatatypeProperty",
+      "domain": "urn:wamtest:Task",
+      "range": "string",
+      "subPropertyOf": "wam:isComplete",
+      "label": {
+        "ja": "完成（中断ありのOKボタン）",
+        "en": "Complete or suspend by OK button"
       }
     },
     {
