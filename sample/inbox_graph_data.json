@@ -1,237 +1,501 @@
 {
- "_comment": "Then が無いので5案件は並行に立つ。各案件の中だけが 起案→承認 の順である。",
- "urn:inbox:受信箱ゴール": [
+ "_comment": "担当者の受信箱。調達3案件（A・B・C）と検収2案件（D・E）が、それぞれ業務フローとして起動してチャネルに並ぶ（ハーネスの --start-all。追記R494）。4人が自分のぶんを片付ける。山田の限度額は案件をまたいで効く——予算に並ぶ調達のレコードを検索して、その合計に掛ける。 レコードはチャネル（ONTOc1）に置く——調達のレコードは調達のチャネル、検収は検収のチャネル、予算はマスターのチャネル（追記R494）。",
+ "ONTO2": [
   {
-   "_comment": "調達3件＋検収2件。山田は 起案A・起案C・検収E の3つを抱える（業務種別をまたぐ）。鈴木は 承認A・承認B の2件。",
-   "@id": "urn:node:受信箱ゴール.head",
-   "@type": "urn:inbox:受信箱ゴール",
-   "variables": [
+   "_comment": "ワークプレース。ホーン節はその onto7 の値である（実際の系と同じ形。追記R474・K439）",
+   "@id": "urn:wamtest:workplace.inbox_graph_data",
+   "@type": "ONTO2",
+   "onto7": [
     {
-     "@id": "#L",
-     "variableName": "L"
+     "@id": "urn:node:起案.head",
+     "@type": "urn:inbox:起案"
     },
     {
-     "@id": "#XA",
-     "variableName": "XA"
+     "@id": "urn:node:承認.head",
+     "@type": "urn:inbox:承認"
     },
     {
-     "@id": "#XB",
-     "variableName": "XB"
-    },
-    {
-     "@id": "#XC",
-     "variableName": "XC"
+     "@id": "urn:node:検収作業.head",
+     "@type": "urn:inbox:検収作業"
     }
    ],
-   "internalGraph": [
+   "ontoC": [
     {
-     "@id": "urn:node:限度額を引く",
-     "@type": "urn:inbox:利用者限度額",
-     "urn:inbox:利用者": "urn:entity:山田",
-     "urn:inbox:限度額": {
-      "@id": "#L"
-     }
-    },
-    {
-     "@id": "urn:node:調達A",
-     "@type": "urn:inbox:調達",
-     "urn:inbox:案件": "A",
-     "urn:inbox:起案者": "urn:entity:山田",
-     "urn:inbox:承認者": "urn:entity:鈴木",
-     "urn:inbox:金額": {
-      "@id": "#XA"
-     }
-    },
-    {
-     "@id": "urn:node:調達B",
-     "@type": "urn:inbox:調達",
-     "urn:inbox:案件": "B",
-     "urn:inbox:起案者": "urn:entity:佐藤",
-     "urn:inbox:承認者": "urn:entity:鈴木",
-     "urn:inbox:金額": {
-      "@id": "#XB"
-     }
-    },
-    {
-     "@id": "urn:node:調達C",
-     "@type": "urn:inbox:調達",
-     "urn:inbox:案件": "C",
-     "urn:inbox:起案者": "urn:entity:山田",
-     "urn:inbox:承認者": "urn:entity:田中",
-     "urn:inbox:金額": {
-      "@id": "#XC"
-     }
-    },
-    {
-     "@id": "urn:node:検収D",
-     "@type": "urn:inbox:検収",
-     "urn:inbox:案件": "D",
-     "urn:inbox:検収者": "urn:entity:佐藤"
-    },
-    {
-     "@id": "urn:node:検収E",
-     "@type": "urn:inbox:検収",
-     "urn:inbox:案件": "E",
-     "urn:inbox:検収者": "urn:entity:山田"
-    },
-    {
-     "_comment": "**案件をまたぐ制約。** 山田の限度額 ≧ 案件A＋案件C の合計。案件B は佐藤なので入らない。",
-     "@id": "urn:node:山田の限度額チェック",
-     "@type": "urn:inbox:Geq",
-     "arg1": {
-      "@id": "#L"
-     },
-     "arg2": [
+     "_comment": "調達のチャネル設定。案件ごとの調達の業務フローの定義（ゴール節）",
+     "@id": "urn:inbox:設定.調達",
+     "@type": "ONTOc",
+     "onto0": "調達",
+     "ontoG": [
       {
-       "@id": "#XA"
-      },
+       "_comment": "調達(案件: N, 起案者: U, 承認者: W, 金額: X, agent: U) :- 成員(主体: 全構成員, 人: U), 起案(agent: U, 案件: N, 金額: X) ─Then→ 承認(agent: W, 案件: N, 金額: X), 予算(利用者: U, 限度額: L, 調達一覧: 調達(金額: Y), existing: true), ≧(L, Y). 案件をまたぐ限度額は、予算に並ぶ調達のレコードを検索して、その合計に掛ける（tut.md。追記R494）",
+       "@id": "urn:node:調達.head",
+       "@type": "urn:inbox:調達",
+       "urn:inbox:案件": {
+        "@id": "#N"
+       },
+       "urn:inbox:起案者": {
+        "@id": "#U"
+       },
+       "urn:inbox:承認者": {
+        "@id": "#W"
+       },
+       "urn:inbox:金額": {
+        "@id": "#X"
+       },
+       "variables": [
+        {
+         "@id": "#N",
+         "variableName": "N"
+        },
+        {
+         "@id": "#U",
+         "variableName": "U"
+        },
+        {
+         "@id": "#W",
+         "variableName": "W"
+        },
+        {
+         "@id": "#X",
+         "variableName": "X"
+        },
+        {
+         "@id": "#L",
+         "variableName": "L"
+        },
+        {
+         "@id": "#Y",
+         "variableName": "Y"
+        }
+       ],
+       "internalGraph": [
+        {
+         "_comment": "U が組織の構成員であること——担当者 U を本体が制約するので基幹業務である（KOBUY の購買と同じ形。追記R546）",
+         "@id": "urn:node:社員",
+         "@type": "成員",
+         "主体": {
+          "@id": "urn:entity:全構成員"
+         },
+         "人": {
+          "@id": "#U"
+         }
+        },
+        {
+         "@id": "urn:node:起案",
+         "@type": "urn:inbox:起案",
+         "urn:inbox:案件": {
+          "@id": "#N"
+         },
+         "urn:inbox:金額": {
+          "@id": "#X"
+         },
+         "agent": {
+          "@id": "#U"
+         }
+        },
+        {
+         "@id": "urn:node:承認",
+         "@type": "urn:inbox:承認",
+         "urn:inbox:案件": {
+          "@id": "#N"
+         },
+         "urn:inbox:金額": {
+          "@id": "#X"
+         },
+         "agent": {
+          "@id": "#W"
+         }
+        },
+        {
+         "@id": "urn:node:調達.head#link1",
+         "@type": "urn:inbox:Then",
+         "arg1": {
+          "@id": "urn:node:起案"
+         },
+         "arg2": {
+          "@id": "urn:node:承認"
+         }
+        },
+        {
+         "_comment": "予算を検索する（existing。マスターのレコード）。調達一覧は refersTo なので、調達(金額: Y) は既にある調達のレコードの検索で、Y は U の調達の金額を集めた多値。自分の案件のレコードも入るので、X を別に足さない（tut.md）",
+         "@id": "urn:node:予算参照",
+         "@type": "urn:inbox:予算",
+         "wam:existing": true,
+         "urn:inbox:利用者": {
+          "@id": "#U"
+         },
+         "urn:inbox:限度額": {
+          "@id": "#L"
+         },
+         "urn:inbox:調達一覧": {
+          "@type": "urn:inbox:調達",
+          "urn:inbox:金額": {
+           "@id": "#Y"
+          }
+         }
+        },
+        {
+         "@id": "urn:node:限度額チェック",
+         "@type": "urn:inbox:Geq",
+         "arg1": {
+          "@id": "#L"
+         },
+         "arg2": {
+          "@id": "#Y"
+         }
+        }
+       ],
+       "agent": {
+        "@id": "#U"
+       }
+      }
+     ]
+    },
+    {
+     "_comment": "検収のチャネル設定",
+     "@id": "urn:inbox:設定.検収",
+     "@type": "ONTOc",
+     "onto0": "検収",
+     "ontoG": [
       {
-       "@id": "#XC"
+       "@id": "urn:node:検収.head",
+       "@type": "urn:inbox:検収",
+       "urn:inbox:案件": {
+        "@id": "#N"
+       },
+       "urn:inbox:検収者": {
+        "@id": "#U"
+       },
+       "variables": [
+        {
+         "@id": "#N",
+         "variableName": "N"
+        },
+        {
+         "@id": "#U",
+         "variableName": "U"
+        },
+        {
+         "@id": "#Q",
+         "variableName": "Q"
+        }
+       ],
+       "internalGraph": [
+        {
+         "@id": "urn:node:検収作業",
+         "@type": "urn:inbox:検収作業",
+         "urn:inbox:案件": {
+          "@id": "#N"
+         },
+         "urn:inbox:数量": {
+          "@id": "#Q"
+         },
+         "agent": {
+          "@id": "#U"
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "_comment": "マスターのチャネル設定。予算のレコードは、この登録の節（頭部だけのゴール節）で作る（R488）",
+     "@id": "urn:inbox:設定.マスター",
+     "@type": "ONTOc",
+     "onto0": "マスター",
+     "ontoG": [
+      {
+       "_comment": "予算の登録",
+       "@id": "urn:node:予算.登録",
+       "@type": "urn:inbox:予算",
+       "urn:inbox:利用者": {
+        "@id": "#U"
+       },
+       "urn:inbox:限度額": {
+        "@id": "#L"
+       },
+       "urn:inbox:調達一覧": {
+        "@id": "#P"
+       },
+       "agent": {
+        "@id": "#M"
+       },
+       "variables": [
+        {
+         "@id": "#U",
+         "variableName": "U"
+        },
+        {
+         "@id": "#L",
+         "variableName": "L"
+        },
+        {
+         "@id": "#P",
+         "variableName": "P"
+        },
+        {
+         "@id": "#M",
+         "variableName": "M"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "_comment": "チャネル作成のチャネル設定。名前の無いチャネル（基幹業務の分割チャネル）の節を持つ。起案者がまだ分割チャネルを持たなければ、エンジンがこの節を走らせて作る（追記R433・R435・R546）",
+     "@id": "urn:inbox:設定.チャネル",
+     "@type": "ONTOc",
+     "onto0": "チャネル",
+     "ontoG": [
+      {
+       "_comment": "ONTOc1(ontoC: S, agent: O) :- 基幹業務を含む(設定: S). 名前の無いチャネル（分割チャネル）",
+       "@id": "urn:node:チャネル.head",
+       "@type": "ONTOc1",
+       "ontoC": {
+        "@id": "#S"
+       },
+       "agent": {
+        "@id": "#O"
+       },
+       "variables": [
+        {
+         "@id": "#S",
+         "variableName": "S"
+        },
+        {
+         "@id": "#O",
+         "variableName": "O"
+        }
+       ],
+       "internalGraph": [
+        {
+         "@id": "urn:node:基幹業務を含む",
+         "@type": "基幹業務を含む",
+         "設定": {
+          "@id": "#S"
+         }
+        }
+       ]
       }
      ]
     }
    ]
   }
  ],
+ "ONTOc1": [
+  {
+   "_comment": "検収のチャネル（設定 urn:inbox:設定.検収 の名前付きのチャネル。業務フローノードのレコードがここに並ぶ。追記R494・R488）",
+   "@id": "urn:channel:検収",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:inbox:設定.検収"
+   },
+   "onto0": "検収",
+   "wam:completeByOkButton": {
+    "@id": "urn:entity:管理者"
+   }
+  },
+  {
+   "_comment": "マスターのチャネル（設定 urn:inbox:設定.マスター の名前付きのチャネル。業務フローノードのレコードがここに並ぶ。追記R494・R488）",
+   "@id": "urn:channel:マスター",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:inbox:設定.マスター"
+   },
+   "onto0": "マスター",
+   "wam:completeByOkButton": {
+    "@id": "urn:entity:管理者"
+   }
+  },
+  {
+   "_comment": "調達の、山田の分割チャネル（名前を持たず、起案者 _initiator が山田。基幹業務のレコードは起案者ごとの分割チャネルに入る。追記R546・R488）",
+   "@id": "urn:channel:調達.山田",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:inbox:設定.調達"
+   },
+   "_initiator": {
+    "@id": "urn:entity:山田"
+   },
+   "wam:completeByOkButton": {
+    "@id": "urn:entity:管理者"
+   }
+  },
+  {
+   "_comment": "調達の、佐藤の分割チャネル（名前を持たず、起案者 _initiator が佐藤。基幹業務のレコードは起案者ごとの分割チャネルに入る。追記R546・R488）",
+   "@id": "urn:channel:調達.佐藤",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:inbox:設定.調達"
+   },
+   "_initiator": {
+    "@id": "urn:entity:佐藤"
+   },
+   "wam:completeByOkButton": {
+    "@id": "urn:entity:管理者"
+   }
+  },
+  {
+   "_comment": "チャネル作成のチャネル（作った分割チャネルのレコードがここに並ぶ）",
+   "@id": "urn:channel:チャネル",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:inbox:設定.チャネル"
+   },
+   "onto0": "チャネル",
+   "wam:completeByOkButton": {
+    "@id": "urn:entity:管理者"
+   }
+  }
+ ],
  "urn:inbox:調達": [
   {
-   "_comment": "調達(案件:N, 起案者:U, 承認者:V, 金額:X) :- 起案 --Then--> 承認.",
-   "@id": "urn:node:調達.head",
-   "@type": "urn:inbox:調達",
-   "urn:inbox:案件": {
-    "@id": "#N"
+   "@id": "urn:entity:調達.A",
+   "urn:inbox:案件": "A",
+   "urn:inbox:起案者": "urn:entity:山田",
+   "urn:inbox:承認者": "urn:entity:鈴木",
+   "inChannel": {
+    "@id": "urn:channel:調達.山田"
    },
-   "urn:inbox:起案者": {
-    "@id": "#U"
+   "agent": {
+    "@id": "urn:entity:山田"
+   }
+  },
+  {
+   "@id": "urn:entity:調達.B",
+   "urn:inbox:案件": "B",
+   "urn:inbox:起案者": "urn:entity:佐藤",
+   "urn:inbox:承認者": "urn:entity:鈴木",
+   "inChannel": {
+    "@id": "urn:channel:調達.佐藤"
    },
-   "urn:inbox:承認者": {
-    "@id": "#W"
+   "agent": {
+    "@id": "urn:entity:佐藤"
+   }
+  },
+  {
+   "@id": "urn:entity:調達.C",
+   "urn:inbox:案件": "C",
+   "urn:inbox:起案者": "urn:entity:山田",
+   "urn:inbox:承認者": "urn:entity:田中",
+   "inChannel": {
+    "@id": "urn:channel:調達.山田"
    },
-   "urn:inbox:金額": {
-    "@id": "#X"
-   },
-   "variables": [
-    {
-     "@id": "#N",
-     "variableName": "N"
-    },
-    {
-     "@id": "#U",
-     "variableName": "U"
-    },
-    {
-     "@id": "#W",
-     "variableName": "W"
-    },
-    {
-     "@id": "#X",
-     "variableName": "X"
-    }
-   ],
-   "internalGraph": [
-    {
-     "@id": "urn:node:起案",
-     "@type": "urn:inbox:起案",
-     "urn:inbox:案件": {
-      "@id": "#N"
-     },
-     "urn:inbox:金額": {
-      "@id": "#X"
-     },
-     "urn:inbox:agent": {
-      "@id": "#U"
-     }
-    },
-    {
-     "@id": "urn:node:承認",
-     "@type": "urn:inbox:承認",
-     "urn:inbox:案件": {
-      "@id": "#N"
-     },
-     "urn:inbox:金額": {
-      "@id": "#X"
-     },
-     "urn:inbox:agent": {
-      "@id": "#W"
-     }
-    },
-    {
-     "@id": "urn:node:調達.head#link1",
-     "@type": "urn:inbox:Then",
-     "arg1": {
-      "@id": "urn:node:起案"
-     },
-     "arg2": {
-      "@id": "urn:node:承認"
-     }
-    }
-   ]
+   "agent": {
+    "@id": "urn:entity:山田"
+   }
   }
  ],
  "urn:inbox:検収": [
   {
-   "@id": "urn:node:検収.head",
-   "@type": "urn:inbox:検収",
-   "urn:inbox:案件": {
-    "@id": "#N"
-   },
-   "urn:inbox:検収者": {
-    "@id": "#U"
-   },
-   "variables": [
-    {
-     "@id": "#N",
-     "variableName": "N"
-    },
-    {
-     "@id": "#U",
-     "variableName": "U"
-    },
-    {
-     "@id": "#Q",
-     "variableName": "Q"
-    }
+   "@id": "urn:entity:検収.D",
+   "urn:inbox:案件": "D",
+   "urn:inbox:検収者": "urn:entity:佐藤",
+   "inChannel": {
+    "@id": "urn:channel:検収"
+   }
+  },
+  {
+   "@id": "urn:entity:検収.E",
+   "urn:inbox:案件": "E",
+   "urn:inbox:検収者": "urn:entity:山田",
+   "inChannel": {
+    "@id": "urn:channel:検収"
+   }
+  }
+ ],
+ "urn:inbox:予算": [
+  {
+   "@id": "urn:entity:予算.山田",
+   "urn:inbox:利用者": "urn:entity:山田",
+   "urn:inbox:限度額": 500000,
+   "urn:inbox:調達一覧": [
+    "urn:entity:調達.A",
+    "urn:entity:調達.C"
    ],
-   "internalGraph": [
+   "agent": "urn:entity:管理者",
+   "wam:completeByOkButton": "urn:entity:管理者",
+   "inChannel": {
+    "@id": "urn:channel:マスター"
+   }
+  },
+  {
+   "@id": "urn:entity:予算.佐藤",
+   "urn:inbox:利用者": "urn:entity:佐藤",
+   "urn:inbox:限度額": 1000000,
+   "urn:inbox:調達一覧": [
+    "urn:entity:調達.B"
+   ],
+   "agent": "urn:entity:管理者",
+   "wam:completeByOkButton": "urn:entity:管理者",
+   "inChannel": {
+    "@id": "urn:channel:マスター"
+   }
+  },
+  {
+   "@id": "urn:entity:予算.高橋",
+   "urn:inbox:利用者": {
+    "@id": "urn:entity:高橋"
+   },
+   "urn:inbox:限度額": 300000,
+   "urn:inbox:調達一覧": [],
+   "agent": "urn:entity:管理者",
+   "wam:completeByOkButton": "urn:entity:管理者",
+   "inChannel": {
+    "@id": "urn:channel:マスター"
+   }
+  }
+ ],
+ "Person": [
+  {
+   "@id": "urn:entity:山田",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:entity:佐藤",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:entity:鈴木",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:entity:田中",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:entity:管理者",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:entity:高橋",
+   "@type": "Person"
+  }
+ ],
+ "urn:inbox:グループ": [
+  {
+   "_comment": "組織の全構成員（成員 で起案者を制約する）",
+   "@id": "urn:entity:全構成員",
+   "メンバー": [
     {
-     "@id": "urn:node:検収作業",
-     "@type": "urn:inbox:検収作業",
-     "urn:inbox:案件": {
-      "@id": "#N"
-     },
-     "urn:inbox:数量": {
-      "@id": "#Q"
-     },
-     "urn:inbox:agent": {
-      "@id": "#U"
-     }
+     "@id": "urn:entity:山田"
+    },
+    {
+     "@id": "urn:entity:佐藤"
+    },
+    {
+     "@id": "urn:entity:鈴木"
+    },
+    {
+     "@id": "urn:entity:田中"
+    },
+    {
+     "@id": "urn:entity:管理者"
+    },
+    {
+     "@id": "urn:entity:高橋"
     }
    ]
-  }
- ],
- "urn:inbox:利用者限度額": [
-  {
-   "@id": "urn:entity:限度額.山田",
-   "urn:inbox:利用者": "urn:entity:山田",
-   "urn:inbox:限度額": 500000
-  }
- ],
- "urn:inbox:起案": [
-  {
-   "@id": "urn:node:起案.head",
-   "@type": "urn:inbox:起案"
-  }
- ],
- "urn:inbox:承認": [
-  {
-   "@id": "urn:node:承認.head",
-   "@type": "urn:inbox:承認"
-  }
- ],
- "urn:inbox:検収作業": [
-  {
-   "@id": "urn:node:検収作業.head",
-   "@type": "urn:inbox:検収作業"
   }
  ]
 }
