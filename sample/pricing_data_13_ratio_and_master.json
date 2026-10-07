@@ -4,14 +4,18 @@
     {
       "@id": "urn:e:ir1",
       "urn:pr:商品": "鉛筆4B",
-      "urn:pr:掛率": 0.5
+      "urn:pr:掛率": 0.5,
+      "agent": "urn:entity:admin",
+      "completeByOkButton": "urn:entity:admin"
     }
   ],
   "urn:pr:商品マスター": [
     {
       "@id": "urn:e:m1",
       "urn:pr:商品": "鉛筆4B",
-      "urn:pr:単価": 120
+      "urn:pr:単価": 120,
+      "agent": "urn:entity:admin",
+      "completeByOkButton": "urn:entity:admin"
     }
   ]
 }
