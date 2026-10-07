@@ -62,7 +62,6 @@
   {
    "@id": "urn:wamtest:Then",
    "@type": "Class",
-   "linkKind": "then",
    "_comment": "リンクは属性ではなくクラスである。arg1 が始点、arg2 が終点。",
    "label": {
     "ja": "Then",
@@ -72,7 +71,6 @@
   {
    "@id": "urn:wamtest:Else",
    "@type": "Class",
-   "linkKind": "else",
    "label": {
     "ja": "Else",
     "en": "Else"
