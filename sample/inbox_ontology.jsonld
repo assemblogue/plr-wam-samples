@@ -495,6 +495,12 @@
      "onProperty": "#_initiator",
      "minCardinality": 0,
      "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
     }
    ],
    "label": "チャネル"
@@ -566,6 +572,27 @@
    "@id": "#_initiator",
    "@type": "ObjectProperty",
    "label": "起案者（分割チャネル）"
+  },
+  {
+   "@id": "#基幹業務を含む",
+   "@type": "Class",
+   "builtInFunction": "基幹業務を含む",
+   "isConstraint": true,
+   "_comment": "組込述語 基幹業務を含む(設定: S)。チャネル作成の名前の無いチャネルの節が使う（追記R488・R546）",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "#設定",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "基幹業務を含む"
+  },
+  {
+   "@id": "#設定",
+   "@type": "ObjectProperty",
+   "label": "設定"
   }
  ],
  "channelProperty": "inChannel",

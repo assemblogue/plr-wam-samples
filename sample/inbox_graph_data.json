@@ -240,6 +240,44 @@
        ]
       }
      ]
+    },
+    {
+     "_comment": "チャネル作成のチャネル設定。名前の無いチャネル（基幹業務の分割チャネル）の節を持つ。起案者がまだ分割チャネルを持たなければ、エンジンがこの節を走らせて作る（追記R433・R435・R546）",
+     "@id": "urn:inbox:設定.チャネル",
+     "@type": "ONTOc",
+     "onto0": "チャネル",
+     "ontoG": [
+      {
+       "_comment": "ONTOc1(ontoC: S, agent: O) :- 基幹業務を含む(設定: S). 名前の無いチャネル（分割チャネル）",
+       "@id": "urn:node:チャネル.head",
+       "@type": "ONTOc1",
+       "ontoC": {
+        "@id": "#S"
+       },
+       "agent": {
+        "@id": "#O"
+       },
+       "variables": [
+        {
+         "@id": "#S",
+         "variableName": "S"
+        },
+        {
+         "@id": "#O",
+         "variableName": "O"
+        }
+       ],
+       "internalGraph": [
+        {
+         "@id": "urn:node:基幹業務を含む",
+         "@type": "基幹業務を含む",
+         "設定": {
+          "@id": "#S"
+         }
+        }
+       ]
+      }
+     ]
     }
    ]
   }
@@ -252,7 +290,10 @@
    "ontoC": {
     "@id": "urn:inbox:設定.検収"
    },
-   "onto0": "検収"
+   "onto0": "検収",
+   "wam:completeByOkButton": {
+    "@id": "urn:entity:管理者"
+   }
   },
   {
    "_comment": "マスターのチャネル（設定 urn:inbox:設定.マスター の名前付きのチャネル。業務フローノードのレコードがここに並ぶ。追記R494・R488）",
@@ -261,7 +302,10 @@
    "ontoC": {
     "@id": "urn:inbox:設定.マスター"
    },
-   "onto0": "マスター"
+   "onto0": "マスター",
+   "wam:completeByOkButton": {
+    "@id": "urn:entity:管理者"
+   }
   },
   {
    "_comment": "調達の、山田の分割チャネル（名前を持たず、起案者 _initiator が山田。基幹業務のレコードは起案者ごとの分割チャネルに入る。追記R546・R488）",
@@ -272,6 +316,9 @@
    },
    "_initiator": {
     "@id": "urn:entity:山田"
+   },
+   "wam:completeByOkButton": {
+    "@id": "urn:entity:管理者"
    }
   },
   {
@@ -283,6 +330,21 @@
    },
    "_initiator": {
     "@id": "urn:entity:佐藤"
+   },
+   "wam:completeByOkButton": {
+    "@id": "urn:entity:管理者"
+   }
+  },
+  {
+   "_comment": "チャネル作成のチャネル（作った分割チャネルのレコードがここに並ぶ）",
+   "@id": "urn:channel:チャネル",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:inbox:設定.チャネル"
+   },
+   "onto0": "チャネル",
+   "wam:completeByOkButton": {
+    "@id": "urn:entity:管理者"
    }
   }
  ],
@@ -369,6 +431,19 @@
    "inChannel": {
     "@id": "urn:channel:マスター"
    }
+  },
+  {
+   "@id": "urn:entity:予算.高橋",
+   "urn:inbox:利用者": {
+    "@id": "urn:entity:高橋"
+   },
+   "urn:inbox:限度額": 300000,
+   "urn:inbox:調達一覧": [],
+   "agent": "urn:entity:管理者",
+   "wam:completeByOkButton": "urn:entity:管理者",
+   "inChannel": {
+    "@id": "urn:channel:マスター"
+   }
   }
  ],
  "Person": [
@@ -391,6 +466,10 @@
   {
    "@id": "urn:entity:管理者",
    "@type": "Person"
+  },
+  {
+   "@id": "urn:entity:高橋",
+   "@type": "Person"
   }
  ],
  "urn:inbox:グループ": [
@@ -412,6 +491,9 @@
     },
     {
      "@id": "urn:entity:管理者"
+    },
+    {
+     "@id": "urn:entity:高橋"
     }
    ]
   }
