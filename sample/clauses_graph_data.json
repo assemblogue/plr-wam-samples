@@ -1,84 +1,85 @@
 {
   "_comment": "ホーン節（追記207 の新形式）。ホーン節は「ノード1つ ＋ その内部グラフ」である。",
-  "urn:wamtest:調達申請ワークフロー": [
+  "ONTO2": [
     {
-      "@id": "urn:node:chotatsu.head",
-      "@type": "urn:wamtest:調達申請ワークフロー",
-      "variables": [
+      "_comment": "ワークプレース。ホーン節はその onto7 の値である（実際の系と同じ形。追記R474・K439）",
+      "@id": "urn:wamtest:workplace.clauses_graph_data",
+      "@type": "ONTO2",
+      "onto7": [
         {
-          "@id": "#T1",
-          "variableName": "T1"
+          "@id": "urn:node:chotatsu.head",
+          "@type": "urn:wamtest:調達申請ワークフロー",
+          "variables": [
+            {
+              "@id": "#T1",
+              "variableName": "T1"
+            },
+            {
+              "@id": "#T2",
+              "variableName": "T2"
+            },
+            {
+              "@id": "#T3",
+              "variableName": "T3"
+            }
+          ],
+          "internalGraph": [
+            {
+              "@id": "urn:node:sinsei-001",
+              "@type": "urn:wamtest:申請",
+              "wam:truthValue": {
+                "@id": "#T1"
+              }
+            },
+            {
+              "@id": "urn:node:shonin-001",
+              "@type": "urn:wamtest:承認",
+              "wam:truthValue": {
+                "@id": "#T2"
+              }
+            },
+            {
+              "@id": "urn:node:hacchu-001",
+              "@type": "urn:wamtest:発注",
+              "wam:truthValue": {
+                "@id": "#T3"
+              }
+            },
+            {
+              "@id": "urn:node:chotatsu.head#link1",
+              "@type": "urn:wamtest:Then",
+              "arg1": {
+                "@id": "urn:node:sinsei-001"
+              },
+              "arg2": {
+                "@id": "urn:node:shonin-001"
+              }
+            },
+            {
+              "@id": "urn:node:chotatsu.head#link2",
+              "@type": "urn:wamtest:Then",
+              "arg1": {
+                "@id": "urn:node:shonin-001"
+              },
+              "arg2": {
+                "@id": "urn:node:hacchu-001"
+              }
+            }
+          ]
         },
         {
-          "@id": "#T2",
-          "variableName": "T2"
+          "@id": "urn:node:申請.head",
+          "@type": "urn:wamtest:申請"
         },
         {
-          "@id": "#T3",
-          "variableName": "T3"
-        }
-      ],
-      "internalGraph": [
-        {
-          "@id": "urn:node:sinsei-001",
-          "@type": "urn:wamtest:申請",
-          "wam:truthValue": {
-            "@id": "#T1"
-          }
+          "@id": "urn:node:承認.head",
+          "@type": "urn:wamtest:承認"
         },
         {
-          "@id": "urn:node:shonin-001",
-          "@type": "urn:wamtest:承認",
-          "wam:truthValue": {
-            "@id": "#T2"
-          }
-        },
-        {
-          "@id": "urn:node:hacchu-001",
-          "@type": "urn:wamtest:発注",
-          "wam:truthValue": {
-            "@id": "#T3"
-          }
-        },
-        {
-          "@id": "urn:node:chotatsu.head#link1",
-          "@type": "urn:wamtest:Then",
-          "arg1": {
-            "@id": "urn:node:sinsei-001"
-          },
-          "arg2": {
-            "@id": "urn:node:shonin-001"
-          }
-        },
-        {
-          "@id": "urn:node:chotatsu.head#link2",
-          "@type": "urn:wamtest:Then",
-          "arg1": {
-            "@id": "urn:node:shonin-001"
-          },
-          "arg2": {
-            "@id": "urn:node:hacchu-001"
-          }
+          "@id": "urn:node:発注.head",
+          "@type": "urn:wamtest:発注"
         }
       ]
-    }
-  ],
-  "urn:wamtest:申請": [
-    {
-      "@id": "urn:node:申請.head",
-      "@type": "urn:wamtest:申請"
-    }
-  ],
-  "urn:wamtest:承認": [
-    {
-      "@id": "urn:node:承認.head",
-      "@type": "urn:wamtest:承認"
-    }
-  ],
-  "urn:wamtest:発注": [
-    {
-      "@id": "urn:node:発注.head",
-      "@type": "urn:wamtest:発注"
     }
   ]
 }
