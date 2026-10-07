@@ -49,7 +49,8 @@
    "@id": "urn:eye:Cancelable",
    "@type": "Class",
    "subClassOf": [
-    "urn:eye:Task"
+    "urn:eye:Task",
+    "#Cancelable"
    ],
    "label": {
     "ja": "取消可能タスク"
@@ -77,7 +78,9 @@
   {
    "@id": "urn:eye:Person",
    "@type": "Class",
-   "subClassOf": [],
+   "subClassOf": [
+    "#Person"
+   ],
    "label": {
     "ja": "人"
    }
@@ -88,12 +91,18 @@
    "label": {
     "ja": "担当者"
    },
-   "range": "urn:eye:Person"
+   "range": "urn:eye:Person",
+   "subPropertyOf": [
+    "#agent"
+   ]
   },
   {
    "@id": "urn:eye:agentWithOK",
    "@type": "ObjectProperty",
-   "subPropertyOf": "urn:eye:agent",
+   "subPropertyOf": [
+    "urn:eye:agent",
+    "#agentWithOK"
+   ],
    "range": "urn:eye:Person",
    "label": {
     "ja": "担当者"
@@ -102,7 +111,10 @@
   {
    "@id": "urn:eye:agentWithSuspendingOK",
    "@type": "ObjectProperty",
-   "subPropertyOf": "urn:eye:agentWithOK",
+   "subPropertyOf": [
+    "urn:eye:agentWithOK",
+    "#agentWithSuspendingOK"
+   ],
    "range": "urn:eye:Person",
    "label": {
     "ja": "担当者"

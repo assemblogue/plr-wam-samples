@@ -77,7 +77,8 @@
    "@id": "urn:inbox:Cancelable",
    "@type": "Class",
    "subClassOf": [
-    "urn:inbox:Task"
+    "urn:inbox:Task",
+    "#Cancelable"
    ],
    "label": {
     "ja": "取消可能タスク",
@@ -121,7 +122,10 @@
    "label": {
     "ja": "Then",
     "en": "Then"
-   }
+   },
+   "subClassOf": [
+    "#Then"
+   ]
   },
   {
    "@id": "arg1",

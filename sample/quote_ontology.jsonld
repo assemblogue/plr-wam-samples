@@ -71,7 +71,10 @@
       "label": {
         "ja": "人",
         "en": "Person"
-      }
+      },
+      "subClassOf": [
+        "#Person"
+      ]
     },
     {
       "@id": "urn:quote:agent",
@@ -80,7 +83,10 @@
       "label": {
         "ja": "担当者",
         "en": "Agent"
-      }
+      },
+      "subPropertyOf": [
+        "#agent"
+      ]
     },
     {
       "@id": "urn:quote:CreateQuote",
@@ -306,7 +312,10 @@
       "label": {
         "ja": "Then",
         "en": "Then link"
-      }
+      },
+      "subClassOf": [
+        "#Then"
+      ]
     },
     {
       "@id": "arg1",

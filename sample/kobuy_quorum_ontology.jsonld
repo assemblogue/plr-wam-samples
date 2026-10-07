@@ -118,7 +118,10 @@
    "label": {
     "ja": "Then",
     "en": "Then"
-   }
+   },
+   "subClassOf": [
+    "#Then"
+   ]
   },
   {
    "@id": "arg1",

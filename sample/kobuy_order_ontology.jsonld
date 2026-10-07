@@ -80,7 +80,8 @@
    "@id": "urn:kord:Cancelable",
    "@type": "Class",
    "subClassOf": [
-    "urn:kord:Task"
+    "urn:kord:Task",
+    "#Cancelable"
    ],
    "label": {
     "ja": "取消可能タスク",
@@ -91,7 +92,8 @@
    "@id": "urn:kord:Compensable",
    "@type": "Class",
    "subClassOf": [
-    "urn:kord:Task"
+    "urn:kord:Task",
+    "#Compensable"
    ],
    "label": {
     "ja": "補償可能タスク",
@@ -102,7 +104,8 @@
    "@id": "urn:kord:Incompensable",
    "@type": "Class",
    "subClassOf": [
-    "urn:kord:Task"
+    "urn:kord:Task",
+    "#Incompensable"
    ],
    "label": {
     "ja": "補償不能タスク",
@@ -130,7 +133,9 @@
   {
    "@id": "urn:kord:Person",
    "@type": "Class",
-   "subClassOf": [],
+   "subClassOf": [
+    "#Person"
+   ],
    "label": {
     "ja": "人",
     "en": "Person"
@@ -152,7 +157,10 @@
    "label": {
     "ja": "担当者",
     "en": "Agent"
-   }
+   },
+   "subPropertyOf": [
+    "#agent"
+   ]
   },
   {
    "@id": "urn:kord:Geq",
@@ -186,7 +194,10 @@
    "label": {
     "ja": "Then",
     "en": "Then"
-   }
+   },
+   "subClassOf": [
+    "#Then"
+   ]
   },
   {
    "@id": "arg1",

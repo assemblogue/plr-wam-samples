@@ -66,7 +66,10 @@
       "label": {
         "ja": "Then",
         "en": "Then"
-      }
+      },
+      "subClassOf": [
+        "#Then"
+      ]
     },
     {
       "@id": "urn:wamtest:Else",
@@ -74,7 +77,10 @@
       "label": {
         "ja": "Else",
         "en": "Else"
-      }
+      },
+      "subClassOf": [
+        "#Else"
+      ]
     },
     {
       "@id": "arg1",

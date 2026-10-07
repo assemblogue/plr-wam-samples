@@ -81,7 +81,10 @@
    "label": {
     "ja": "人",
     "en": "Person"
-   }
+   },
+   "subClassOf": [
+    "#Person"
+   ]
   },
   {
    "@id": "urn:kbil:agent",
@@ -90,7 +93,10 @@
    "label": {
     "ja": "担当者",
     "en": "Agent"
-   }
+   },
+   "subPropertyOf": [
+    "#agent"
+   ]
   },
   {
    "@id": "urn:kbil:Then",
@@ -98,7 +104,10 @@
    "label": {
     "ja": "Then",
     "en": "Then"
-   }
+   },
+   "subClassOf": [
+    "#Then"
+   ]
   },
   {
    "@id": "arg1",

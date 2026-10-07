@@ -28,7 +28,10 @@
    "label": {
     "ja": "補償タスク",
     "en": "Compensates with"
-   }
+   },
+   "subPropertyOf": [
+    "#compensatesWith"
+   ]
   },
   {
    "@id": "urn:kinsp:Atom",
@@ -89,7 +92,8 @@
    "@id": "urn:kinsp:Cancelable",
    "@type": "Class",
    "subClassOf": [
-    "urn:kinsp:Task"
+    "urn:kinsp:Task",
+    "#Cancelable"
    ],
    "label": {
     "ja": "取消可能タスク",
@@ -100,7 +104,8 @@
    "@id": "urn:kinsp:Compensable",
    "@type": "Class",
    "subClassOf": [
-    "urn:kinsp:Task"
+    "urn:kinsp:Task",
+    "#Compensable"
    ],
    "label": {
     "ja": "補償可能タスク",
@@ -111,7 +116,8 @@
    "@id": "urn:kinsp:Incompensable",
    "@type": "Class",
    "subClassOf": [
-    "urn:kinsp:Task"
+    "urn:kinsp:Task",
+    "#Incompensable"
    ],
    "label": {
     "ja": "補償不能タスク",
@@ -124,7 +130,10 @@
    "label": {
     "ja": "人",
     "en": "Person"
-   }
+   },
+   "subClassOf": [
+    "#Person"
+   ]
   },
   {
    "@id": "urn:kinsp:agent",
@@ -133,7 +142,10 @@
    "label": {
     "ja": "担当者",
     "en": "Agent"
-   }
+   },
+   "subPropertyOf": [
+    "#agent"
+   ]
   },
   {
    "@id": "urn:kinsp:Geq",
@@ -206,7 +218,10 @@
    "label": {
     "ja": "Then",
     "en": "Then"
-   }
+   },
+   "subClassOf": [
+    "#Then"
+   ]
   },
   {
    "@id": "arg1",

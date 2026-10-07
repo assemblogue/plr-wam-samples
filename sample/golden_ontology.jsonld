@@ -69,7 +69,8 @@
       "@id": "urn:golden:Cancelable",
       "@type": "Class",
       "subClassOf": [
-        "urn:golden:Task"
+        "urn:golden:Task",
+        "#Cancelable"
       ],
       "label": {
         "ja": "取消可能タスク",
@@ -80,7 +81,8 @@
       "@id": "urn:golden:Compensable",
       "@type": "Class",
       "subClassOf": [
-        "urn:golden:Task"
+        "urn:golden:Task",
+        "#Compensable"
       ],
       "label": {
         "ja": "補償可能タスク",
@@ -94,7 +96,10 @@
       "label": {
         "ja": "補償タスク",
         "en": "Compensates with"
-      }
+      },
+      "subPropertyOf": [
+        "#compensatesWith"
+      ]
     },
     {
       "@id": "urn:golden:Person",
@@ -102,7 +107,10 @@
       "label": {
         "ja": "人",
         "en": "Person"
-      }
+      },
+      "subClassOf": [
+        "#Person"
+      ]
     },
     {
       "@id": "urn:golden:agent",
@@ -111,7 +119,10 @@
       "label": {
         "ja": "担当者",
         "en": "Agent"
-      }
+      },
+      "subPropertyOf": [
+        "#agent"
+      ]
     },
     {
       "@id": "urn:golden:組織",
@@ -421,7 +432,10 @@
       "label": {
         "ja": "Then",
         "en": "Then"
-      }
+      },
+      "subClassOf": [
+        "#Then"
+      ]
     },
     {
       "@id": "arg1",
