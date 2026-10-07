@@ -5,9 +5,7 @@
       "@id": "urn:e:ib1",
       "urn:pr:商品": "鉛筆4B",
       "urn:pr:バイヤー": "田中商店",
-      "urn:pr:掛率": 0.75,
-      "agent": "urn:entity:admin",
-      "completeByOkButton": "urn:entity:admin"
+      "urn:pr:掛率": 0.75
     }
   ]
 }
