@@ -19,6 +19,19 @@
  },
  "defines": [
   {
+   "@id": "#Task",
+   "@type": "Class",
+   "subClassOf": [],
+   "_comment": "システムワークプレースの Task。onto10 に下位クラスを書く（Cancelable・Incompensable もシステムのクラスで、その onto10 に組織のクラスを書く）。この文は組織のワークプレースの中にあり、システムワークプレースを書き換えない。クラスであることは onto10 の値域から、タスクでないクラス（明細）は属性の値域（onto32）から導かれるので、onto6 には Task だけを挙げる"
+  },
+  {
+   "@id": "#Cancelable",
+   "@type": "Class",
+   "subClassOf": [
+    "#Task"
+   ]
+  },
+  {
    "@id": "urn:kobuy:購買",
    "@type": "Class",
    "subClassOf": [
@@ -94,6 +107,13 @@
     "#OtherAtom"
    ],
    "label": "承認明細"
+  },
+  {
+   "@id": "#Incompensable",
+   "@type": "Class",
+   "subClassOf": [
+    "#Task"
+   ]
   },
   {
    "@id": "urn:kobuy:発注C",
@@ -358,6 +378,12 @@
    "_comment": "任意コード「勘定科目」の選択肢のクラス（KOBUY の任意コードのドロップダウン）。選択肢はマスターのレコードで、勘定科目マスターのチャネルに置く"
   },
   {
+   "@id": "#OtherAtom",
+   "@type": "Class",
+   "subClassOf": [],
+   "_comment": "システムワークプレースの OtherAtom（タスクでも制約でもないアトムの型）。明細本体C・承認経路・承認明細C は自分の節を持つ述語なので、その下位にする（tut.md「要素ごとの計算は、要素の述語の節に書く」。追記R483）"
+  },
+  {
    "@id": "urn:kobuy:承認経路",
    "@type": "Class",
    "subClassOf": [
@@ -395,6 +421,16 @@
     }
    ],
    "label": "成員"
+  },
+  {
+   "@id": "#Then",
+   "@type": "Class",
+   "label": "Then"
+  },
+  {
+   "@id": "#Else",
+   "@type": "Class",
+   "label": "Else"
   },
   {
    "@id": "#真",
@@ -435,6 +471,144 @@
    "isConstraint": true,
    "_comment": "足した（見積書の例題と同じ形）",
    "label": "＝"
+  },
+  {
+   "@id": "#TaskAgent",
+   "@type": "Class",
+   "_comment": "系が持つ標準の節の述語で、副作用の無いアトムノード（OtherAtom。追記R542・R543）。TaskAgent(channel: C, task: T, person: A) :- TaskAccess(channel: C, task: T, taskAgent: G, existing: true), 成員(主体: G, 人: A).",
+   "subClassOf": [
+    "#OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "#channel",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#task",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#person",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "TaskAgent"
+  },
+  {
+   "@id": "#TaskAccess",
+   "@type": "Class",
+   "_comment": "チャネルを作る人が決めた、タスクごとの書ける主体・読める主体。チャネルのノードの中に置く。取消可能タスク（Cancelable）の下位（追記R543）",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "#channel",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#task",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#taskAgent",
+     "minCardinality": 0
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#taskUser",
+     "minCardinality": 0
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agentWithOK",
+     "minCardinality": 0
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:completeByOkButton",
+     "minCardinality": 0
+    }
+   ],
+   "label": "TaskAccess"
+  },
+  {
+   "@id": "#ONTO1",
+   "@type": "Class",
+   "label": "クラス",
+   "_comment": "Ontology.xlsx の ONTO1（menu:Class）。クラスを値にとる属性の値域（追記K477）。クラスレベル属性 builtInFunction・compensatesWith は ONTO1 の属性——クラスの宣言に書く値である（追記R545）",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "#builtInFunction",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#compensatesWith",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ]
+  },
+  {
+   "@id": "#TaskPrincipal",
+   "@type": "Class",
+   "label": "利用主体",
+   "_comment": "TaskAccess の taskAgent・taskUser の値域。下位に Person・役職（Post）・グループ。ワークプレースの開示先も同じ（追記R543・R544）"
+  },
+  {
+   "@id": "#ONTOc1",
+   "@type": "Class",
+   "_comment": "チャネル",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "#ontoC",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#onto0",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#TaskAccess",
+     "minCardinality": 0
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agentWithOK",
+     "minCardinality": 0
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "wam:completeByOkButton",
+     "minCardinality": 0
+    }
+   ],
+   "label": "チャネル"
+  },
+  {
+   "@id": "#Person",
+   "@type": "Class",
+   "label": "人",
+   "subClassOf": [
+    "#TaskPrincipal"
+   ],
+   "_comment": "Profile.xlsx で定義されたクラス。人もレコードとして置く（追記R529・R531）"
   },
   {
    "@id": "urn:system:構成員",
@@ -687,6 +861,24 @@
    "label": "名称"
   },
   {
+   "@id": "#agent",
+   "@type": "ObjectProperty",
+   "label": "担当者",
+   "subPropertyOf": "#refersTo",
+   "range": "#Person"
+  },
+  {
+   "@id": "#agentWithOK",
+   "@type": "ObjectProperty",
+   "label": "担当者（OK）",
+   "subPropertyOf": "#agent"
+  },
+  {
+   "@id": "#refersTo",
+   "@type": "ObjectProperty",
+   "label": "参照"
+  },
+  {
    "@id": "wam:completeByOkButton",
    "@type": "ObjectProperty",
    "label": "OK を押した人"
@@ -695,6 +887,62 @@
    "@id": "#inChannel",
    "@type": "ObjectProperty",
    "label": "チャネル"
+  },
+  {
+   "@id": "#onto0",
+   "@type": "DatatypeProperty",
+   "label": "名前",
+   "range": "string"
+  },
+  {
+   "@id": "#ontoC",
+   "@type": "ObjectProperty",
+   "label": "チャネル設定"
+  },
+  {
+   "@id": "#ontoG",
+   "@type": "ObjectProperty",
+   "label": "ゴール節"
+  },
+  {
+   "@id": "#TaskAccess",
+   "@type": "ObjectProperty",
+   "label": "タスクの権限"
+  },
+  {
+   "@id": "#channel",
+   "@type": "ObjectProperty",
+   "label": "チャネル",
+   "subPropertyOf": "#refersTo",
+   "range": "#ONTOc1"
+  },
+  {
+   "@id": "#task",
+   "@type": "ObjectProperty",
+   "label": "タスク",
+   "subPropertyOf": "#refersTo",
+   "range": "#ONTO1"
+  },
+  {
+   "@id": "#taskAgent",
+   "@type": "ObjectProperty",
+   "label": "書ける主体",
+   "subPropertyOf": "#refersTo",
+   "range": "#TaskPrincipal"
+  },
+  {
+   "@id": "#taskUser",
+   "@type": "ObjectProperty",
+   "label": "読める主体",
+   "subPropertyOf": "#refersTo",
+   "range": "#TaskPrincipal"
+  },
+  {
+   "@id": "#person",
+   "@type": "ObjectProperty",
+   "label": "人",
+   "subPropertyOf": "#refersTo",
+   "range": "#Person"
   },
   {
    "@id": "#主体",
@@ -733,6 +981,28 @@
    "@type": "DatatypeProperty",
    "label": "公開鍵",
    "range": "string"
+  },
+  {
+   "@id": "#builtInFunction",
+   "@type": "DatatypeProperty",
+   "label": "組込述語",
+   "range": "string"
+  },
+  {
+   "@id": "#compensatesWith",
+   "@type": "ObjectProperty",
+   "label": "補償タスク",
+   "range": "#ONTO1"
+  },
+  {
+   "@id": "#arg1",
+   "@type": "ObjectProperty",
+   "label": "第1引数"
+  },
+  {
+   "@id": "#arg2",
+   "@type": "ObjectProperty",
+   "label": "第2引数"
   }
  ]
 }
