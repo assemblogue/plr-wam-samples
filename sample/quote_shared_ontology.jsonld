@@ -1,6 +1,7 @@
 {
   "@id": "urn:quote:ontology",
   "@type": "Ontology",
+  "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
   "_comment": "見積書デモの**共有データ版**。**2本の明細が同じ納品先を指す**——`urn:quote:lineDestination` は `refersTo` の下位ではないので、納品先は**共有ノード**である（`spec_exec.md`「共有ノードに達するノードは、完成を求め直す」。追記230・246・250）。⚠️ **商品では共有にならない**——`lineProduct` は `refersTo` の下位なので、参照を共有しても完成は伝播しない。",
   "agentProperty": "urn:quote:agent",
   "defines": [
@@ -10,7 +11,7 @@
       "subClassOf": [
         {
           "@type": "Restriction",
-          "onProperty": "wam:isComplete",
+          "onProperty": "#isComplete",
           "minCardinality": 0,
           "maxCardinality": 1
         }
@@ -18,17 +19,6 @@
       "label": {
         "ja": "テンプレート",
         "en": "Template"
-      }
-    },
-    {
-      "@id": "urn:quote:Goal",
-      "@type": "Class",
-      "subClassOf": [
-        "urn:quote:Task"
-      ],
-      "label": {
-        "ja": "ゴール",
-        "en": "Goal"
       }
     },
     {
@@ -80,11 +70,12 @@
       "@id": "urn:quote:Cancelable",
       "@type": "Class",
       "subClassOf": [
-        "urn:quote:Atom"
+        "urn:quote:Task",
+        "#Cancelable"
       ],
       "_comment": "取消可能タスクのマーカークラス（`spec_kg.md`「決定: Template の下位クラス構成」）。判定は TaskPolicyProjection が isSubClassOf で行う——ハーネスが文字列で持たない。",
       "label": {
-        "ja": "取消可能",
+        "ja": "取消可能タスク",
         "en": "Cancelable"
       }
     },
@@ -110,7 +101,7 @@
       "@id": "urn:quote:QuoteRecord",
       "@type": "Class",
       "subClassOf": [
-        "urn:quote:Goal",
+        "urn:quote:Task",
         "urn:quote:Cancelable",
         {
           "@type": "Restriction",
@@ -125,7 +116,7 @@
         },
         {
           "@type": "Restriction",
-          "onProperty": "wam:completeByOkButton",
+          "onProperty": "#completeOrSuspendByOkButton",
           "minCardinality": 0,
           "maxCardinality": 1
         },
@@ -158,7 +149,6 @@
       "@type": "Class",
       "subClassOf": [
         "urn:quote:Constraint",
-        "urn:quote:Cancelable",
         {
           "@type": "Restriction",
           "onProperty": "urn:quote:lineQuantity",
@@ -310,7 +300,10 @@
       "label": {
         "ja": "人",
         "en": "Person"
-      }
+      },
+      "subClassOf": [
+        "#Person"
+      ]
     },
     {
       "@id": "urn:quote:personName",
@@ -330,42 +323,10 @@
         "ja": "担当者",
         "en": "Agent"
       },
-      "_comment": "担当ユーザ。**個数はホーン節が決める**（橋田さん）——頭部に書けば1個、書かなければ0個であり、「任意」という中間は無い。この例では**見積書だけが持つ**：明細にも持たせると、両者が同じ担当者を指して**担当者が共有ノードになる**（追記250・252）。⚠️ **誰かが作らなければならないデータの根ノードは、agent 属性でその人を指す**——ここでは見積書がそれである。"
-    },
-    {
-      "_comment": "完成の属性の上位属性（追記249）。complete と completeByOkButton はどちらもこれの下位属性であり、cardinality を1以下にすることで「いずれか一方しか使えない」が表される。専用の静的検査は要らない。",
-      "@id": "wam:isComplete",
-      "@type": "DatatypeProperty",
-      "domain": "urn:quote:Template",
-      "range": "string",
-      "label": {
-        "ja": "完成",
-        "en": "Is complete"
-      }
-    },
-    {
-      "_comment": "OKボタンを持たないノードの完成（2値）。",
-      "@id": "wam:complete",
-      "@type": "DatatypeProperty",
-      "domain": "urn:quote:Template",
-      "range": "boolean",
-      "subPropertyOf": "wam:isComplete",
-      "label": {
-        "ja": "完成",
-        "en": "Complete"
-      }
-    },
-    {
-      "_comment": "OKボタンによる完成（3値。偽＝未完成、真＝完成したが未押下、ユーザ＝その人が確認した）。この属性を宣言することが「OKボタンを持つ」の宣言である。",
-      "@id": "wam:completeByOkButton",
-      "@type": "DatatypeProperty",
-      "domain": "urn:quote:Template",
-      "range": "string",
-      "subPropertyOf": "wam:isComplete",
-      "label": {
-        "ja": "完成（OKボタン）",
-        "en": "Complete by OK button"
-      }
+      "_comment": "担当ユーザ。**個数はホーン節が決める**（橋田さん）——頭部に書けば1個、書かなければ0個であり、「任意」という中間は無い。この例では**見積書だけが持つ**：明細にも持たせると、両者が同じ担当者を指して**担当者が共有ノードになる**（追記250・252）。⚠️ **誰かが作らなければならないデータの根ノードは、agent 属性でその人を指す**——ここでは見積書がそれである。",
+      "subPropertyOf": [
+        "#agent"
+      ]
     },
     {
       "_comment": "納品先。⚠️ **refersTo の下位にしない**——参照ではなく構成要素であり、その完成が明細の完成に効く。だから複数の明細から指されると共有ノードになる。",

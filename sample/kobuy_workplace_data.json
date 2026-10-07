@@ -1,0 +1,4304 @@
+{
+ "ONTOc": [
+  {
+   "@id": "urn:kobuy:設定.購買",
+   "@type": "ONTOc",
+   "onto0": "購買",
+   "ontoG": [
+    "urn:kobuy:rule.購買",
+    "urn:kobuy:rule.相談"
+   ]
+  },
+  {
+   "@id": "urn:kobuy:設定.商品マスター",
+   "@type": "ONTOc",
+   "onto0": "商品マスター",
+   "ontoG": [
+    "urn:kobuy:rule.商品",
+    "urn:kobuy:rule.取引先"
+   ]
+  },
+  {
+   "@id": "urn:kobuy:設定.勘定科目マスター",
+   "@type": "ONTOc",
+   "onto0": "勘定科目マスター",
+   "ontoG": [
+    "urn:kobuy:rule.勘定科目"
+   ]
+  }
+ ],
+ "Person": [
+  {
+   "@id": "urn:person:田中",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:山田",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:鈴木",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:太木",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:管理者",
+   "@type": "Person"
+  }
+ ],
+ "ONTOc1": [
+  {
+   "@id": "urn:channel:購買.田中",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:kobuy:設定.購買"
+   },
+   "agent": {
+    "@id": "urn:person:田中"
+   },
+   "_initiator": {
+    "@id": "urn:person:田中"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:田中"
+   }
+  },
+  {
+   "@id": "urn:channel:備品の相談",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:kobuy:設定.購買"
+   },
+   "onto0": "備品の相談",
+   "agent": {
+    "@id": "urn:person:太木"
+   },
+   "_initiator": {
+    "@id": "urn:person:太木"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:太木"
+   },
+   "TaskAccess": [
+    {
+     "@id": "urn:channel:備品の相談#TaskAccess.1"
+    }
+   ]
+  },
+  {
+   "@id": "urn:channel:商品マスター",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:kobuy:設定.商品マスター"
+   },
+   "onto0": "商品マスター",
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者"
+   },
+   "TaskAccess": [
+    {
+     "@id": "urn:channel:商品マスター#TaskAccess.1"
+    },
+    {
+     "@id": "urn:channel:商品マスター#TaskAccess.2"
+    }
+   ],
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:channel:勘定科目マスター",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:kobuy:設定.勘定科目マスター"
+   },
+   "onto0": "勘定科目マスター",
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "TaskAccess": [
+    {
+     "@id": "urn:channel:勘定科目マスター#TaskAccess.1"
+    }
+   ]
+  },
+  {
+   "@id": "urn:channel:組織マスター",
+   "@type": "ONTOc1",
+   "ontoC": "urn:system:設定.組織マスター",
+   "onto0": "A社 組織マスター",
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者"
+   },
+   "TaskAccess": [
+    {
+     "@id": "urn:channel:組織マスター#TaskAccess.1"
+    },
+    {
+     "@id": "urn:channel:組織マスター#TaskAccess.2"
+    },
+    {
+     "@id": "urn:channel:組織マスター#TaskAccess.3"
+    }
+   ],
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  }
+ ],
+ "TaskAccess": [
+  {
+   "@id": "urn:channel:備品の相談#TaskAccess.1",
+   "@type": "TaskAccess",
+   "channel": {
+    "@id": "urn:channel:備品の相談"
+   },
+   "task": "urn:kobuy:相談",
+   "taskAgent": [
+    {
+     "@id": "urn:org:グループ.総務部"
+    }
+   ],
+   "agent": {
+    "@id": "urn:person:太木"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:太木"
+   }
+  },
+  {
+   "@id": "urn:channel:商品マスター#TaskAccess.1",
+   "@type": "TaskAccess",
+   "channel": {
+    "@id": "urn:channel:商品マスター"
+   },
+   "task": "urn:kobuy:商品C",
+   "taskAgent": [
+    {
+     "@id": "urn:org:役職.購買担当"
+    }
+   ],
+   "taskUser": [
+    {
+     "@id": "urn:org:グループ.全構成員"
+    }
+   ],
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:channel:商品マスター#TaskAccess.2",
+   "@type": "TaskAccess",
+   "channel": {
+    "@id": "urn:channel:商品マスター"
+   },
+   "task": "urn:kobuy:取引先C",
+   "taskAgent": [
+    {
+     "@id": "urn:org:役職.購買担当"
+    }
+   ],
+   "taskUser": [
+    {
+     "@id": "urn:org:グループ.全構成員"
+    }
+   ],
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:channel:勘定科目マスター#TaskAccess.1",
+   "@type": "TaskAccess",
+   "channel": {
+    "@id": "urn:channel:勘定科目マスター"
+   },
+   "task": "urn:kobuy:勘定科目C",
+   "taskAgent": [
+    {
+     "@id": "urn:org:役職.購買担当"
+    }
+   ],
+   "taskUser": [
+    {
+     "@id": "urn:org:グループ.全構成員"
+    }
+   ],
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:channel:組織マスター#TaskAccess.1",
+   "@type": "TaskAccess",
+   "channel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "task": "urn:system:役職",
+   "taskAgent": [
+    {
+     "@id": "urn:person:管理者"
+    }
+   ],
+   "taskUser": [
+    {
+     "@id": "urn:org:グループ.全構成員"
+    }
+   ],
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:channel:組織マスター#TaskAccess.2",
+   "@type": "TaskAccess",
+   "channel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "task": "urn:system:グループ",
+   "taskAgent": [
+    {
+     "@id": "urn:person:管理者"
+    }
+   ],
+   "taskUser": [
+    {
+     "@id": "urn:org:グループ.全構成員"
+    }
+   ],
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:channel:組織マスター#TaskAccess.3",
+   "@type": "TaskAccess",
+   "channel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "task": "urn:system:構成員",
+   "taskAgent": [
+    {
+     "@id": "urn:person:管理者"
+    }
+   ],
+   "taskUser": [
+    {
+     "@id": "urn:org:グループ.全構成員"
+    }
+   ],
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  }
+ ],
+ "urn:kobuy:購買": [
+  {
+   "@id": "urn:record:購買-0001",
+   "@type": "urn:kobuy:購買",
+   "inChannel": {
+    "@id": "urn:channel:購買.田中"
+   },
+   "urn:kobuy:件名": "会議室のプロジェクタ",
+   "agent": {
+    "@id": "urn:person:田中"
+   },
+   "_initiator": {
+    "@id": "urn:person:田中"
+   },
+   "completeByOkButton": "_true",
+   "_progress": "待ち",
+   "_awaiting": [
+    "{\"task\":\"urn:record:購買-0001\",\"class\":\"urn:kobuy:購買\",\"agent\":[\"urn:person:田中\"]}",
+    "{\"task\":\"urn:kobuy:rule.購買#発注\",\"class\":\"urn:kobuy:発注C\",\"agent\":[\"urn:person:太木\"]}"
+   ],
+   "internalGraph": [
+    {
+     "@id": "urn:entity:created-1",
+     "@type": "urn:kobuy:注文C",
+     "inChannel": {
+      "@id": "urn:channel:購買.田中"
+     },
+     "agent": {
+      "@id": "urn:person:田中"
+     },
+     "_editableBy": [
+      "{\"node\":\"urn:entity:created-1\",\"agent\":[\"urn:person:田中\"]}"
+     ],
+     "completeByOkButton": {
+      "@id": "urn:person:田中"
+     },
+     "urn:kobuy:注文明細一覧": [
+      {
+       "@id": "urn:record:購買-0001#明細1"
+      },
+      {
+       "@id": "urn:record:購買-0001#明細2"
+      }
+     ],
+     "urn:kobuy:金額": 183000,
+     "urn:kobuy:希望納期": "2026-10-20",
+     "_frozenBy": [
+      {
+       "@id": "urn:entity:created-1"
+      }
+     ]
+    },
+    {
+     "@id": "urn:entity:created-2",
+     "@type": "urn:kobuy:承認C",
+     "inChannel": {
+      "@id": "urn:channel:購買.田中"
+     },
+     "agent": {
+      "@id": "urn:org:役職.課長"
+     },
+     "urn:kobuy:承認明細一覧": [
+      {
+       "@id": "urn:entity:created-3",
+       "bornHere": true
+      },
+      {
+       "@id": "urn:entity:created-4",
+       "bornHere": true
+      }
+     ],
+     "_editableBy": [
+      "{\"node\":\"urn:entity:created-2\",\"agent\":[\"urn:person:山田\"]}"
+     ],
+     "completeByOkButton": {
+      "@id": "urn:person:山田"
+     },
+     "urn:kobuy:判断": "urn:kobuy:承認する",
+     "_frozenBy": [
+      {
+       "@id": "urn:entity:created-2"
+      }
+     ],
+     "internalGraph": [
+      {
+       "@id": "urn:entity:created-3",
+       "@type": "urn:kobuy:承認明細C",
+       "inChannel": {
+        "@id": "urn:channel:購買.田中"
+       },
+       "urn:kobuy:注文明細": {
+        "@id": "urn:record:購買-0001#明細1"
+       },
+       "complete": false,
+       "urn:kobuy:勘定科目": {
+        "@id": "urn:account:5201"
+       },
+       "_frozenBy": [
+        {
+         "@id": "urn:entity:created-2"
+        }
+       ]
+      },
+      {
+       "@id": "urn:entity:created-4",
+       "@type": "urn:kobuy:承認明細C",
+       "inChannel": {
+        "@id": "urn:channel:購買.田中"
+       },
+       "urn:kobuy:注文明細": {
+        "@id": "urn:record:購買-0001#明細2"
+       },
+       "complete": false,
+       "urn:kobuy:勘定科目": {
+        "@id": "urn:account:5202"
+       },
+       "_frozenBy": [
+        {
+         "@id": "urn:entity:created-2"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "urn:kobuy:相談": [
+  {
+   "@id": "urn:record:相談-0001",
+   "@type": "urn:kobuy:相談",
+   "inChannel": {
+    "@id": "urn:channel:備品の相談"
+   },
+   "_initiator": {
+    "@id": "urn:person:太木"
+   },
+   "agent": {
+    "@id": "urn:person:太木"
+   },
+   "urn:kobuy:本文": "プロジェクタは X200 と X300 のどちらがよいでしょうか",
+   "urn:kobuy:関連する購買": {
+    "@id": "urn:record:購買-0001"
+   },
+   "completeByOkButton": "_false"
+  }
+ ],
+ "urn:kobuy:商品C": [
+  {
+   "@id": "urn:product:プロジェクタ-X200",
+   "@type": "urn:kobuy:商品C",
+   "urn:kobuy:商品名": "プロジェクタ X200",
+   "urn:kobuy:商品単価": 180000,
+   "urn:kobuy:仕入先": {
+    "@id": "urn:kobuy:佐藤商事"
+   },
+   "inChannel": {
+    "@id": "urn:channel:商品マスター"
+   },
+   "_initiator": {
+    "@id": "urn:person:太木"
+   },
+   "agent": {
+    "@id": "urn:person:太木"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:太木"
+   }
+  },
+  {
+   "@id": "urn:product:HDMIケーブル-3m",
+   "@type": "urn:kobuy:商品C",
+   "urn:kobuy:商品名": "HDMI ケーブル 3m",
+   "urn:kobuy:商品単価": 1500,
+   "urn:kobuy:仕入先": {
+    "@id": "urn:kobuy:佐藤商事"
+   },
+   "inChannel": {
+    "@id": "urn:channel:商品マスター"
+   },
+   "_initiator": {
+    "@id": "urn:person:太木"
+   },
+   "agent": {
+    "@id": "urn:person:太木"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:太木"
+   }
+  }
+ ],
+ "urn:kobuy:取引先C": [
+  {
+   "@id": "urn:kobuy:佐藤商事",
+   "@type": "urn:kobuy:取引先C",
+   "urn:kobuy:取引先名": "佐藤商事",
+   "inChannel": {
+    "@id": "urn:channel:商品マスター"
+   },
+   "_initiator": {
+    "@id": "urn:person:太木"
+   },
+   "agent": {
+    "@id": "urn:person:太木"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:太木"
+   }
+  }
+ ],
+ "urn:kobuy:勘定科目C": [
+  {
+   "@id": "urn:account:5201",
+   "@type": "urn:kobuy:勘定科目C",
+   "urn:kobuy:科目コード": "5201",
+   "urn:kobuy:科目名": "消耗品費",
+   "inChannel": {
+    "@id": "urn:channel:勘定科目マスター"
+   },
+   "_initiator": {
+    "@id": "urn:person:太木"
+   },
+   "agent": {
+    "@id": "urn:person:太木"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:太木"
+   }
+  },
+  {
+   "@id": "urn:account:5202",
+   "@type": "urn:kobuy:勘定科目C",
+   "urn:kobuy:科目コード": "5202",
+   "urn:kobuy:科目名": "備品費",
+   "inChannel": {
+    "@id": "urn:channel:勘定科目マスター"
+   },
+   "_initiator": {
+    "@id": "urn:person:太木"
+   },
+   "agent": {
+    "@id": "urn:person:太木"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:太木"
+   }
+  },
+  {
+   "@id": "urn:account:5203",
+   "@type": "urn:kobuy:勘定科目C",
+   "urn:kobuy:科目コード": "5203",
+   "urn:kobuy:科目名": "通信費",
+   "inChannel": {
+    "@id": "urn:channel:勘定科目マスター"
+   },
+   "_initiator": {
+    "@id": "urn:person:太木"
+   },
+   "agent": {
+    "@id": "urn:person:太木"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:太木"
+   }
+  }
+ ],
+ "urn:system:構成員": [
+  {
+   "@id": "urn:org:構成員.田中",
+   "@type": "urn:system:構成員",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "人": {
+    "@id": "urn:person:田中"
+   },
+   "publicフォルダ": "https://example.invalid/田中/public",
+   "公開鍵": "…",
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:org:構成員.山田",
+   "@type": "urn:system:構成員",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "人": {
+    "@id": "urn:person:山田"
+   },
+   "publicフォルダ": "https://example.invalid/山田/public",
+   "公開鍵": "…",
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:org:構成員.鈴木",
+   "@type": "urn:system:構成員",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "人": {
+    "@id": "urn:person:鈴木"
+   },
+   "publicフォルダ": "https://example.invalid/鈴木/public",
+   "公開鍵": "…",
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:org:構成員.太木",
+   "@type": "urn:system:構成員",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "人": {
+    "@id": "urn:person:太木"
+   },
+   "publicフォルダ": "https://example.invalid/太木/public",
+   "公開鍵": "…",
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:org:構成員.管理者",
+   "@type": "urn:system:構成員",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "人": {
+    "@id": "urn:person:管理者"
+   },
+   "publicフォルダ": "https://example.invalid/管理者/public",
+   "公開鍵": "…",
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  }
+ ],
+ "urn:system:役職": [
+  {
+   "@id": "urn:org:役職.課長",
+   "@type": "urn:system:役職",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "名前": "購買課 課長",
+   "就任者": [
+    {
+     "@id": "urn:person:山田"
+    }
+   ],
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:org:役職.部長",
+   "@type": "urn:system:役職",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "名前": "総務部 部長",
+   "就任者": [
+    {
+     "@id": "urn:person:鈴木"
+    }
+   ],
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:org:役職.購買担当",
+   "@type": "urn:system:役職",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "名前": "購買担当",
+   "就任者": [
+    {
+     "@id": "urn:person:太木"
+    }
+   ],
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  }
+ ],
+ "urn:system:グループ": [
+  {
+   "@id": "urn:org:グループ.総務部",
+   "@type": "urn:system:グループ",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "名前": "総務部",
+   "メンバー": [
+    {
+     "@id": "urn:person:太木"
+    },
+    {
+     "@id": "urn:org:役職.部長"
+    }
+   ],
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:org:グループ.全構成員",
+   "@type": "urn:system:グループ",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "名前": "全構成員",
+   "メンバー": [
+    {
+     "@id": "urn:person:田中"
+    },
+    {
+     "@id": "urn:person:山田"
+    },
+    {
+     "@id": "urn:person:鈴木"
+    },
+    {
+     "@id": "urn:person:太木"
+    },
+    {
+     "@id": "urn:person:管理者"
+    }
+   ],
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  }
+ ],
+ "urn:kobuy:明細本体C": [
+  {
+   "@id": "urn:record:購買-0001#本体1",
+   "@type": "urn:kobuy:明細本体C",
+   "urn:kobuy:商品": {
+    "@id": "urn:product:プロジェクタ-X200"
+   },
+   "urn:kobuy:数量": 1,
+   "urn:kobuy:明細金額": 180000,
+   "complete": true,
+   "_frozenBy": [
+    {
+     "@id": "urn:entity:created-1"
+    }
+   ],
+   "once": [],
+   "urn:kobuy:購入メモ": []
+  },
+  {
+   "@id": "urn:record:購買-0001#本体2",
+   "@type": "urn:kobuy:明細本体C",
+   "urn:kobuy:商品": {
+    "@id": "urn:product:HDMIケーブル-3m"
+   },
+   "urn:kobuy:数量": 2,
+   "urn:kobuy:明細金額": 3000,
+   "complete": true,
+   "_frozenBy": [
+    {
+     "@id": "urn:entity:created-1"
+    }
+   ],
+   "once": [],
+   "urn:kobuy:購入メモ": []
+  }
+ ],
+ "urn:kobuy:注文明細C": [
+  {
+   "@id": "urn:record:購買-0001#明細1",
+   "@type": "urn:kobuy:注文明細C",
+   "urn:kobuy:本体": {
+    "@id": "urn:record:購買-0001#本体1"
+   },
+   "_frozenBy": [
+    {
+     "@id": "urn:entity:created-1"
+    }
+   ],
+   "urn:kobuy:勘定科目": []
+  },
+  {
+   "@id": "urn:record:購買-0001#明細2",
+   "@type": "urn:kobuy:注文明細C",
+   "urn:kobuy:本体": {
+    "@id": "urn:record:購買-0001#本体2"
+   },
+   "_frozenBy": [
+    {
+     "@id": "urn:entity:created-1"
+    }
+   ],
+   "urn:kobuy:勘定科目": []
+  }
+ ],
+ "wam:trail": {
+  "urn:record:購買-0001": [
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000001",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "predicateName": "urn:kobuy:購買",
+    "parentInstanceId": null,
+    "callerNodeUri": null,
+    "elements": [
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000001:urn:record:購買-0001:urn:kobuy:件名",
+      "previousValue": null,
+      "newValue": {
+       "value": "会議室のプロジェクタ",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:33.990379Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "attributeEntityUri": "urn:record:購買-0001",
+      "attributeName": "urn:kobuy:件名",
+      "editedBy": "urn:wam:user:unknown",
+      "seq": 0
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001:S",
+      "previousValue": null,
+      "newValue": {
+       "uri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000001:urn:record:購買-0001:urn:kobuy:件名",
+       "termType": "varRef"
+      },
+      "timestamp": "2026-10-07T12:49:33.994866Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 1,
+      "valueEntityUri": "urn:record:購買-0001",
+      "valueAttributeName": "urn:kobuy:件名"
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000001:urn:record:購買-0001:agent",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:person:田中",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:33.996683Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "attributeEntityUri": "urn:record:購買-0001",
+      "attributeName": "agent",
+      "editedBy": "urn:wam:user:unknown",
+      "seq": 2
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001:U",
+      "previousValue": null,
+      "newValue": {
+       "uri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000001:urn:record:購買-0001:agent",
+       "termType": "varRef"
+      },
+      "timestamp": "2026-10-07T12:49:33.997072Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 3,
+      "valueEntityUri": "urn:record:購買-0001",
+      "valueAttributeName": "agent"
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000001:urn:record:購買-0001:inChannel",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:channel:購買.田中",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.003442Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "attributeEntityUri": "urn:record:購買-0001",
+      "attributeName": "inChannel",
+      "seq": 4
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000001:urn:record:購買-0001:_initiator",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:person:田中",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.003520Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "attributeEntityUri": "urn:record:購買-0001",
+      "attributeName": "_initiator",
+      "seq": 5
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000001:urn:record:購買-0001:completeByOkButton",
+      "previousValue": null,
+      "newValue": {
+       "value": "_true",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.003627Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "attributeEntityUri": "urn:record:購買-0001",
+      "attributeName": "completeByOkButton",
+      "seq": 6
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~0:X1",
+      "previousValue": null,
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.009247Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 7
+     }
+    ],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.購買",
+    "state": "running",
+    "resolutions": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#社員",
+      "resolution": "succeeded",
+      "timestamp": "2026-10-07T12:49:34.009476Z"
+     },
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#注文",
+      "resolution": "pending",
+      "timestamp": "2026-10-07T12:49:34.021782Z"
+     }
+    ],
+    "undoneSeqs": [],
+    "goalHead": {
+     "nodeUri": "urn:record:購買-0001",
+     "predicate": "urn:kobuy:購買",
+     "args": {
+      "urn:kobuy:件名": {
+       "name": "S",
+       "termType": "variable"
+      },
+      "agent": {
+       "name": "U",
+       "termType": "variable"
+      },
+      "inChannel": {
+       "value": "urn:channel:購買.田中",
+       "termType": "constant"
+      }
+     },
+     "isConstraint": false,
+     "builtInFunction": null,
+     "quant": null,
+     "quorum": null,
+     "tallyAgent": null,
+     "completionMode": "confirm",
+     "once": false,
+     "existing": false
+    },
+    "constraints": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#社員",
+      "referencedUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001:U"
+      ],
+      "boundUris": []
+     }
+    ],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#社員": "0",
+      "urn:kobuy:rule.購買#注文": "1",
+      "urn:kobuy:rule.購買#経路": "2",
+      "urn:record:購買-0001": "3"
+     },
+     "parents": {
+      "0": null,
+      "1": null,
+      "2": null,
+      "3": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:33.978934",
+    "endTime": null,
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000002",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000002",
+    "predicateName": "urn:kobuy:注文C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:kobuy:rule.購買#注文",
+    "elements": [],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.注文",
+    "state": "created",
+    "resolutions": [],
+    "undoneSeqs": [],
+    "constraints": [],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#注文|urn:kobuy:注文明細一覧#0": "0"
+     },
+     "parents": {
+      "0": null
+     },
+     "slotNames": {}
+    },
+    "startTime": "2026-10-07T21:49:34.017472",
+    "endTime": "2026-10-07T12:49:34.029430Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000001#2",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "predicateName": "urn:kobuy:購買",
+    "parentInstanceId": null,
+    "callerNodeUri": null,
+    "elements": [
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~0:X1",
+      "previousValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.091841Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 8
+     }
+    ],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.購買",
+    "state": "suspended",
+    "resolutions": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#注文",
+      "resolution": "pending",
+      "timestamp": "2026-10-07T12:49:34.092725Z"
+     }
+    ],
+    "undoneSeqs": [],
+    "goalHead": {
+     "nodeUri": "urn:record:購買-0001",
+     "predicate": "urn:kobuy:購買",
+     "args": {
+      "urn:kobuy:件名": {
+       "name": "S",
+       "termType": "variable"
+      },
+      "agent": {
+       "name": "U",
+       "termType": "variable"
+      },
+      "inChannel": {
+       "value": "urn:channel:購買.田中",
+       "termType": "constant"
+      }
+     },
+     "isConstraint": false,
+     "builtInFunction": null,
+     "quant": null,
+     "quorum": null,
+     "tallyAgent": null,
+     "completionMode": "confirm",
+     "once": false,
+     "existing": false
+    },
+    "constraints": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#社員",
+      "referencedUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001:U"
+      ],
+      "boundUris": []
+     }
+    ],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#社員": "0",
+      "urn:kobuy:rule.購買#注文": "1",
+      "urn:kobuy:rule.購買#経路": "2",
+      "urn:record:購買-0001": "3",
+      "urn:kobuy:rule.購買#発注": "4"
+     },
+     "parents": {
+      "0": null,
+      "1": null,
+      "2": null,
+      "3": null,
+      "4": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:33.978934",
+    "endTime": "2026-10-07T12:49:34.093731Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000002#2",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000002",
+    "predicateName": "urn:kobuy:注文C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:kobuy:rule.購買#注文",
+    "elements": [],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.注文",
+    "state": "created",
+    "resolutions": [],
+    "undoneSeqs": [],
+    "constraints": [],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#注文|urn:kobuy:注文明細一覧#0": "0",
+      "urn:kobuy:rule.注文#和": "1"
+     },
+     "parents": {
+      "0": null,
+      "1": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:34.017472",
+    "endTime": "2026-10-07T12:49:34.093745Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000003",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000003",
+    "predicateName": "urn:kobuy:注文C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:kobuy:rule.購買#注文",
+    "elements": [],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.注文",
+    "state": "created",
+    "resolutions": [],
+    "undoneSeqs": [],
+    "constraints": [],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#注文|urn:kobuy:注文明細一覧#0": "0"
+     },
+     "parents": {
+      "0": null
+     },
+     "slotNames": {}
+    },
+    "startTime": "2026-10-07T21:49:34.092330",
+    "endTime": "2026-10-07T12:49:34.093753Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000001#3",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "predicateName": "urn:kobuy:購買",
+    "parentInstanceId": null,
+    "callerNodeUri": null,
+    "elements": [
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~0:X1",
+      "previousValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.104238Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 9
+     }
+    ],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.購買",
+    "state": "suspended",
+    "resolutions": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#注文",
+      "resolution": "pending",
+      "timestamp": "2026-10-07T12:49:34.104738Z"
+     }
+    ],
+    "undoneSeqs": [],
+    "goalHead": {
+     "nodeUri": "urn:record:購買-0001",
+     "predicate": "urn:kobuy:購買",
+     "args": {
+      "urn:kobuy:件名": {
+       "name": "S",
+       "termType": "variable"
+      },
+      "agent": {
+       "name": "U",
+       "termType": "variable"
+      },
+      "inChannel": {
+       "value": "urn:channel:購買.田中",
+       "termType": "constant"
+      }
+     },
+     "isConstraint": false,
+     "builtInFunction": null,
+     "quant": null,
+     "quorum": null,
+     "tallyAgent": null,
+     "completionMode": "confirm",
+     "once": false,
+     "existing": false
+    },
+    "constraints": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#社員",
+      "referencedUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001:U"
+      ],
+      "boundUris": []
+     }
+    ],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#社員": "0",
+      "urn:kobuy:rule.購買#注文": "1",
+      "urn:kobuy:rule.購買#経路": "2",
+      "urn:record:購買-0001": "3",
+      "urn:kobuy:rule.購買#発注": "4"
+     },
+     "parents": {
+      "0": null,
+      "1": null,
+      "2": null,
+      "3": null,
+      "4": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:33.978934",
+    "endTime": "2026-10-07T12:49:34.105430Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000003#2",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000003",
+    "predicateName": "urn:kobuy:注文C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:kobuy:rule.購買#注文",
+    "elements": [],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.注文",
+    "state": "created",
+    "resolutions": [],
+    "undoneSeqs": [],
+    "constraints": [],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#注文|urn:kobuy:注文明細一覧#0": "0",
+      "urn:kobuy:rule.注文#和": "1"
+     },
+     "parents": {
+      "0": null,
+      "1": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:34.092330",
+    "endTime": "2026-10-07T12:49:34.105452Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000004",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000004",
+    "predicateName": "urn:kobuy:注文C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:kobuy:rule.購買#注文",
+    "elements": [],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.注文",
+    "state": "created",
+    "resolutions": [],
+    "undoneSeqs": [],
+    "constraints": [],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#注文|urn:kobuy:注文明細一覧#0": "0"
+     },
+     "parents": {
+      "0": null
+     },
+     "slotNames": {}
+    },
+    "startTime": "2026-10-07T21:49:34.104474",
+    "endTime": "2026-10-07T12:49:34.105458Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000001#4",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "predicateName": "urn:kobuy:購買",
+    "parentInstanceId": null,
+    "callerNodeUri": null,
+    "elements": [
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~0:X1",
+      "previousValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.113494Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 10
+     }
+    ],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.購買",
+    "state": "suspended",
+    "resolutions": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#注文",
+      "resolution": "pending",
+      "timestamp": "2026-10-07T12:49:34.114013Z"
+     }
+    ],
+    "undoneSeqs": [],
+    "goalHead": {
+     "nodeUri": "urn:record:購買-0001",
+     "predicate": "urn:kobuy:購買",
+     "args": {
+      "urn:kobuy:件名": {
+       "name": "S",
+       "termType": "variable"
+      },
+      "agent": {
+       "name": "U",
+       "termType": "variable"
+      },
+      "inChannel": {
+       "value": "urn:channel:購買.田中",
+       "termType": "constant"
+      }
+     },
+     "isConstraint": false,
+     "builtInFunction": null,
+     "quant": null,
+     "quorum": null,
+     "tallyAgent": null,
+     "completionMode": "confirm",
+     "once": false,
+     "existing": false
+    },
+    "constraints": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#社員",
+      "referencedUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001:U"
+      ],
+      "boundUris": []
+     }
+    ],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#社員": "0",
+      "urn:kobuy:rule.購買#注文": "1",
+      "urn:kobuy:rule.購買#経路": "2",
+      "urn:record:購買-0001": "3",
+      "urn:kobuy:rule.購買#発注": "4"
+     },
+     "parents": {
+      "0": null,
+      "1": null,
+      "2": null,
+      "3": null,
+      "4": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:33.978934",
+    "endTime": "2026-10-07T12:49:34.115050Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000004#2",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000004",
+    "predicateName": "urn:kobuy:注文C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:kobuy:rule.購買#注文",
+    "elements": [],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.注文",
+    "state": "created",
+    "resolutions": [],
+    "undoneSeqs": [],
+    "constraints": [],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#注文|urn:kobuy:注文明細一覧#0": "0",
+      "urn:kobuy:rule.注文#和": "1"
+     },
+     "parents": {
+      "0": null,
+      "1": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:34.104474",
+    "endTime": "2026-10-07T12:49:34.115110Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000005",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000005",
+    "predicateName": "urn:kobuy:注文C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:kobuy:rule.購買#注文",
+    "elements": [],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.注文",
+    "state": "created",
+    "resolutions": [],
+    "undoneSeqs": [],
+    "constraints": [],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#注文|urn:kobuy:注文明細一覧#0": "0"
+     },
+     "parents": {
+      "0": null
+     },
+     "slotNames": {}
+    },
+    "startTime": "2026-10-07T21:49:34.113743",
+    "endTime": "2026-10-07T12:49:34.115119Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000001#5",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "predicateName": "urn:kobuy:購買",
+    "parentInstanceId": null,
+    "callerNodeUri": null,
+    "elements": [
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~0:X1",
+      "previousValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.123604Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 11
+     }
+    ],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.購買",
+    "state": "suspended",
+    "resolutions": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#注文",
+      "resolution": "pending",
+      "timestamp": "2026-10-07T12:49:34.124142Z"
+     }
+    ],
+    "undoneSeqs": [],
+    "goalHead": {
+     "nodeUri": "urn:record:購買-0001",
+     "predicate": "urn:kobuy:購買",
+     "args": {
+      "urn:kobuy:件名": {
+       "name": "S",
+       "termType": "variable"
+      },
+      "agent": {
+       "name": "U",
+       "termType": "variable"
+      },
+      "inChannel": {
+       "value": "urn:channel:購買.田中",
+       "termType": "constant"
+      }
+     },
+     "isConstraint": false,
+     "builtInFunction": null,
+     "quant": null,
+     "quorum": null,
+     "tallyAgent": null,
+     "completionMode": "confirm",
+     "once": false,
+     "existing": false
+    },
+    "constraints": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#社員",
+      "referencedUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001:U"
+      ],
+      "boundUris": []
+     }
+    ],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#社員": "0",
+      "urn:kobuy:rule.購買#注文": "1",
+      "urn:kobuy:rule.購買#経路": "2",
+      "urn:record:購買-0001": "3",
+      "urn:kobuy:rule.購買#発注": "4"
+     },
+     "parents": {
+      "0": null,
+      "1": null,
+      "2": null,
+      "3": null,
+      "4": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:33.978934",
+    "endTime": "2026-10-07T12:49:34.124661Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000005#2",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000005",
+    "predicateName": "urn:kobuy:注文C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:kobuy:rule.購買#注文",
+    "elements": [],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.注文",
+    "state": "created",
+    "resolutions": [],
+    "undoneSeqs": [],
+    "constraints": [],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#注文|urn:kobuy:注文明細一覧#0": "0",
+      "urn:kobuy:rule.注文#和": "1"
+     },
+     "parents": {
+      "0": null,
+      "1": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:34.113743",
+    "endTime": "2026-10-07T12:49:34.124695Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000006",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000006",
+    "predicateName": "urn:kobuy:注文C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:kobuy:rule.購買#注文",
+    "elements": [],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.注文",
+    "state": "created",
+    "resolutions": [],
+    "undoneSeqs": [],
+    "constraints": [],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#注文|urn:kobuy:注文明細一覧#0": "0"
+     },
+     "parents": {
+      "0": null
+     },
+     "slotNames": {}
+    },
+    "startTime": "2026-10-07T21:49:34.123850",
+    "endTime": "2026-10-07T12:49:34.124701Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000001#6",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "predicateName": "urn:kobuy:購買",
+    "parentInstanceId": null,
+    "callerNodeUri": null,
+    "elements": [
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001:N",
+      "previousValue": null,
+      "newValue": {
+       "uri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000001:urn:entity:created-1:urn:kobuy:注文明細一覧",
+       "termType": "varRef"
+      },
+      "timestamp": "2026-10-07T12:49:34.135643Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 12,
+      "valueEntityUri": "urn:entity:created-1",
+      "valueAttributeName": "urn:kobuy:注文明細一覧"
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001:Amount",
+      "previousValue": null,
+      "newValue": {
+       "uri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000001:urn:entity:created-1:urn:kobuy:金額",
+       "termType": "varRef"
+      },
+      "timestamp": "2026-10-07T12:49:34.136333Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 13,
+      "valueEntityUri": "urn:entity:created-1",
+      "valueAttributeName": "urn:kobuy:金額"
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000001:urn:entity:created-1:urn:kobuy:注文明細一覧",
+      "previousValue": null,
+      "newValue": {
+       "values": [
+        {
+         "value": "urn:record:購買-0001#明細1",
+         "termType": "constant"
+        },
+        {
+         "value": "urn:record:購買-0001#明細2",
+         "termType": "constant"
+        }
+       ],
+       "termType": "multiValue"
+      },
+      "timestamp": "2026-10-07T12:49:34.145232Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "attributeEntityUri": "urn:entity:created-1",
+      "attributeName": "urn:kobuy:注文明細一覧",
+      "editedBy": "urn:wam:user:unknown",
+      "seq": 14
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~0:X1",
+      "previousValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.148574Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 15
+     }
+    ],
+    "dbWrites": [
+     {
+      "recordUri": "urn:entity:created-1",
+      "operation": "insert",
+      "previousValue": null,
+      "newValue": {
+       "agent": "urn:person:田中"
+      },
+      "timestamp": "2026-10-07T12:49:34.134226Z",
+      "atomNodeUri": "urn:kobuy:rule.購買#注文",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "isReversal": false
+     },
+     {
+      "recordUri": "urn:entity:created-1",
+      "operation": "insert",
+      "previousValue": null,
+      "newValue": {
+       "urn:kobuy:金額": 183000
+      },
+      "timestamp": "2026-10-07T12:49:34.171663Z",
+      "atomNodeUri": null,
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "isReversal": false
+     }
+    ],
+    "clauseHeadNodeUri": "urn:kobuy:rule.購買",
+    "state": "suspended",
+    "resolutions": [],
+    "undoneSeqs": [],
+    "goalHead": {
+     "nodeUri": "urn:record:購買-0001",
+     "predicate": "urn:kobuy:購買",
+     "args": {
+      "urn:kobuy:件名": {
+       "name": "S",
+       "termType": "variable"
+      },
+      "agent": {
+       "name": "U",
+       "termType": "variable"
+      },
+      "inChannel": {
+       "value": "urn:channel:購買.田中",
+       "termType": "constant"
+      }
+     },
+     "isConstraint": false,
+     "builtInFunction": null,
+     "quant": null,
+     "quorum": null,
+     "tallyAgent": null,
+     "completionMode": "confirm",
+     "once": false,
+     "existing": false
+    },
+    "constraints": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#社員",
+      "referencedUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001:U"
+      ],
+      "boundUris": []
+     }
+    ],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#社員": "0",
+      "urn:kobuy:rule.購買#注文": "1",
+      "urn:kobuy:rule.購買#経路": "2",
+      "urn:record:購買-0001": "3",
+      "urn:kobuy:rule.購買#発注": "4"
+     },
+     "parents": {
+      "0": null,
+      "1": null,
+      "2": null,
+      "3": null,
+      "4": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:33.978934",
+    "endTime": "2026-10-07T12:49:34.172545Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000002#3",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000002",
+    "predicateName": "urn:kobuy:注文C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:kobuy:rule.購買#注文",
+    "elements": [],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.注文",
+    "state": "backtracked",
+    "resolutions": [],
+    "undoneSeqs": [],
+    "constraints": [],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#注文|urn:kobuy:注文明細一覧#0": "0",
+      "urn:kobuy:rule.注文#和": "1"
+     },
+     "parents": {
+      "0": null,
+      "1": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:34.017472",
+    "endTime": "2026-10-07T12:49:34.172564Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000003#3",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000003",
+    "predicateName": "urn:kobuy:注文C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:kobuy:rule.購買#注文",
+    "elements": [],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.注文",
+    "state": "backtracked",
+    "resolutions": [],
+    "undoneSeqs": [],
+    "constraints": [],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#注文|urn:kobuy:注文明細一覧#0": "0",
+      "urn:kobuy:rule.注文#和": "1"
+     },
+     "parents": {
+      "0": null,
+      "1": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:34.092330",
+    "endTime": "2026-10-07T12:49:34.172572Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000004#3",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000004",
+    "predicateName": "urn:kobuy:注文C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:kobuy:rule.購買#注文",
+    "elements": [],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.注文",
+    "state": "backtracked",
+    "resolutions": [],
+    "undoneSeqs": [],
+    "constraints": [],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#注文|urn:kobuy:注文明細一覧#0": "0",
+      "urn:kobuy:rule.注文#和": "1"
+     },
+     "parents": {
+      "0": null,
+      "1": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:34.104474",
+    "endTime": "2026-10-07T12:49:34.172579Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000005#3",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000005",
+    "predicateName": "urn:kobuy:注文C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:kobuy:rule.購買#注文",
+    "elements": [],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.注文",
+    "state": "backtracked",
+    "resolutions": [],
+    "undoneSeqs": [],
+    "constraints": [],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#注文|urn:kobuy:注文明細一覧#0": "0",
+      "urn:kobuy:rule.注文#和": "1"
+     },
+     "parents": {
+      "0": null,
+      "1": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:34.113743",
+    "endTime": "2026-10-07T12:49:34.172586Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000006#2",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000006",
+    "predicateName": "urn:kobuy:注文C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:kobuy:rule.購買#注文",
+    "elements": [],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.注文",
+    "state": "backtracked",
+    "resolutions": [],
+    "undoneSeqs": [],
+    "constraints": [],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#注文|urn:kobuy:注文明細一覧#0": "0",
+      "urn:kobuy:rule.注文#和": "1"
+     },
+     "parents": {
+      "0": null,
+      "1": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:34.123850",
+    "endTime": "2026-10-07T12:49:34.172682Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000007",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000007",
+    "predicateName": "urn:kobuy:注文C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:kobuy:rule.購買#注文",
+    "elements": [
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000007:urn:record:購買-0001#明細1:urn:kobuy:本体",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:record:購買-0001#本体1",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.150940Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000007",
+      "attributeEntityUri": "urn:record:購買-0001#明細1",
+      "attributeName": "urn:kobuy:本体",
+      "seq": 16
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000007:urn:record:購買-0001#本体1:urn:kobuy:商品",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:product:プロジェクタ-X200",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.151994Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000007",
+      "attributeEntityUri": "urn:record:購買-0001#本体1",
+      "attributeName": "urn:kobuy:商品",
+      "seq": 17
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000007:urn:record:購買-0001#本体1:urn:kobuy:数量",
+      "previousValue": null,
+      "newValue": {
+       "value": 1,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.152491Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000007",
+      "attributeEntityUri": "urn:record:購買-0001#本体1",
+      "attributeName": "urn:kobuy:数量",
+      "seq": 18
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000007:urn:record:購買-0001#本体1:complete",
+      "previousValue": null,
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.162118Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000007",
+      "attributeEntityUri": "urn:record:購買-0001#本体1",
+      "attributeName": "complete",
+      "seq": 31
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000007:urn:record:購買-0001#明細2:urn:kobuy:本体",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:record:購買-0001#本体2",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.162544Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000007",
+      "attributeEntityUri": "urn:record:購買-0001#明細2",
+      "attributeName": "urn:kobuy:本体",
+      "seq": 32
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000007:urn:record:購買-0001#本体2:urn:kobuy:商品",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:product:HDMIケーブル-3m",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.162844Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000007",
+      "attributeEntityUri": "urn:record:購買-0001#本体2",
+      "attributeName": "urn:kobuy:商品",
+      "seq": 33
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000007:urn:record:購買-0001#本体2:urn:kobuy:数量",
+      "previousValue": null,
+      "newValue": {
+       "value": 2,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.162953Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000007",
+      "attributeEntityUri": "urn:record:購買-0001#本体2",
+      "attributeName": "urn:kobuy:数量",
+      "seq": 34
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000007:urn:record:購買-0001#本体2:complete",
+      "previousValue": null,
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.164959Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000007",
+      "attributeEntityUri": "urn:record:購買-0001#本体2",
+      "attributeName": "complete",
+      "seq": 47
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000007:M",
+      "previousValue": null,
+      "newValue": {
+       "values": [
+        {
+         "uri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000007:urn:record:購買-0001#本体1:urn:kobuy:明細金額",
+         "termType": "varRef"
+        },
+        {
+         "uri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000007:urn:record:購買-0001#本体2:urn:kobuy:明細金額",
+         "termType": "varRef"
+        }
+       ],
+       "termType": "multiValue"
+      },
+      "timestamp": "2026-10-07T12:49:34.165419Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000007",
+      "seq": 48
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000007:Amount",
+      "previousValue": null,
+      "newValue": {
+       "uri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000001:urn:entity:created-1:urn:kobuy:金額",
+       "termType": "varRef"
+      },
+      "timestamp": "2026-10-07T12:49:34.166463Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000007",
+      "seq": 49,
+      "valueEntityUri": "urn:entity:created-1",
+      "valueAttributeName": "urn:kobuy:金額"
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000001:urn:entity:created-1:urn:kobuy:金額",
+      "previousValue": null,
+      "newValue": {
+       "uri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000007:M",
+       "termType": "varRef"
+      },
+      "timestamp": "2026-10-07T12:49:34.167175Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000007",
+      "attributeEntityUri": "urn:entity:created-1",
+      "attributeName": "urn:kobuy:金額",
+      "seq": 50,
+      "equatedToSum": true
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000007~2:X1",
+      "previousValue": null,
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.167638Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000007",
+      "seq": 51
+     }
+    ],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.注文",
+    "state": "completed",
+    "resolutions": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.注文#和",
+      "resolution": "succeeded",
+      "timestamp": "2026-10-07T12:49:34.167651Z"
+     }
+    ],
+    "undoneSeqs": [],
+    "constraints": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.注文#和",
+      "referencedUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000007:Amount",
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000007:M"
+      ],
+      "boundUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000007:Amount"
+      ]
+     }
+    ],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#注文|urn:kobuy:注文明細一覧#0": "0",
+      "urn:kobuy:rule.購買#注文|urn:kobuy:注文明細一覧#1": "1",
+      "urn:kobuy:rule.注文#和": "2"
+     },
+     "parents": {
+      "0": null,
+      "1": null,
+      "2": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:34.149007",
+    "endTime": "2026-10-07T12:49:34.172712Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000008",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000008",
+    "predicateName": "urn:kobuy:明細本体C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000007",
+    "callerNodeUri": "urn:record:購買-0001#本体1",
+    "elements": [
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000008:urn:product:プロジェクタ-X200:urn:kobuy:商品名",
+      "previousValue": null,
+      "newValue": {
+       "value": "プロジェクタ X200",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.154609Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000008",
+      "attributeEntityUri": "urn:product:プロジェクタ-X200",
+      "attributeName": "urn:kobuy:商品名",
+      "seq": 19
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000008:urn:product:プロジェクタ-X200:urn:kobuy:商品単価",
+      "previousValue": null,
+      "newValue": {
+       "value": 180000,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.154761Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000008",
+      "attributeEntityUri": "urn:product:プロジェクタ-X200",
+      "attributeName": "urn:kobuy:商品単価",
+      "seq": 20
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000008:urn:product:プロジェクタ-X200:urn:kobuy:仕入先",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:kobuy:佐藤商事",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.154965Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000008",
+      "attributeEntityUri": "urn:product:プロジェクタ-X200",
+      "attributeName": "urn:kobuy:仕入先",
+      "seq": 21
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000008:urn:product:プロジェクタ-X200:inChannel",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:channel:商品マスター",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.155103Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000008",
+      "attributeEntityUri": "urn:product:プロジェクタ-X200",
+      "attributeName": "inChannel",
+      "seq": 22
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000008:urn:product:プロジェクタ-X200:_initiator",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:person:太木",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.155174Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000008",
+      "attributeEntityUri": "urn:product:プロジェクタ-X200",
+      "attributeName": "_initiator",
+      "seq": 23
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000008:urn:product:プロジェクタ-X200:agent",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:person:太木",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.155293Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000008",
+      "attributeEntityUri": "urn:product:プロジェクタ-X200",
+      "attributeName": "agent",
+      "seq": 24
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000008:urn:product:プロジェクタ-X200:completeByOkButton",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:person:太木",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.155412Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000008",
+      "attributeEntityUri": "urn:product:プロジェクタ-X200",
+      "attributeName": "completeByOkButton",
+      "seq": 25
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000008:U",
+      "previousValue": null,
+      "newValue": {
+       "uri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000008:urn:product:プロジェクタ-X200:urn:kobuy:商品単価",
+       "termType": "varRef"
+      },
+      "timestamp": "2026-10-07T12:49:34.156280Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000008",
+      "seq": 26,
+      "valueEntityUri": "urn:product:プロジェクタ-X200",
+      "valueAttributeName": "urn:kobuy:商品単価"
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000008:Q",
+      "previousValue": null,
+      "newValue": {
+       "uri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000007:urn:record:購買-0001#本体1:urn:kobuy:数量",
+       "termType": "varRef"
+      },
+      "timestamp": "2026-10-07T12:49:34.156680Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000008",
+      "seq": 27,
+      "valueEntityUri": "urn:record:購買-0001#本体1",
+      "valueAttributeName": "urn:kobuy:数量"
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000008:M",
+      "previousValue": null,
+      "newValue": {
+       "uri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000007:urn:record:購買-0001#本体1:urn:kobuy:明細金額",
+       "termType": "varRef"
+      },
+      "timestamp": "2026-10-07T12:49:34.157108Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000008",
+      "seq": 28,
+      "valueEntityUri": "urn:record:購買-0001#本体1",
+      "valueAttributeName": "urn:kobuy:明細金額"
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000007:urn:record:購買-0001#本体1:urn:kobuy:明細金額",
+      "previousValue": null,
+      "newValue": {
+       "value": 180000,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.157960Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000008",
+      "attributeEntityUri": "urn:record:購買-0001#本体1",
+      "attributeName": "urn:kobuy:明細金額",
+      "seq": 29
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000008~1:X1",
+      "previousValue": null,
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.160292Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000008",
+      "seq": 30
+     }
+    ],
+    "dbWrites": [
+     {
+      "recordUri": "urn:record:購買-0001#本体1",
+      "operation": "insert",
+      "previousValue": null,
+      "newValue": {
+       "urn:kobuy:明細金額": 180000
+      },
+      "timestamp": "2026-10-07T12:49:34.160838Z",
+      "atomNodeUri": null,
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000008",
+      "isReversal": false
+     }
+    ],
+    "clauseHeadNodeUri": "urn:kobuy:rule.明細本体",
+    "state": "completed",
+    "resolutions": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.明細本体#積",
+      "resolution": "succeeded",
+      "timestamp": "2026-10-07T12:49:34.160373Z"
+     }
+    ],
+    "undoneSeqs": [],
+    "constraints": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.明細本体#積",
+      "referencedUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000008:M",
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000008:Q",
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000008:U"
+      ],
+      "boundUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000008:M"
+      ]
+     }
+    ],
+    "frameLayout": {
+     "frames": {
+      "urn:record:購買-0001#本体1|urn:kobuy:商品#0": "0",
+      "urn:kobuy:rule.明細本体#積": "1"
+     },
+     "parents": {
+      "0": null,
+      "1": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:34.153818",
+    "endTime": "2026-10-07T12:49:34.172732Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000009",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000009",
+    "predicateName": "urn:kobuy:明細本体C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000007",
+    "callerNodeUri": "urn:record:購買-0001#本体2",
+    "elements": [
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000009:urn:product:HDMIケーブル-3m:urn:kobuy:商品名",
+      "previousValue": null,
+      "newValue": {
+       "value": "HDMI ケーブル 3m",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.163373Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000009",
+      "attributeEntityUri": "urn:product:HDMIケーブル-3m",
+      "attributeName": "urn:kobuy:商品名",
+      "seq": 35
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000009:urn:product:HDMIケーブル-3m:urn:kobuy:商品単価",
+      "previousValue": null,
+      "newValue": {
+       "value": 1500,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.163469Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000009",
+      "attributeEntityUri": "urn:product:HDMIケーブル-3m",
+      "attributeName": "urn:kobuy:商品単価",
+      "seq": 36
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000009:urn:product:HDMIケーブル-3m:urn:kobuy:仕入先",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:kobuy:佐藤商事",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.163561Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000009",
+      "attributeEntityUri": "urn:product:HDMIケーブル-3m",
+      "attributeName": "urn:kobuy:仕入先",
+      "seq": 37
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000009:urn:product:HDMIケーブル-3m:inChannel",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:channel:商品マスター",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.163637Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000009",
+      "attributeEntityUri": "urn:product:HDMIケーブル-3m",
+      "attributeName": "inChannel",
+      "seq": 38
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000009:urn:product:HDMIケーブル-3m:_initiator",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:person:太木",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.163676Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000009",
+      "attributeEntityUri": "urn:product:HDMIケーブル-3m",
+      "attributeName": "_initiator",
+      "seq": 39
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000009:urn:product:HDMIケーブル-3m:agent",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:person:太木",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.163740Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000009",
+      "attributeEntityUri": "urn:product:HDMIケーブル-3m",
+      "attributeName": "agent",
+      "seq": 40
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000009:urn:product:HDMIケーブル-3m:completeByOkButton",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:person:太木",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.163787Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000009",
+      "attributeEntityUri": "urn:product:HDMIケーブル-3m",
+      "attributeName": "completeByOkButton",
+      "seq": 41
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000009:U",
+      "previousValue": null,
+      "newValue": {
+       "uri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000009:urn:product:HDMIケーブル-3m:urn:kobuy:商品単価",
+       "termType": "varRef"
+      },
+      "timestamp": "2026-10-07T12:49:34.163900Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000009",
+      "seq": 42,
+      "valueEntityUri": "urn:product:HDMIケーブル-3m",
+      "valueAttributeName": "urn:kobuy:商品単価"
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000009:Q",
+      "previousValue": null,
+      "newValue": {
+       "uri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000007:urn:record:購買-0001#本体2:urn:kobuy:数量",
+       "termType": "varRef"
+      },
+      "timestamp": "2026-10-07T12:49:34.164080Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000009",
+      "seq": 43,
+      "valueEntityUri": "urn:record:購買-0001#本体2",
+      "valueAttributeName": "urn:kobuy:数量"
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000009:M",
+      "previousValue": null,
+      "newValue": {
+       "uri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000007:urn:record:購買-0001#本体2:urn:kobuy:明細金額",
+       "termType": "varRef"
+      },
+      "timestamp": "2026-10-07T12:49:34.164196Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000009",
+      "seq": 44,
+      "valueEntityUri": "urn:record:購買-0001#本体2",
+      "valueAttributeName": "urn:kobuy:明細金額"
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000007:urn:record:購買-0001#本体2:urn:kobuy:明細金額",
+      "previousValue": null,
+      "newValue": {
+       "value": 3000,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.164398Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000009",
+      "attributeEntityUri": "urn:record:購買-0001#本体2",
+      "attributeName": "urn:kobuy:明細金額",
+      "seq": 45
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000009~1:X1",
+      "previousValue": null,
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.164550Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000009",
+      "seq": 46
+     }
+    ],
+    "dbWrites": [
+     {
+      "recordUri": "urn:record:購買-0001#本体2",
+      "operation": "insert",
+      "previousValue": null,
+      "newValue": {
+       "urn:kobuy:明細金額": 3000
+      },
+      "timestamp": "2026-10-07T12:49:34.164611Z",
+      "atomNodeUri": null,
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000009",
+      "isReversal": false
+     }
+    ],
+    "clauseHeadNodeUri": "urn:kobuy:rule.明細本体",
+    "state": "completed",
+    "resolutions": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.明細本体#積",
+      "resolution": "succeeded",
+      "timestamp": "2026-10-07T12:49:34.164559Z"
+     }
+    ],
+    "undoneSeqs": [],
+    "constraints": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.明細本体#積",
+      "referencedUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000009:M",
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000009:Q",
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000009:U"
+      ],
+      "boundUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000009:M"
+      ]
+     }
+    ],
+    "frameLayout": {
+     "frames": {
+      "urn:record:購買-0001#本体2|urn:kobuy:商品#0": "0",
+      "urn:kobuy:rule.明細本体#積": "1"
+     },
+     "parents": {
+      "0": null,
+      "1": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:34.163158",
+    "endTime": "2026-10-07T12:49:34.172835Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000001#7",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "predicateName": "urn:kobuy:購買",
+    "parentInstanceId": null,
+    "callerNodeUri": null,
+    "elements": [
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~0:X1",
+      "previousValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.242203Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 52
+     }
+    ],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.購買",
+    "state": "suspended",
+    "resolutions": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#注文",
+      "resolution": "pending",
+      "timestamp": "2026-10-07T12:49:34.242982Z"
+     }
+    ],
+    "undoneSeqs": [],
+    "goalHead": {
+     "nodeUri": "urn:record:購買-0001",
+     "predicate": "urn:kobuy:購買",
+     "args": {
+      "urn:kobuy:件名": {
+       "name": "S",
+       "termType": "variable"
+      },
+      "agent": {
+       "name": "U",
+       "termType": "variable"
+      },
+      "inChannel": {
+       "value": "urn:channel:購買.田中",
+       "termType": "constant"
+      }
+     },
+     "isConstraint": false,
+     "builtInFunction": null,
+     "quant": null,
+     "quorum": null,
+     "tallyAgent": null,
+     "completionMode": "confirm",
+     "once": false,
+     "existing": false
+    },
+    "constraints": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#社員",
+      "referencedUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001:U"
+      ],
+      "boundUris": []
+     }
+    ],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#社員": "0",
+      "urn:kobuy:rule.購買#注文": "1",
+      "urn:kobuy:rule.購買#経路": "2",
+      "urn:record:購買-0001": "3",
+      "urn:kobuy:rule.購買#発注": "4"
+     },
+     "parents": {
+      "0": null,
+      "1": null,
+      "2": null,
+      "3": null,
+      "4": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:33.978934",
+    "endTime": "2026-10-07T12:49:34.243305Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000001#8",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "predicateName": "urn:kobuy:購買",
+    "parentInstanceId": null,
+    "callerNodeUri": null,
+    "elements": [
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000001:urn:record:購買-0001#本体1:once",
+      "previousValue": null,
+      "newValue": {
+       "values": [],
+       "termType": "multiValue"
+      },
+      "timestamp": "2026-10-07T12:49:34.342575Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "attributeEntityUri": "urn:record:購買-0001#本体1",
+      "attributeName": "once",
+      "seq": 53
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000001:urn:record:購買-0001#本体1:urn:kobuy:購入メモ",
+      "previousValue": null,
+      "newValue": {
+       "values": [],
+       "termType": "multiValue"
+      },
+      "timestamp": "2026-10-07T12:49:34.342967Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "attributeEntityUri": "urn:record:購買-0001#本体1",
+      "attributeName": "urn:kobuy:購入メモ",
+      "seq": 54
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000001:urn:record:購買-0001#明細1:urn:kobuy:勘定科目",
+      "previousValue": null,
+      "newValue": {
+       "values": [],
+       "termType": "multiValue"
+      },
+      "timestamp": "2026-10-07T12:49:34.343079Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "attributeEntityUri": "urn:record:購買-0001#明細1",
+      "attributeName": "urn:kobuy:勘定科目",
+      "seq": 55
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000001:urn:record:購買-0001#本体2:once",
+      "previousValue": null,
+      "newValue": {
+       "values": [],
+       "termType": "multiValue"
+      },
+      "timestamp": "2026-10-07T12:49:34.343301Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "attributeEntityUri": "urn:record:購買-0001#本体2",
+      "attributeName": "once",
+      "seq": 56
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000001:urn:record:購買-0001#本体2:urn:kobuy:購入メモ",
+      "previousValue": null,
+      "newValue": {
+       "values": [],
+       "termType": "multiValue"
+      },
+      "timestamp": "2026-10-07T12:49:34.343479Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "attributeEntityUri": "urn:record:購買-0001#本体2",
+      "attributeName": "urn:kobuy:購入メモ",
+      "seq": 57
+     },
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000001:urn:record:購買-0001#明細2:urn:kobuy:勘定科目",
+      "previousValue": null,
+      "newValue": {
+       "values": [],
+       "termType": "multiValue"
+      },
+      "timestamp": "2026-10-07T12:49:34.343575Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "attributeEntityUri": "urn:record:購買-0001#明細2",
+      "attributeName": "urn:kobuy:勘定科目",
+      "seq": 58
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~0:X1",
+      "previousValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.345579Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 59
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~1:X1",
+      "previousValue": null,
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.346495Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 60
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~5:X2",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:record:購買-0001#明細1",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.348895Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 62
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~6:X2",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:record:購買-0001#明細2",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.348964Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 63
+     }
+    ],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.購買",
+    "state": "suspended",
+    "resolutions": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#注文",
+      "resolution": "succeeded",
+      "timestamp": "2026-10-07T12:49:34.346513Z"
+     },
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#経路",
+      "resolution": "pending",
+      "timestamp": "2026-10-07T12:49:34.354647Z"
+     }
+    ],
+    "undoneSeqs": [],
+    "goalHead": {
+     "nodeUri": "urn:record:購買-0001",
+     "predicate": "urn:kobuy:購買",
+     "args": {
+      "urn:kobuy:件名": {
+       "name": "S",
+       "termType": "variable"
+      },
+      "agent": {
+       "name": "U",
+       "termType": "variable"
+      },
+      "inChannel": {
+       "value": "urn:channel:購買.田中",
+       "termType": "constant"
+      }
+     },
+     "isConstraint": false,
+     "builtInFunction": null,
+     "quant": null,
+     "quorum": null,
+     "tallyAgent": null,
+     "completionMode": "confirm",
+     "once": false,
+     "existing": false
+    },
+    "constraints": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#社員",
+      "referencedUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001:U"
+      ],
+      "boundUris": []
+     }
+    ],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#社員": "0",
+      "urn:kobuy:rule.購買#注文": "1",
+      "urn:kobuy:rule.購買#経路": "2",
+      "urn:record:購買-0001": "3",
+      "urn:kobuy:rule.購買#発注": "4",
+      "urn:kobuy:rule.購買#経路|urn:kobuy:承認明細一覧#0": "5",
+      "urn:kobuy:rule.購買#経路|urn:kobuy:承認明細一覧#1": "6"
+     },
+     "parents": {
+      "0": null,
+      "1": null,
+      "2": null,
+      "3": null,
+      "4": null,
+      "5": null,
+      "6": null
+     },
+     "slotNames": {
+      "truthValue": "X1",
+      "urn:kobuy:注文明細": "X2",
+      "urn:kobuy:勘定科目": "X3"
+     }
+    },
+    "startTime": "2026-10-07T21:49:33.978934",
+    "endTime": "2026-10-07T12:49:34.354928Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000007#2",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000007",
+    "predicateName": "urn:kobuy:注文C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:kobuy:rule.購買#注文",
+    "elements": [],
+    "dbWrites": [
+     {
+      "recordUri": "urn:record:購買-0001#明細1",
+      "operation": "insert",
+      "previousValue": null,
+      "newValue": {
+       "urn:kobuy:勘定科目": []
+      },
+      "timestamp": "2026-10-07T12:49:34.346562Z",
+      "atomNodeUri": null,
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000007",
+      "isReversal": false
+     },
+     {
+      "recordUri": "urn:record:購買-0001#本体1",
+      "operation": "insert",
+      "previousValue": null,
+      "newValue": {
+       "once": []
+      },
+      "timestamp": "2026-10-07T12:49:34.346647Z",
+      "atomNodeUri": null,
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000007",
+      "isReversal": false
+     },
+     {
+      "recordUri": "urn:record:購買-0001#本体1",
+      "operation": "insert",
+      "previousValue": null,
+      "newValue": {
+       "urn:kobuy:購入メモ": []
+      },
+      "timestamp": "2026-10-07T12:49:34.346718Z",
+      "atomNodeUri": null,
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000007",
+      "isReversal": false
+     },
+     {
+      "recordUri": "urn:record:購買-0001#明細2",
+      "operation": "insert",
+      "previousValue": null,
+      "newValue": {
+       "urn:kobuy:勘定科目": []
+      },
+      "timestamp": "2026-10-07T12:49:34.346775Z",
+      "atomNodeUri": null,
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000007",
+      "isReversal": false
+     },
+     {
+      "recordUri": "urn:record:購買-0001#本体2",
+      "operation": "insert",
+      "previousValue": null,
+      "newValue": {
+       "once": []
+      },
+      "timestamp": "2026-10-07T12:49:34.346828Z",
+      "atomNodeUri": null,
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000007",
+      "isReversal": false
+     },
+     {
+      "recordUri": "urn:record:購買-0001#本体2",
+      "operation": "insert",
+      "previousValue": null,
+      "newValue": {
+       "urn:kobuy:購入メモ": []
+      },
+      "timestamp": "2026-10-07T12:49:34.346882Z",
+      "atomNodeUri": null,
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000007",
+      "isReversal": false
+     }
+    ],
+    "clauseHeadNodeUri": "urn:kobuy:rule.注文",
+    "state": "completed",
+    "resolutions": [],
+    "undoneSeqs": [],
+    "constraints": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.注文#和",
+      "referencedUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000007:Amount",
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000007:M"
+      ],
+      "boundUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000007:Amount"
+      ]
+     }
+    ],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#注文|urn:kobuy:注文明細一覧#0": "0",
+      "urn:kobuy:rule.購買#注文|urn:kobuy:注文明細一覧#1": "1",
+      "urn:kobuy:rule.注文#和": "2"
+     },
+     "parents": {
+      "0": null,
+      "1": null,
+      "2": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:34.149007",
+    "endTime": "2026-10-07T12:49:34.354946Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000010",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000010",
+    "predicateName": "urn:kobuy:承認経路",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:kobuy:rule.購買#経路",
+    "elements": [
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000010:Amount",
+      "previousValue": null,
+      "newValue": {
+       "values": [
+        {
+         "uri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000007:urn:record:購買-0001#本体1:urn:kobuy:明細金額",
+         "termType": "varRef"
+        },
+        {
+         "uri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000007:urn:record:購買-0001#本体2:urn:kobuy:明細金額",
+         "termType": "varRef"
+        }
+       ],
+       "termType": "multiValue"
+      },
+      "timestamp": "2026-10-07T12:49:34.347909Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000010",
+      "seq": 61
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000010:L",
+      "previousValue": null,
+      "newValue": {
+       "values": [
+        {
+         "value": "urn:wam:clause:wamtest:1791377373951:000001~5",
+         "termType": "constant"
+        },
+        {
+         "value": "urn:wam:clause:wamtest:1791377373951:000001~6",
+         "termType": "constant"
+        }
+       ],
+       "termType": "multiValue"
+      },
+      "timestamp": "2026-10-07T12:49:34.353015Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000010",
+      "seq": 70
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000010:_agentFrom_urn%3Akobuy%3Arule.%E6%89%BF%E8%AA%8D%E7%B5%8C%E8%B7%AF%23%E8%AA%B2%E9%95%B7",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:org:役職.課長",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.353797Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000010",
+      "seq": 71
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000010:_agentOf_urn%3Akobuy%3Arule.%E6%89%BF%E8%AA%8D%E7%B5%8C%E8%B7%AF%23%E8%AA%B2%E9%95%B7",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:person:山田",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.353853Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000010",
+      "seq": 72
+     }
+    ],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.承認経路",
+    "state": "suspended",
+    "resolutions": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.承認経路#課長",
+      "resolution": "pending",
+      "timestamp": "2026-10-07T12:49:34.353920Z"
+     }
+    ],
+    "undoneSeqs": [],
+    "constraints": [],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.承認経路#課長": "0",
+      "urn:kobuy:rule.承認経路#判定": "1"
+     },
+     "parents": {
+      "0": null,
+      "1": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:34.347736",
+    "endTime": "2026-10-07T12:49:34.354981Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000012",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000012",
+    "predicateName": "urn:kobuy:承認明細C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:wam:clause:wamtest:1791377373951:000001~5",
+    "elements": [
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000012:urn:record:購買-0001#明細1:_frozenBy",
+      "previousValue": null,
+      "newValue": {
+       "values": [
+        {
+         "value": "urn:entity:created-1",
+         "termType": "constant"
+        }
+       ],
+       "termType": "multiValue"
+      },
+      "timestamp": "2026-10-07T12:49:34.350218Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000012",
+      "attributeEntityUri": "urn:record:購買-0001#明細1",
+      "attributeName": "_frozenBy",
+      "seq": 64
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000012:Y",
+      "previousValue": null,
+      "newValue": {
+       "uri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000001:urn:record:購買-0001#明細1:urn:kobuy:勘定科目",
+       "termType": "varRef"
+      },
+      "timestamp": "2026-10-07T12:49:34.350441Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000012",
+      "seq": 65,
+      "valueEntityUri": "urn:record:購買-0001#明細1",
+      "valueAttributeName": "urn:kobuy:勘定科目"
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000012:K",
+      "previousValue": null,
+      "newValue": {
+       "uri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~5:X3",
+       "termType": "varRef"
+      },
+      "timestamp": "2026-10-07T12:49:34.350788Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000012",
+      "seq": 66
+     }
+    ],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.承認明細",
+    "state": "suspended",
+    "resolutions": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.承認明細#包含",
+      "resolution": "pending",
+      "timestamp": "2026-10-07T12:49:34.351743Z"
+     }
+    ],
+    "undoneSeqs": [],
+    "constraints": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.承認明細#包含",
+      "referencedUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000012:K",
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000012:Y"
+      ],
+      "boundUris": []
+     }
+    ],
+    "frameLayout": {
+     "frames": {
+      "urn:wam:clause:wamtest:1791377373951:000001~5|urn:kobuy:注文明細#0": "0",
+      "urn:kobuy:rule.承認明細#包含": "1"
+     },
+     "parents": {
+      "0": null,
+      "1": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:34.349840",
+    "endTime": "2026-10-07T12:49:34.354990Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000014",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000014",
+    "predicateName": "urn:kobuy:承認明細C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:wam:clause:wamtest:1791377373951:000001~6",
+    "elements": [
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000014:urn:record:購買-0001#明細2:_frozenBy",
+      "previousValue": null,
+      "newValue": {
+       "values": [
+        {
+         "value": "urn:entity:created-1",
+         "termType": "constant"
+        }
+       ],
+       "termType": "multiValue"
+      },
+      "timestamp": "2026-10-07T12:49:34.352390Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000014",
+      "attributeEntityUri": "urn:record:購買-0001#明細2",
+      "attributeName": "_frozenBy",
+      "seq": 67
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000014:Y",
+      "previousValue": null,
+      "newValue": {
+       "uri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000001:urn:record:購買-0001#明細2:urn:kobuy:勘定科目",
+       "termType": "varRef"
+      },
+      "timestamp": "2026-10-07T12:49:34.352481Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000014",
+      "seq": 68,
+      "valueEntityUri": "urn:record:購買-0001#明細2",
+      "valueAttributeName": "urn:kobuy:勘定科目"
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000014:K",
+      "previousValue": null,
+      "newValue": {
+       "uri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~6:X3",
+       "termType": "varRef"
+      },
+      "timestamp": "2026-10-07T12:49:34.352594Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000014",
+      "seq": 69
+     }
+    ],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.承認明細",
+    "state": "suspended",
+    "resolutions": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.承認明細#包含",
+      "resolution": "pending",
+      "timestamp": "2026-10-07T12:49:34.352687Z"
+     }
+    ],
+    "undoneSeqs": [],
+    "constraints": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.承認明細#包含",
+      "referencedUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000014:K",
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000014:Y"
+      ],
+      "boundUris": []
+     }
+    ],
+    "frameLayout": {
+     "frames": {
+      "urn:wam:clause:wamtest:1791377373951:000001~6|urn:kobuy:注文明細#0": "0",
+      "urn:kobuy:rule.承認明細#包含": "1"
+     },
+     "parents": {
+      "0": null,
+      "1": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:34.352196",
+    "endTime": "2026-10-07T12:49:34.355001Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000015",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000015",
+    "predicateName": "urn:kobuy:承認C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000010",
+    "callerNodeUri": "urn:kobuy:rule.承認経路#課長",
+    "elements": [],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.承認C",
+    "state": "completed",
+    "resolutions": [],
+    "undoneSeqs": [],
+    "constraints": [],
+    "startTime": "2026-10-07T21:49:34.353201",
+    "endTime": "2026-10-07T12:49:34.355012Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000001#9",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "predicateName": "urn:kobuy:購買",
+    "parentInstanceId": null,
+    "callerNodeUri": null,
+    "elements": [
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~5:X3",
+      "previousValue": null,
+      "newValue": {
+       "uri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000010:urn:entity:created-3:urn:kobuy:勘定科目",
+       "termType": "varRef"
+      },
+      "timestamp": "2026-10-07T12:49:34.415904Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 73,
+      "valueEntityUri": "urn:entity:created-3",
+      "valueAttributeName": "urn:kobuy:勘定科目"
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~6:X3",
+      "previousValue": null,
+      "newValue": {
+       "uri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000010:urn:entity:created-4:urn:kobuy:勘定科目",
+       "termType": "varRef"
+      },
+      "timestamp": "2026-10-07T12:49:34.416121Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 74,
+      "valueEntityUri": "urn:entity:created-4",
+      "valueAttributeName": "urn:kobuy:勘定科目"
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~0:X1",
+      "previousValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.418776Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 75
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~1:X1",
+      "previousValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.418816Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 76
+     }
+    ],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.購買",
+    "state": "suspended",
+    "resolutions": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#経路",
+      "resolution": "pending",
+      "timestamp": "2026-10-07T12:49:34.420209Z"
+     }
+    ],
+    "undoneSeqs": [],
+    "goalHead": {
+     "nodeUri": "urn:record:購買-0001",
+     "predicate": "urn:kobuy:購買",
+     "args": {
+      "urn:kobuy:件名": {
+       "name": "S",
+       "termType": "variable"
+      },
+      "agent": {
+       "name": "U",
+       "termType": "variable"
+      },
+      "inChannel": {
+       "value": "urn:channel:購買.田中",
+       "termType": "constant"
+      }
+     },
+     "isConstraint": false,
+     "builtInFunction": null,
+     "quant": null,
+     "quorum": null,
+     "tallyAgent": null,
+     "completionMode": "confirm",
+     "once": false,
+     "existing": false
+    },
+    "constraints": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#社員",
+      "referencedUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001:U"
+      ],
+      "boundUris": []
+     }
+    ],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#社員": "0",
+      "urn:kobuy:rule.購買#注文": "1",
+      "urn:kobuy:rule.購買#経路": "2",
+      "urn:record:購買-0001": "3",
+      "urn:kobuy:rule.購買#発注": "4",
+      "urn:kobuy:rule.購買#経路|urn:kobuy:承認明細一覧#0": "5",
+      "urn:kobuy:rule.購買#経路|urn:kobuy:承認明細一覧#1": "6"
+     },
+     "parents": {
+      "0": null,
+      "1": null,
+      "2": null,
+      "3": null,
+      "4": null,
+      "5": null,
+      "6": null
+     },
+     "slotNames": {
+      "truthValue": "X1",
+      "urn:kobuy:注文明細": "X2",
+      "urn:kobuy:勘定科目": "X3"
+     }
+    },
+    "startTime": "2026-10-07T21:49:33.978934",
+    "endTime": "2026-10-07T12:49:34.421137Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000010#2",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000010",
+    "predicateName": "urn:kobuy:承認経路",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:kobuy:rule.購買#経路",
+    "elements": [],
+    "dbWrites": [
+     {
+      "recordUri": "urn:entity:created-3",
+      "operation": "insert",
+      "previousValue": null,
+      "newValue": {
+       "urn:kobuy:注文明細": "urn:record:購買-0001#明細1"
+      },
+      "timestamp": "2026-10-07T12:49:34.415924Z",
+      "atomNodeUri": "urn:wam:clause:wamtest:1791377373951:000001~5",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000010",
+      "isReversal": false
+     },
+     {
+      "recordUri": "urn:entity:created-4",
+      "operation": "insert",
+      "previousValue": null,
+      "newValue": {
+       "urn:kobuy:注文明細": "urn:record:購買-0001#明細2"
+      },
+      "timestamp": "2026-10-07T12:49:34.416129Z",
+      "atomNodeUri": "urn:wam:clause:wamtest:1791377373951:000001~6",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000010",
+      "isReversal": false
+     },
+     {
+      "recordUri": "urn:entity:created-2",
+      "operation": "insert",
+      "previousValue": null,
+      "newValue": {
+       "agent": "urn:org:役職.課長",
+       "urn:kobuy:承認明細一覧": [
+        "urn:entity:created-3",
+        "urn:entity:created-4"
+       ]
+      },
+      "timestamp": "2026-10-07T12:49:34.416982Z",
+      "atomNodeUri": "urn:kobuy:rule.承認経路#課長",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000010",
+      "isReversal": false
+     }
+    ],
+    "clauseHeadNodeUri": "urn:kobuy:rule.承認経路",
+    "state": "suspended",
+    "resolutions": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.承認経路#課長",
+      "resolution": "pending",
+      "timestamp": "2026-10-07T12:49:34.419874Z"
+     }
+    ],
+    "undoneSeqs": [],
+    "constraints": [],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.承認経路#課長": "0",
+      "urn:kobuy:rule.承認経路#判定": "1",
+      "urn:kobuy:rule.承認経路#部長": "2",
+      "urn:kobuy:rule.承認経路#何もしない": "3"
+     },
+     "parents": {
+      "0": null,
+      "1": null,
+      "2": null,
+      "3": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:34.347736",
+    "endTime": "2026-10-07T12:49:34.421200Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000001#10",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "predicateName": "urn:kobuy:購買",
+    "parentInstanceId": null,
+    "callerNodeUri": null,
+    "elements": [
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~0:X1",
+      "previousValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.470473Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 80
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~1:X1",
+      "previousValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.470532Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 81
+     }
+    ],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.購買",
+    "state": "suspended",
+    "resolutions": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#経路",
+      "resolution": "pending",
+      "timestamp": "2026-10-07T12:49:34.471947Z"
+     }
+    ],
+    "undoneSeqs": [],
+    "goalHead": {
+     "nodeUri": "urn:record:購買-0001",
+     "predicate": "urn:kobuy:購買",
+     "args": {
+      "urn:kobuy:件名": {
+       "name": "S",
+       "termType": "variable"
+      },
+      "agent": {
+       "name": "U",
+       "termType": "variable"
+      },
+      "inChannel": {
+       "value": "urn:channel:購買.田中",
+       "termType": "constant"
+      }
+     },
+     "isConstraint": false,
+     "builtInFunction": null,
+     "quant": null,
+     "quorum": null,
+     "tallyAgent": null,
+     "completionMode": "confirm",
+     "once": false,
+     "existing": false
+    },
+    "constraints": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#社員",
+      "referencedUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001:U"
+      ],
+      "boundUris": []
+     }
+    ],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#社員": "0",
+      "urn:kobuy:rule.購買#注文": "1",
+      "urn:kobuy:rule.購買#経路": "2",
+      "urn:record:購買-0001": "3",
+      "urn:kobuy:rule.購買#発注": "4",
+      "urn:kobuy:rule.購買#経路|urn:kobuy:承認明細一覧#0": "5",
+      "urn:kobuy:rule.購買#経路|urn:kobuy:承認明細一覧#1": "6"
+     },
+     "parents": {
+      "0": null,
+      "1": null,
+      "2": null,
+      "3": null,
+      "4": null,
+      "5": null,
+      "6": null
+     },
+     "slotNames": {
+      "truthValue": "X1",
+      "urn:kobuy:注文明細": "X2",
+      "urn:kobuy:勘定科目": "X3"
+     }
+    },
+    "startTime": "2026-10-07T21:49:33.978934",
+    "endTime": "2026-10-07T12:49:34.472289Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000010#3",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000010",
+    "predicateName": "urn:kobuy:承認経路",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:kobuy:rule.購買#経路",
+    "elements": [
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000010:urn:entity:created-3:urn:kobuy:勘定科目",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:account:5201",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.468556Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000010",
+      "attributeEntityUri": "urn:entity:created-3",
+      "attributeName": "urn:kobuy:勘定科目",
+      "editedBy": "urn:wam:user:unknown",
+      "seq": 77
+     }
+    ],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.承認経路",
+    "state": "suspended",
+    "resolutions": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.承認経路#課長",
+      "resolution": "pending",
+      "timestamp": "2026-10-07T12:49:34.471731Z"
+     }
+    ],
+    "undoneSeqs": [],
+    "constraints": [],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.承認経路#課長": "0",
+      "urn:kobuy:rule.承認経路#判定": "1",
+      "urn:kobuy:rule.承認経路#部長": "2",
+      "urn:kobuy:rule.承認経路#何もしない": "3"
+     },
+     "parents": {
+      "0": null,
+      "1": null,
+      "2": null,
+      "3": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:34.347736",
+    "endTime": "2026-10-07T12:49:34.472334Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000012#2",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000012",
+    "predicateName": "urn:kobuy:承認明細C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:wam:clause:wamtest:1791377373951:000001~5",
+    "elements": [
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000012~1:X1",
+      "previousValue": null,
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.469863Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000012",
+      "seq": 78
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000012~1:X1",
+      "previousValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.470150Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000012",
+      "seq": 79
+     }
+    ],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.承認明細",
+    "state": "completed",
+    "resolutions": [],
+    "undoneSeqs": [],
+    "constraints": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.承認明細#包含",
+      "referencedUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000012:K",
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000012:Y"
+      ],
+      "boundUris": []
+     }
+    ],
+    "frameLayout": {
+     "frames": {
+      "urn:wam:clause:wamtest:1791377373951:000001~5|urn:kobuy:注文明細#0": "0",
+      "urn:kobuy:rule.承認明細#包含": "1"
+     },
+     "parents": {
+      "0": null,
+      "1": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:34.349840",
+    "endTime": "2026-10-07T12:49:34.472350Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000001#11",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "predicateName": "urn:kobuy:購買",
+    "parentInstanceId": null,
+    "callerNodeUri": null,
+    "elements": [
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~0:X1",
+      "previousValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.514515Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 85
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~1:X1",
+      "previousValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.514546Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 86
+     }
+    ],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.購買",
+    "state": "suspended",
+    "resolutions": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#経路",
+      "resolution": "pending",
+      "timestamp": "2026-10-07T12:49:34.515723Z"
+     }
+    ],
+    "undoneSeqs": [],
+    "goalHead": {
+     "nodeUri": "urn:record:購買-0001",
+     "predicate": "urn:kobuy:購買",
+     "args": {
+      "urn:kobuy:件名": {
+       "name": "S",
+       "termType": "variable"
+      },
+      "agent": {
+       "name": "U",
+       "termType": "variable"
+      },
+      "inChannel": {
+       "value": "urn:channel:購買.田中",
+       "termType": "constant"
+      }
+     },
+     "isConstraint": false,
+     "builtInFunction": null,
+     "quant": null,
+     "quorum": null,
+     "tallyAgent": null,
+     "completionMode": "confirm",
+     "once": false,
+     "existing": false
+    },
+    "constraints": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#社員",
+      "referencedUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001:U"
+      ],
+      "boundUris": []
+     }
+    ],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#社員": "0",
+      "urn:kobuy:rule.購買#注文": "1",
+      "urn:kobuy:rule.購買#経路": "2",
+      "urn:record:購買-0001": "3",
+      "urn:kobuy:rule.購買#発注": "4",
+      "urn:kobuy:rule.購買#経路|urn:kobuy:承認明細一覧#0": "5",
+      "urn:kobuy:rule.購買#経路|urn:kobuy:承認明細一覧#1": "6"
+     },
+     "parents": {
+      "0": null,
+      "1": null,
+      "2": null,
+      "3": null,
+      "4": null,
+      "5": null,
+      "6": null
+     },
+     "slotNames": {
+      "truthValue": "X1",
+      "urn:kobuy:注文明細": "X2",
+      "urn:kobuy:勘定科目": "X3"
+     }
+    },
+    "startTime": "2026-10-07T21:49:33.978934",
+    "endTime": "2026-10-07T12:49:34.516002Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000010#4",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000010",
+    "predicateName": "urn:kobuy:承認経路",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:kobuy:rule.購買#経路",
+    "elements": [
+     {
+      "variableUri": "urn:wam:attrvar:wamtest:urn:wam:clause:wamtest:1791377373951:000010:urn:entity:created-4:urn:kobuy:勘定科目",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:account:5202",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.513927Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000010",
+      "attributeEntityUri": "urn:entity:created-4",
+      "attributeName": "urn:kobuy:勘定科目",
+      "editedBy": "urn:wam:user:unknown",
+      "seq": 82
+     }
+    ],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.承認経路",
+    "state": "suspended",
+    "resolutions": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.承認経路#課長",
+      "resolution": "pending",
+      "timestamp": "2026-10-07T12:49:34.515636Z"
+     }
+    ],
+    "undoneSeqs": [],
+    "constraints": [],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.承認経路#課長": "0",
+      "urn:kobuy:rule.承認経路#判定": "1",
+      "urn:kobuy:rule.承認経路#部長": "2",
+      "urn:kobuy:rule.承認経路#何もしない": "3"
+     },
+     "parents": {
+      "0": null,
+      "1": null,
+      "2": null,
+      "3": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:34.347736",
+    "endTime": "2026-10-07T12:49:34.516046Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000014#2",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000014",
+    "predicateName": "urn:kobuy:承認明細C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:wam:clause:wamtest:1791377373951:000001~6",
+    "elements": [
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000014~1:X1",
+      "previousValue": null,
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.514194Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000014",
+      "seq": 83
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000014~1:X1",
+      "previousValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.514271Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000014",
+      "seq": 84
+     }
+    ],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.承認明細",
+    "state": "completed",
+    "resolutions": [],
+    "undoneSeqs": [],
+    "constraints": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.承認明細#包含",
+      "referencedUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000014:K",
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000014:Y"
+      ],
+      "boundUris": []
+     }
+    ],
+    "frameLayout": {
+     "frames": {
+      "urn:wam:clause:wamtest:1791377373951:000001~6|urn:kobuy:注文明細#0": "0",
+      "urn:kobuy:rule.承認明細#包含": "1"
+     },
+     "parents": {
+      "0": null,
+      "1": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:34.352196",
+    "endTime": "2026-10-07T12:49:34.516064Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000001#12",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "predicateName": "urn:kobuy:購買",
+    "parentInstanceId": null,
+    "callerNodeUri": null,
+    "elements": [
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~0:X1",
+      "previousValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.554615Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 87
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~1:X1",
+      "previousValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.554657Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 88
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001~2:X1",
+      "previousValue": null,
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.557701Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 92
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001:_agentFrom_urn%3Akobuy%3Arule.%E8%B3%BC%E8%B2%B7%23%E7%99%BA%E6%B3%A8",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:org:役職.購買担当",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.558337Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 93
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001:_agentOf_urn%3Akobuy%3Arule.%E8%B3%BC%E8%B2%B7%23%E7%99%BA%E6%B3%A8",
+      "previousValue": null,
+      "newValue": {
+       "value": "urn:person:太木",
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.558375Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+      "seq": 94
+     }
+    ],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.購買",
+    "state": "suspended",
+    "resolutions": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#経路",
+      "resolution": "succeeded",
+      "timestamp": "2026-10-07T12:49:34.557704Z"
+     },
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#発注",
+      "resolution": "pending",
+      "timestamp": "2026-10-07T12:49:34.558428Z"
+     }
+    ],
+    "undoneSeqs": [],
+    "goalHead": {
+     "nodeUri": "urn:record:購買-0001",
+     "predicate": "urn:kobuy:購買",
+     "args": {
+      "urn:kobuy:件名": {
+       "name": "S",
+       "termType": "variable"
+      },
+      "agent": {
+       "name": "U",
+       "termType": "variable"
+      },
+      "inChannel": {
+       "value": "urn:channel:購買.田中",
+       "termType": "constant"
+      }
+     },
+     "isConstraint": false,
+     "builtInFunction": null,
+     "quant": null,
+     "quorum": null,
+     "tallyAgent": null,
+     "completionMode": "confirm",
+     "once": false,
+     "existing": false
+    },
+    "constraints": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.購買#社員",
+      "referencedUris": [
+       "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000001:U"
+      ],
+      "boundUris": []
+     }
+    ],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.購買#社員": "0",
+      "urn:kobuy:rule.購買#注文": "1",
+      "urn:kobuy:rule.購買#経路": "2",
+      "urn:record:購買-0001": "3",
+      "urn:kobuy:rule.購買#発注": "4",
+      "urn:kobuy:rule.購買#経路|urn:kobuy:承認明細一覧#0": "5",
+      "urn:kobuy:rule.購買#経路|urn:kobuy:承認明細一覧#1": "6"
+     },
+     "parents": {
+      "0": null,
+      "1": null,
+      "2": null,
+      "3": null,
+      "4": null,
+      "5": null,
+      "6": null
+     },
+     "slotNames": {
+      "truthValue": "X1",
+      "urn:kobuy:注文明細": "X2",
+      "urn:kobuy:勘定科目": "X3"
+     }
+    },
+    "startTime": "2026-10-07T21:49:33.978934",
+    "endTime": "2026-10-07T12:49:34.558693Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000010#5",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000010",
+    "predicateName": "urn:kobuy:承認経路",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:kobuy:rule.購買#経路",
+    "elements": [
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000010~0:X1",
+      "previousValue": null,
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.556018Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000010",
+      "seq": 89
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000010~1:X1",
+      "previousValue": null,
+      "newValue": {
+       "value": false,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.557493Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000010",
+      "seq": 90
+     },
+     {
+      "variableUri": "urn:wam:var:wamtest:urn:wam:clause:wamtest:1791377373951:000010~3:X1",
+      "previousValue": null,
+      "newValue": {
+       "value": true,
+       "termType": "constant"
+      },
+      "timestamp": "2026-10-07T12:49:34.557641Z",
+      "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000010",
+      "seq": 91
+     }
+    ],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.承認経路",
+    "state": "completed",
+    "resolutions": [
+     {
+      "atomNodeUri": "urn:kobuy:rule.承認経路#課長",
+      "resolution": "succeeded",
+      "timestamp": "2026-10-07T12:49:34.556036Z"
+     },
+     {
+      "atomNodeUri": "urn:kobuy:rule.承認経路#判定",
+      "resolution": "failed",
+      "timestamp": "2026-10-07T12:49:34.557510Z"
+     },
+     {
+      "atomNodeUri": "urn:kobuy:rule.承認経路#何もしない",
+      "resolution": "succeeded",
+      "timestamp": "2026-10-07T12:49:34.557645Z"
+     }
+    ],
+    "undoneSeqs": [],
+    "constraints": [],
+    "frameLayout": {
+     "frames": {
+      "urn:kobuy:rule.承認経路#課長": "0",
+      "urn:kobuy:rule.承認経路#判定": "1",
+      "urn:kobuy:rule.承認経路#部長": "2",
+      "urn:kobuy:rule.承認経路#何もしない": "3"
+     },
+     "parents": {
+      "0": null,
+      "1": null,
+      "2": null,
+      "3": null
+     },
+     "slotNames": {
+      "truthValue": "X1"
+     }
+    },
+    "startTime": "2026-10-07T21:49:34.347736",
+    "endTime": "2026-10-07T12:49:34.558733Z",
+    "sourceClientId": "wamtest"
+   },
+   {
+    "segmentId": "urn:wam:segment:urn:wam:clause:wamtest:1791377373951:000016",
+    "sessionId": "wamtest",
+    "clauseInstanceId": "urn:wam:clause:wamtest:1791377373951:000016",
+    "predicateName": "urn:kobuy:発注C",
+    "parentInstanceId": "urn:wam:clause:wamtest:1791377373951:000001",
+    "callerNodeUri": "urn:kobuy:rule.購買#発注",
+    "elements": [],
+    "dbWrites": [],
+    "clauseHeadNodeUri": "urn:kobuy:rule.発注C",
+    "state": "completed",
+    "resolutions": [],
+    "undoneSeqs": [],
+    "constraints": [],
+    "startTime": "2026-10-07T21:49:34.558080",
+    "endTime": "2026-10-07T12:49:34.558756Z",
+    "sourceClientId": "wamtest"
+   }
+  ]
+ }
+}
