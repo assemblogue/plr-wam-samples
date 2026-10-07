@@ -1,0 +1,2356 @@
+{
+ "_source": {
+  "fileId": "1vGIu77lmaIzfpXvL3X5waYZWTDKA-4kp",
+  "sha256": "0e21ec2aaa3881552e6d07ed1e81fa888e1dd7dc677897120b59b93b5b803939"
+ },
+ "@context": "http://PUBLIC/ontologies/menuContext.jsonld",
+ "@id": "ONTO",
+ "@type": "PlrOntology",
+ "defines": [
+  {
+   "@id": "#ONTO",
+   "@type": "Class",
+   "label": {
+    "": "Ontology",
+    "ja": "オントロジー"
+   },
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "minCardinality": 0,
+     "onProperty": "#onto0"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto1"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "minCardinality": 0,
+     "onProperty": "#onto2"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto4"
+    },
+    {
+     "@id": "#_AutomaticGeneration_Super_0000000005_SuperClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#onto0",
+   "@type": "DatatypeProperty",
+   "domain": "#_AutomaticGeneration_Super_0000000005_SuperClass",
+   "format": {
+    "": "[]"
+   },
+   "label": {
+    "": "name",
+    "ja": "名前"
+   },
+   "range": "string"
+  },
+  {
+   "@id": "#onto1",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO",
+   "label": {
+    "": "abberv name",
+    "ja": "短縮名"
+   },
+   "range": "string"
+  },
+  {
+   "@id": "#onto2",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO",
+   "label": {
+    "": "explanation",
+    "ja": "説明"
+   },
+   "range": "string"
+  },
+  {
+   "@id": "#onto4",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO",
+   "label": {
+    "": "image",
+    "ja": "画像"
+   },
+   "range": "mmdata"
+  },
+  {
+   "@id": "#ONTO1",
+   "@type": "Class",
+   "abbrev": {
+    "": ""
+   },
+   "format": {
+    "": "[%onto0]"
+   },
+   "label": {
+    "": "Class",
+    "ja": "クラス"
+   },
+   "subClassOf": [
+    {
+     "@id": "#ONTO",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "cardinality": 1,
+     "onProperty": "#ontoID"
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#onto5"
+    },
+    {
+     "@id": "#_AutomaticGeneration_Super_0000000007_SuperClass",
+     "@type": "Class"
+    },
+    {
+     "@id": "#ONTO0",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#ontoD"
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#onto10"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#builtInFunction"
+    },
+    {
+     "@type": "Restriction",
+     "cardinality": 1,
+     "onProperty": "#compensatesWith"
+    },
+    {
+     "@id": "#_AutomaticGeneration_ontoR00_0000000006_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#ontoID",
+   "@type": "DatatypeProperty",
+   "domain": "#_AutomaticGeneration_Super_0000000007_SuperClass",
+   "label": {
+    "": "ontoID"
+   },
+   "range": "string"
+  },
+  {
+   "@id": "#onto5",
+   "@type": "ObjectProperty",
+   "domain": "#ONTO1",
+   "format": {
+    "": "([])"
+   },
+   "label": {
+    "": "prop spec",
+    "ja": "属性指定"
+   },
+   "range": "#ONTO4"
+  },
+  {
+   "@id": "#ONTO4",
+   "@type": "Class",
+   "abbrev": {
+    "": ""
+   },
+   "format": {
+    "": "[%onto0]"
+   },
+   "label": {
+    "": "Property Spec",
+    "ja": "属性指定"
+   },
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "cardinality": 1,
+     "onProperty": "#ontoA"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "minCardinality": 0,
+     "onProperty": "#onto30"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "minCardinality": 0,
+     "onProperty": "#onto31"
+    }
+   ]
+  },
+  {
+   "@id": "#ontoA",
+   "@type": "ObjectProperty",
+   "domain": "#ONTO4",
+   "format": {
+    "": "[]"
+   },
+   "label": {
+    "": "prop body",
+    "ja": "属性本体"
+   },
+   "range": "#ONTO3"
+  },
+  {
+   "@id": "#ONTO3",
+   "@type": "Class",
+   "abbrev": {
+    "": ""
+   },
+   "format": {
+    "": "[%onto0]"
+   },
+   "label": {
+    "ja": "属性"
+   },
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "cardinality": 1,
+     "onProperty": "#ontoID"
+    },
+    {
+     "@id": "#_AutomaticGeneration_Super_0000000007_SuperClass",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "minCardinality": 0,
+     "onProperty": "#onto8"
+    },
+    {
+     "@type": "Restriction",
+     "cardinality": 1,
+     "onProperty": "#onto32"
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#onto33"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto34"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto35"
+    },
+    {
+     "@id": "#ONTO",
+     "@type": "Class"
+    },
+    {
+     "@id": "#_AutomaticGeneration_ontoR00_0000000006_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_AutomaticGeneration_Super_0000000007_SuperClass",
+   "@type": "Class"
+  },
+  {
+   "@id": "#onto8",
+   "@type": "ObjectProperty",
+   "domain": "#ONTO3",
+   "label": {
+    "": "format",
+    "ja": "書式"
+   },
+   "range": "#ONTO8",
+   "subPropertyOf": [
+    "#reusable"
+   ]
+  },
+  {
+   "@id": "#ONTO8",
+   "@type": "Class",
+   "label": {
+    "ja": "書式"
+   },
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "minCardinality": 0,
+     "onProperty": "#onto80"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "minCardinality": 0,
+     "onProperty": "#onto81"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "minCardinality": 0,
+     "onProperty": "#onto82"
+    },
+    {
+     "@id": "#_AutomaticGeneration_Super_0000000012_SuperClass",
+     "@type": "Class"
+    },
+    {
+     "@id": "#ONTO",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#onto80",
+   "@type": "DatatypeProperty",
+   "domain": "#_AutomaticGeneration_Super_0000000012_SuperClass",
+   "label": {
+    "": "prefix",
+    "ja": "接頭辞"
+   },
+   "range": "string"
+  },
+  {
+   "@id": "#onto81",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO8",
+   "label": {
+    "": "infix",
+    "ja": "接中辞"
+   },
+   "range": "string"
+  },
+  {
+   "@id": "#onto82",
+   "@type": "DatatypeProperty",
+   "domain": "#_AutomaticGeneration_Super_0000000012_SuperClass",
+   "label": {
+    "": "postfix",
+    "ja": "接尾辞"
+   },
+   "range": "string"
+  },
+  {
+   "@id": "#onto32",
+   "@type": "ObjectProperty",
+   "domain": "#ONTO3",
+   "format": {
+    "": "[]"
+   },
+   "label": {
+    "": "value",
+    "ja": "値"
+   },
+   "range": "#ONTO0",
+   "subPropertyOf": [
+    "#reusable"
+   ]
+  },
+  {
+   "@id": "#ONTO0",
+   "@type": "Class",
+   "label": {
+    "": "Value",
+    "ja": "値"
+   }
+  },
+  {
+   "@id": "#ONTO02",
+   "@type": "Class",
+   "label": {
+    "": "Literal",
+    "ja": "リテラル"
+   },
+   "subClassOf": [
+    {
+     "@id": "#ONTO0",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#ontoFMT"
+    }
+   ]
+  },
+  {
+   "@id": "#ontoFMT",
+   "@type": "ObjectProperty",
+   "domain": "#ONTO02",
+   "label": {
+    "": "format",
+    "ja": "書式"
+   },
+   "range": "#ONTOfmt",
+   "subPropertyOf": [
+    "#reusable"
+   ]
+  },
+  {
+   "@id": "#ONTOfmt",
+   "@type": "Class",
+   "label": {
+    "ja": "書式"
+   },
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "minCardinality": 0,
+     "onProperty": "#onto80"
+    },
+    {
+     "@id": "#_AutomaticGeneration_Super_0000000012_SuperClass",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "minCardinality": 0,
+     "onProperty": "#onto82"
+    },
+    {
+     "@id": "#ONTO",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_AutomaticGeneration_Super_0000000012_SuperClass",
+   "@type": "Class"
+  },
+  {
+   "@id": "#ONTO20",
+   "@type": "Class",
+   "format": {
+    "": " {[%onto200]~}{~[%onto201]}"
+   },
+   "label": {
+    "": "Integer",
+    "ja": "整数"
+   },
+   "subClassOf": [
+    {
+     "@id": "#ONTO02",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto200"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto201"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto202"
+    }
+   ]
+  },
+  {
+   "@id": "#onto200",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO20",
+   "label": {
+    "": "min",
+    "ja": "最小"
+   },
+   "range": "integer"
+  },
+  {
+   "@id": "#onto201",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO20",
+   "label": {
+    "": "max",
+    "ja": "最大"
+   },
+   "range": "integer"
+  },
+  {
+   "@id": "#onto202",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO20",
+   "label": {
+    "": "default",
+    "ja": "デフォルト"
+   },
+   "range": "integer"
+  },
+  {
+   "@id": "#ONTO26",
+   "@type": "Class",
+   "format": {
+    "": " {[%onto260]~}{~[%onto261]}"
+   },
+   "label": {
+    "": "Positive Integer",
+    "ja": "正整数"
+   },
+   "subClassOf": [
+    {
+     "@id": "#ONTO02",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto260"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto261"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto262"
+    }
+   ]
+  },
+  {
+   "@id": "#onto260",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO26",
+   "label": {
+    "": "min",
+    "ja": "最小"
+   },
+   "range": "positiveInteger"
+  },
+  {
+   "@id": "#onto261",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO26",
+   "label": {
+    "": "max",
+    "ja": "最大"
+   },
+   "range": "positiveInteger"
+  },
+  {
+   "@id": "#onto262",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO26",
+   "label": {
+    "": "default",
+    "ja": "デフォルト"
+   },
+   "range": "positiveInteger"
+  },
+  {
+   "@id": "#ONTO27",
+   "@type": "Class",
+   "format": {
+    "": " {[%onto270]~}{~[%onto271]}"
+   },
+   "label": {
+    "": "Non-Negative Integer",
+    "ja": "非負整数"
+   },
+   "subClassOf": [
+    {
+     "@id": "#ONTO02",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto270"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto271"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto272"
+    }
+   ]
+  },
+  {
+   "@id": "#onto270",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO27",
+   "label": {
+    "": "min",
+    "ja": "最小"
+   },
+   "range": "nonNegativeInteger"
+  },
+  {
+   "@id": "#onto271",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO27",
+   "label": {
+    "": "max",
+    "ja": "最大"
+   },
+   "range": "nonNegativeInteger"
+  },
+  {
+   "@id": "#onto272",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO27",
+   "label": {
+    "": "default",
+    "ja": "デフォルト"
+   },
+   "range": "nonNegativeInteger"
+  },
+  {
+   "@id": "#ONTO21",
+   "@type": "Class",
+   "format": {
+    "": " {[%onto210]~}{~[%onto211]}"
+   },
+   "label": {
+    "": "Decimal",
+    "ja": "十進数"
+   },
+   "subClassOf": [
+    {
+     "@id": "#ONTO02",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto210"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto211"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto212"
+    }
+   ]
+  },
+  {
+   "@id": "#onto210",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO21",
+   "label": {
+    "": "min",
+    "ja": "最小"
+   },
+   "range": "decimal"
+  },
+  {
+   "@id": "#onto211",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO21",
+   "label": {
+    "": "max",
+    "ja": "最大"
+   },
+   "range": "decimal"
+  },
+  {
+   "@id": "#onto212",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO21",
+   "label": {
+    "": "default",
+    "ja": "デフォルト"
+   },
+   "range": "decimal"
+  },
+  {
+   "@id": "#ONTO22",
+   "@type": "Class",
+   "format": {
+    "": " {[%onto220]~}{~[%onto221]}"
+   },
+   "label": {
+    "": "String",
+    "ja": "文字列"
+   },
+   "subClassOf": [
+    {
+     "@id": "#ONTO02",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto220"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto221"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto222"
+    }
+   ]
+  },
+  {
+   "@id": "#onto220",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO22",
+   "label": {
+    "": "shortest",
+    "ja": "最短"
+   },
+   "range": "integer"
+  },
+  {
+   "@id": "#onto221",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO22",
+   "label": {
+    "": "longest",
+    "ja": "最長"
+   },
+   "range": "integer"
+  },
+  {
+   "@id": "#onto222",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO22",
+   "label": {
+    "": "default",
+    "ja": "デフォルト"
+   },
+   "range": "string"
+  },
+  {
+   "@id": "#ONTO23",
+   "@type": "Class",
+   "format": {
+    "": " {[%onto230]~}{~[%onto231]}"
+   },
+   "label": {
+    "": "DateTime",
+    "ja": "日時"
+   },
+   "subClassOf": [
+    {
+     "@id": "#ONTO02",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto230"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto231"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto232"
+    }
+   ]
+  },
+  {
+   "@id": "#onto230",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO23",
+   "label": {
+    "": "earliest",
+    "ja": "最古"
+   },
+   "range": "dateTime"
+  },
+  {
+   "@id": "#onto231",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO23",
+   "label": {
+    "": "latest",
+    "ja": "最新"
+   },
+   "range": "dateTime"
+  },
+  {
+   "@id": "#onto232",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO23",
+   "label": {
+    "": "default",
+    "ja": "デフォルト"
+   },
+   "range": "dateTime"
+  },
+  {
+   "@id": "#ONTO24",
+   "@type": "Class",
+   "format": {
+    "": " {[%onto240]~}{~[%onto241]}"
+   },
+   "label": {
+    "": "Date",
+    "ja": "日付"
+   },
+   "subClassOf": [
+    {
+     "@id": "#ONTO02",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto240"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto241"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto242"
+    }
+   ]
+  },
+  {
+   "@id": "#onto240",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO24",
+   "label": {
+    "": "earliest",
+    "ja": "最古"
+   },
+   "range": "date"
+  },
+  {
+   "@id": "#onto241",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO24",
+   "label": {
+    "": "latest",
+    "ja": "最新"
+   },
+   "range": "date"
+  },
+  {
+   "@id": "#onto242",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO24",
+   "label": {
+    "": "default",
+    "ja": "デフォルト"
+   },
+   "range": "date"
+  },
+  {
+   "@id": "#ONTO25",
+   "@type": "Class",
+   "format": {
+    "": " {[%onto250]~}{~[%onto251]}"
+   },
+   "label": {
+    "": "Time",
+    "ja": "時刻"
+   },
+   "subClassOf": [
+    {
+     "@id": "#ONTO02",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto250"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto251"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#onto252"
+    }
+   ]
+  },
+  {
+   "@id": "#onto250",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO25",
+   "label": {
+    "": "earliest",
+    "ja": "最古"
+   },
+   "range": "time"
+  },
+  {
+   "@id": "#onto251",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO25",
+   "label": {
+    "": "latest",
+    "ja": "最新"
+   },
+   "range": "time"
+  },
+  {
+   "@id": "#onto252",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO25",
+   "label": {
+    "": "default",
+    "ja": "デフォルト"
+   },
+   "range": "time"
+  },
+  {
+   "@id": "#onto33",
+   "@type": "ObjectProperty",
+   "domain": "#ONTO3",
+   "label": {
+    "": "subprop",
+    "ja": "下位属性"
+   },
+   "range": "#ONTO3"
+  },
+  {
+   "@id": "#onto34",
+   "@type": "ObjectProperty",
+   "domain": "#ONTO3",
+   "label": {
+    "": "collection type",
+    "ja": "集まりの種類"
+   },
+   "range": "#_AutomaticGeneration_onto34_0000000008_SelectorClass"
+  },
+  {
+   "@id": "#_onto340",
+   "@type": "Class",
+   "label": {
+    "": "ordered",
+    "ja": "列"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_onto34_0000000008_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_onto341",
+   "@type": "Class",
+   "label": {
+    "": "multiset",
+    "ja": "多重集合"
+   },
+   "selected": true,
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_onto34_0000000008_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_AutomaticGeneration_onto34_0000000008_SelectorClass",
+   "@type": "Class"
+  },
+  {
+   "@id": "#_onto342",
+   "@type": "Class",
+   "label": {
+    "": "set",
+    "ja": "集合"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_onto34_0000000008_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#onto35",
+   "@type": "DatatypeProperty",
+   "defaultValue": false,
+   "domain": "#ONTO3",
+   "label": {
+    "": "partial",
+    "ja": "部分的"
+   },
+   "range": "boolean"
+  },
+  {
+   "@id": "#onto30",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO4",
+   "label": {
+    "": "minOccurrence",
+    "ja": "最小"
+   },
+   "range": "nonNegativeInteger"
+  },
+  {
+   "@id": "#onto31",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO4",
+   "label": {
+    "": "maxOccurrence",
+    "ja": "最大"
+   },
+   "range": "nonNegativeInteger"
+  },
+  {
+   "@id": "#ontoD",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO1",
+   "label": {
+    "": "duration",
+    "ja": "時間長"
+   },
+   "range": "duration"
+  },
+  {
+   "@id": "#onto10",
+   "@type": "ObjectProperty",
+   "domain": "#ONTO1",
+   "label": {
+    "": "subclass",
+    "ja": "下位クラス"
+   },
+   "range": "#ONTO1"
+  },
+  {
+   "@id": "#builtInFunction",
+   "@type": "DatatypeProperty",
+   "domain": "#ONTO1",
+   "label": {
+    "": "built-in fuction",
+    "ja": "組込関数"
+   },
+   "range": "string"
+  },
+  {
+   "@id": "#compensatesWith",
+   "@type": "ObjectProperty",
+   "domain": "#ONTO1",
+   "label": {
+    "": "compensates with",
+    "ja": "補償"
+   },
+   "range": "#ONTO1"
+  },
+  {
+   "@id": "#ONTOr",
+   "@type": "Class",
+   "label": {
+    "": "Restriction",
+    "ja": "限定"
+   },
+   "subClassOf": [
+    {
+     "@id": "#ONTO",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "minCardinality": 1,
+     "onProperty": "#ontoRU"
+    }
+   ]
+  },
+  {
+   "@id": "#ontoRU",
+   "@type": "ObjectProperty",
+   "domain": "#ONTOr",
+   "label": {
+    "": "unit restriction",
+    "ja": "単位限定"
+   },
+   "range": "#ONTOru"
+  },
+  {
+   "@id": "#ONTOru",
+   "@type": "Class",
+   "label": {
+    "": "Unit Restriction",
+    "ja": "単位限定"
+   },
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "minCardinality": 1,
+     "onProperty": "#ontoR00"
+    },
+    {
+     "@type": "Restriction",
+     "minCardinality": 1,
+     "onProperty": "#ontoR01"
+    }
+   ]
+  },
+  {
+   "@id": "#ontoR00",
+   "@type": "ObjectProperty",
+   "domain": "#ONTOru",
+   "label": {
+    "": "restricted",
+    "ja": "対象"
+   },
+   "range": "#_AutomaticGeneration_ontoR00_0000000006_SelectorClass",
+   "subPropertyOf": [
+    "#reuse"
+   ]
+  },
+  {
+   "@id": "#_AutomaticGeneration_ontoR00_0000000006_SelectorClass",
+   "@type": "Class"
+  },
+  {
+   "@id": "#ontoR01",
+   "@type": "ObjectProperty",
+   "domain": "#ONTOru",
+   "label": {
+    "": "restriction mode",
+    "ja": "限定方法"
+   },
+   "range": "#_AutomaticGeneration_ontoR01_0000000006_SelectorClass"
+  },
+  {
+   "@id": "#_ontoR0",
+   "@type": "Class",
+   "comment": {
+    "ja": "入力不可"
+   },
+   "label": {
+    "": "menu",
+    "ja": "メニュー"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_ontoR01_0000000006_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_ontoR1",
+   "@type": "Class",
+   "comment": {
+    "": "gray in menu and unselectable",
+    "ja": "メニューにグレーで表示し選択(入力)不可"
+   },
+   "label": {
+    "": "no input",
+    "ja": "非入力"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_ontoR01_0000000006_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_AutomaticGeneration_ontoR01_0000000006_SelectorClass",
+   "@type": "Class"
+  },
+  {
+   "@id": "#_ontoR2",
+   "@type": "Class",
+   "comment": {
+    "ja": "メニューに表示せず下位クラス/属性は「入力可」の場合のみメニューに表示"
+   },
+   "label": {
+    "": "no input+",
+    "ja": "非入力+"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_ontoR01_0000000006_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_ontoR3",
+   "@type": "Class",
+   "label": {
+    "": "input",
+    "ja": "入力"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_ontoR01_0000000006_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_ontoR4",
+   "@type": "Class",
+   "label": {
+    "": "input+",
+    "ja": "入力+"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_ontoR01_0000000006_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_ontoR5",
+   "@type": "Class",
+   "label": {
+    "": "edit",
+    "ja": "編集"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_ontoR01_0000000006_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_ontoR6",
+   "@type": "Class",
+   "label": {
+    "": "edit+",
+    "ja": "編集+"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_ontoR01_0000000006_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_ontoRd",
+   "@type": "Class",
+   "label": {
+    "": "make",
+    "ja": "作成"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_ontoR01_0000000006_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_ontoRe",
+   "@type": "Class",
+   "label": {
+    "": "make+",
+    "ja": "作成+"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_ontoR01_0000000006_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_ontoR7",
+   "@type": "Class",
+   "label": {
+    "": "show",
+    "ja": "表示"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_ontoR01_0000000006_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_ontoR8",
+   "@type": "Class",
+   "label": {
+    "": "show+",
+    "ja": "表示+"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_ontoR01_0000000006_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_ontoR9",
+   "@type": "Class",
+   "label": {
+    "": "hide",
+    "ja": "非表示"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_ontoR01_0000000006_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_ontoRa",
+   "@type": "Class",
+   "label": {
+    "": "hide+",
+    "ja": "非表示+"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_ontoR01_0000000006_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_ontoRb",
+   "@type": "Class",
+   "comment": {
+    "": "hide from timeline and graph",
+    "ja": "タイムラインとグラフに表示しない"
+   },
+   "label": {
+    "": "top-level hide",
+    "ja": "トップレベル非表示"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_ontoR01_0000000006_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_ontoRc",
+   "@type": "Class",
+   "label": {
+    "": "top-level hide+",
+    "ja": "トップレベル非表示+"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_ontoR01_0000000006_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#ONTO2",
+   "@type": "Class",
+   "label": {
+    "": "Workplace",
+    "ja": "ワークプレース"
+   },
+   "subClassOf": [
+    {
+     "@id": "#ONTO",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "minCardinality": 0,
+     "onProperty": "#onto"
+    },
+    {
+     "@type": "Restriction",
+     "minCardinality": 0,
+     "onProperty": "#onto6"
+    },
+    {
+     "@type": "Restriction",
+     "minCardinality": 0,
+     "onProperty": "#onto3"
+    },
+    {
+     "@type": "Restriction",
+     "minCardinality": 0,
+     "onProperty": "#ontoR"
+    },
+    {
+     "@type": "Restriction",
+     "minCardinality": 0,
+     "onProperty": "#onto7"
+    },
+    {
+     "@type": "Restriction",
+     "minCardinality": 0,
+     "onProperty": "#ontoC"
+    },
+    {
+     "@type": "Restriction",
+     "minCardinality": 0,
+     "onProperty": "#onto9"
+    }
+   ]
+  },
+  {
+   "@id": "#onto",
+   "@type": "ObjectProperty",
+   "domain": "#ONTO2",
+   "label": {
+    "": "workplace",
+    "ja": "ワークプレース"
+   },
+   "range": "#ONTO2",
+   "subPropertyOf": [
+    "#reuse"
+   ]
+  },
+  {
+   "@id": "#onto6",
+   "@type": "ObjectProperty",
+   "domain": "#ONTO2",
+   "label": {
+    "": "class",
+    "ja": "クラス"
+   },
+   "range": "#ONTO1"
+  },
+  {
+   "@id": "#onto3",
+   "@type": "Property",
+   "domain": "#ONTO2",
+   "label": {
+    "": "prop",
+    "ja": "属性"
+   },
+   "subPropertyOf": [
+    "#reusable"
+   ]
+  },
+  {
+   "@id": "#ontoR",
+   "@type": "ObjectProperty",
+   "domain": "#ONTO2",
+   "label": {
+    "": "restriction",
+    "ja": "限定"
+   },
+   "range": "#ONTOr"
+  },
+  {
+   "@id": "#onto7",
+   "@type": "ObjectProperty",
+   "domain": "#ONTO2",
+   "label": {
+    "": "rule",
+    "ja": "ルール"
+   },
+   "range": "#Template"
+  },
+  {
+   "@id": "#Template",
+   "@type": "Class",
+   "comment": {
+    "": "Internal graph is Horn clause body, which ignores minOccurrence of properties, contains variables, and distinguishes between existing and other info.",
+    "ja": "内部グラフがホーン節の本体。属性のminOccurrenceを無視、変数を導入、既存情報(入力)と他の区別"
+   },
+   "label": {
+    "": "Rule",
+    "ja": "ルール"
+   },
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#isComplete"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#complete"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#completeByOkButton"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#completeOrSuspendByOkButton"
+    },
+    {
+     "@id": "#_AutomaticGeneration_Super_0000000003_SuperClass",
+     "@type": "Class"
+    },
+    {
+     "@id": "#Event",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#Atom",
+   "@type": "Class",
+   "comment": {
+    "": "the head of a Horn clause when it is the value of onto7 attribute, and an atom node in the body of a Horn clause when it is in the internal graph of its head",
+    "ja": "onto7属性かontoG属性の値である場合はホーン節の頭部、その内部グラフにおいてはホーン節の本体のアトムノード"
+   },
+   "label": {
+    "": "Atom Node",
+    "ja": "アトムノード"
+   },
+   "subClassOf": [
+    {
+     "@id": "#Template",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#once"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#truthValue"
+    }
+   ]
+  },
+  {
+   "@id": "#once",
+   "@type": "DatatypeProperty",
+   "defaultValue": false,
+   "domain": "#Atom",
+   "label": {
+    "": "once"
+   },
+   "range": "boolean"
+  },
+  {
+   "@id": "#truthValue",
+   "@type": "DatatypeProperty",
+   "domain": "#Atom",
+   "label": {
+    "": "truth value",
+    "ja": "真偽値"
+   },
+   "range": "boolean"
+  },
+  {
+   "@id": "#Task",
+   "@type": "Class",
+   "label": {
+    "": "Task",
+    "ja": "タスク"
+   },
+   "subClassOf": [
+    {
+     "@id": "#Atom",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#agent"
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agentWithOK"
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agentWithSuspendingOK"
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agentWithoutOK"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#existing"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#inChannel"
+    }
+   ]
+  },
+  {
+   "@id": "#agent",
+   "@type": "ObjectProperty",
+   "domain": "#Task",
+   "label": {
+    "": "agent",
+    "ja": "担当者"
+   },
+   "range": "#Person",
+   "subPropertyOf": [
+    "#refersTo"
+   ]
+  },
+  {
+   "@id": "#Person",
+   "@type": "Class",
+   "label": {
+    "": "Person",
+    "ja": "人"
+   },
+   "subClassOf": [
+    {
+     "@id": "#TaskPrincipal",
+     "@type": "Class"
+    },
+    {
+     "@id": "#CompletionValue",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#agentWithOK",
+   "@type": "Property",
+   "domain": "#Task",
+   "label": {
+    "": "OKagent",
+    "ja": "OK主体"
+   },
+   "subPropertyOf": [
+    "#agent"
+   ]
+  },
+  {
+   "@id": "#agentWithSuspendingOK",
+   "@type": "Property",
+   "domain": "#Task",
+   "label": {
+    "": "SOKagent",
+    "ja": "SOK主体"
+   },
+   "subPropertyOf": [
+    "#agent"
+   ]
+  },
+  {
+   "@id": "#agentWithoutOK",
+   "@type": "Property",
+   "domain": "#Task",
+   "label": {
+    "": "agent",
+    "ja": "主体"
+   },
+   "subPropertyOf": [
+    "#agent"
+   ]
+  },
+  {
+   "@id": "#existing",
+   "@type": "DatatypeProperty",
+   "defaultValue": false,
+   "domain": "#Task",
+   "label": {
+    "": "existing",
+    "ja": "既存"
+   },
+   "range": "boolean"
+  },
+  {
+   "@id": "#inChannel",
+   "@type": "ObjectProperty",
+   "domain": "#Task",
+   "label": {
+    "": "in channel",
+    "ja": "チャネル"
+   },
+   "range": "#ONTOc1",
+   "subPropertyOf": [
+    "#refersTo"
+   ]
+  },
+  {
+   "@id": "#ONTOc1",
+   "@type": "Class",
+   "label": {
+    "": "Channel",
+    "ja": "チャネル"
+   },
+   "subClassOf": [
+    {
+     "@id": "#ONTO",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "cardinality": 1,
+     "onProperty": "#ontoC"
+    },
+    {
+     "@type": "Restriction",
+     "minCardinality": 0,
+     "onProperty": "#channels"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#completeByOkButton"
+    },
+    {
+     "@id": "#_AutomaticGeneration_Super_0000000003_SuperClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#Cancelable",
+   "@type": "Class",
+   "label": {
+    "": "Cancelable Task",
+    "ja": "取消可能タスク"
+   },
+   "subClassOf": [
+    {
+     "@id": "#Task",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#TaskAccess",
+   "@type": "Class",
+   "label": {
+    "": "TaskAccess"
+   },
+   "subClassOf": [
+    {
+     "@id": "#Cancelable",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "cardinality": 1,
+     "onProperty": "#channel"
+    },
+    {
+     "@type": "Restriction",
+     "cardinality": 1,
+     "onProperty": "#task"
+    },
+    {
+     "@type": "Restriction",
+     "minCardinality": 1,
+     "onProperty": "#taskAgent"
+    },
+    {
+     "@type": "Restriction",
+     "minCardinality": 0,
+     "onProperty": "#taskUser"
+    }
+   ]
+  },
+  {
+   "@id": "#channel",
+   "@type": "ObjectProperty",
+   "domain": "#Atom",
+   "label": {
+    "": "channel",
+    "ja": "チャネル"
+   },
+   "range": "#ONTOc1",
+   "subPropertyOf": [
+    "#refersTo"
+   ]
+  },
+  {
+   "@id": "#task",
+   "@type": "ObjectProperty",
+   "domain": "#Atom",
+   "label": {
+    "": "task",
+    "ja": "タスク"
+   },
+   "range": "#ONTO1",
+   "subPropertyOf": [
+    "#refersTo"
+   ]
+  },
+  {
+   "@id": "#taskAgent",
+   "@type": "ObjectProperty",
+   "domain": "#TaskAccess",
+   "label": {
+    "": "task agent",
+    "ja": "タスク担当者"
+   },
+   "range": "#TaskPrincipal",
+   "subPropertyOf": [
+    "#refersTo"
+   ]
+  },
+  {
+   "@id": "#TaskPrincipal",
+   "@type": "Class",
+   "label": {
+    "": "Task Principal",
+    "ja": "利用主体"
+   }
+  },
+  {
+   "@id": "#Post",
+   "@type": "Class",
+   "label": {
+    "": "Post",
+    "ja": "役職"
+   },
+   "subClassOf": [
+    {
+     "@id": "#TaskPrincipal",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#Group",
+   "@type": "Class",
+   "label": {
+    "": "Group",
+    "ja": "グループ"
+   },
+   "subClassOf": [
+    {
+     "@id": "#TaskPrincipal",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#taskUser",
+   "@type": "ObjectProperty",
+   "domain": "#TaskAccess",
+   "label": {
+    "": "task user",
+    "ja": "タスク利用者"
+   },
+   "range": "#TaskPrincipal",
+   "subPropertyOf": [
+    "#refersTo"
+   ]
+  },
+  {
+   "@id": "#Compensable",
+   "@type": "Class",
+   "label": {
+    "": "Compensable Task",
+    "ja": "補償可能タスク"
+   },
+   "subClassOf": [
+    {
+     "@id": "#Task",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#Incompensable",
+   "@type": "Class",
+   "label": {
+    "": "Incompensable Task",
+    "ja": "補償不能タスク"
+   },
+   "subClassOf": [
+    {
+     "@id": "#Task",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#Constraint",
+   "@type": "Class",
+   "label": {
+    "": "Constraint",
+    "ja": "制約"
+   },
+   "subClassOf": [
+    {
+     "@id": "#Atom",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "minCardinality": 0,
+     "onProperty": "#field"
+    }
+   ]
+  },
+  {
+   "@id": "#field",
+   "@type": "ObjectProperty",
+   "domain": "#Constraint",
+   "label": {
+    "": "field",
+    "ja": "欄"
+   },
+   "range": "#Field"
+  },
+  {
+   "@id": "#Field",
+   "@type": "Class",
+   "label": {
+    "": "Field",
+    "ja": "欄"
+   },
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "cardinality": 1,
+     "onProperty": "#fieldArgument"
+    },
+    {
+     "@type": "Restriction",
+     "cardinality": 1,
+     "onProperty": "#fieldNode"
+    },
+    {
+     "@type": "Restriction",
+     "cardinality": 1,
+     "onProperty": "#fieldProperty"
+    }
+   ]
+  },
+  {
+   "@id": "#fieldArgument",
+   "@type": "ObjectProperty",
+   "domain": "#Field",
+   "label": {
+    "": "argument",
+    "ja": "引数"
+   },
+   "range": "#ONTO3"
+  },
+  {
+   "@id": "#fieldNode",
+   "@type": "Property",
+   "domain": "#Field",
+   "label": {
+    "": "node",
+    "ja": "ノード"
+   }
+  },
+  {
+   "@id": "#fieldProperty",
+   "@type": "ObjectProperty",
+   "domain": "#Field",
+   "label": {
+    "": "property",
+    "ja": "属性"
+   },
+   "range": "#ONTO3"
+  },
+  {
+   "@id": "#OtherAtom",
+   "@type": "Class",
+   "label": {
+    "": "Other Atomic Formula",
+    "ja": "他の要素式"
+   },
+   "subClassOf": [
+    {
+     "@id": "#Atom",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#TaskAgent",
+   "@type": "Class",
+   "label": {
+    "": "TaskAgent"
+   },
+   "subClassOf": [
+    {
+     "@id": "#OtherAtom",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "cardinality": 1,
+     "onProperty": "#channel"
+    },
+    {
+     "@type": "Restriction",
+     "cardinality": 1,
+     "onProperty": "#task"
+    },
+    {
+     "@type": "Restriction",
+     "cardinality": 1,
+     "onProperty": "#person"
+    }
+   ]
+  },
+  {
+   "@id": "#person",
+   "@type": "ObjectProperty",
+   "domain": "#TaskAgent",
+   "label": {
+    "": "person",
+    "ja": "人"
+   },
+   "range": "#Person",
+   "subPropertyOf": [
+    "#refersTo"
+   ]
+  },
+  {
+   "@id": "#isComplete",
+   "@type": "Property",
+   "domain": "#Template",
+   "label": {
+    "": "is complete",
+    "ja": "完成"
+   }
+  },
+  {
+   "@id": "#complete",
+   "@type": "DatatypeProperty",
+   "domain": "#Template",
+   "label": {
+    "": "complete",
+    "ja": "完成"
+   },
+   "range": "boolean",
+   "subPropertyOf": [
+    "#isComplete"
+   ]
+  },
+  {
+   "@id": "#completeByOkButton",
+   "@type": "ObjectProperty",
+   "domain": "#_AutomaticGeneration_Super_0000000003_SuperClass",
+   "label": {
+    "": "complete by OK button",
+    "ja": "OKによる完成"
+   },
+   "range": "#CompletionValue",
+   "subPropertyOf": [
+    "#isComplete"
+   ]
+  },
+  {
+   "@id": "#CompletionValue",
+   "@type": "Class",
+   "label": {
+    "": "Completion Value",
+    "ja": "完成の値"
+   }
+  },
+  {
+   "@id": "#_true",
+   "@type": "Class",
+   "label": {
+    "": "true",
+    "ja": "真"
+   },
+   "subClassOf": [
+    {
+     "@id": "#CompletionValue",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_false",
+   "@type": "Class",
+   "label": {
+    "": "false",
+    "ja": "偽"
+   },
+   "subClassOf": [
+    {
+     "@id": "#CompletionValue",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#completeOrSuspendByOkButton",
+   "@type": "ObjectProperty",
+   "domain": "#Template",
+   "label": {
+    "": "complete or suspend by OK button",
+    "ja": "OK・中断OKによる完成"
+   },
+   "range": "#CompletionValue",
+   "subPropertyOf": [
+    "#isComplete"
+   ]
+  },
+  {
+   "@id": "#ontoC",
+   "@type": "ObjectProperty",
+   "domain": "#ONTO",
+   "label": {
+    "": "channel setting",
+    "ja": "チャネル設定"
+   },
+   "range": "#ONTOc"
+  },
+  {
+   "@id": "#ONTOc",
+   "@type": "Class",
+   "label": {
+    "": "Channel Setting",
+    "ja": "チャネル設定"
+   },
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "cardinality": 1,
+     "onProperty": "#onto0"
+    },
+    {
+     "@id": "#_AutomaticGeneration_Super_0000000005_SuperClass",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "minCardinality": 0,
+     "onProperty": "#ontoG"
+    },
+    {
+     "@type": "Restriction",
+     "minCardinality": 0,
+     "onProperty": "#ontoER"
+    },
+    {
+     "@id": "#ONTO",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_AutomaticGeneration_Super_0000000005_SuperClass",
+   "@type": "Class"
+  },
+  {
+   "@id": "#ontoG",
+   "@type": "ObjectProperty",
+   "domain": "#ONTOc",
+   "label": {
+    "": "goal",
+    "ja": "ゴール"
+   },
+   "range": "#Task"
+  },
+  {
+   "@id": "#ontoER",
+   "@type": "ObjectProperty",
+   "comment": {
+    "": "reference existing restriction",
+    "ja": "既存の限定を参照"
+   },
+   "domain": "#ONTOc",
+   "label": {
+    "": "effective restriction",
+    "ja": "有効限定"
+   },
+   "range": "#ONTOr",
+   "subPropertyOf": [
+    "#reuse"
+   ]
+  },
+  {
+   "@id": "#onto9",
+   "@type": "ObjectProperty",
+   "domain": "#ONTO2",
+   "label": {
+    "": "rendering",
+    "ja": "レンダリング"
+   },
+   "range": "#REND"
+  },
+  {
+   "@id": "#REND",
+   "@type": "Class",
+   "label": {
+    "": "GUI"
+   }
+  },
+  {
+   "@id": "#channels",
+   "@type": "ObjectProperty",
+   "domain": "#ONTOc1",
+   "label": {
+    "": "child channel",
+    "ja": "子チャネル"
+   },
+   "range": "#ONTOc1"
+  },
+  {
+   "@id": "#_AutomaticGeneration_Super_0000000003_SuperClass",
+   "@type": "Class"
+  },
+  {
+   "@id": "#Event",
+   "@type": "Class"
+  },
+  {
+   "@id": "#GraphRelation",
+   "@type": "Class"
+  },
+  {
+   "@id": "#ControlRelation",
+   "@type": "Class",
+   "label": {
+    "": "Control Relation",
+    "ja": "制御関係"
+   },
+   "subClassOf": [
+    {
+     "@id": "#GraphRelation",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "cardinality": 1,
+     "onProperty": "#arg1"
+    },
+    {
+     "@type": "Restriction",
+     "cardinality": 1,
+     "onProperty": "#arg2"
+    }
+   ]
+  },
+  {
+   "@id": "#arg1",
+   "@type": "Property",
+   "domain": "#ControlRelation"
+  },
+  {
+   "@id": "#arg2",
+   "@type": "Property",
+   "domain": "#ControlRelation"
+  },
+  {
+   "@id": "#Next",
+   "@type": "Class",
+   "label": {
+    "": "Next",
+    "ja": "次"
+   },
+   "subClassOf": [
+    {
+     "@id": "#ControlRelation",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#Then",
+   "@type": "Class",
+   "label": {
+    "": "then"
+   },
+   "subClassOf": [
+    {
+     "@id": "#ControlRelation",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#Else",
+   "@type": "Class",
+   "label": {
+    "": "else"
+   },
+   "subClassOf": [
+    {
+     "@id": "#ControlRelation",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#refersTo",
+   "@type": "Property",
+   "label": {
+    "": "refers to",
+    "ja": "参照"
+   }
+  },
+  {
+   "@id": "#reusable",
+   "@type": "Property",
+   "label": {
+    "": "reusable",
+    "ja": "再利用可"
+   }
+  },
+  {
+   "@id": "#reuse",
+   "@type": "Property",
+   "comment": {
+    "": "no creation",
+    "ja": "新規作成不可"
+   },
+   "label": {
+    "": "reuse",
+    "ja": "再利用"
+   }
+  },
+  {
+   "@id": "#ontoEC",
+   "@type": "Property",
+   "label": {
+    "ja": "有効ルール"
+   },
+   "subPropertyOf": [
+    "#reuse"
+   ]
+  }
+ ],
+ "label": {
+  "": "Ontology",
+  "ja": "オントロジー"
+ }
+}

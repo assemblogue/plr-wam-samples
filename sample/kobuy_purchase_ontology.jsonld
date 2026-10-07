@@ -3,10 +3,6 @@
  "@id": "urn:kobuy:ontology",
  "@type": "Ontology",
  "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
- "ontoG": [
-  "urn:kobuy:購買ゴール",
-  "urn:kobuy:購買ゴールB"
- ],
  "agentProperty": "urn:kobuy:agent",
  "defines": [
   {
@@ -85,7 +81,10 @@
    "label": {
     "ja": "人",
     "en": "Person"
-   }
+   },
+   "subClassOf": [
+    "#Person"
+   ]
   },
   {
    "@id": "urn:kobuy:agent",
@@ -94,7 +93,10 @@
    "label": {
     "ja": "担当者",
     "en": "Agent"
-   }
+   },
+   "subPropertyOf": [
+    "#agent"
+   ]
   },
   {
    "@id": "urn:kobuy:refersTo",
@@ -120,11 +122,13 @@
   {
    "@id": "urn:kobuy:Then",
    "@type": "Class",
-   "linkKind": "then",
    "label": {
     "ja": "Then",
     "en": "Then"
-   }
+   },
+   "subClassOf": [
+    "#Then"
+   ]
   },
   {
    "@id": "arg1",

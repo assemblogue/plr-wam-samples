@@ -1,0 +1,733 @@
+{
+ "_comment": "doc/wam/examples/kobuy_workplace.jsonld（ONTO2 のワークプレース）を tool/convert_workplace.py でハーネスの形式にしたもの。KOBUY の購買とトークのワークプレース（ONTO2 インスタンス）の例。説明は doc/wam/workplace_example.md。語彙は Ontology.xlsx の Ontology (6) と Rendering.xlsx の Rend (4)。ホーン節は spec_kg.md「ホーン節の JSON 表現」（追記207）の形。_ で始まる鍵は説明のための注記で、データではない。 値域から導ける @type（ONTO1・ONTO3・ONTO4・ONTOc）は書かない。",
+ "@id": "urn:kobuy:ontology",
+ "@type": "Ontology",
+ "agentProperty": "agent",
+ "channelProperty": "inChannel",
+ "_taskAccess": "業務フロー定義が担当者を制約しないタスクは、チャネルの TaskAccess が担当者を決める（spec_ops.md）。エンジンへ渡す述語と属性。class はエンジンが節に入れる標準の節の述語、recordClass はチャネルの要素",
+ "taskAccess": {
+  "class": "TaskAgent",
+  "channel": "channel",
+  "task": "task",
+  "agent": "person",
+  "recordClass": "TaskAccess",
+  "recordAgent": "taskAgent",
+  "memberProperties": [
+   "就任者",
+   "メンバー"
+  ]
+ },
+ "defines": [
+  {
+   "@id": "urn:kobuy:購買",
+   "@type": "Class",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:件名",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agentWithOK",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#inChannel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "購買"
+  },
+  {
+   "@id": "urn:kobuy:承認C",
+   "@type": "Class",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:判断",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:コメント",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:承認明細一覧",
+     "minCardinality": 0
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agentWithOK",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "承認"
+  },
+  {
+   "@id": "urn:kobuy:承認明細C",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:注文明細",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:勘定科目",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    "#OtherAtom"
+   ],
+   "label": "承認明細"
+  },
+  {
+   "@id": "urn:kobuy:発注C",
+   "@type": "Class",
+   "subClassOf": [
+    "#Incompensable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:発注日",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:発注先",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agentWithOK",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "発注"
+  },
+  {
+   "@id": "urn:kobuy:注文C",
+   "@type": "Class",
+   "subClassOf": [
+    "#Task",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:注文明細一覧",
+     "minCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:希望納期",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agentWithOK",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "注文"
+  },
+  {
+   "@id": "urn:kobuy:注文明細C",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:本体",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:勘定科目",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "注文明細"
+  },
+  {
+   "@id": "urn:kobuy:明細本体C",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:商品",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:数量",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:明細金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:購入メモ",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    "#OtherAtom"
+   ],
+   "label": "明細本体"
+  },
+  {
+   "@id": "urn:kobuy:相談",
+   "@type": "Class",
+   "subClassOf": [
+    "#Task",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:本文",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:関連する購買",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agentWithOK",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#inChannel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "相談"
+  },
+  {
+   "@id": "urn:kobuy:商品C",
+   "@type": "Class",
+   "subClassOf": [
+    "#Task",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:商品名",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:商品単価",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:仕入先",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agentWithOK",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#inChannel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "商品"
+  },
+  {
+   "@id": "urn:kobuy:取引先C",
+   "@type": "Class",
+   "subClassOf": [
+    "#Task",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:取引先名",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agentWithOK",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#inChannel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "取引先"
+  },
+  {
+   "@id": "urn:kobuy:判断C",
+   "@type": "Class",
+   "subClassOf": [
+    "#Task"
+   ],
+   "label": "判断",
+   "_comment": "判断もタスク（承認の担当者がする）。承認の中に埋め込まれる。下位の 承認する・差し戻す のどちらかのインスタンスになる"
+  },
+  {
+   "@id": "urn:kobuy:承認する",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kobuy:判断C"
+   ],
+   "label": "承認する"
+  },
+  {
+   "@id": "urn:kobuy:差し戻す",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kobuy:判断C"
+   ],
+   "label": "差し戻す"
+  },
+  {
+   "@id": "urn:kobuy:勘定科目C",
+   "@type": "Class",
+   "subClassOf": [
+    "#Task",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:科目コード",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:科目名",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agentWithOK",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#inChannel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "勘定科目",
+   "_comment": "任意コード「勘定科目」の選択肢のクラス（KOBUY の任意コードのドロップダウン）。選択肢はマスターのレコードで、勘定科目マスターのチャネルに置く"
+  },
+  {
+   "@id": "urn:kobuy:承認経路",
+   "@type": "Class",
+   "subClassOf": [
+    "#OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kobuy:承認明細一覧",
+     "minCardinality": 0
+    }
+   ],
+   "label": "承認経路"
+  },
+  {
+   "@id": "#成員",
+   "@type": "Class",
+   "builtInFunction": "成員",
+   "isConstraint": true,
+   "_comment": "組込述語 成員(主体: G, 人: A)。A が G そのものか、G の就任者・メンバー（入れ子も辿る）",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "#主体",
+     "minCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#人",
+     "minCardinality": 1
+    }
+   ],
+   "label": "成員"
+  },
+  {
+   "@id": "#真",
+   "@type": "Class",
+   "builtInFunction": "真",
+   "isConstraint": true,
+   "_comment": "システムの組込の制約述語（追記R486）。引数を持たず、真偽値は常に T",
+   "label": "真"
+  },
+  {
+   "@id": "#Geq",
+   "@type": "Class",
+   "builtInFunction": "≧",
+   "isConstraint": true,
+   "_comment": "システムの組込（Equals・Times と同じ）。≧(arg1, arg2) は arg1 ≧ arg2",
+   "label": "≧"
+  },
+  {
+   "@id": "#⊆",
+   "@type": "Class",
+   "builtInFunction": "⊆",
+   "isConstraint": true,
+   "_comment": "システムの組込の制約述語（追記K358）。⊆(arg1, arg2) は arg1 の要素がすべて arg2 にある",
+   "label": "⊆"
+  },
+  {
+   "@id": "#Times",
+   "@type": "Class",
+   "builtInFunction": "×",
+   "isConstraint": true,
+   "_comment": "足した（見積書の例題と同じ形）",
+   "label": "×"
+  },
+  {
+   "@id": "#Equals",
+   "@type": "Class",
+   "builtInFunction": "=",
+   "isConstraint": true,
+   "_comment": "足した（見積書の例題と同じ形）",
+   "label": "＝"
+  },
+  {
+   "@id": "urn:system:構成員",
+   "@type": "Class",
+   "label": "構成員",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "#人",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#publicフォルダ",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#公開鍵",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agentWithOK",
+     "minCardinality": 0
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#inChannel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ]
+  },
+  {
+   "@id": "urn:system:役職",
+   "@type": "Class",
+   "label": "役職",
+   "subClassOf": [
+    "#TaskPrincipal",
+    {
+     "@type": "Restriction",
+     "onProperty": "#名前",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#就任者",
+     "minCardinality": 0
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agentWithOK",
+     "minCardinality": 0
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#inChannel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ]
+  },
+  {
+   "@id": "urn:system:グループ",
+   "@type": "Class",
+   "label": "グループ",
+   "subClassOf": [
+    "#TaskPrincipal",
+    {
+     "@type": "Restriction",
+     "onProperty": "#名前",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#メンバー",
+     "minCardinality": 0
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agentWithOK",
+     "minCardinality": 0
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#inChannel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ]
+  },
+  {
+   "@id": "urn:kobuy:件名",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "_comment": "最大 80 文字（ONTO22 の onto221。ハーネスは長さを見ない）",
+   "label": "件名"
+  },
+  {
+   "@id": "urn:kobuy:判断",
+   "@type": "ObjectProperty",
+   "range": "urn:kobuy:判断C",
+   "label": "判断"
+  },
+  {
+   "@id": "urn:kobuy:コメント",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "コメント"
+  },
+  {
+   "@id": "urn:kobuy:注文明細",
+   "@type": "ObjectProperty",
+   "range": "urn:kobuy:注文明細C",
+   "subPropertyOf": "#refersTo",
+   "label": "注文明細"
+  },
+  {
+   "@id": "urn:kobuy:勘定科目",
+   "@type": "ObjectProperty",
+   "range": "urn:kobuy:勘定科目C",
+   "subPropertyOf": "#refersTo",
+   "label": "勘定科目"
+  },
+  {
+   "@id": "urn:kobuy:承認明細一覧",
+   "@type": "ObjectProperty",
+   "range": "urn:kobuy:承認明細C",
+   "_comment": "多値で、並びに意味がある（onto34: _onto340）",
+   "label": "承認明細"
+  },
+  {
+   "@id": "urn:kobuy:発注日",
+   "@type": "DatatypeProperty",
+   "range": "date",
+   "label": "発注日"
+  },
+  {
+   "@id": "urn:kobuy:発注先",
+   "@type": "ObjectProperty",
+   "range": "urn:kobuy:取引先C",
+   "subPropertyOf": "#refersTo",
+   "label": "発注先"
+  },
+  {
+   "@id": "urn:kobuy:商品",
+   "@type": "ObjectProperty",
+   "range": "urn:kobuy:商品C",
+   "subPropertyOf": "#refersTo",
+   "label": "商品"
+  },
+  {
+   "@id": "urn:kobuy:数量",
+   "@type": "DatatypeProperty",
+   "range": "positiveInteger",
+   "label": "数量"
+  },
+  {
+   "@id": "urn:kobuy:明細金額",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": "金額"
+  },
+  {
+   "@id": "urn:kobuy:購入メモ",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "_comment": "最大 100 文字（ONTO22 の onto221。ハーネスは長さを見ない）",
+   "label": "購入メモ"
+  },
+  {
+   "@id": "urn:kobuy:本体",
+   "@type": "ObjectProperty",
+   "range": "urn:kobuy:明細本体C",
+   "label": "本体"
+  },
+  {
+   "@id": "urn:kobuy:注文明細一覧",
+   "@type": "ObjectProperty",
+   "range": "urn:kobuy:注文明細C",
+   "_comment": "多値で、並びに意味がある（onto34: _onto340）",
+   "label": "注文明細"
+  },
+  {
+   "@id": "urn:kobuy:金額",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": "金額"
+  },
+  {
+   "@id": "urn:kobuy:希望納期",
+   "@type": "DatatypeProperty",
+   "range": "date",
+   "label": "希望納期"
+  },
+  {
+   "@id": "urn:kobuy:本文",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "本文"
+  },
+  {
+   "@id": "urn:kobuy:関連する購買",
+   "@type": "ObjectProperty",
+   "range": "urn:kobuy:購買",
+   "subPropertyOf": "#refersTo",
+   "label": "関連する購買"
+  },
+  {
+   "@id": "urn:kobuy:商品名",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "商品名"
+  },
+  {
+   "@id": "urn:kobuy:商品単価",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": "単価"
+  },
+  {
+   "@id": "urn:kobuy:仕入先",
+   "@type": "ObjectProperty",
+   "range": "urn:kobuy:取引先C",
+   "subPropertyOf": "#refersTo",
+   "label": "仕入先"
+  },
+  {
+   "@id": "urn:kobuy:取引先名",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "名前"
+  },
+  {
+   "@id": "urn:kobuy:科目コード",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "コード"
+  },
+  {
+   "@id": "urn:kobuy:科目名",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "名称"
+  },
+  {
+   "@id": "wam:completeByOkButton",
+   "@type": "ObjectProperty",
+   "label": "OK を押した人"
+  },
+  {
+   "@id": "#主体",
+   "@type": "ObjectProperty",
+   "label": "主体"
+  },
+  {
+   "@id": "#人",
+   "@type": "ObjectProperty",
+   "label": "人"
+  },
+  {
+   "@id": "#名前",
+   "@type": "DatatypeProperty",
+   "label": "名前",
+   "range": "string"
+  },
+  {
+   "@id": "#就任者",
+   "@type": "ObjectProperty",
+   "label": "就任者"
+  },
+  {
+   "@id": "#メンバー",
+   "@type": "ObjectProperty",
+   "label": "メンバー"
+  },
+  {
+   "@id": "#publicフォルダ",
+   "@type": "DatatypeProperty",
+   "label": "public フォルダ",
+   "range": "string"
+  },
+  {
+   "@id": "#公開鍵",
+   "@type": "DatatypeProperty",
+   "label": "公開鍵",
+   "range": "string"
+  }
+ ]
+}

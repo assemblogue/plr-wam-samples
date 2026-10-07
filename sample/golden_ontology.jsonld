@@ -2,9 +2,6 @@
   "@id": "urn:golden:ontology",
   "@type": "Ontology",
   "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
-  "ontoG": [
-    "urn:golden:調達申請ワークフロー"
-  ],
   "_comment_agent": "担当ユーザを指す属性（agentProperty）。**宣言しないとエンジンは誰が担当かを知らない**——既定は bare な \"agent\" なので、OK押下の押し主が記録されず（追記248 の配下ロックが掛からない）、督促の宛先も決まらない。bindings ファイルにも書けるが、GUI は bindings を渡さないので、**オントロジー側が正典である**",
   "agentProperty": "urn:golden:agent",
   "defines": [
@@ -72,7 +69,8 @@
       "@id": "urn:golden:Cancelable",
       "@type": "Class",
       "subClassOf": [
-        "urn:golden:Task"
+        "urn:golden:Task",
+        "#Cancelable"
       ],
       "label": {
         "ja": "取消可能タスク",
@@ -83,7 +81,8 @@
       "@id": "urn:golden:Compensable",
       "@type": "Class",
       "subClassOf": [
-        "urn:golden:Task"
+        "urn:golden:Task",
+        "#Compensable"
       ],
       "label": {
         "ja": "補償可能タスク",
@@ -97,7 +96,10 @@
       "label": {
         "ja": "補償タスク",
         "en": "Compensates with"
-      }
+      },
+      "subPropertyOf": [
+        "#compensatesWith"
+      ]
     },
     {
       "@id": "urn:golden:Person",
@@ -105,7 +107,10 @@
       "label": {
         "ja": "人",
         "en": "Person"
-      }
+      },
+      "subClassOf": [
+        "#Person"
+      ]
     },
     {
       "@id": "urn:golden:agent",
@@ -114,7 +119,10 @@
       "label": {
         "ja": "担当者",
         "en": "Agent"
-      }
+      },
+      "subPropertyOf": [
+        "#agent"
+      ]
     },
     {
       "@id": "urn:golden:組織",
@@ -420,12 +428,14 @@
     {
       "@id": "urn:wamtest:Then",
       "@type": "Class",
-      "linkKind": "then",
       "_comment": "リンクは属性ではなくクラスである。arg1 が始点、arg2 が終点。",
       "label": {
         "ja": "Then",
         "en": "Then"
-      }
+      },
+      "subClassOf": [
+        "#Then"
+      ]
     },
     {
       "@id": "arg1",

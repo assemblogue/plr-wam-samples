@@ -1,10 +1,8 @@
 {
   "@id": "urn:quote:ontology",
   "@type": "Ontology",
+  "agentProperty": "urn:quote:agent",
   "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
-  "ontoG": [
-    "urn:quote:CreateQuote"
-  ],
   "_comment": "見積書デモ。クラスid・属性idは ASCII の絶対URI（changelog 追記181）。range のデータ型名は接頭辞なしで書く（xsd: を付けると解決されない）。 単価（unitPrice）は Product の属性であって LineItem の欄ではない。したがって set_value の対象として存在せず、人も AI も書けない。",
   "defines": [
     {
@@ -73,7 +71,10 @@
       "label": {
         "ja": "人",
         "en": "Person"
-      }
+      },
+      "subClassOf": [
+        "#Person"
+      ]
     },
     {
       "@id": "urn:quote:agent",
@@ -82,7 +83,10 @@
       "label": {
         "ja": "担当者",
         "en": "Agent"
-      }
+      },
+      "subPropertyOf": [
+        "#agent"
+      ]
     },
     {
       "@id": "urn:quote:CreateQuote",
@@ -304,12 +308,14 @@
     {
       "@id": "urn:wamtest:Then",
       "@type": "Class",
-      "linkKind": "then",
       "_comment": "リンクは属性ではなくクラスである。arg1 が始点、arg2 が終点。",
       "label": {
         "ja": "Then",
         "en": "Then link"
-      }
+      },
+      "subClassOf": [
+        "#Then"
+      ]
     },
     {
       "@id": "arg1",

@@ -2,9 +2,6 @@
   "@id": "urn:quote:ontology",
   "@type": "Ontology",
   "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
-  "ontoG": [
-    "urn:quote:QuoteRecord"
-  ],
   "_comment": "見積書デモの**共有データ版**。**2本の明細が同じ納品先を指す**——`urn:quote:lineDestination` は `refersTo` の下位ではないので、納品先は**共有ノード**である（`spec_exec.md`「共有ノードに達するノードは、完成を求め直す」。追記230・246・250）。⚠️ **商品では共有にならない**——`lineProduct` は `refersTo` の下位なので、参照を共有しても完成は伝播しない。",
   "agentProperty": "urn:quote:agent",
   "defines": [
@@ -73,7 +70,8 @@
       "@id": "urn:quote:Cancelable",
       "@type": "Class",
       "subClassOf": [
-        "urn:quote:Task"
+        "urn:quote:Task",
+        "#Cancelable"
       ],
       "_comment": "取消可能タスクのマーカークラス（`spec_kg.md`「決定: Template の下位クラス構成」）。判定は TaskPolicyProjection が isSubClassOf で行う——ハーネスが文字列で持たない。",
       "label": {
@@ -302,7 +300,10 @@
       "label": {
         "ja": "人",
         "en": "Person"
-      }
+      },
+      "subClassOf": [
+        "#Person"
+      ]
     },
     {
       "@id": "urn:quote:personName",
@@ -322,7 +323,10 @@
         "ja": "担当者",
         "en": "Agent"
       },
-      "_comment": "担当ユーザ。**個数はホーン節が決める**（橋田さん）——頭部に書けば1個、書かなければ0個であり、「任意」という中間は無い。この例では**見積書だけが持つ**：明細にも持たせると、両者が同じ担当者を指して**担当者が共有ノードになる**（追記250・252）。⚠️ **誰かが作らなければならないデータの根ノードは、agent 属性でその人を指す**——ここでは見積書がそれである。"
+      "_comment": "担当ユーザ。**個数はホーン節が決める**（橋田さん）——頭部に書けば1個、書かなければ0個であり、「任意」という中間は無い。この例では**見積書だけが持つ**：明細にも持たせると、両者が同じ担当者を指して**担当者が共有ノードになる**（追記250・252）。⚠️ **誰かが作らなければならないデータの根ノードは、agent 属性でその人を指す**——ここでは見積書がそれである。",
+      "subPropertyOf": [
+        "#agent"
+      ]
     },
     {
       "_comment": "完成の属性の上位属性（追記249）。complete と completeByOkButton はどちらもこれの下位属性であり、cardinality を1以下にすることで「いずれか一方しか使えない」が表される。専用の静的検査は要らない。",

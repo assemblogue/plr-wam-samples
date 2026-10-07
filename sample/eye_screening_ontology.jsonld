@@ -2,9 +2,6 @@
  "_comment": "視覚検査（3歳児健診）の例題。判定と結果はどれも**制約ノード**で、ユーザは9つの欄のどれにでも入力できる——入れた欄から、他の欄の範囲が絞られる（逆向きにも効く）。**値は言及されているものしかない。**屈折・眼位は所見の多値で、**所見が無いことは空の多値 `[]` を入れて表す**（未入力とは別。確定ではなく、ふつうの値としていつでも変えられる）。視力は boolean（真＝弱視疑い）。",
  "@id": "urn:eye:ontology",
  "@type": "Ontology",
- "ontoG": [
-  "urn:eye:視覚検査"
- ],
  "agentProperty": "urn:eye:agent",
  "defines": [
   {
@@ -52,7 +49,8 @@
    "@id": "urn:eye:Cancelable",
    "@type": "Class",
    "subClassOf": [
-    "urn:eye:Task"
+    "urn:eye:Task",
+    "#Cancelable"
    ],
    "label": {
     "ja": "取消可能タスク"
@@ -80,7 +78,9 @@
   {
    "@id": "urn:eye:Person",
    "@type": "Class",
-   "subClassOf": [],
+   "subClassOf": [
+    "#Person"
+   ],
    "label": {
     "ja": "人"
    }
@@ -91,12 +91,18 @@
    "label": {
     "ja": "担当者"
    },
-   "range": "urn:eye:Person"
+   "range": "urn:eye:Person",
+   "subPropertyOf": [
+    "#agent"
+   ]
   },
   {
    "@id": "urn:eye:agentWithOK",
    "@type": "ObjectProperty",
-   "subPropertyOf": "urn:eye:agent",
+   "subPropertyOf": [
+    "urn:eye:agent",
+    "#agentWithOK"
+   ],
    "range": "urn:eye:Person",
    "label": {
     "ja": "担当者"
@@ -105,7 +111,10 @@
   {
    "@id": "urn:eye:agentWithSuspendingOK",
    "@type": "ObjectProperty",
-   "subPropertyOf": "urn:eye:agentWithOK",
+   "subPropertyOf": [
+    "urn:eye:agentWithOK",
+    "#agentWithSuspendingOK"
+   ],
    "range": "urn:eye:Person",
    "label": {
     "ja": "担当者"

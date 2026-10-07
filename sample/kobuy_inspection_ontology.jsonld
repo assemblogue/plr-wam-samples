@@ -3,10 +3,6 @@
  "@id": "urn:kinsp:ontology",
  "@type": "Ontology",
  "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
- "ontoG": [
-  "urn:kinsp:消費税の計算例",
-  "urn:kinsp:検収ゴール"
- ],
  "agentProperty": "urn:kinsp:agent",
  "defines": [
   {
@@ -32,7 +28,10 @@
    "label": {
     "ja": "補償タスク",
     "en": "Compensates with"
-   }
+   },
+   "subPropertyOf": [
+    "#compensatesWith"
+   ]
   },
   {
    "@id": "urn:kinsp:Atom",
@@ -93,7 +92,8 @@
    "@id": "urn:kinsp:Cancelable",
    "@type": "Class",
    "subClassOf": [
-    "urn:kinsp:Task"
+    "urn:kinsp:Task",
+    "#Cancelable"
    ],
    "label": {
     "ja": "取消可能タスク",
@@ -104,7 +104,8 @@
    "@id": "urn:kinsp:Compensable",
    "@type": "Class",
    "subClassOf": [
-    "urn:kinsp:Task"
+    "urn:kinsp:Task",
+    "#Compensable"
    ],
    "label": {
     "ja": "補償可能タスク",
@@ -115,7 +116,8 @@
    "@id": "urn:kinsp:Incompensable",
    "@type": "Class",
    "subClassOf": [
-    "urn:kinsp:Task"
+    "urn:kinsp:Task",
+    "#Incompensable"
    ],
    "label": {
     "ja": "補償不能タスク",
@@ -128,7 +130,10 @@
    "label": {
     "ja": "人",
     "en": "Person"
-   }
+   },
+   "subClassOf": [
+    "#Person"
+   ]
   },
   {
    "@id": "urn:kinsp:agent",
@@ -137,7 +142,10 @@
    "label": {
     "ja": "担当者",
     "en": "Agent"
-   }
+   },
+   "subPropertyOf": [
+    "#agent"
+   ]
   },
   {
    "@id": "urn:kinsp:Geq",
@@ -207,11 +215,13 @@
   {
    "@id": "urn:kinsp:Then",
    "@type": "Class",
-   "linkKind": "then",
    "label": {
     "ja": "Then",
     "en": "Then"
-   }
+   },
+   "subClassOf": [
+    "#Then"
+   ]
   },
   {
    "@id": "arg1",
