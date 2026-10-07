@@ -2,7 +2,7 @@
  "_comment": "**定足数と「締める」の例題**（追記345・349・351）。承認グループ（鈴木・山本・田中の3人）で、**8割以上が応答しないと無効**、応答した人の過半数で可決、とする。⚠️ **3人の8割は3人である**（2/3 ≒ 0.667 < 0.8）——2人が承認しただけでは決まらず、`close` で締めると**定足数未達で不成立**になる。量化は `量化:決着割合超 0.5`（応答した人の過半数）、定足数は `量化:定足数割合以上 0.8`。",
  "@id": "urn:kapp:ontology",
  "@type": "Ontology",
- "agentProperty": "urn:kapp:agent",
+ "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
  "defines": [
   {
    "@id": "urn:kapp:Template",
@@ -43,17 +43,6 @@
    }
   },
   {
-   "@id": "urn:kapp:Goal",
-   "@type": "Class",
-   "subClassOf": [
-    "urn:kapp:Task"
-   ],
-   "label": {
-    "ja": "ゴール",
-    "en": "Goal"
-   }
-  },
-  {
    "@id": "urn:kapp:Constraint",
    "@type": "Class",
    "subClassOf": [
@@ -86,7 +75,8 @@
    }
   },
   {
-   "@id": "urn:kapp:Person",
+   "@id": "#Person",
+   "_comment": "Profile.xlsx で定義されたクラス Person（追記R531・R532）",
    "@type": "Class",
    "label": {
     "ja": "人",
@@ -94,9 +84,8 @@
    }
   },
   {
-   "@id": "urn:kapp:agent",
+   "@id": "#agent",
    "@type": "ObjectProperty",
-   "range": "urn:kapp:Person",
    "label": {
     "ja": "担当者",
     "en": "Agent"
@@ -151,7 +140,7 @@
   {
    "@id": "urn:kapp:注文者",
    "@type": "ObjectProperty",
-   "range": "urn:kapp:Person",
+   "range": "#Person",
    "label": {
     "ja": "注文者",
     "en": "Orderer"
@@ -169,7 +158,7 @@
   {
    "@id": "urn:kapp:承認者",
    "@type": "ObjectProperty",
-   "range": "urn:kapp:Person",
+   "range": "#Person",
    "label": {
     "ja": "承認者",
     "en": "Approver"
@@ -188,13 +177,13 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "urn:kapp:agent",
+     "onProperty": "#agent",
      "minCardinality": 1,
      "maxCardinality": 1
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeByOkButton",
+     "onProperty": "wam:completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -218,13 +207,13 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "urn:kapp:agent",
+     "onProperty": "#agent",
      "minCardinality": 1,
      "maxCardinality": 1
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeByOkButton",
+     "onProperty": "wam:completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     },
@@ -253,13 +242,13 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "urn:kapp:agent",
+     "onProperty": "#agent",
      "minCardinality": 1,
      "maxCardinality": 1
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeByOkButton",
+     "onProperty": "wam:completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -296,7 +285,7 @@
    "@id": "urn:kapp:購買ゴール",
    "@type": "Class",
    "subClassOf": [
-    "urn:kapp:Goal"
+    "urn:kapp:Task"
    ],
    "label": {
     "ja": "購買ゴール",
@@ -320,7 +309,7 @@
    "_comment": "**この量化命題を締める人**（追記K353）。**制限ノードに書く。** ⚠️ **量化命題そのものに担当者はいない**——制限ノードは制約ノード であり、この系では制約ノードに督促は発生しない。担当者がいるのは **「締める」という行為**のほうである。⚠️ **「遅い」と「来ない」は観測で区別できない**（FLP 不可能性、JACM 1985）ので、「もう答えは来ない」は推論できず**外から与えるしかない**——だから宣言である。エンジンはこの宣言から**締めのタスクを合成する**（補償タスクと同じ流儀）。そのタスクは**節の本体にも主要作用域にも属さない**（BPMN の境界イベントと同じ）ので、**全員が応答すれば誰も押さないまま節が成功する。**",
    "@id": "urn:kapp:tallyAgent",
    "@type": "ObjectProperty",
-   "range": "urn:kapp:Person",
+   "range": "#Person",
    "label": {
     "ja": "締める人",
     "en": "Tally agent"
@@ -490,7 +479,7 @@
   {
    "@id": "urn:kapp:構成員",
    "@type": "ObjectProperty",
-   "range": "urn:kapp:Person",
+   "range": "#Person",
    "label": {
     "ja": "構成員",
     "en": "Member"

@@ -11,17 +11,23 @@
     {
       "@id": "urn:e:x1",
       "urn:pr:対象": "鉛筆4B",
-      "urn:pr:カテゴリ": "鉛筆"
+      "urn:pr:カテゴリ": "鉛筆",
+      "agent": "urn:entity:admin",
+      "wam:completeByOkButton": "urn:entity:admin"
     },
     {
       "@id": "urn:e:x2",
       "urn:pr:対象": "鉛筆",
-      "urn:pr:カテゴリ": "文具"
+      "urn:pr:カテゴリ": "文具",
+      "agent": "urn:entity:admin",
+      "wam:completeByOkButton": "urn:entity:admin"
     },
     {
       "@id": "urn:e:x3",
       "urn:pr:対象": "文具",
-      "urn:pr:カテゴリ": "鉛筆"
+      "urn:pr:カテゴリ": "鉛筆",
+      "agent": "urn:entity:admin",
+      "wam:completeByOkButton": "urn:entity:admin"
     }
   ]
 }
