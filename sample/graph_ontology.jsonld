@@ -1,6 +1,10 @@
 {
   "@id": "urn:gc:ontology",
   "@type": "Ontology",
+  "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
+  "ontoG": [
+    "urn:gc:Quote"
+  ],
   "_comment": "--graph-clauses の最小例。ホーン節が知識グラフ側（graph_data.json）に、追記207 の新形式（ノード1つ ＋ その internalGraph）で書かれている。クラスid・属性idは ASCII の絶対URI（追記181）。",
   "defines": [
     {
@@ -9,17 +13,6 @@
       "label": {
         "ja": "テンプレート",
         "en": "Template"
-      }
-    },
-    {
-      "@id": "urn:gc:Goal",
-      "@type": "Class",
-      "subClassOf": [
-        "urn:gc:Task"
-      ],
-      "label": {
-        "ja": "ゴール",
-        "en": "Goal"
       }
     },
     {
@@ -49,7 +42,7 @@
       "@id": "urn:gc:Quote",
       "@type": "Class",
       "subClassOf": [
-        "urn:gc:Goal"
+        "urn:gc:Task"
       ],
       "label": {
         "ja": "見積書",
