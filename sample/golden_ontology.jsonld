@@ -1,7 +1,6 @@
 {
   "@id": "urn:golden:ontology",
   "@type": "Ontology",
-  "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
   "_comment_agent": "担当ユーザを指す属性（agentProperty）。**宣言しないとエンジンは誰が担当かを知らない**——既定は bare な \"agent\" なので、OK押下の押し主が記録されず（追記248 の配下ロックが掛からない）、督促の宛先も決まらない。bindings ファイルにも書けるが、GUI は bindings を渡さないので、**オントロジー側が正典である**",
   "agentProperty": "urn:golden:agent",
   "defines": [
@@ -19,6 +18,17 @@
       "label": {
         "ja": "テンプレート",
         "en": "Template"
+      }
+    },
+    {
+      "@id": "urn:golden:Goal",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:golden:Task"
+      ],
+      "label": {
+        "ja": "ゴール",
+        "en": "Goal"
       }
     },
     {
@@ -69,11 +79,10 @@
       "@id": "urn:golden:Cancelable",
       "@type": "Class",
       "subClassOf": [
-        "urn:golden:Task",
-        "#Cancelable"
+        "urn:golden:Atom"
       ],
       "label": {
-        "ja": "取消可能タスク",
+        "ja": "取消可能",
         "en": "Cancelable"
       }
     },
@@ -81,25 +90,12 @@
       "@id": "urn:golden:Compensable",
       "@type": "Class",
       "subClassOf": [
-        "urn:golden:Task",
-        "#Compensable"
+        "urn:golden:Atom"
       ],
       "label": {
-        "ja": "補償可能タスク",
+        "ja": "補償可能",
         "en": "Compensable"
       }
-    },
-    {
-      "_comment": "補償タスク述語を指すクラスレベル属性（golden_scenario.md）。**完全なURIで書く**——JSON-LD の素の鍵は保たれない（追記317）。",
-      "@id": "urn:golden:compensatesWith",
-      "@type": "ObjectProperty",
-      "label": {
-        "ja": "補償タスク",
-        "en": "Compensates with"
-      },
-      "subPropertyOf": [
-        "#compensatesWith"
-      ]
     },
     {
       "@id": "urn:golden:Person",
@@ -107,10 +103,7 @@
       "label": {
         "ja": "人",
         "en": "Person"
-      },
-      "subClassOf": [
-        "#Person"
-      ]
+      }
     },
     {
       "@id": "urn:golden:agent",
@@ -119,10 +112,7 @@
       "label": {
         "ja": "担当者",
         "en": "Agent"
-      },
-      "subPropertyOf": [
-        "#agent"
-      ]
+      }
     },
     {
       "@id": "urn:golden:組織",
@@ -270,7 +260,7 @@
         },
         {
           "@type": "Restriction",
-          "onProperty": "wam:completeOrSuspendByOkButton",
+          "onProperty": "wam:completeByOkButton",
           "minCardinality": 0,
           "maxCardinality": 1
         }
@@ -333,7 +323,7 @@
         },
         {
           "@type": "Restriction",
-          "onProperty": "wam:completeOrSuspendByOkButton",
+          "onProperty": "wam:completeByOkButton",
           "minCardinality": 0,
           "maxCardinality": 1
         }
@@ -341,8 +331,7 @@
       "label": {
         "ja": "発注",
         "en": "Order"
-      },
-      "urn:golden:compensatesWith": "urn:golden:発注取消"
+      }
     },
     {
       "@id": "urn:golden:発注.申請者",
@@ -418,7 +407,7 @@
       "@id": "urn:golden:調達申請ワークフロー",
       "@type": "Class",
       "subClassOf": [
-        "urn:golden:Task"
+        "urn:golden:Goal"
       ],
       "label": {
         "ja": "調達申請ワークフロー",
@@ -428,14 +417,12 @@
     {
       "@id": "urn:wamtest:Then",
       "@type": "Class",
+      "linkKind": "then",
       "_comment": "リンクは属性ではなくクラスである。arg1 が始点、arg2 が終点。",
       "label": {
         "ja": "Then",
         "en": "Then"
-      },
-      "subClassOf": [
-        "#Then"
-      ]
+      }
     },
     {
       "@id": "arg1",
@@ -486,18 +473,6 @@
       "label": {
         "ja": "完成（OKボタン）",
         "en": "Complete by OK button"
-      }
-    },
-    {
-      "_comment": "中断ありの OK ボタンによる完成（3値。偽＝未完成、真＝完成したが未押下、ユーザ＝その人が押した）。**いつでも押せ、配下が未完成のうちに押すと中断になる**（追記K383・K384）。押したのが完成の確認か中断かは配下の凍結の印が答える。**この属性を宣言することが「中断ありの OK ボタンを持つ」の宣言である。**",
-      "@id": "wam:completeOrSuspendByOkButton",
-      "@type": "DatatypeProperty",
-      "domain": "urn:golden:Template",
-      "range": "string",
-      "subPropertyOf": "wam:isComplete",
-      "label": {
-        "ja": "完成（中断ありのOKボタン）",
-        "en": "Complete or suspend by OK button"
       }
     }
   ]
