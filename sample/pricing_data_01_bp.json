@@ -5,17 +5,13 @@
       "@id": "urn:e:bp1",
       "urn:pr:商品": "鉛筆4B",
       "urn:pr:バイヤー": "田中商店",
-      "urn:pr:単価": 88,
-      "agent": "urn:entity:admin",
-      "completeByOkButton": "urn:entity:admin"
+      "urn:pr:単価": 88
     },
     {
       "@id": "urn:e:bp2",
       "urn:pr:商品": "鉛筆4B",
       "urn:pr:バイヤー": "佐藤商店",
-      "urn:pr:単価": 92,
-      "agent": "urn:entity:admin",
-      "completeByOkButton": "urn:entity:admin"
+      "urn:pr:単価": 92
     }
   ]
 }
