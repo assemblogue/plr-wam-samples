@@ -159,6 +159,15 @@
       }
     },
     {
+      "@id": "urn:ship:refersTo",
+      "@type": "ObjectProperty",
+      "_comment": "参照属性の上位属性。この下位の属性の欄は、既存の実体を指すか、ほかの欄に既にある値と単一化するだけで、新しい値は入れられない（追記R517）",
+      "label": {
+        "ja": "参照",
+        "en": "RefersTo"
+      }
+    },
+    {
       "@id": "urn:ship:納入数",
       "@type": "DatatypeProperty",
       "domain": "urn:ship:検収",
@@ -166,7 +175,9 @@
       "label": {
         "ja": "納入数",
         "en": "Delivered count"
-      }
+      },
+      "subPropertyOf": "urn:ship:refersTo",
+      "_comment": "検収から見た納入数は、出荷の個数を受け取る側が読む値である——refersTo の下位属性として宣言する（受け渡しは、渡す側の欄を受け取る側が refersTo の属性で読む。追記R516・R517）"
     },
     {
       "@id": "urn:ship:返品数",

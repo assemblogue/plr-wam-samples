@@ -290,16 +290,5 @@
   }
  ],
  "agentProperty": "urn:bud:agent",
- "channelProperty": "urn:bud:channel",
- "channelSettings": {
-  "urn:setting:予算": {
-   "includesTask": [
-    "urn:bud:予算チェック",
-    "urn:bud:起案"
-   ]
-  }
- },
- "channels": {
-  "urn:channel:山田": "urn:setting:予算"
- }
+ "channelProperty": "urn:bud:channel"
 }
