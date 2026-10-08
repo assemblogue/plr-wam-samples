@@ -1,5 +1,5 @@
 {
- "_comment": "【検証用】多値属性はホーン節のアトムノードが持ち、その値がチャネルの要素である。山田の予算の 調達 に、山田が実行した調達が並ぶ。新しい調達を足すと、既存分との合計が限度額に掛かる。 追記R373: 済んだ起案はチャネル（山田のチャネル）に入り、調達のノードの内部グラフに現れる。解き直しで済んだ調達を実行し直さない判定はこれを見る。",
+ "_comment": "【検証用】予算の限度額は、同じ利用者の調達の合計に掛かる（追記R487・R494）。調達は業務フロー（設定.調達 のゴール節）で、案件ごとに起動され、調達のチャネルにレコードとして並ぶ。調達の節は、予算の 調達一覧（refersTo の下位）で既にある調達のレコードを検索し、その金額の合計に限度額を掛ける。起案中の調達自身のレコードも 調達一覧 に入っているので、その金額は検索の結果として1回だけ数える（自分の金額を別に足さない）。",
  "@id": "urn:bud:ontology",
  "@type": "Ontology",
  "defines": [
@@ -151,7 +151,6 @@
    "@id": "urn:bud:調達",
    "@type": "Class",
    "subClassOf": [
-    "urn:bud:OtherAtom",
     {
      "@type": "Restriction",
      "onProperty": "urn:bud:案件",
@@ -161,15 +160,31 @@
     {
      "@type": "Restriction",
      "onProperty": "urn:bud:金額",
-     "minCardinality": 1,
+     "minCardinality": 0,
      "maxCardinality": 1
-    }
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:bud:agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    "urn:bud:Task"
    ],
    "label": {
     "ja": "調達",
     "en": "Procurement"
    },
-   "_comment": "実行された調達。チャネルの要素である。"
+   "_comment": "業務フロー（設定.調達 のゴール節の頭部）。案件ごとに起動され、そのレコードが調達のチャネルに入る。起案者が agent。金額は起案で入る（追記R487・R494）"
+  },
+  {
+   "@id": "urn:bud:refersTo",
+   "@type": "ObjectProperty",
+   "_comment": "参照属性の上位属性",
+   "label": {
+    "ja": "参照",
+    "en": "RefersTo"
+   }
   },
   {
    "@id": "urn:bud:調達一覧",
@@ -178,7 +193,9 @@
    "label": {
     "ja": "調達",
     "en": "Procurements"
-   }
+   },
+   "subPropertyOf": "urn:bud:refersTo",
+   "_comment": "既にある調達のレコードを指す（refersTo の下位）。予算の節は、ここに並ぶ調達を検索して金額を集める（追記R487）"
   },
   {
    "@id": "urn:bud:予算",
@@ -208,23 +225,6 @@
     "en": "Budget"
    },
    "_comment": "利用者ごとの予算。多値属性 調達 の値がチャネルの要素（山田が実行した調達）である。"
-  },
-  {
-   "@id": "urn:bud:予算チェック",
-   "@type": "Class",
-   "subClassOf": [
-    "urn:bud:Task",
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:bud:channel",
-     "minCardinality": 1,
-     "maxCardinality": 1
-    }
-   ],
-   "label": {
-    "ja": "予算チェック",
-    "en": "Budget check"
-   }
   },
   {
    "@id": "urn:bud:agent",
