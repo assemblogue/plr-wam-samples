@@ -48,9 +48,10 @@
        "urn:kobuy:agent": {
         "@id": "#U"
        },
-       "wam:truthValue": {
+       "truthValue": {
         "@id": "#T注文"
-       }
+       },
+       "okButton": "_suspendingOk"
       },
       {
        "_comment": "利用者ごとの限度額を引く（頭部だけ・本体が空のホーン節＝事実）。",
@@ -93,7 +94,8 @@
        "urn:kobuy:金額": {
         "@id": "#Amount"
        },
-       "urn:kobuy:agent": "urn:entity:サプライヤ"
+       "urn:kobuy:agent": "urn:entity:サプライヤ",
+       "okButton": "_suspendingOk"
       },
       {
        "@id": "urn:node:購買.head#link1",
@@ -145,7 +147,8 @@
        "urn:kobuy:agent": "urn:entity:A社課長",
        "urn:kobuy:差戻し先": {
         "@id": "#B"
-       }
+       },
+       "okButton": "_suspendingOk"
       },
       {
        "@id": "urn:node:A社.部長承認",
@@ -156,7 +159,8 @@
        "urn:kobuy:agent": "urn:entity:A社部長",
        "urn:kobuy:差戻し先": {
         "@id": "#B"
-       }
+       },
+       "okButton": "_suspendingOk"
       },
       {
        "@id": "urn:node:承認経路.A社.head#link1",
@@ -201,7 +205,8 @@
        "urn:kobuy:agent": "urn:entity:B社主任",
        "urn:kobuy:差戻し先": {
         "@id": "#B"
-       }
+       },
+       "okButton": "_suspendingOk"
       },
       {
        "@id": "urn:node:B社.課長承認",
@@ -212,7 +217,8 @@
        "urn:kobuy:agent": "urn:entity:B社課長",
        "urn:kobuy:差戻し先": {
         "@id": "#B"
-       }
+       },
+       "okButton": "_suspendingOk"
       },
       {
        "@id": "urn:node:B社.役員承認",
@@ -223,7 +229,8 @@
        "urn:kobuy:agent": "urn:entity:B社役員",
        "urn:kobuy:差戻し先": {
         "@id": "#B"
-       }
+       },
+       "okButton": "_suspendingOk"
       },
       {
        "@id": "urn:node:承認経路.B社.head#link1",
@@ -252,15 +259,18 @@
     },
     {
      "@id": "urn:node:注文.head",
-     "@type": "urn:kobuy:注文"
+     "@type": "urn:kobuy:注文",
+     "okButton": "_suspendingOk"
     },
     {
      "@id": "urn:node:承認.head",
-     "@type": "urn:kobuy:承認"
+     "@type": "urn:kobuy:承認",
+     "okButton": "_suspendingOk"
     },
     {
      "@id": "urn:node:発注.head",
-     "@type": "urn:kobuy:発注"
+     "@type": "urn:kobuy:発注",
+     "okButton": "_suspendingOk"
     }
    ],
    "ontoC": [

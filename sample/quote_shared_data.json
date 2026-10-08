@@ -150,7 +150,8 @@
                     "@id": "#Amount"
                   }
                 }
-              ]
+              ],
+              "okButton": "_suspendingOk"
             }
           ]
         }
@@ -165,7 +166,9 @@
         "urn:entity:line-1",
         "urn:entity:line-2"
       ],
-      "urn:quote:agent": "urn:entity:buyer"
+      "urn:quote:agent": "urn:entity:buyer",
+      "okButton": "_suspendingOk",
+      "completeOrSuspendByOkButton": "_false"
     }
   ],
   "urn:quote:QuoteLine": [

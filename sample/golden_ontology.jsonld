@@ -11,7 +11,7 @@
       "subClassOf": [
         {
           "@type": "Restriction",
-          "onProperty": "wam:isComplete",
+          "onProperty": "#isComplete",
           "minCardinality": 0,
           "maxCardinality": 1
         }
@@ -69,7 +69,8 @@
       "@id": "urn:golden:Cancelable",
       "@type": "Class",
       "subClassOf": [
-        "urn:golden:Task"
+        "urn:golden:Task",
+        "#Cancelable"
       ],
       "label": {
         "ja": "取消可能タスク",
@@ -80,7 +81,8 @@
       "@id": "urn:golden:Compensable",
       "@type": "Class",
       "subClassOf": [
-        "urn:golden:Task"
+        "urn:golden:Task",
+        "#Compensable"
       ],
       "label": {
         "ja": "補償可能タスク",
@@ -94,7 +96,10 @@
       "label": {
         "ja": "補償タスク",
         "en": "Compensates with"
-      }
+      },
+      "subPropertyOf": [
+        "#compensatesWith"
+      ]
     },
     {
       "@id": "urn:golden:Person",
@@ -102,7 +107,10 @@
       "label": {
         "ja": "人",
         "en": "Person"
-      }
+      },
+      "subClassOf": [
+        "#Person"
+      ]
     },
     {
       "@id": "urn:golden:agent",
@@ -111,7 +119,10 @@
       "label": {
         "ja": "担当者",
         "en": "Agent"
-      }
+      },
+      "subPropertyOf": [
+        "#agent"
+      ]
     },
     {
       "@id": "urn:golden:組織",
@@ -259,7 +270,7 @@
         },
         {
           "@type": "Restriction",
-          "onProperty": "wam:completeOrSuspendByOkButton",
+          "onProperty": "#completeOrSuspendByOkButton",
           "minCardinality": 0,
           "maxCardinality": 1
         }
@@ -322,7 +333,7 @@
         },
         {
           "@type": "Restriction",
-          "onProperty": "wam:completeOrSuspendByOkButton",
+          "onProperty": "#completeOrSuspendByOkButton",
           "minCardinality": 0,
           "maxCardinality": 1
         }
@@ -417,12 +428,14 @@
     {
       "@id": "urn:wamtest:Then",
       "@type": "Class",
-      "linkKind": "then",
       "_comment": "リンクは属性ではなくクラスである。arg1 が始点、arg2 が終点。",
       "label": {
         "ja": "Then",
         "en": "Then"
-      }
+      },
+      "subClassOf": [
+        "#Then"
+      ]
     },
     {
       "@id": "arg1",
@@ -438,53 +451,6 @@
       "label": {
         "ja": "第2引数",
         "en": "Arg 2"
-      }
-    },
-    {
-      "_comment": "完成の属性の上位属性（追記249）。complete と completeByOkButton はどちらもこれの下位属性であり、cardinality を1以下にすることで「いずれか一方しか使えない」が表される。",
-      "@id": "wam:isComplete",
-      "@type": "DatatypeProperty",
-      "domain": "urn:golden:Template",
-      "range": "string",
-      "label": {
-        "ja": "完成",
-        "en": "Is complete"
-      }
-    },
-    {
-      "_comment": "OKボタンを持たないノードの完成（2値）。",
-      "@id": "wam:complete",
-      "@type": "DatatypeProperty",
-      "domain": "urn:golden:Template",
-      "range": "boolean",
-      "subPropertyOf": "wam:isComplete",
-      "label": {
-        "ja": "完成",
-        "en": "Complete"
-      }
-    },
-    {
-      "_comment": "OKボタンによる完成（3値。偽＝未完成、真＝完成したが未押下、ユーザ＝その人が確認した）。**この属性を宣言することが「OKボタンを持つ」の宣言である**（追記249。completionMode は使わない）。",
-      "@id": "wam:completeByOkButton",
-      "@type": "DatatypeProperty",
-      "domain": "urn:golden:Template",
-      "range": "string",
-      "subPropertyOf": "wam:isComplete",
-      "label": {
-        "ja": "完成（OKボタン）",
-        "en": "Complete by OK button"
-      }
-    },
-    {
-      "_comment": "中断ありの OK ボタンによる完成（3値。偽＝未完成、真＝完成したが未押下、ユーザ＝その人が押した）。**いつでも押せ、配下が未完成のうちに押すと中断になる**（追記K383・K384）。押したのが完成の確認か中断かは配下の凍結の印が答える。**この属性を宣言することが「中断ありの OK ボタンを持つ」の宣言である。**",
-      "@id": "wam:completeOrSuspendByOkButton",
-      "@type": "DatatypeProperty",
-      "domain": "urn:golden:Template",
-      "range": "string",
-      "subPropertyOf": "wam:isComplete",
-      "label": {
-        "ja": "完成（中断ありのOKボタン）",
-        "en": "Complete or suspend by OK button"
       }
     }
   ]

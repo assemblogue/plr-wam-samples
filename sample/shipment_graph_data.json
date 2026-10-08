@@ -82,9 +82,10 @@
                 "@id": "#S"
               },
               "urn:ship:agent": "urn:entity:サプライヤー",
-              "wam:truthValue": {
+              "truthValue": {
                 "@id": "#T出荷"
-              }
+              },
+              "okButton": "_suspendingOk"
             },
             {
               "@id": "urn:node:検収",
@@ -96,9 +97,10 @@
                 "@id": "#R"
               },
               "urn:ship:agent": "urn:entity:バイヤー",
-              "wam:truthValue": {
+              "truthValue": {
                 "@id": "#T検収"
-              }
+              },
+              "okButton": "_suspendingOk"
             },
             {
               "@id": "urn:node:再帰",
@@ -189,7 +191,8 @@
               }
             }
           ],
-          "_comment": "検収(納入数:S, 返品数:R) :- ≧(arg1:S, arg2:R)."
+          "_comment": "検収(納入数:S, 返品数:R) :- ≧(arg1:S, arg2:R).",
+          "okButton": "_suspendingOk"
         },
         {
           "@id": "urn:node:出荷.head",
@@ -203,7 +206,8 @@
               "variableName": "S"
             }
           ],
-          "_comment": "出荷(個数:S). 出荷数の上限 ≧(要出荷数, [出荷済数, 個数]) は 出荷+検収 の本体にある制約ノードで、連立で解かれるのでどちらに書いても同じ"
+          "_comment": "出荷(個数:S). 出荷数の上限 ≧(要出荷数, [出荷済数, 個数]) は 出荷+検収 の本体にある制約ノードで、連立で解かれるのでどちらに書いても同じ",
+          "okButton": "_suspendingOk"
         }
       ],
       "ontoC": [

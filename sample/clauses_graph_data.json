@@ -27,21 +27,22 @@
             {
               "@id": "urn:node:sinsei-001",
               "@type": "urn:wamtest:申請",
-              "wam:truthValue": {
+              "truthValue": {
                 "@id": "#T1"
               }
             },
             {
               "@id": "urn:node:shonin-001",
               "@type": "urn:wamtest:承認",
-              "wam:truthValue": {
+              "truthValue": {
                 "@id": "#T2"
-              }
+              },
+              "okButton": "_suspendingOk"
             },
             {
               "@id": "urn:node:hacchu-001",
               "@type": "urn:wamtest:発注",
-              "wam:truthValue": {
+              "truthValue": {
                 "@id": "#T3"
               }
             },
@@ -73,7 +74,8 @@
         },
         {
           "@id": "urn:node:承認.head",
-          "@type": "urn:wamtest:承認"
+          "@type": "urn:wamtest:承認",
+          "okButton": "_suspendingOk"
         },
         {
           "@id": "urn:node:発注.head",

@@ -29,9 +29,10 @@
        "urn:kapp:金額": {
         "@id": "#A"
        },
-       "urn:kapp:agent": {
+       "agent": {
         "@id": "#U"
-       }
+       },
+       "okButton": "_suspendingOk"
       },
       {
        "_comment": "**承認の仕方はここでは分からない。** 金額が決まってから代替節が選ばれる。",
@@ -50,7 +51,8 @@
        "urn:kapp:金額": {
         "@id": "#A"
        },
-       "urn:kapp:agent": "urn:entity:サプライヤ"
+       "agent": "urn:entity:サプライヤ",
+       "okButton": "_suspendingOk"
       },
       {
        "@id": "urn:node:購買.head#link1",
@@ -125,9 +127,10 @@
        "urn:kapp:金額": {
         "@id": "#A"
        },
-       "urn:kapp:agent": {
+       "agent": {
         "@id": "#B"
-       }
+       },
+       "okButton": "_suspendingOk"
       }
      ]
     },
@@ -182,9 +185,10 @@
        "urn:kapp:金額": {
         "@id": "#A"
        },
-       "urn:kapp:agent": {
+       "agent": {
         "@id": "#X"
-       }
+       },
+       "okButton": "_suspendingOk"
       }
      ]
     }

@@ -10,7 +10,7 @@
    "subClassOf": [
     {
      "@type": "Restriction",
-     "onProperty": "wam:isComplete",
+     "onProperty": "#isComplete",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -65,22 +65,15 @@
    }
   },
   {
-   "@id": "wam:isComplete",
-   "@type": "DatatypeProperty",
-   "domain": "urn:ship:Template",
-   "range": "string",
-   "label": {
-    "ja": "完成",
-    "en": "Is complete"
-   }
-  },
-  {
    "@id": "urn:mship:Person",
    "@type": "Class",
    "label": {
     "ja": "人",
     "en": "Person"
-   }
+   },
+   "subClassOf": [
+    "#Person"
+   ]
   },
   {
    "@id": "urn:mship:agent",
@@ -89,7 +82,10 @@
    "label": {
     "ja": "担当者",
     "en": "Agent"
-   }
+   },
+   "subPropertyOf": [
+    "#agent"
+   ]
   },
   {
    "@id": "urn:mship:Eq",
@@ -120,11 +116,13 @@
   {
    "@id": "urn:mship:Then",
    "@type": "Class",
-   "linkKind": "then",
    "label": {
     "ja": "Then",
     "en": "Then"
-   }
+   },
+   "subClassOf": [
+    "#Then"
+   ]
   },
   {
    "_comment": "参照属性の上位属性（橋田さん、2026-09-19）。この下位に属する属性は担当者が自分では書き込めない——他方から流れてくる値を参照するだけである。ノードの型によって、同じ意味の値でもrefersToの下位属性かどうかが変わる（出荷検収自身の要出荷数は権威ある元の値だが、出荷から見た要出荷数は参照——別の属性idにする）。",
@@ -358,7 +356,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeOrSuspendByOkButton",
+     "onProperty": "#completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -437,7 +435,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeOrSuspendByOkButton",
+     "onProperty": "#completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }

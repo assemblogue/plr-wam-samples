@@ -120,7 +120,8 @@
        },
        "arg2": 1
       }
-     ]
+     ],
+     "okButton": "_suspendingOk"
     },
     {
      "@id": "urn:node:検収+.head",
@@ -144,7 +145,8 @@
        "@id": "#R7",
        "variableName": "R7"
       }
-     ]
+     ],
+     "okButton": "_suspendingOk"
     },
     {
      "@id": "urn:node:出荷検収+.完了.head",
@@ -277,9 +279,10 @@
         }
        },
        "urn:mship:agent": "urn:entity:サプライヤー",
-       "wam:truthValue": {
+       "truthValue": {
         "@id": "#T出荷"
-       }
+       },
+       "okButton": "_suspendingOk"
       },
       {
        "@id": "urn:node:検収",
@@ -300,9 +303,10 @@
         }
        },
        "urn:mship:agent": "urn:entity:バイヤー",
-       "wam:truthValue": {
+       "truthValue": {
         "@id": "#T検収"
-       }
+       },
+       "okButton": "_suspendingOk"
       },
       {
        "@id": "urn:node:再帰",

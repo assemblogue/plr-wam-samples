@@ -29,9 +29,10 @@
        "urn:kapp:金額": {
         "@id": "#A"
        },
-       "urn:kapp:agent": {
+       "agent": {
         "@id": "#U"
-       }
+       },
+       "okButton": "_suspendingOk"
       },
       {
        "_comment": "**承認の仕方はここでは分からない。** 金額が決まってから代替節が選ばれる。",
@@ -50,7 +51,8 @@
        "urn:kapp:金額": {
         "@id": "#A"
        },
-       "urn:kapp:agent": "urn:entity:サプライヤ"
+       "agent": "urn:entity:サプライヤ",
+       "okButton": "_suspendingOk"
       },
       {
        "@id": "urn:node:購買.head#link1",
@@ -109,7 +111,7 @@
        }
       },
       {
-       "_comment": "直属の上司を引く（事実）。",
+       "_comment": "直属の上司を引く（事実）。 **existing**——上司・所属はマスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。",
        "@id": "urn:node:上司を引く",
        "@type": "urn:kapp:上司",
        "urn:kapp:注文者": {
@@ -117,7 +119,8 @@
        },
        "urn:kapp:承認者": {
         "@id": "#B"
-       }
+       },
+       "existing": "_true"
       },
       {
        "@id": "urn:node:上司承認",
@@ -125,9 +128,10 @@
        "urn:kapp:金額": {
         "@id": "#A"
        },
-       "urn:kapp:agent": {
+       "agent": {
         "@id": "#B"
-       }
+       },
+       "okButton": "_suspendingOk"
       }
      ]
     },
@@ -165,14 +169,15 @@
        "arg2": 1000000
       },
       {
-       "_comment": "**制限ノード**。この解（＝グループの構成員）ごとに主要作用域を実行し、成功が過半数かで決める。",
+       "_comment": "**制限ノード**。この解（＝グループの構成員）ごとに主要作用域を実行し、成功が過半数かで決める。 **existing**——上司・所属はマスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。",
        "@id": "urn:node:構成員を数える",
        "@type": "urn:kapp:所属",
        "urn:kapp:quantRatioGt": 0.5,
        "urn:kapp:構成員": {
         "@id": "#X"
        },
-       "urn:kapp:グループ": "urn:entity:承認グループ"
+       "urn:kapp:グループ": "urn:entity:承認グループ",
+       "existing": "_true"
       },
       {
        "@id": "urn:node:グループ承認",
@@ -180,9 +185,10 @@
        "urn:kapp:金額": {
         "@id": "#A"
        },
-       "urn:kapp:agent": {
+       "agent": {
         "@id": "#X"
-       }
+       },
+       "okButton": "_suspendingOk"
       }
      ]
     }
@@ -206,6 +212,70 @@
        ]
       }
      ]
+    },
+    {
+     "_comment": "マスターのチャネル設定。上司・所属のレコードは、この登録の節（頭部だけのゴール節）で作る（R488）",
+     "@id": "urn:wamtest:設定.マスター",
+     "@type": "ONTOc",
+     "onto0": "マスター",
+     "ontoG": [
+      {
+       "_comment": "上司の登録",
+       "@id": "urn:node:上司.登録",
+       "@type": "urn:kapp:上司",
+       "urn:kapp:注文者": {
+        "@id": "#P"
+       },
+       "urn:kapp:承認者": {
+        "@id": "#Q"
+       },
+       "agent": {
+        "@id": "#M"
+       },
+       "variables": [
+        {
+         "@id": "#P",
+         "variableName": "P"
+        },
+        {
+         "@id": "#Q",
+         "variableName": "Q"
+        },
+        {
+         "@id": "#M",
+         "variableName": "M"
+        }
+       ]
+      },
+      {
+       "_comment": "所属の登録",
+       "@id": "urn:node:所属.登録",
+       "@type": "urn:kapp:所属",
+       "urn:kapp:構成員": {
+        "@id": "#X"
+       },
+       "urn:kapp:グループ": {
+        "@id": "#G"
+       },
+       "agent": {
+        "@id": "#M"
+       },
+       "variables": [
+        {
+         "@id": "#X",
+         "variableName": "X"
+        },
+        {
+         "@id": "#G",
+         "variableName": "G"
+        },
+        {
+         "@id": "#M",
+         "variableName": "M"
+        }
+       ]
+      }
+     ]
     }
    ]
   }
@@ -216,7 +286,9 @@
    "@id": "urn:entity:上司.山田",
    "@type": "urn:kapp:上司",
    "urn:kapp:注文者": "urn:entity:山田",
-   "urn:kapp:承認者": "urn:entity:佐藤"
+   "urn:kapp:承認者": "urn:entity:佐藤",
+   "agent": "urn:entity:管理者",
+   "completeByOkButton": "urn:entity:管理者"
   }
  ],
  "urn:kapp:所属": [
@@ -224,19 +296,56 @@
    "@id": "urn:entity:所属.鈴木",
    "@type": "urn:kapp:所属",
    "urn:kapp:構成員": "urn:entity:鈴木",
-   "urn:kapp:グループ": "urn:entity:承認グループ"
+   "urn:kapp:グループ": "urn:entity:承認グループ",
+   "agent": "urn:entity:管理者",
+   "completeByOkButton": "urn:entity:管理者"
   },
   {
    "@id": "urn:entity:所属.山本",
    "@type": "urn:kapp:所属",
    "urn:kapp:構成員": "urn:entity:山本",
-   "urn:kapp:グループ": "urn:entity:承認グループ"
+   "urn:kapp:グループ": "urn:entity:承認グループ",
+   "agent": "urn:entity:管理者",
+   "completeByOkButton": "urn:entity:管理者"
   },
   {
    "@id": "urn:entity:所属.田中",
    "@type": "urn:kapp:所属",
    "urn:kapp:構成員": "urn:entity:田中",
-   "urn:kapp:グループ": "urn:entity:承認グループ"
+   "urn:kapp:グループ": "urn:entity:承認グループ",
+   "agent": "urn:entity:管理者",
+   "completeByOkButton": "urn:entity:管理者"
+  }
+ ],
+ "Person": [
+  {
+   "_comment": "人もレコードとして置く——担当者の属性の先の完成を見るので、人のノードが保管先に要る（追記R529）",
+   "@id": "urn:entity:山田",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:entity:佐藤",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:entity:鈴木",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:entity:山本",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:entity:田中",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:entity:管理者",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:entity:サプライヤ",
+   "@type": "Person"
   }
  ]
 }

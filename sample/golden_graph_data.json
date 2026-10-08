@@ -18,11 +18,13 @@
         },
         {
           "@id": "urn:node:承認.head",
-          "@type": "urn:golden:承認"
+          "@type": "urn:golden:承認",
+          "okButton": "_suspendingOk"
         },
         {
           "@id": "urn:node:発注.head",
-          "@type": "urn:golden:発注"
+          "@type": "urn:golden:発注",
+          "okButton": "_suspendingOk"
         }
       ],
       "ontoC": [
@@ -56,7 +58,7 @@
                   "urn:golden:申請.商品": "urn:entity:item-paper",
                   "urn:golden:申請.数量": 100,
                   "urn:golden:申請.発注先": "urn:entity:org-a",
-                  "wam:truthValue": "t"
+                  "truthValue": true
                 },
                 {
                   "@id": "urn:node:上司照会",
@@ -73,9 +75,10 @@
                   "urn:golden:agent": {
                     "@id": "#承認者"
                   },
-                  "wam:truthValue": {
+                  "truthValue": {
                     "@id": "#T2"
-                  }
+                  },
+                  "okButton": "_suspendingOk"
                 },
                 {
                   "@id": "urn:entity:hacchu-001",
@@ -85,9 +88,10 @@
                   "urn:golden:発注.数量": 100,
                   "urn:golden:発注.発注先": "urn:entity:org-a",
                   "urn:golden:agent": "urn:entity:person-c",
-                  "wam:truthValue": {
+                  "truthValue": {
                     "@id": "#T3"
-                  }
+                  },
+                  "okButton": "_suspendingOk"
                 },
                 {
                   "@id": "urn:node:調達申請ワークフロー.head#link1",

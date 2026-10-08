@@ -69,7 +69,7 @@
        "@id": "urn:node:明細.単価掛率",
        "@type": "urn:qp:単価・掛率",
        "_comment": "once: 単価・掛率 は最初に当たった価格設定で確定し、バックトラックしない（追記R384）。",
-       "wam:once": true,
+       "once": true,
        "urn:qp:商品": {
         "@id": "#Item"
        },
@@ -146,7 +146,9 @@
        },
        "urn:qp:単価": {
         "@id": "#Price"
-       }
+       },
+       "existing": "_true",
+       "_comment": "**existing**——マスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。"
       }
      ]
     },
@@ -199,7 +201,9 @@
        },
        "urn:qp:掛率": {
         "@id": "#Ratio"
-       }
+       },
+       "existing": "_true",
+       "_comment": "**existing**——マスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。"
       }
      ]
     },
@@ -233,7 +237,9 @@
        },
        "urn:qp:単価": {
         "@id": "#Price"
-       }
+       },
+       "existing": "_true",
+       "_comment": "**existing**——マスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。"
       }
      ]
     },
@@ -276,7 +282,9 @@
        },
        "urn:qp:掛率": {
         "@id": "#Ratio"
-       }
+       },
+       "existing": "_true",
+       "_comment": "**existing**——マスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。"
       }
      ]
     },
@@ -343,7 +351,9 @@
        },
        "urn:qp:掛率": {
         "@id": "#Ratio"
-       }
+       },
+       "existing": "_true",
+       "_comment": "**existing**——マスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。"
       }
      ]
     },
@@ -400,7 +410,9 @@
        },
        "urn:qp:掛率": {
         "@id": "#Ratio"
-       }
+       },
+       "existing": "_true",
+       "_comment": "**existing**——マスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。"
       }
      ]
     },
@@ -443,7 +455,9 @@
        },
        "urn:qp:掛率": {
         "@id": "#Ratio"
-       }
+       },
+       "existing": "_true",
+       "_comment": "**existing**——マスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。"
       }
      ]
     },
@@ -476,7 +490,9 @@
        "@type": "urn:qp:全体掛率",
        "urn:qp:掛率": {
         "@id": "#Ratio"
-       }
+       },
+       "existing": "_true",
+       "_comment": "**existing**——マスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。"
       }
      ]
     },
@@ -527,7 +543,9 @@
        },
        "urn:qp:カテゴリ": {
         "@id": "#C"
-       }
+       },
+       "existing": "_true",
+       "_comment": "**existing**——マスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。"
       }
      ]
     },
@@ -564,7 +582,9 @@
        },
        "urn:qp:カテゴリ": {
         "@id": "#D"
-       }
+       },
+       "existing": "_true",
+       "_comment": "**existing**——マスターのレコード（タスク）なので、登録の業務フローを走らせず、既にあるレコードを検索する（追記R528）。"
       },
       {
        "@id": "urn:node:上位カテゴリ2.再帰",
@@ -618,6 +638,259 @@
          "arg2": {
           "@id": "#Amount"
          }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "_comment": "マスターのチャネル設定。マスターのレコードは、この登録の節（頭部だけのゴール節）で作る（R488）",
+     "@id": "urn:qp:設定.マスター",
+     "@type": "ONTOc",
+     "onto0": "マスター",
+     "ontoG": [
+      {
+       "_comment": "商品・バイヤー・単価 の登録",
+       "@id": "urn:node:商品・バイヤー・単価.登録",
+       "@type": "urn:qp:商品・バイヤー・単価",
+       "urn:qp:商品": {
+        "@id": "#V0"
+       },
+       "urn:qp:バイヤー": {
+        "@id": "#V1"
+       },
+       "urn:qp:単価": {
+        "@id": "#V2"
+       },
+       "agent": {
+        "@id": "#M"
+       },
+       "variables": [
+        {
+         "@id": "#V0",
+         "variableName": "V0"
+        },
+        {
+         "@id": "#V1",
+         "variableName": "V1"
+        },
+        {
+         "@id": "#V2",
+         "variableName": "V2"
+        },
+        {
+         "@id": "#M",
+         "variableName": "M"
+        }
+       ]
+      },
+      {
+       "_comment": "商品・バイヤー・掛率 の登録",
+       "@id": "urn:node:商品・バイヤー・掛率.登録",
+       "@type": "urn:qp:商品・バイヤー・掛率",
+       "urn:qp:商品": {
+        "@id": "#V0"
+       },
+       "urn:qp:バイヤー": {
+        "@id": "#V1"
+       },
+       "urn:qp:掛率": {
+        "@id": "#V2"
+       },
+       "agent": {
+        "@id": "#M"
+       },
+       "variables": [
+        {
+         "@id": "#V0",
+         "variableName": "V0"
+        },
+        {
+         "@id": "#V1",
+         "variableName": "V1"
+        },
+        {
+         "@id": "#V2",
+         "variableName": "V2"
+        },
+        {
+         "@id": "#M",
+         "variableName": "M"
+        }
+       ]
+      },
+      {
+       "_comment": "商品・単価 の登録",
+       "@id": "urn:node:商品・単価.登録",
+       "@type": "urn:qp:商品・単価",
+       "agent": {
+        "@id": "#M"
+       },
+       "variables": [
+        {
+         "@id": "#M",
+         "variableName": "M"
+        }
+       ]
+      },
+      {
+       "_comment": "商品・掛率 の登録",
+       "@id": "urn:node:商品・掛率.登録",
+       "@type": "urn:qp:商品・掛率",
+       "urn:qp:商品": {
+        "@id": "#V0"
+       },
+       "urn:qp:掛率": {
+        "@id": "#V1"
+       },
+       "agent": {
+        "@id": "#M"
+       },
+       "variables": [
+        {
+         "@id": "#V0",
+         "variableName": "V0"
+        },
+        {
+         "@id": "#V1",
+         "variableName": "V1"
+        },
+        {
+         "@id": "#M",
+         "variableName": "M"
+        }
+       ]
+      },
+      {
+       "_comment": "カテゴリ・バイヤー・掛率 の登録",
+       "@id": "urn:node:カテゴリ・バイヤー・掛率.登録",
+       "@type": "urn:qp:カテゴリ・バイヤー・掛率",
+       "urn:qp:カテゴリ": {
+        "@id": "#V0"
+       },
+       "urn:qp:バイヤー": {
+        "@id": "#V1"
+       },
+       "urn:qp:掛率": {
+        "@id": "#V2"
+       },
+       "agent": {
+        "@id": "#M"
+       },
+       "variables": [
+        {
+         "@id": "#V0",
+         "variableName": "V0"
+        },
+        {
+         "@id": "#V1",
+         "variableName": "V1"
+        },
+        {
+         "@id": "#V2",
+         "variableName": "V2"
+        },
+        {
+         "@id": "#M",
+         "variableName": "M"
+        }
+       ]
+      },
+      {
+       "_comment": "カテゴリ・掛率 の登録",
+       "@id": "urn:node:カテゴリ・掛率.登録",
+       "@type": "urn:qp:カテゴリ・掛率",
+       "urn:qp:カテゴリ": {
+        "@id": "#V0"
+       },
+       "urn:qp:掛率": {
+        "@id": "#V1"
+       },
+       "agent": {
+        "@id": "#M"
+       },
+       "variables": [
+        {
+         "@id": "#V0",
+         "variableName": "V0"
+        },
+        {
+         "@id": "#V1",
+         "variableName": "V1"
+        },
+        {
+         "@id": "#M",
+         "variableName": "M"
+        }
+       ]
+      },
+      {
+       "_comment": "バイヤー・掛率 の登録",
+       "@id": "urn:node:バイヤー・掛率.登録",
+       "@type": "urn:qp:バイヤー・掛率",
+       "urn:qp:バイヤー": {
+        "@id": "#V0"
+       },
+       "urn:qp:掛率": {
+        "@id": "#V1"
+       },
+       "agent": {
+        "@id": "#M"
+       },
+       "variables": [
+        {
+         "@id": "#V0",
+         "variableName": "V0"
+        },
+        {
+         "@id": "#V1",
+         "variableName": "V1"
+        },
+        {
+         "@id": "#M",
+         "variableName": "M"
+        }
+       ]
+      },
+      {
+       "_comment": "全体掛率 の登録",
+       "@id": "urn:node:全体掛率.登録",
+       "@type": "urn:qp:全体掛率",
+       "agent": {
+        "@id": "#M"
+       },
+       "variables": [
+        {
+         "@id": "#M",
+         "variableName": "M"
+        }
+       ]
+      },
+      {
+       "_comment": "直上カテゴリ の登録",
+       "@id": "urn:node:直上カテゴリ.登録",
+       "@type": "urn:qp:直上カテゴリ",
+       "urn:qp:対象": {
+        "@id": "#V0"
+       },
+       "urn:qp:カテゴリ": {
+        "@id": "#V1"
+       },
+       "agent": {
+        "@id": "#M"
+       },
+       "variables": [
+        {
+         "@id": "#V0",
+         "variableName": "V0"
+        },
+        {
+         "@id": "#V1",
+         "variableName": "V1"
+        },
+        {
+         "@id": "#M",
+         "variableName": "M"
         }
        ]
       }
@@ -764,57 +1037,79 @@
   {
    "@id": "urn:entity:parent-1",
    "urn:qp:対象": "urn:entity:pencil-4b",
-   "urn:qp:カテゴリ": "urn:entity:cat-pencil"
+   "urn:qp:カテゴリ": "urn:entity:cat-pencil",
+   "agent": "urn:entity:admin",
+   "completeByOkButton": "urn:entity:admin"
   },
   {
    "@id": "urn:entity:parent-2",
    "urn:qp:対象": "urn:entity:cat-pencil",
-   "urn:qp:カテゴリ": "urn:entity:cat-writing"
+   "urn:qp:カテゴリ": "urn:entity:cat-writing",
+   "agent": "urn:entity:admin",
+   "completeByOkButton": "urn:entity:admin"
   },
   {
    "@id": "urn:entity:parent-3",
    "urn:qp:対象": "urn:entity:cat-writing",
-   "urn:qp:カテゴリ": "urn:entity:cat-stationery"
+   "urn:qp:カテゴリ": "urn:entity:cat-stationery",
+   "agent": "urn:entity:admin",
+   "completeByOkButton": "urn:entity:admin"
   },
   {
    "@id": "urn:entity:parent-4",
    "urn:qp:対象": "urn:entity:pen-red",
-   "urn:qp:カテゴリ": "urn:entity:cat-mono-ballpen"
+   "urn:qp:カテゴリ": "urn:entity:cat-mono-ballpen",
+   "agent": "urn:entity:admin",
+   "completeByOkButton": "urn:entity:admin"
   },
   {
    "@id": "urn:entity:parent-5",
    "urn:qp:対象": "urn:entity:cat-mono-ballpen",
-   "urn:qp:カテゴリ": "urn:entity:cat-ballpen"
+   "urn:qp:カテゴリ": "urn:entity:cat-ballpen",
+   "agent": "urn:entity:admin",
+   "completeByOkButton": "urn:entity:admin"
   },
   {
    "@id": "urn:entity:parent-6",
    "urn:qp:対象": "urn:entity:cat-ballpen",
-   "urn:qp:カテゴリ": "urn:entity:cat-writing"
+   "urn:qp:カテゴリ": "urn:entity:cat-writing",
+   "agent": "urn:entity:admin",
+   "completeByOkButton": "urn:entity:admin"
   },
   {
    "@id": "urn:entity:parent-7",
    "urn:qp:対象": "urn:entity:notebook",
-   "urn:qp:カテゴリ": "urn:entity:cat-paper"
+   "urn:qp:カテゴリ": "urn:entity:cat-paper",
+   "agent": "urn:entity:admin",
+   "completeByOkButton": "urn:entity:admin"
   },
   {
    "@id": "urn:entity:parent-8",
    "urn:qp:対象": "urn:entity:sticky",
-   "urn:qp:カテゴリ": "urn:entity:cat-paper"
+   "urn:qp:カテゴリ": "urn:entity:cat-paper",
+   "agent": "urn:entity:admin",
+   "completeByOkButton": "urn:entity:admin"
   },
   {
    "@id": "urn:entity:parent-9",
    "urn:qp:対象": "urn:entity:cat-paper",
-   "urn:qp:カテゴリ": "urn:entity:cat-stationery"
+   "urn:qp:カテゴリ": "urn:entity:cat-stationery",
+   "agent": "urn:entity:admin",
+   "completeByOkButton": "urn:entity:admin"
   },
   {
    "@id": "urn:entity:parent-10",
    "urn:qp:対象": "urn:entity:eraser",
-   "urn:qp:カテゴリ": "urn:entity:cat-stationery"
+   "urn:qp:カテゴリ": "urn:entity:cat-stationery",
+   "agent": "urn:entity:admin",
+   "completeByOkButton": "urn:entity:admin"
   },
   {
    "@id": "urn:entity:parent-11",
    "urn:qp:対象": "urn:entity:mech-pencil",
-   "urn:qp:カテゴリ": "urn:entity:cat-pencil"
+   "urn:qp:カテゴリ": "urn:entity:cat-pencil",
+   "agent": "urn:entity:admin",
+   "completeByOkButton": "urn:entity:admin"
   }
  ],
  "urn:qp:商品・バイヤー・単価": [
@@ -823,7 +1118,9 @@
    "@id": "urn:entity:bp-1",
    "urn:qp:商品": "urn:entity:pencil-4b",
    "urn:qp:バイヤー": "urn:entity:tanaka",
-   "urn:qp:単価": 88
+   "urn:qp:単価": 88,
+   "agent": "urn:entity:admin",
+   "completeByOkButton": "urn:entity:admin"
   }
  ],
  "urn:qp:商品・バイヤー・掛率": [
@@ -832,7 +1129,9 @@
    "@id": "urn:entity:br-1",
    "urn:qp:商品": "urn:entity:notebook",
    "urn:qp:バイヤー": "urn:entity:tanaka",
-   "urn:qp:掛率": 0.75
+   "urn:qp:掛率": 0.75,
+   "agent": "urn:entity:admin",
+   "completeByOkButton": "urn:entity:admin"
   }
  ],
  "urn:qp:商品・掛率": [
@@ -840,7 +1139,9 @@
    "_comment": "② ——田中商店には①が優先する",
    "@id": "urn:entity:pr-1",
    "urn:qp:商品": "urn:entity:notebook",
-   "urn:qp:掛率": 0.9
+   "urn:qp:掛率": 0.9,
+   "agent": "urn:entity:admin",
+   "completeByOkButton": "urn:entity:admin"
   }
  ],
  "urn:qp:カテゴリ・バイヤー・掛率": [
@@ -849,21 +1150,27 @@
    "@id": "urn:entity:cbr-1",
    "urn:qp:カテゴリ": "urn:entity:cat-ballpen",
    "urn:qp:バイヤー": "urn:entity:tanaka",
-   "urn:qp:掛率": 0.875
+   "urn:qp:掛率": 0.875,
+   "agent": "urn:entity:admin",
+   "completeByOkButton": "urn:entity:admin"
   },
   {
    "_comment": "③ 田中商店向けの筆記具 25%引き。赤のボールペンには、より詳細な ボールペン の設定（cbr-1）が先に当たる",
    "@id": "urn:entity:cbr-2",
    "urn:qp:カテゴリ": "urn:entity:cat-writing",
    "urn:qp:バイヤー": "urn:entity:tanaka",
-   "urn:qp:掛率": 0.75
+   "urn:qp:掛率": 0.75,
+   "agent": "urn:entity:admin",
+   "completeByOkButton": "urn:entity:admin"
   },
   {
    "_comment": "③ 佐藤商店向けの紙製品 12.5%引き",
    "@id": "urn:entity:cbr-3",
    "urn:qp:カテゴリ": "urn:entity:cat-paper",
    "urn:qp:バイヤー": "urn:entity:sato",
-   "urn:qp:掛率": 0.875
+   "urn:qp:掛率": 0.875,
+   "agent": "urn:entity:admin",
+   "completeByOkButton": "urn:entity:admin"
   }
  ],
  "urn:qp:カテゴリ・掛率": [
@@ -871,7 +1178,9 @@
    "_comment": "④ ——田中商店には③が優先する（より詳細なカテゴリの設定だが、バイヤー指定有が先）",
    "@id": "urn:entity:cr-1",
    "urn:qp:カテゴリ": "urn:entity:cat-mono-ballpen",
-   "urn:qp:掛率": 0.95
+   "urn:qp:掛率": 0.95,
+   "agent": "urn:entity:admin",
+   "completeByOkButton": "urn:entity:admin"
   }
  ],
  "urn:qp:バイヤー・掛率": [
@@ -879,7 +1188,16 @@
    "_comment": "⑤",
    "@id": "urn:entity:byr-1",
    "urn:qp:バイヤー": "urn:entity:tanaka",
-   "urn:qp:掛率": 0.625
+   "urn:qp:掛率": 0.625,
+   "agent": "urn:entity:admin",
+   "completeByOkButton": "urn:entity:admin"
+  }
+ ],
+ "Person": [
+  {
+   "_comment": "人もレコードとして置く（追記R529）",
+   "@id": "urn:entity:admin",
+   "@type": "Person"
   }
  ]
 }

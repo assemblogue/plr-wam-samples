@@ -10,13 +10,15 @@
           "_comment": "商品を選ぶタスクの、頭部だけの節。本体の無いタスクも節を持つ（追記R474）",
           "@id": "urn:node:PickItem.head-only",
           "@type": "urn:quote:PickItem",
-          "variables": []
+          "variables": [],
+          "okButton": "_suspendingOk"
         },
         {
           "_comment": "明細のタスクの、頭部だけの節。本体の無いタスクも節を持つ（追記R474）",
           "@id": "urn:node:LineItem.head-only",
           "@type": "urn:quote:LineItem",
-          "variables": []
+          "variables": [],
+          "okButton": "_suspendingOk"
         }
       ],
       "ontoC": [
@@ -93,9 +95,10 @@
                     "@id": "#N1"
                   },
                   "urn:quote:agent": "urn:entity:buyer",
-                  "wam:truthValue": {
+                  "truthValue": {
                     "@id": "#TP1"
-                  }
+                  },
+                  "okButton": "_suspendingOk"
                 },
                 {
                   "@id": "urn:node:lookup1",
@@ -120,9 +123,10 @@
                     "@id": "#A1"
                   },
                   "urn:quote:agent": "urn:entity:buyer",
-                  "wam:truthValue": {
+                  "truthValue": {
                     "@id": "#TL1"
-                  }
+                  },
+                  "okButton": "_suspendingOk"
                 },
                 {
                   "@id": "urn:node:amount1",
@@ -146,9 +150,10 @@
                     "@id": "#N2"
                   },
                   "urn:quote:agent": "urn:entity:buyer",
-                  "wam:truthValue": {
+                  "truthValue": {
                     "@id": "#TP2"
-                  }
+                  },
+                  "okButton": "_suspendingOk"
                 },
                 {
                   "@id": "urn:node:lookup2",
@@ -173,9 +178,10 @@
                     "@id": "#A2"
                   },
                   "urn:quote:agent": "urn:entity:buyer",
-                  "wam:truthValue": {
+                  "truthValue": {
                     "@id": "#TL2"
-                  }
+                  },
+                  "okButton": "_suspendingOk"
                 },
                 {
                   "@id": "urn:node:amount2",

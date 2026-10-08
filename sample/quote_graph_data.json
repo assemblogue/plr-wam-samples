@@ -170,7 +170,8 @@
                     "@id": "#Amount"
                   }
                 }
-              ]
+              ],
+              "okButton": "_suspendingOk"
             }
           ]
         }
@@ -181,7 +182,9 @@
     {
       "_comment": "見積書1件。**明細はまだ1本も無い。** 本数を決めるのはここであって、ホーン節ではない。",
       "@id": "urn:entity:quote-001",
-      "urn:quote:agent": "urn:entity:buyer"
+      "urn:quote:agent": "urn:entity:buyer",
+      "okButton": "_suspendingOk",
+      "completeOrSuspendByOkButton": "_false"
     }
   ],
   "urn:quote:CatalogItem": [

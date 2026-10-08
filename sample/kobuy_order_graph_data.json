@@ -56,7 +56,8 @@
        "urn:kord:単価": {
         "@id": "#P"
        },
-       "urn:kord:agent": "urn:entity:バイヤー山田"
+       "urn:kord:agent": "urn:entity:バイヤー山田",
+       "okButton": "_suspendingOk"
       },
       {
        "_comment": "サプライヤが受注を受け付ける（§3.2.1.2）。**ここで担当がバイヤーからサプライヤへ移る。**",
@@ -65,7 +66,8 @@
        "urn:kord:注文数": {
         "@id": "#Q"
        },
-       "urn:kord:agent": "urn:entity:サプライヤ営業"
+       "urn:kord:agent": "urn:entity:サプライヤ営業",
+       "okButton": "_suspendingOk"
       },
       {
        "_comment": "企業ごとに1本の節を選ぶ。出荷数と出荷日はこの呼出で受け取る。",
@@ -124,7 +126,8 @@
        "urn:kord:税込金額": {
         "@id": "#G"
        },
-       "urn:kord:agent": "urn:entity:バイヤー山田"
+       "urn:kord:agent": "urn:entity:バイヤー山田",
+       "okButton": "_suspendingOk"
       },
       {
        "@id": "urn:node:受注フロー.head#link1",
@@ -210,7 +213,8 @@
        "urn:kord:納入予定日": {
         "@id": "#D"
        },
-       "urn:kord:agent": "urn:entity:サプライヤ営業"
+       "urn:kord:agent": "urn:entity:サプライヤ営業",
+       "okButton": "_suspendingOk"
       },
       {
        "@id": "urn:node:S社.出荷",
@@ -221,7 +225,8 @@
        "urn:kord:出荷日": {
         "@id": "#SD"
        },
-       "urn:kord:agent": "urn:entity:サプライヤ倉庫"
+       "urn:kord:agent": "urn:entity:サプライヤ倉庫",
+       "okButton": "_suspendingOk"
       },
       {
        "@id": "urn:node:納品段取り.S社.head#link1",
@@ -280,29 +285,35 @@
        "urn:kord:出荷日": {
         "@id": "#SD"
        },
-       "urn:kord:agent": "urn:entity:サプライヤ倉庫"
+       "urn:kord:agent": "urn:entity:サプライヤ倉庫",
+       "okButton": "_suspendingOk"
       }
      ]
     },
     {
      "@id": "urn:node:注文.head",
-     "@type": "urn:kord:注文"
+     "@type": "urn:kord:注文",
+     "okButton": "_suspendingOk"
     },
     {
      "@id": "urn:node:受注受付.head",
-     "@type": "urn:kord:受注受付"
+     "@type": "urn:kord:受注受付",
+     "okButton": "_suspendingOk"
     },
     {
      "@id": "urn:node:納期回答.head",
-     "@type": "urn:kord:納期回答"
+     "@type": "urn:kord:納期回答",
+     "okButton": "_suspendingOk"
     },
     {
      "@id": "urn:node:出荷.head",
-     "@type": "urn:kord:出荷"
+     "@type": "urn:kord:出荷",
+     "okButton": "_suspendingOk"
     },
     {
      "@id": "urn:node:検収.head",
-     "@type": "urn:kord:検収"
+     "@type": "urn:kord:検収",
+     "okButton": "_suspendingOk"
     }
    ],
    "ontoC": [

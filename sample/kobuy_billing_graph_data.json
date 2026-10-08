@@ -54,7 +54,8 @@
               "urn:kbil:締日": {
                 "@id": "#D"
               },
-              "urn:kbil:agent": "urn:entity:管理会社"
+              "urn:kbil:agent": "urn:entity:管理会社",
+              "okButton": "_suspendingOk"
             },
             {
               "_comment": "共通: まとめの単位（分類の鍵。請求:未 は非変数なので絞り込みの条件、締日 は締め処理の D。値が無いことも1つの値として数える）。個別: 同じ売上伝票明細の、1件ずつ残る部分——根は共通と同じデータノードに当たるので、ノードの変数で繋がない（追記R399）。統合: 作る請求書1通。明細は個別の変数を使うパターンで、請求書の中に書く。",
@@ -136,7 +137,8 @@
         },
         {
           "@id": "urn:node:締め処理.head",
-          "@type": "urn:kbil:締め処理"
+          "@type": "urn:kbil:締め処理",
+          "okButton": "_suspendingOk"
         }
       ],
       "ontoC": [

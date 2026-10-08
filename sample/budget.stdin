@@ -1,4 +1,26 @@
-250000
-150000
-down
-ok
+as urn:entity:山田
+start urn:bud:調達 urn:bud:案件 A urn:bud:予算 予算-1
+1.2 300000
+1
+as urn:entity:佐藤
+1
+as urn:entity:高橋
+start urn:bud:調達 urn:bud:案件 B urn:bud:予算 予算-1
+1.2 50000
+1
+as urn:entity:佐藤
+1
+as urn:entity:山田
+start urn:bud:調達 urn:bud:案件 C urn:bud:予算 予算-1
+1.2 250000
+1.2 150000
+1
+as urn:entity:佐藤
+1
+as urn:entity:山田
+start urn:bud:調達 urn:bud:案件 D urn:bud:予算 予算-山田
+1.2 120000
+1.2 80000
+1
+1
+end

@@ -65,7 +65,8 @@
        "urn:kinsp:検収数": {
         "@id": "#N"
        },
-       "urn:kinsp:agent": "urn:entity:バイヤー"
+       "urn:kinsp:agent": "urn:entity:バイヤー",
+       "okButton": "_suspendingOk"
       },
       {
        "_comment": "検収数は出荷数を超えられない。",
@@ -156,7 +157,8 @@
     },
     {
      "@id": "urn:node:検収.head",
-     "@type": "urn:kinsp:検収"
+     "@type": "urn:kinsp:検収",
+     "okButton": "_suspendingOk"
     },
     {
      "@id": "urn:node:売上伝票.head",

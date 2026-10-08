@@ -61,7 +61,8 @@
                         "@id": "#Unit"
                       }
                     }
-                  }
+                  },
+                  "okButton": "_suspendingOk"
                 },
                 {
                   "@id": "urn:node:total",
@@ -88,7 +89,8 @@
         "urn:entity:line-1",
         "urn:entity:line-2",
         "urn:entity:line-3"
-      ]
+      ],
+      "okButton": "_suspendingOk"
     }
   ],
   "urn:quote:QuoteLine": [

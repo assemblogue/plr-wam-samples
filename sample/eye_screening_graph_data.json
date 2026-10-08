@@ -258,7 +258,7 @@
        "urn:eye:結果": {
         "@id": "#結果"
        },
-       "urn:eye:agentWithSuspendingOK": {
+       "urn:eye:agent": {
         "@id": "#担当者"
        },
        "variables": [
@@ -356,7 +356,8 @@
           "@id": "#結果"
          }
         }
-       ]
+       ],
+       "okButton": "_suspendingOk"
       }
      ]
     }
@@ -368,7 +369,9 @@
    "_comment": "受診票1件。ユーザはここの9つの欄に入力する。",
    "@id": "urn:entity:受診票",
    "@type": "urn:eye:視覚検査",
-   "urn:eye:agentWithSuspendingOK": "urn:entity:保健師"
+   "urn:eye:agent": "urn:entity:保健師",
+   "okButton": "_suspendingOk",
+   "completeOrSuspendByOkButton": "_false"
   }
  ],
  "urn:eye:視力検査判定": [
