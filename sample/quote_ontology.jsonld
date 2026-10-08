@@ -1,8 +1,6 @@
 {
   "@id": "urn:quote:ontology",
   "@type": "Ontology",
-  "agentProperty": "urn:quote:agent",
-  "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
   "_comment": "見積書デモ。クラスid・属性idは ASCII の絶対URI（changelog 追記181）。range のデータ型名は接頭辞なしで書く（xsd: を付けると解決されない）。 単価（unitPrice）は Product の属性であって LineItem の欄ではない。したがって set_value の対象として存在せず、人も AI も書けない。",
   "defines": [
     {
@@ -11,7 +9,7 @@
       "subClassOf": [
         {
           "@type": "Restriction",
-          "onProperty": "#isComplete",
+          "onProperty": "wam:isComplete",
           "minCardinality": 0,
           "maxCardinality": 1
         }
@@ -19,6 +17,17 @@
       "label": {
         "ja": "テンプレート",
         "en": "Template"
+      }
+    },
+    {
+      "@id": "urn:quote:Goal",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:quote:Task"
+      ],
+      "label": {
+        "ja": "ゴール",
+        "en": "Goal"
       }
     },
     {
@@ -71,10 +80,7 @@
       "label": {
         "ja": "人",
         "en": "Person"
-      },
-      "subClassOf": [
-        "#Person"
-      ]
+      }
     },
     {
       "@id": "urn:quote:agent",
@@ -83,16 +89,13 @@
       "label": {
         "ja": "担当者",
         "en": "Agent"
-      },
-      "subPropertyOf": [
-        "#agent"
-      ]
+      }
     },
     {
       "@id": "urn:quote:CreateQuote",
       "@type": "Class",
       "subClassOf": [
-        "urn:quote:Task",
+        "urn:quote:Goal",
         {
           "@type": "Restriction",
           "onProperty": "urn:quote:total",
@@ -134,7 +137,7 @@
         },
         {
           "@type": "Restriction",
-          "onProperty": "#completeOrSuspendByOkButton",
+          "onProperty": "wam:completeByOkButton",
           "minCardinality": 0,
           "maxCardinality": 1
         }
@@ -185,7 +188,7 @@
         },
         {
           "@type": "Restriction",
-          "onProperty": "#completeOrSuspendByOkButton",
+          "onProperty": "wam:completeByOkButton",
           "minCardinality": 0,
           "maxCardinality": 1
         }
@@ -308,14 +311,12 @@
     {
       "@id": "urn:wamtest:Then",
       "@type": "Class",
+      "linkKind": "then",
       "_comment": "リンクは属性ではなくクラスである。arg1 が始点、arg2 が終点。",
       "label": {
         "ja": "Then",
         "en": "Then link"
-      },
-      "subClassOf": [
-        "#Then"
-      ]
+      }
     },
     {
       "@id": "arg1",
@@ -331,6 +332,41 @@
       "label": {
         "ja": "第2引数",
         "en": "Arg 2"
+      }
+    },
+    {
+      "_comment": "完成の属性の上位属性（追記249）。complete と completeByOkButton はどちらもこれの下位属性であり、cardinality を1以下にすることで「いずれか一方しか使えない」が表される。",
+      "@id": "wam:isComplete",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:Template",
+      "range": "string",
+      "label": {
+        "ja": "完成",
+        "en": "Is complete"
+      }
+    },
+    {
+      "_comment": "OKボタンを持たないノードの完成（2値）。",
+      "@id": "wam:complete",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:Template",
+      "range": "boolean",
+      "subPropertyOf": "wam:isComplete",
+      "label": {
+        "ja": "完成",
+        "en": "Complete"
+      }
+    },
+    {
+      "_comment": "OKボタンによる完成（3値。偽＝未完成、真＝完成したが未押下、ユーザ＝その人が確認した）。**この属性を宣言することが「OKボタンを持つ」の宣言である**（追記249。completionMode は使わない）。",
+      "@id": "wam:completeByOkButton",
+      "@type": "DatatypeProperty",
+      "domain": "urn:quote:Template",
+      "range": "string",
+      "subPropertyOf": "wam:isComplete",
+      "label": {
+        "ja": "完成（OKボタン）",
+        "en": "Complete by OK button"
       }
     }
   ]
