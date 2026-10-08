@@ -3,10 +3,6 @@
  "@id": "urn:kord:ontology",
  "@type": "Ontology",
  "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
- "ontoG": [
-  "urn:kord:受注ゴール",
-  "urn:kord:受注ゴールT"
- ],
  "agentProperty": "urn:kord:agent",
  "channelProperty": "urn:kord:channel",
  "channelSettings": {

@@ -7,22 +7,6 @@
    "@type": "ONTO2",
    "onto7": [
     {
-     "_comment": ":- 検収フロー(サプライヤ: Kobuy, 単価: 100, 単価区分: 税込, 税率: 8, 出荷数: 50).",
-     "@id": "urn:node:検収ゴール.head",
-     "@type": "urn:kinsp:検収ゴール",
-     "internalGraph": [
-      {
-       "@id": "urn:node:検収フロー",
-       "@type": "urn:kinsp:検収フロー",
-       "urn:kinsp:単価": 100,
-       "urn:kinsp:出荷数": 50,
-       "urn:kinsp:サプライヤ": "urn:entity:kobuy",
-       "urn:kinsp:単価区分": "税込",
-       "urn:kinsp:税率": 8
-      }
-     ]
-    },
-    {
      "@id": "urn:node:検収フロー.head",
      "@type": "urn:kinsp:検収フロー",
      "urn:kinsp:単価": {
@@ -653,23 +637,48 @@
        }
       }
      ]
-    },
+    }
+   ],
+   "ontoC": [
     {
-     "_comment": "消費税の計算例(計算例一覧: 消費税計算(税込金額: G)).  パターンが各行へ分配され、各行の 消費税計算 の節が解かれる。",
-     "@id": "urn:node:消費税の計算例.head",
-     "@type": "urn:kinsp:消費税の計算例",
-     "variables": [
+     "_comment": "チャネル設定。ゴール節はその ontoG の値である（追記R488）",
+     "@id": "urn:wamtest:設定.kobuy_inspection_graph_data",
+     "@type": "ONTOc",
+     "ontoG": [
       {
-       "@id": "#G",
-       "variableName": "G"
+       "_comment": ":- 検収フロー(サプライヤ: Kobuy, 単価: 100, 単価区分: 税込, 税率: 8, 出荷数: 50).",
+       "@id": "urn:node:検収ゴール.head",
+       "@type": "urn:kinsp:検収ゴール",
+       "internalGraph": [
+        {
+         "@id": "urn:node:検収フロー",
+         "@type": "urn:kinsp:検収フロー",
+         "urn:kinsp:単価": 100,
+         "urn:kinsp:出荷数": 50,
+         "urn:kinsp:サプライヤ": "urn:entity:kobuy",
+         "urn:kinsp:単価区分": "税込",
+         "urn:kinsp:税率": 8
+        }
+       ]
+      },
+      {
+       "_comment": "消費税の計算例(計算例一覧: 消費税計算(税込金額: G)).  パターンが各行へ分配され、各行の 消費税計算 の節が解かれる。",
+       "@id": "urn:node:消費税の計算例.head",
+       "@type": "urn:kinsp:消費税の計算例",
+       "variables": [
+        {
+         "@id": "#G",
+         "variableName": "G"
+        }
+       ],
+       "urn:kinsp:計算例一覧": {
+        "@type": "urn:kinsp:消費税計算",
+        "urn:kinsp:税込金額": {
+         "@id": "#G"
+        }
+       }
       }
-     ],
-     "urn:kinsp:計算例一覧": {
-      "@type": "urn:kinsp:消費税計算",
-      "urn:kinsp:税込金額": {
-       "@id": "#G"
-      }
-     }
+     ]
     }
    ]
   }

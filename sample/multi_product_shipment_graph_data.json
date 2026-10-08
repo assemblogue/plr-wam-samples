@@ -354,26 +354,35 @@
        }
       }
      ]
-    },
+    }
+   ],
+   "ontoC": [
     {
-     "@id": "urn:node:ゴール.head",
-     "@type": "urn:mship:ゴール",
-     "internalGraph": [
+     "_comment": "チャネル設定。ゴール節はその ontoG の値である（追記R488）",
+     "@id": "urn:wamtest:設定.multi_product_shipment_graph_data",
+     "@type": "ONTOc",
+     "ontoG": [
       {
-       "@id": "urn:node:出荷検収+呼び出し",
-       "@type": "urn:mship:出荷検収+",
-       "urn:mship:出荷検収+引数": [
+       "@id": "urn:node:ゴール.head",
+       "@type": "urn:mship:ゴール",
+       "internalGraph": [
         {
-         "@type": "urn:mship:出荷検収",
-         "urn:mship:商品": "えんぴつ",
-         "urn:mship:出荷済数": 0,
-         "urn:mship:要出荷数": 60
-        },
-        {
-         "@type": "urn:mship:出荷検収",
-         "urn:mship:商品": "消しゴム",
-         "urn:mship:出荷済数": 0,
-         "urn:mship:要出荷数": 100
+         "@id": "urn:node:出荷検収+呼び出し",
+         "@type": "urn:mship:出荷検収+",
+         "urn:mship:出荷検収+引数": [
+          {
+           "@type": "urn:mship:出荷検収",
+           "urn:mship:商品": "えんぴつ",
+           "urn:mship:出荷済数": 0,
+           "urn:mship:要出荷数": 60
+          },
+          {
+           "@type": "urn:mship:出荷検収",
+           "urn:mship:商品": "消しゴム",
+           "urn:mship:出荷済数": 0,
+           "urn:mship:要出荷数": 100
+          }
+         ]
         }
        ]
       }

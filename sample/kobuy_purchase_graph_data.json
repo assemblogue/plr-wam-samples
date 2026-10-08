@@ -7,19 +7,6 @@
    "@type": "ONTO2",
    "onto7": [
     {
-     "_comment": ":- 購買(注文者: 山田, 会社: A社). ゴールは初期束縛を受け取れないので、定数を渡すだけの包み節にしてある。B社を試すときはここを B社 にする。",
-     "@id": "urn:node:購買ゴール.head",
-     "@type": "urn:kobuy:購買ゴール",
-     "internalGraph": [
-      {
-       "@id": "urn:node:購買",
-       "@type": "urn:kobuy:購買",
-       "urn:kobuy:注文者": "urn:entity:山田",
-       "urn:kobuy:会社": "urn:entity:A社"
-      }
-     ]
-    },
-    {
      "_comment": "購買(注文者:U, 会社:C) :- 注文(金額:Amount, agent:U) ├Then→ 承認経路(会社:C, 金額:Amount) └Then→ 発注, 利用者限度額(利用者:U, 限度額:L), ≧(L, Amount). **この節は会社が増えても変わらない。**",
      "@id": "urn:node:購買.head",
      "@type": "urn:kobuy:購買",
@@ -274,17 +261,39 @@
     {
      "@id": "urn:node:発注.head",
      "@type": "urn:kobuy:発注"
-    },
+    }
+   ],
+   "ontoC": [
     {
-     "_comment": ":- 購買(注文者: 鈴木, 会社: B社). **購買の節は A社 のときと同じものである。**違うのは承認経路の節が B社 のものに選ばれることだけで、段数は2段から3段になる。",
-     "@id": "urn:node:購買ゴールB.head",
-     "@type": "urn:kobuy:購買ゴールB",
-     "internalGraph": [
+     "_comment": "チャネル設定。ゴール節はその ontoG の値である（追記R488）",
+     "@id": "urn:wamtest:設定.kobuy_purchase_graph_data",
+     "@type": "ONTOc",
+     "ontoG": [
       {
-       "@id": "urn:node:購買B",
-       "@type": "urn:kobuy:購買",
-       "urn:kobuy:注文者": "urn:entity:鈴木",
-       "urn:kobuy:会社": "urn:entity:B社"
+       "_comment": ":- 購買(注文者: 山田, 会社: A社). ゴールは初期束縛を受け取れないので、定数を渡すだけの包み節にしてある。B社を試すときはここを B社 にする。",
+       "@id": "urn:node:購買ゴール.head",
+       "@type": "urn:kobuy:購買ゴール",
+       "internalGraph": [
+        {
+         "@id": "urn:node:購買",
+         "@type": "urn:kobuy:購買",
+         "urn:kobuy:注文者": "urn:entity:山田",
+         "urn:kobuy:会社": "urn:entity:A社"
+        }
+       ]
+      },
+      {
+       "_comment": ":- 購買(注文者: 鈴木, 会社: B社). **購買の節は A社 のときと同じものである。**違うのは承認経路の節が B社 のものに選ばれることだけで、段数は2段から3段になる。",
+       "@id": "urn:node:購買ゴールB.head",
+       "@type": "urn:kobuy:購買ゴールB",
+       "internalGraph": [
+        {
+         "@id": "urn:node:購買B",
+         "@type": "urn:kobuy:購買",
+         "urn:kobuy:注文者": "urn:entity:鈴木",
+         "urn:kobuy:会社": "urn:entity:B社"
+        }
+       ]
       }
      ]
     }

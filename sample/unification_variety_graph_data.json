@@ -7,42 +7,6 @@
    "@type": "ONTO2",
    "onto7": [
     {
-     "_comment": "発注書(明細一覧: 明細(金額: A), 総額: T) :- ＝(T, A).",
-     "@id": "urn:node:発注書.head",
-     "@type": "urn:uv:発注書",
-     "variables": [
-      {
-       "@id": "#T",
-       "variableName": "T"
-      },
-      {
-       "@id": "#A",
-       "variableName": "A"
-      }
-     ],
-     "urn:uv:明細一覧": {
-      "@type": "urn:uv:明細",
-      "urn:uv:金額": {
-       "@id": "#A"
-      }
-     },
-     "urn:uv:総額": {
-      "@id": "#T"
-     },
-     "internalGraph": [
-      {
-       "@id": "urn:node:発注書.総額",
-       "@type": "urn:uv:Equals",
-       "arg1": {
-        "@id": "#T"
-       },
-       "arg2": {
-        "@id": "#A"
-       }
-      }
-     ]
-    },
-    {
      "_comment": "明細(品目: 品目(入数: N), 担当: W, 数量: Q, 値: P, 金額: A, 区分: K, 箱数: B, 手配: H) :- 梱包(数量: Q, 入数: N, 区分: K, 箱数: B), ×([P, Q], A), 手配先(担当: W, 手配: H).",
      "@id": "urn:node:明細.head",
      "@type": "urn:uv:明細",
@@ -240,6 +204,51 @@
       "@id": "#W"
      },
      "urn:uv:手配": "外注"
+    }
+   ],
+   "ontoC": [
+    {
+     "_comment": "チャネル設定。ゴール節はその ontoG の値である（追記R488）",
+     "@id": "urn:wamtest:設定.unification_variety_graph_data",
+     "@type": "ONTOc",
+     "ontoG": [
+      {
+       "_comment": "発注書(明細一覧: 明細(金額: A), 総額: T) :- ＝(T, A).",
+       "@id": "urn:node:発注書.head",
+       "@type": "urn:uv:発注書",
+       "variables": [
+        {
+         "@id": "#T",
+         "variableName": "T"
+        },
+        {
+         "@id": "#A",
+         "variableName": "A"
+        }
+       ],
+       "urn:uv:明細一覧": {
+        "@type": "urn:uv:明細",
+        "urn:uv:金額": {
+         "@id": "#A"
+        }
+       },
+       "urn:uv:総額": {
+        "@id": "#T"
+       },
+       "internalGraph": [
+        {
+         "@id": "urn:node:発注書.総額",
+         "@type": "urn:uv:Equals",
+         "arg1": {
+          "@id": "#T"
+         },
+         "arg2": {
+          "@id": "#A"
+         }
+        }
+       ]
+      }
+     ]
     }
    ]
   }

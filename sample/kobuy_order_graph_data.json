@@ -7,32 +7,6 @@
    "@type": "ONTO2",
    "onto7": [
     {
-     "_comment": ":- 受注フロー(企業: S社). **注文数と単価は書かない**——バイヤーが注文の欄に入れる。",
-     "@id": "urn:node:受注ゴール.head",
-     "@type": "urn:kord:受注ゴール",
-     "internalGraph": [
-      {
-       "@id": "urn:node:受注フロー",
-       "@type": "urn:kord:受注フロー",
-       "urn:kord:企業": "urn:entity:S社"
-      }
-     ],
-     "urn:kord:channel": "urn:channel:バイヤー"
-    },
-    {
-     "_comment": ":- 受注フロー(企業: T社). **注文数と単価は書かない**——バイヤーが注文の欄に入れる。",
-     "@id": "urn:node:受注ゴールT.head",
-     "@type": "urn:kord:受注ゴールT",
-     "internalGraph": [
-      {
-       "@id": "urn:node:受注フローT",
-       "@type": "urn:kord:受注フロー",
-       "urn:kord:企業": "urn:entity:T社"
-      }
-     ],
-     "urn:kord:channel": "urn:channel:バイヤー"
-    },
-    {
      "_comment": "受注フロー(注文数:Q, 単価:P, 企業:C) :- 注文 →Then→ 受注受付 →Then→ 納品段取り(企業:C) →Then→ 検収, ≧(Q, N), ×(N, P, G). **この節は企業が増えても変わらない。**",
      "@id": "urn:node:受注フロー.head",
      "@type": "urn:kord:受注フロー",
@@ -329,6 +303,41 @@
     {
      "@id": "urn:node:検収.head",
      "@type": "urn:kord:検収"
+    }
+   ],
+   "ontoC": [
+    {
+     "_comment": "チャネル設定。ゴール節はその ontoG の値である（追記R488）",
+     "@id": "urn:wamtest:設定.kobuy_order_graph_data",
+     "@type": "ONTOc",
+     "ontoG": [
+      {
+       "_comment": ":- 受注フロー(企業: S社). **注文数と単価は書かない**——バイヤーが注文の欄に入れる。",
+       "@id": "urn:node:受注ゴール.head",
+       "@type": "urn:kord:受注ゴール",
+       "internalGraph": [
+        {
+         "@id": "urn:node:受注フロー",
+         "@type": "urn:kord:受注フロー",
+         "urn:kord:企業": "urn:entity:S社"
+        }
+       ],
+       "urn:kord:channel": "urn:channel:バイヤー"
+      },
+      {
+       "_comment": ":- 受注フロー(企業: T社). **注文数と単価は書かない**——バイヤーが注文の欄に入れる。",
+       "@id": "urn:node:受注ゴールT.head",
+       "@type": "urn:kord:受注ゴールT",
+       "internalGraph": [
+        {
+         "@id": "urn:node:受注フローT",
+         "@type": "urn:kord:受注フロー",
+         "urn:kord:企業": "urn:entity:T社"
+        }
+       ],
+       "urn:kord:channel": "urn:channel:バイヤー"
+      }
+     ]
     }
    ]
   }

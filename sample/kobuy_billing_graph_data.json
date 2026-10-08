@@ -7,17 +7,6 @@
       "@type": "ONTO2",
       "onto7": [
         {
-          "@id": "urn:node:請求締めゴール.head",
-          "@type": "urn:kbil:請求締めゴール",
-          "internalGraph": [
-            {
-              "@id": "urn:node:請求締め",
-              "@type": "urn:kbil:請求締め",
-              "urn:kbil:締日": "20260824"
-            }
-          ]
-        },
-        {
           "_comment": "請求締め(締日:D) :- 締め処理(締日:D, 担当者:管理会社) --Then--> 帳票集約(共通:…, 個別:…, 統合:…). **集約は組込述語1個で、ホーン節は増えない。** 3つの引数はパターン（項）で、節の中にそのまま書く（追記K411）。",
           "@id": "urn:node:請求締め.head",
           "@type": "urn:kbil:請求締め",
@@ -148,6 +137,26 @@
         {
           "@id": "urn:node:締め処理.head",
           "@type": "urn:kbil:締め処理"
+        }
+      ],
+      "ontoC": [
+        {
+          "_comment": "チャネル設定。ゴール節はその ontoG の値である（追記R488）",
+          "@id": "urn:wamtest:設定.kobuy_billing_graph_data",
+          "@type": "ONTOc",
+          "ontoG": [
+            {
+              "@id": "urn:node:請求締めゴール.head",
+              "@type": "urn:kbil:請求締めゴール",
+              "internalGraph": [
+                {
+                  "@id": "urn:node:請求締め",
+                  "@type": "urn:kbil:請求締め",
+                  "urn:kbil:締日": "20260824"
+                }
+              ]
+            }
+          ]
         }
       ]
     }

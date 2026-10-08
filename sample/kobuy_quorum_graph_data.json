@@ -7,18 +7,6 @@
    "@type": "ONTO2",
    "onto7": [
     {
-     "_comment": ":- 購買(注文者: 山田). ゴールは初期束縛を受け取れないので、定数を渡すだけの包み節にしてある。",
-     "@id": "urn:node:購買ゴール.head",
-     "@type": "urn:kapp:購買ゴール",
-     "internalGraph": [
-      {
-       "@id": "urn:node:購買",
-       "@type": "urn:kapp:購買",
-       "urn:kapp:注文者": "urn:entity:山田"
-      }
-     ]
-    },
-    {
      "@id": "urn:node:購買.head",
      "@type": "urn:kapp:購買",
      "urn:kapp:注文者": {
@@ -197,6 +185,27 @@
        "urn:kapp:agent": {
         "@id": "#X"
        }
+      }
+     ]
+    }
+   ],
+   "ontoC": [
+    {
+     "_comment": "チャネル設定。ゴール節はその ontoG の値である（追記R488）",
+     "@id": "urn:wamtest:設定.kobuy_quorum_graph_data",
+     "@type": "ONTOc",
+     "ontoG": [
+      {
+       "_comment": ":- 購買(注文者: 山田). ゴールは初期束縛を受け取れないので、定数を渡すだけの包み節にしてある。",
+       "@id": "urn:node:購買ゴール.head",
+       "@type": "urn:kapp:購買ゴール",
+       "internalGraph": [
+        {
+         "@id": "urn:node:購買",
+         "@type": "urn:kapp:購買",
+         "urn:kapp:注文者": "urn:entity:山田"
+        }
+       ]
       }
      ]
     }

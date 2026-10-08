@@ -7,19 +7,6 @@
       "@type": "ONTO2",
       "onto7": [
         {
-          "@id": "urn:node:ゴール.head",
-          "@type": "urn:ship:納品ゴール",
-          "internalGraph": [
-            {
-              "@id": "urn:node:納品",
-              "@type": "urn:ship:出荷+検収",
-              "urn:ship:出荷済数": 0,
-              "urn:ship:要出荷数": 10
-            }
-          ],
-          "_comment": ":- 出荷+検収(出荷済数:0, 要出荷数:10). ゴールは初期束縛を受け取れないので、定数を渡すだけの包み節にしてある"
-        },
-        {
           "@id": "urn:node:出荷+検収.完了.head",
           "@type": "urn:ship:出荷+検収",
           "urn:ship:出荷済数": {
@@ -217,6 +204,28 @@
             }
           ],
           "_comment": "出荷(個数:S). 出荷数の上限 ≧(要出荷数, [出荷済数, 個数]) は 出荷+検収 の本体にある制約ノードで、連立で解かれるのでどちらに書いても同じ"
+        }
+      ],
+      "ontoC": [
+        {
+          "_comment": "チャネル設定。ゴール節はその ontoG の値である（追記R488）",
+          "@id": "urn:wamtest:設定.shipment_graph_data",
+          "@type": "ONTOc",
+          "ontoG": [
+            {
+              "@id": "urn:node:ゴール.head",
+              "@type": "urn:ship:納品ゴール",
+              "internalGraph": [
+                {
+                  "@id": "urn:node:納品",
+                  "@type": "urn:ship:出荷+検収",
+                  "urn:ship:出荷済数": 0,
+                  "urn:ship:要出荷数": 10
+                }
+              ],
+              "_comment": ":- 出荷+検収(出荷済数:0, 要出荷数:10). ゴールは初期束縛を受け取れないので、定数を渡すだけの包み節にしてある"
+            }
+          ]
         }
       ]
     }

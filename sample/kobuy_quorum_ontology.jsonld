@@ -3,9 +3,6 @@
  "@id": "urn:kapp:ontology",
  "@type": "Ontology",
  "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
- "ontoG": [
-  "urn:kapp:購買ゴール"
- ],
  "agentProperty": "urn:kapp:agent",
  "defines": [
   {

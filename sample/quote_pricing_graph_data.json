@@ -7,42 +7,6 @@
    "@type": "ONTO2",
    "onto7": [
     {
-     "_comment": "見積書(明細一覧: 明細(金額: Amount), 総額: T) :- ＝(T, Amount).",
-     "@id": "urn:node:見積書.head",
-     "@type": "urn:qp:見積書",
-     "variables": [
-      {
-       "@id": "#T",
-       "variableName": "T"
-      },
-      {
-       "@id": "#Amount",
-       "variableName": "Amount"
-      }
-     ],
-     "urn:qp:明細一覧": {
-      "@type": "urn:qp:明細",
-      "urn:qp:金額": {
-       "@id": "#Amount"
-      }
-     },
-     "urn:qp:総額": {
-      "@id": "#T"
-     },
-     "internalGraph": [
-      {
-       "@id": "urn:node:総額",
-       "@type": "urn:qp:Equals",
-       "arg1": {
-        "@id": "#T"
-       },
-       "arg2": {
-        "@id": "#Amount"
-       }
-      }
-     ]
-    },
-    {
      "_comment": "明細(商品: 商品(単価: P0, node: Item), バイヤー: B, 数量: Q, 単価: U, 掛率: R, 金額: A) :- 単価・掛率(商品: Item, バイヤー: B, 元単価: P0, 単価: U, 掛率: R), ×([U, R, Q], A).  単価・掛率 は once（最初の解で確定）。元単価は商品マスターDB（チャネル）から照合した商品の単価。",
      "@id": "urn:node:明細.head",
      "@type": "urn:qp:明細",
@@ -611,6 +575,51 @@
        "urn:qp:カテゴリ": {
         "@id": "#C"
        }
+      }
+     ]
+    }
+   ],
+   "ontoC": [
+    {
+     "_comment": "チャネル設定。ゴール節はその ontoG の値である（追記R488）",
+     "@id": "urn:wamtest:設定.quote_pricing_graph_data",
+     "@type": "ONTOc",
+     "ontoG": [
+      {
+       "_comment": "見積書(明細一覧: 明細(金額: Amount), 総額: T) :- ＝(T, Amount).",
+       "@id": "urn:node:見積書.head",
+       "@type": "urn:qp:見積書",
+       "variables": [
+        {
+         "@id": "#T",
+         "variableName": "T"
+        },
+        {
+         "@id": "#Amount",
+         "variableName": "Amount"
+        }
+       ],
+       "urn:qp:明細一覧": {
+        "@type": "urn:qp:明細",
+        "urn:qp:金額": {
+         "@id": "#Amount"
+        }
+       },
+       "urn:qp:総額": {
+        "@id": "#T"
+       },
+       "internalGraph": [
+        {
+         "@id": "urn:node:総額",
+         "@type": "urn:qp:Equals",
+         "arg1": {
+          "@id": "#T"
+         },
+         "arg2": {
+          "@id": "#Amount"
+         }
+        }
+       ]
       }
      ]
     }
