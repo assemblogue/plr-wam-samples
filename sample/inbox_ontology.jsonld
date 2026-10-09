@@ -1,7 +1,8 @@
 {
- "_comment": "例題⑤ 担当者の受信箱。調達3案件と検収2案件が同時に走り、4人が自分のぶんを片付ける。1人が複数案件・複数業務種別をまたぐ。山田の限度額は案件をまたいで効く（多値の合計に掛かる制約）。 案件は1つずつ業務フローとして起動し、チャネルに並ぶ（tut.md「同時に走る複数案件は、それぞれ業務フローとして起動し、チャネルに並ぶ」。追記R494）。 予算は利用者が1人の予算で、その承認者が予算担当として予算合計を作る（追記R568）。合計は検索した時点のスナップショットなので、片付ける順序で予算合計のレコードの中身は変わる。",
+ "_comment": "例題⑤ 担当者の受信箱。調達3案件と検収2案件が同時に走り、4人が自分のぶんを片付ける。1人が複数案件・複数業務種別をまたぐ。山田の限度額は案件をまたいで効く（多値の合計に掛かる制約）。",
  "@id": "urn:inbox:ontology",
  "@type": "Ontology",
+ "agentProperty": "urn:inbox:agent",
  "defines": [
   {
    "@id": "urn:inbox:Template",
@@ -9,13 +10,7 @@
    "subClassOf": [
     {
      "@type": "Restriction",
-     "onProperty": "#isComplete",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "#complete",
+     "onProperty": "wam:isComplete",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -23,8 +18,7 @@
    "label": {
     "ja": "テンプレート",
     "en": "Template"
-   },
-   "_comment": "complete は OK ボタンの無いタスクの完成。完成した時刻 completedAt はそれが真になったときに書かれる（追記R564）"
+   }
   },
   {
    "@id": "urn:inbox:Atom",
@@ -71,11 +65,20 @@
    }
   },
   {
+   "@id": "wam:isComplete",
+   "@type": "DatatypeProperty",
+   "domain": "urn:inbox:Template",
+   "range": "string",
+   "label": {
+    "ja": "完成",
+    "en": "Is complete"
+   }
+  },
+  {
    "@id": "urn:inbox:Cancelable",
    "@type": "Class",
    "subClassOf": [
-    "urn:inbox:Task",
-    "#Cancelable"
+    "urn:inbox:Task"
    ],
    "label": {
     "ja": "取消可能タスク",
@@ -83,8 +86,7 @@
    }
   },
   {
-   "@id": "#Person",
-   "_comment": "Profile.xlsx で定義されたクラス Person（追記R531・R532）",
+   "@id": "urn:inbox:Person",
    "@type": "Class",
    "subClassOf": [],
    "label": {
@@ -93,8 +95,9 @@
    }
   },
   {
-   "@id": "#agent",
+   "@id": "urn:inbox:agent",
    "@type": "ObjectProperty",
+   "range": "urn:inbox:Person",
    "label": {
     "ja": "担当者",
     "en": "Agent"
@@ -116,13 +119,11 @@
   {
    "@id": "urn:inbox:Then",
    "@type": "Class",
+   "linkKind": "then",
    "label": {
     "ja": "Then",
     "en": "Then"
-   },
-   "subClassOf": [
-    "#Then"
-   ]
+   }
   },
   {
    "@id": "arg1",
@@ -179,17 +180,16 @@
   {
    "@id": "urn:inbox:利用者",
    "@type": "ObjectProperty",
-   "range": "#Person",
+   "range": "urn:inbox:Person",
    "label": {
     "ja": "利用者",
     "en": "User"
-   },
-   "_comment": "その予算で起案できる人（多値。inbox の予算はどれも1人）"
+   }
   },
   {
    "@id": "urn:inbox:起案者",
    "@type": "ObjectProperty",
-   "range": "#Person",
+   "range": "urn:inbox:Person",
    "label": {
     "ja": "起案者",
     "en": "Drafter"
@@ -198,7 +198,7 @@
   {
    "@id": "urn:inbox:承認者",
    "@type": "ObjectProperty",
-   "range": "#Person",
+   "range": "urn:inbox:Person",
    "label": {
     "ja": "承認者",
     "en": "Approver"
@@ -207,7 +207,7 @@
   {
    "@id": "urn:inbox:検収者",
    "@type": "ObjectProperty",
-   "range": "#Person",
+   "range": "urn:inbox:Person",
    "label": {
     "ja": "検収者",
     "en": "Inspector"
@@ -232,20 +232,14 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "#agent",
+     "onProperty": "urn:inbox:agent",
      "minCardinality": 1,
      "maxCardinality": 1
     },
     {
      "@type": "Restriction",
-     "onProperty": "#completeOrSuspendByOkButton",
+     "onProperty": "wam:completeOrSuspendByOkButton",
      "minCardinality": 0,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:inbox:予算",
-     "minCardinality": 1,
      "maxCardinality": 1
     }
    ],
@@ -273,20 +267,14 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "#agent",
+     "onProperty": "urn:inbox:agent",
      "minCardinality": 1,
      "maxCardinality": 1
     },
     {
      "@type": "Restriction",
-     "onProperty": "#completeOrSuspendByOkButton",
+     "onProperty": "wam:completeOrSuspendByOkButton",
      "minCardinality": 0,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:inbox:予算",
-     "minCardinality": 1,
      "maxCardinality": 1
     }
    ],
@@ -314,13 +302,13 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "#agent",
+     "onProperty": "urn:inbox:agent",
      "minCardinality": 1,
      "maxCardinality": 1
     },
     {
      "@type": "Restriction",
-     "onProperty": "#completeOrSuspendByOkButton",
+     "onProperty": "wam:completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -334,7 +322,7 @@
    "@id": "urn:inbox:調達",
    "@type": "Class",
    "subClassOf": [
-    "urn:inbox:Task",
+    "urn:inbox:OtherAtom",
     {
      "@type": "Restriction",
      "onProperty": "urn:inbox:案件",
@@ -358,43 +346,18 @@
      "onProperty": "urn:inbox:金額",
      "minCardinality": 1,
      "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "#agent",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "#inChannel",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "#agent",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:inbox:予算",
-     "minCardinality": 1,
-     "maxCardinality": 1
     }
    ],
    "label": {
     "ja": "調達",
     "en": "Procurement"
-   },
-   "_comment": "業務フローノードの型（ゴール述語）。案件ごとのレコードが業務フローとして起動する（追記R494）"
+   }
   },
   {
    "@id": "urn:inbox:検収",
    "@type": "Class",
    "subClassOf": [
-    "urn:inbox:Task",
+    "urn:inbox:OtherAtom",
     {
      "@type": "Restriction",
      "onProperty": "urn:inbox:案件",
@@ -406,360 +369,46 @@
      "onProperty": "urn:inbox:検収者",
      "minCardinality": 1,
      "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "#agent",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "#inChannel",
-     "minCardinality": 0,
-     "maxCardinality": 1
     }
    ],
    "label": {
     "ja": "検収",
     "en": "Acceptance"
-   },
-   "_comment": "業務フローノードの型（ゴール述語）。案件ごとのレコードが業務フローとして起動する（追記R494）"
-  },
-  {
-   "@id": "urn:inbox:refersTo",
-   "@type": "ObjectProperty",
-   "label": {
-    "ja": "参照",
-    "en": "Refers to"
    }
   },
   {
-   "@id": "urn:inbox:調達一覧",
-   "@type": "ObjectProperty",
-   "range": "urn:inbox:調達",
-   "subPropertyOf": "urn:inbox:refersTo",
-   "_comment": "誰も書かない refersTo の多値。予算合計の節が検索で値を作る（追記R554・R558・R560）。データには書かない",
-   "label": {
-    "ja": "調達",
-    "en": "Procurements"
-   }
-  },
-  {
-   "@id": "urn:inbox:予算",
+   "@id": "urn:inbox:利用者限度額",
    "@type": "Class",
-   "_comment": "マスターのレコード（R488）。利用者が1人の予算で、担当者（agent）はその予算の承認者である——予算合計を作り、承認する（追記R568）。調達の節が existing: _true で検索する",
    "subClassOf": [
-    "urn:inbox:Task",
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:inbox:予算コード",
-     "minCardinality": 1,
-     "maxCardinality": 1
-    },
+    "urn:inbox:OtherAtom",
     {
      "@type": "Restriction",
      "onProperty": "urn:inbox:利用者",
-     "minCardinality": 1
+     "minCardinality": 1,
+     "maxCardinality": 1
     },
     {
      "@type": "Restriction",
      "onProperty": "urn:inbox:限度額",
      "minCardinality": 1,
      "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:inbox:調達一覧",
-     "minCardinality": 0
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:inbox:承認一覧",
-     "minCardinality": 0
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "#agent",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "#completeByOkButton",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "#inChannel",
-     "minCardinality": 0,
-     "maxCardinality": 1
     }
    ],
    "label": {
-    "ja": "予算",
-    "en": "Budget"
+    "ja": "利用者限度額",
+    "en": "User limit"
    }
   },
   {
-   "@id": "urn:inbox:Equals",
+   "@id": "urn:inbox:受信箱ゴール",
    "@type": "Class",
    "subClassOf": [
-    "urn:inbox:Constraint"
+    "urn:inbox:Task"
    ],
    "label": {
-    "ja": "＝",
-    "en": "Equals"
-   },
-   "builtInFunction": "=",
-   "isConstraint": true
-  },
-  {
-   "@id": "urn:inbox:予算",
-   "@type": "DatatypeProperty",
-   "range": "string",
-   "label": {
-    "ja": "予算",
-    "en": "Budget"
-   },
-   "_comment": "予算の識別子（予算コード）"
-  },
-  {
-   "@id": "urn:inbox:予算コード",
-   "@type": "DatatypeProperty",
-   "range": "string",
-   "label": {
-    "ja": "予算コード",
-    "en": "Budget code"
+    "ja": "受信箱ゴール",
+    "en": "Inbox goal"
    }
-  },
-  {
-   "@id": "urn:inbox:確定合計",
-   "@type": "DatatypeProperty",
-   "range": "nonNegativeInteger",
-   "label": {
-    "ja": "確定合計",
-    "en": "Confirmed total"
-   }
-  },
-  {
-   "@id": "urn:inbox:予定合計",
-   "@type": "DatatypeProperty",
-   "range": "nonNegativeInteger",
-   "label": {
-    "ja": "予定合計",
-    "en": "Planned total"
-   }
-  },
-  {
-   "@id": "urn:inbox:確定案件",
-   "@type": "DatatypeProperty",
-   "range": "string",
-   "label": {
-    "ja": "確定案件",
-    "en": "Confirmed cases"
-   }
-  },
-  {
-   "@id": "urn:inbox:予定案件",
-   "@type": "DatatypeProperty",
-   "range": "string",
-   "label": {
-    "ja": "予定案件",
-    "en": "Planned cases"
-   }
-  },
-  {
-   "@id": "urn:inbox:承認一覧",
-   "@type": "ObjectProperty",
-   "range": "urn:inbox:承認",
-   "subPropertyOf": "urn:inbox:refersTo",
-   "label": {
-    "ja": "承認",
-    "en": "Approvals"
-   },
-   "_comment": "同上。調達のレコードの中の承認タスクを検索する（追記R530）"
-  },
-  {
-   "@id": "urn:inbox:予算合計",
-   "@type": "Class",
-   "subClassOf": [
-    "urn:inbox:Cancelable",
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:inbox:予算",
-     "minCardinality": 1,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:inbox:確定合計",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:inbox:確定案件",
-     "minCardinality": 0
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:inbox:予定合計",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "urn:inbox:予定案件",
-     "minCardinality": 0
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "#agent",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "#inChannel",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    }
-   ],
-   "label": {
-    "ja": "予算合計",
-    "en": "Budget total"
-   },
-   "_comment": "予算担当（予算の承認者）が作る、予算の合計のレコード（ゴール述語。トーク的業務）。合計と案件の ID だけを持つ（追記R547・R563・R567・R568） 取消可能タスク——巻き戻しでレコードも取り消す（追記R573）"
-  },
-  {
-   "@id": "#ONTOc1",
-   "@type": "Class",
-   "_comment": "チャネル（追記R494・R488。調達・検収の業務フローノードがチャネルに並ぶ）",
-   "subClassOf": [
-    {
-     "@type": "Restriction",
-     "onProperty": "#ontoC",
-     "minCardinality": 1,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "#onto0",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "#_initiator",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "#agent",
-     "minCardinality": 0,
-     "maxCardinality": 1
-    }
-   ],
-   "label": "チャネル"
-  },
-  {
-   "@id": "#inChannel",
-   "@type": "ObjectProperty",
-   "label": "チャネル"
-  },
-  {
-   "@id": "#ontoC",
-   "@type": "ObjectProperty",
-   "label": "チャネル設定"
-  },
-  {
-   "@id": "#onto0",
-   "@type": "DatatypeProperty",
-   "label": "名前",
-   "range": "string"
-  },
-  {
-   "@id": "#成員",
-   "@type": "Class",
-   "builtInFunction": "成員",
-   "isConstraint": true,
-   "_comment": "組込述語 成員(主体: G, 人: A)。A が G そのものか、G のメンバー（入れ子も辿る）",
-   "subClassOf": [
-    {
-     "@type": "Restriction",
-     "onProperty": "#主体",
-     "minCardinality": 1
-    },
-    {
-     "@type": "Restriction",
-     "onProperty": "#人",
-     "minCardinality": 1
-    }
-   ],
-   "label": "成員"
-  },
-  {
-   "@id": "#主体",
-   "@type": "ObjectProperty",
-   "label": "主体"
-  },
-  {
-   "@id": "#人",
-   "@type": "ObjectProperty",
-   "label": "人"
-  },
-  {
-   "@id": "urn:inbox:グループ",
-   "@type": "Class",
-   "subClassOf": [
-    {
-     "@type": "Restriction",
-     "onProperty": "#メンバー",
-     "minCardinality": 0
-    }
-   ],
-   "label": "グループ"
-  },
-  {
-   "@id": "#メンバー",
-   "@type": "ObjectProperty",
-   "label": "メンバー"
-  },
-  {
-   "@id": "#_initiator",
-   "@type": "ObjectProperty",
-   "label": "起案者（分割チャネル）"
-  },
-  {
-   "@id": "#基幹業務を含む",
-   "@type": "Class",
-   "builtInFunction": "基幹業務を含む",
-   "isConstraint": true,
-   "_comment": "組込述語 基幹業務を含む(設定: S)。チャネル作成の名前の無いチャネルの節が使う（追記R488・R546）",
-   "subClassOf": [
-    {
-     "@type": "Restriction",
-     "onProperty": "#設定",
-     "minCardinality": 1,
-     "maxCardinality": 1
-    }
-   ],
-   "label": "基幹業務を含む"
-  },
-  {
-   "@id": "#設定",
-   "@type": "ObjectProperty",
-   "label": "設定"
   }
- ],
- "channelProperty": "inChannel",
- "taskAccess": {
-  "_comment": "役職の就任者・グループのメンバーをたどる属性（成員・担当者の判定。追記R546）",
-  "memberProperties": [
-   "メンバー"
-  ]
- }
+ ]
 }
