@@ -21,3 +21,13 @@ sample/pricing_*          価格決定（CLI の例題）
 
 正典は private リポジトリ `assemblogue/plrDart` の
 `plr_console/tool/wam_test/sample/` で、ここはその公開の写しです。
+
+## prompts/
+
+AI 用のプロンプトです。
+
+```
+prompts/GDdef.md     グラフ文書の定義（ノードと関係の種類）
+prompts/GDconv.md    文章をグラフ文書に変換する手順
+prompts/GDgen.md     グラフ文書から文章を生成する手順
+```
