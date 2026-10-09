@@ -4,32 +4,24 @@
     {
       "@id": "urn:e:z1",
       "urn:pr:対象": "鉛筆4B",
-      "urn:pr:カテゴリ": "鉛筆",
-      "agent": "urn:entity:admin",
-      "completeByOkButton": "urn:entity:admin"
+      "urn:pr:カテゴリ": "鉛筆"
     },
     {
       "@id": "urn:e:z2",
       "urn:pr:対象": "鉛筆",
-      "urn:pr:カテゴリ": "文具",
-      "agent": "urn:entity:admin",
-      "completeByOkButton": "urn:entity:admin"
+      "urn:pr:カテゴリ": "文具"
     },
     {
       "@id": "urn:e:z3",
       "urn:pr:対象": "文具",
-      "urn:pr:カテゴリ": "鉛筆",
-      "agent": "urn:entity:admin",
-      "completeByOkButton": "urn:entity:admin"
+      "urn:pr:カテゴリ": "鉛筆"
     }
   ],
   "urn:pr:カテゴリ・掛率": [
     {
       "@id": "urn:e:z9",
       "urn:pr:カテゴリ": "事務用品",
-      "urn:pr:掛率": 0.9,
-      "agent": "urn:entity:admin",
-      "completeByOkButton": "urn:entity:admin"
+      "urn:pr:掛率": 0.9
     }
   ]
 }

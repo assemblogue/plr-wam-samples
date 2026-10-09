@@ -3,6 +3,10 @@
  "@id": "urn:kapp:ontology",
  "@type": "Ontology",
  "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
+ "ontoG": [
+  "urn:kapp:購買ゴール"
+ ],
+ "agentProperty": "urn:kapp:agent",
  "defines": [
   {
    "@id": "urn:kapp:Template",
@@ -10,7 +14,7 @@
    "subClassOf": [
     {
      "@type": "Restriction",
-     "onProperty": "#isComplete",
+     "onProperty": "wam:isComplete",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -65,8 +69,17 @@
    }
   },
   {
-   "@id": "#Person",
-   "_comment": "Profile.xlsx で定義されたクラス Person（追記R531・R532）",
+   "@id": "wam:isComplete",
+   "@type": "DatatypeProperty",
+   "domain": "urn:kapp:Template",
+   "range": "string",
+   "label": {
+    "ja": "完成",
+    "en": "Is complete"
+   }
+  },
+  {
+   "@id": "urn:kapp:Person",
    "@type": "Class",
    "label": {
     "ja": "人",
@@ -74,8 +87,9 @@
    }
   },
   {
-   "@id": "#agent",
+   "@id": "urn:kapp:agent",
    "@type": "ObjectProperty",
+   "range": "urn:kapp:Person",
    "label": {
     "ja": "担当者",
     "en": "Agent"
@@ -105,13 +119,11 @@
   {
    "@id": "urn:kapp:Then",
    "@type": "Class",
+   "linkKind": "then",
    "label": {
     "ja": "Then",
     "en": "Then"
-   },
-   "subClassOf": [
-    "#Then"
-   ]
+   }
   },
   {
    "@id": "arg1",
@@ -132,7 +144,7 @@
   {
    "@id": "urn:kapp:注文者",
    "@type": "ObjectProperty",
-   "range": "#Person",
+   "range": "urn:kapp:Person",
    "label": {
     "ja": "注文者",
     "en": "Orderer"
@@ -150,7 +162,7 @@
   {
    "@id": "urn:kapp:承認者",
    "@type": "ObjectProperty",
-   "range": "#Person",
+   "range": "urn:kapp:Person",
    "label": {
     "ja": "承認者",
     "en": "Approver"
@@ -169,13 +181,13 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "#agent",
+     "onProperty": "urn:kapp:agent",
      "minCardinality": 1,
      "maxCardinality": 1
     },
     {
      "@type": "Restriction",
-     "onProperty": "#completeOrSuspendByOkButton",
+     "onProperty": "wam:completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -199,13 +211,13 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "#agent",
+     "onProperty": "urn:kapp:agent",
      "minCardinality": 1,
      "maxCardinality": 1
     },
     {
      "@type": "Restriction",
-     "onProperty": "#completeOrSuspendByOkButton",
+     "onProperty": "wam:completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     },
@@ -234,13 +246,13 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "#agent",
+     "onProperty": "urn:kapp:agent",
      "minCardinality": 1,
      "maxCardinality": 1
     },
     {
      "@type": "Restriction",
-     "onProperty": "#completeOrSuspendByOkButton",
+     "onProperty": "wam:completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -301,7 +313,7 @@
    "_comment": "**この量化命題を締める人**（追記K353）。**制限ノードに書く。** ⚠️ **量化命題そのものに担当者はいない**——制限ノードは制約ノード であり、この系では制約ノードに督促は発生しない。担当者がいるのは **「締める」という行為**のほうである。⚠️ **「遅い」と「来ない」は観測で区別できない**（FLP 不可能性、JACM 1985）ので、「もう答えは来ない」は推論できず**外から与えるしかない**——だから宣言である。エンジンはこの宣言から**締めのタスクを合成する**（補償タスクと同じ流儀）。そのタスクは**節の本体にも主要作用域にも属さない**（BPMN の境界イベントと同じ）ので、**全員が応答すれば誰も押さないまま節が成功する。**",
    "@id": "urn:kapp:tallyAgent",
    "@type": "ObjectProperty",
-   "range": "#Person",
+   "range": "urn:kapp:Person",
    "label": {
     "ja": "締める人",
     "en": "Tally agent"
@@ -471,7 +483,7 @@
   {
    "@id": "urn:kapp:構成員",
    "@type": "ObjectProperty",
-   "range": "#Person",
+   "range": "urn:kapp:Person",
    "label": {
     "ja": "構成員",
     "en": "Member"
