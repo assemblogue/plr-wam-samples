@@ -30,7 +30,7 @@
      "onto0": "調達",
      "ontoG": [
       {
-       "_comment": "調達(案件: N, 起案者: U, 承認者: M, 金額: X, 予算: K, agent: U) :- 予算(予算コード: K, 限度額: L, 利用者: Us, agent: M, existing: _true), 成員(主体: Us, 人: U), 予算合計(予算: K, 確定合計: T, agent: M, existing: _latest) ─Then→ 起案(agent: U, 案件: N, 金額: X, 予算: K) ─Then→ 予算合計(予算: K, 確定合計: T1, agent: M) ─Then→ ≧(L, [X, T1]) ─Then→ 承認(agent: M, 案件: N, 金額: X, 予算: K) ─Then→ 予算合計(予算: K, agent: M), ≧(L, [X, T]).  例題 budget と同じ1本の節（追記R567・R568）。承認者は予算の担当者 M。承認の前の確かめが偽なら起案の OK まで巻き戻って起案者に戻り、承認の後の予算合計が偽なら承認の OK が外れる（追記R571・R573）",
+       "_comment": "調達(案件: N, 起案者: U, 承認者: M, 金額: X, 予算: K, agent: U) :- 予算(予算コード: K, 限度額: L, 利用者: Us, agent: M, existing: _true), 成員(主体: Us, 人: U), 予算合計(予算: K, 確定合計: T, agent: M, existing: _latest), 起案(agent: U, 案件: N, 金額: X, 予算: K) ─Then→ 予算合計(予算: K, 確定合計: T1, agent: M) ─Then→ ≧(L, [X, T1]) ─Then→ 承認(agent: M, 案件: N, 金額: X, 予算: K) ─Then→ 予算合計(予算: K, agent: M), ≧(L, [X, T]).  例題 budget と同じ1本の節（追記R567・R568）。承認者は予算の担当者 M。承認の前の確かめが偽なら起案の OK まで巻き戻って起案者に戻り、承認の後の予算合計が偽なら承認の OK が外れる（追記R571・R573）",
        "@id": "urn:node:調達.head",
        "@type": "urn:inbox:調達",
        "urn:inbox:案件": {
@@ -226,16 +226,6 @@
           "@id": "#M"
          },
          "okButton": "_noOk"
-        },
-        {
-         "@id": "urn:node:調達.head#then0",
-         "@type": "urn:inbox:Then",
-         "arg1": {
-          "@id": "urn:node:最新合計"
-         },
-         "arg2": {
-          "@id": "urn:node:起案"
-         }
         },
         {
          "@id": "urn:node:調達.head#link1",
