@@ -1,104 +1,686 @@
 {
- "_comment": "山田の予算には、既に実行された調達A（30万）が入っている。",
- "urn:bud:予算": [
+ "_comment": "予算-1（限度額 50万。予算担当は佐藤）を、山田と高橋が分け合う。予算-山田（限度額 10万）は山田1人の予算で、予算担当も山田である（追記R568）。調達のレコードはまだ無く、budget.stdin が起案する。最初の予算合計（合計-0・合計-山田-0）は、予算を登録したときにできた空の合計（確定 0・予定 0）である。読み取りは、承認者（予算担当）が起案中の調達を読むのは規則3、起案者が予算合計を読むのは規則4による。アプリでの読み取りの制限は #109 の後（ハーネスは読み取りを制限しない）",
+ "ONTO2": [
   {
-   "@id": "urn:entity:予算.山田",
-   "urn:bud:利用者": "urn:entity:山田",
-   "urn:bud:限度額": 500000,
-   "urn:bud:調達一覧": [
-    "urn:entity:調達.A"
+   "_comment": "ワークプレース。ゴールでない節は onto7、ゴール節はチャネル設定の ontoG にある（追記R474・R488）",
+   "@id": "urn:wamtest:workplace.budget_graph_data",
+   "@type": "ONTO2",
+   "onto7": [
+    {
+     "@id": "urn:node:起案.head",
+     "@type": "urn:bud:起案",
+     "okButton": "_suspendingOk"
+    },
+    {
+     "@id": "urn:node:承認.head",
+     "@type": "urn:bud:承認"
+    }
+   ],
+   "ontoC": [
+    {
+     "_comment": "調達のチャネル設定（基幹業務。起案者ごとの分割チャネル）",
+     "@id": "urn:bud:設定.調達",
+     "@type": "ONTOc",
+     "onto0": "調達",
+     "ontoG": [
+      {
+       "_comment": "調達(案件: N, 金額: X, 予算: K, agent: U) :- 予算(予算コード: K, 限度額: L, 利用者: Us, agent: M, existing: _true), 成員(主体: Us, 人: U), 予算合計(予算: K, 確定合計: T, agent: M, existing: _latest), 起案(agent: U, 案件: N, 金額: X, 予算: K) ─Then→ 予算合計(予算: K, 確定合計: T1, agent: M) ─Then→ ≧(L, [X, T1]) ─Then→ 承認(agent: M, 案件: N, 金額: X, 予算: K) ─Then→ 予算合計(予算: K, agent: M), ≧(L, [X, T]).  利用者が1人の予算も複数人の予算も、この1本の節で扱う（違いは予算のレコードの利用者と担当者だけ。追記R568）。予算担当 M は予算のレコードから引く。起案の限度は、M が作った最新の予算合計の確定合計 T で掛ける（ほかの人が作った合計は当たらない。追記R563・R565）。起案の後に M が予算合計を作り、承認の前に、その確定合計で確かめる（≧(L, [X, T1])）。偽なら、いちばん新しい人の入力である起案の OK まで巻き戻り、起案者に戻る（追記R571・R573）。承認の後にも予算合計を作り、その中で限度額を確かめる——偽なら承認の OK が外れる（追記R567・R573）",
+       "@id": "urn:node:調達.head",
+       "@type": "urn:bud:調達",
+       "urn:bud:案件": {
+        "@id": "#N"
+       },
+       "urn:bud:金額": {
+        "@id": "#X"
+       },
+       "urn:bud:予算": {
+        "@id": "#K"
+       },
+       "agent": {
+        "@id": "#U"
+       },
+       "okButton": "_noOk",
+       "variables": [
+        {
+         "@id": "#N",
+         "variableName": "N"
+        },
+        {
+         "@id": "#X",
+         "variableName": "X"
+        },
+        {
+         "@id": "#K",
+         "variableName": "K"
+        },
+        {
+         "@id": "#U",
+         "variableName": "U"
+        },
+        {
+         "@id": "#L",
+         "variableName": "L"
+        },
+        {
+         "@id": "#M",
+         "variableName": "M"
+        },
+        {
+         "@id": "#T",
+         "variableName": "T"
+        },
+        {
+         "@id": "#Us",
+         "variableName": "Us"
+        },
+        {
+         "@id": "#T1",
+         "variableName": "T1"
+        }
+       ],
+       "internalGraph": [
+        {
+         "_comment": "予算のレコードを検索する。その担当者 M が予算担当である",
+         "@id": "urn:node:予算参照",
+         "@type": "urn:bud:予算",
+         "existing": "_true",
+         "urn:bud:予算コード": {
+          "@id": "#K"
+         },
+         "urn:bud:限度額": {
+          "@id": "#L"
+         },
+         "urn:bud:利用者": {
+          "@id": "#Us"
+         },
+         "agent": {
+          "@id": "#M"
+         }
+        },
+        {
+         "_comment": "起案者は予算の利用者である——担当者 U を本体が制約するので基幹業務である（追記R546）",
+         "@id": "urn:node:利用者",
+         "@type": "成員",
+         "主体": {
+          "@id": "#Us"
+         },
+         "人": {
+          "@id": "#U"
+         }
+        },
+        {
+         "_comment": "予算担当 M が作った最新の予算合計（existing: _latest。追記R563・R564）。作った人を条件に入れるので、ほかの人が作った合計は当たらない（追記R565）",
+         "@id": "urn:node:最新合計",
+         "@type": "urn:bud:予算合計",
+         "existing": "_latest",
+         "urn:bud:予算": {
+          "@id": "#K"
+         },
+         "urn:bud:確定合計": {
+          "@id": "#T"
+         },
+         "agent": {
+          "@id": "#M"
+         }
+        },
+        {
+         "@id": "urn:node:起案",
+         "@type": "urn:bud:起案",
+         "urn:bud:案件": {
+          "@id": "#N"
+         },
+         "urn:bud:金額": {
+          "@id": "#X"
+         },
+         "urn:bud:予算": {
+          "@id": "#K"
+         },
+         "agent": {
+          "@id": "#U"
+         },
+         "okButton": "_suspendingOk"
+        },
+        {
+         "_comment": "起案の限度：自分の金額 ≦ 限度額 − 確定合計。起案の時点では自分の案件はまだ承認されておらず、確定合計に入っていない（追記R563）",
+         "@id": "urn:node:限度額チェック",
+         "@type": "urn:bud:Geq",
+         "arg1": {
+          "@id": "#L"
+         },
+         "arg2": [
+          {
+           "@id": "#X"
+          },
+          {
+           "@id": "#T"
+          }
+         ]
+        },
+        {
+         "_comment": "起案の後に、予算担当が新しい合計を作る（予算合計のゴール節を本体から実行する。1件のレコードになり、予算合計のチャネルに入る。追記R488・R491・R563）",
+         "@id": "urn:node:合計",
+         "@type": "urn:bud:予算合計",
+         "urn:bud:予算": {
+          "@id": "#K"
+         },
+         "urn:bud:確定合計": {
+          "@id": "#T1"
+         },
+         "agent": {
+          "@id": "#M"
+         },
+         "okButton": "_noOk"
+        },
+        {
+         "_comment": "承認の前の確かめ：自分の金額 ≦ 限度額 − 起案の後の合計の確定合計（追記R571）。偽なら起案に戻る",
+         "@id": "urn:node:確かめ",
+         "@type": "urn:bud:Geq",
+         "arg1": {
+          "@id": "#L"
+         },
+         "arg2": [
+          {
+           "@id": "#X"
+          },
+          {
+           "@id": "#T1"
+          }
+         ]
+        },
+        {
+         "@id": "urn:node:承認",
+         "@type": "urn:bud:承認",
+         "urn:bud:案件": {
+          "@id": "#N"
+         },
+         "urn:bud:金額": {
+          "@id": "#X"
+         },
+         "urn:bud:予算": {
+          "@id": "#K"
+         },
+         "agent": {
+          "@id": "#M"
+         }
+        },
+        {
+         "_comment": "承認の後にも予算担当が合計を作る。承認済みの合計が限度額を超えれば偽（差し戻しと同じ扱い。追記R567）",
+         "@id": "urn:node:承認後の合計",
+         "@type": "urn:bud:予算合計",
+         "urn:bud:予算": {
+          "@id": "#K"
+         },
+         "agent": {
+          "@id": "#M"
+         },
+         "okButton": "_noOk"
+        },
+        {
+         "@id": "urn:node:調達.head#then1",
+         "@type": "urn:bud:Then",
+         "arg1": {
+          "@id": "urn:node:起案"
+         },
+         "arg2": {
+          "@id": "urn:node:合計"
+         }
+        },
+        {
+         "@id": "urn:node:調達.head#then2",
+         "@type": "urn:bud:Then",
+         "arg1": {
+          "@id": "urn:node:合計"
+         },
+         "arg2": {
+          "@id": "urn:node:確かめ"
+         }
+        },
+        {
+         "@id": "urn:node:調達.head#then3",
+         "@type": "urn:bud:Then",
+         "arg1": {
+          "@id": "urn:node:確かめ"
+         },
+         "arg2": {
+          "@id": "urn:node:承認"
+         }
+        },
+        {
+         "@id": "urn:node:調達.head#then4",
+         "@type": "urn:bud:Then",
+         "arg1": {
+          "@id": "urn:node:承認"
+         },
+         "arg2": {
+          "@id": "urn:node:承認後の合計"
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "_comment": "予算合計のチャネル設定（トーク的業務）。チャネルを作れるのは管理者だけ（ontoCC。追記R566）。管理者がチャネルを作るときに TaskAccess で、作るのは予算担当・読むのは予算の利用者と決める",
+     "@id": "urn:bud:設定.予算合計",
+     "@type": "ONTOc",
+     "onto0": "予算合計",
+     "ontoCC": [
+      {
+       "@id": "urn:entity:管理者"
+      }
+     ],
+     "ontoG": [
+      {
+       "_comment": "予算合計(予算: K, 確定合計: T, 確定案件: Nc, 予定合計: P, 予定案件: Na, agent: A) :- 予算(予算コード: K, 承認一覧: 承認(予算: K, 案件: Nc, 金額: Y1, completeByOkButton: Person()), existing: _true), 予算(予算コード: K, 調達一覧: 調達(予算: K, 案件: Na, 金額: Y2), existing: _true), =(T, Y1), =(P, Y2), 予算(予算コード: K, 限度額: L, existing: _true), ≧(L, T).  承認一覧・調達一覧は誰も書かない refersTo の多値で、エンジンが検索した時点の状態で値を作る（追記R554・R558・R560）。確定は承認の OK（押した人のある承認）、予定は金額の入った調達。毎回全部を数え直す。担当者 A は頭部にしか現れない（トーク的業務）ので、挿入される TaskAgent が、チャネルの TaskAccess の taskAgent（予算担当）に属するかを確かめる（追記R491）",
+       "@id": "urn:node:予算合計.head",
+       "@type": "urn:bud:予算合計",
+       "urn:bud:予算": {
+        "@id": "#K"
+       },
+       "urn:bud:確定合計": {
+        "@id": "#T"
+       },
+       "urn:bud:確定案件": {
+        "@id": "#Nc"
+       },
+       "urn:bud:予定合計": {
+        "@id": "#P"
+       },
+       "urn:bud:予定案件": {
+        "@id": "#Na"
+       },
+       "agent": {
+        "@id": "#A"
+       },
+       "okButton": "_noOk",
+       "variables": [
+        {
+         "@id": "#K",
+         "variableName": "K"
+        },
+        {
+         "@id": "#T",
+         "variableName": "T"
+        },
+        {
+         "@id": "#Nc",
+         "variableName": "Nc"
+        },
+        {
+         "@id": "#P",
+         "variableName": "P"
+        },
+        {
+         "@id": "#Na",
+         "variableName": "Na"
+        },
+        {
+         "@id": "#A",
+         "variableName": "A"
+        },
+        {
+         "@id": "#Y1",
+         "variableName": "Y1"
+        },
+        {
+         "@id": "#Y2",
+         "variableName": "Y2"
+        },
+        {
+         "@id": "#L",
+         "variableName": "L"
+        }
+       ],
+       "internalGraph": [
+        {
+         "@id": "urn:node:確定の検索",
+         "@type": "urn:bud:予算",
+         "existing": "_true",
+         "urn:bud:予算コード": {
+          "@id": "#K"
+         },
+         "urn:bud:承認一覧": {
+          "@type": "urn:bud:承認",
+          "urn:bud:予算": {
+           "@id": "#K"
+          },
+          "urn:bud:案件": {
+           "@id": "#Nc"
+          },
+          "urn:bud:金額": {
+           "@id": "#Y1"
+          },
+          "completeByOkButton": {
+           "@type": "Person"
+          }
+         }
+        },
+        {
+         "@id": "urn:node:予定の検索",
+         "@type": "urn:bud:予算",
+         "existing": "_true",
+         "urn:bud:予算コード": {
+          "@id": "#K"
+         },
+         "urn:bud:調達一覧": {
+          "@type": "urn:bud:調達",
+          "urn:bud:予算": {
+           "@id": "#K"
+          },
+          "urn:bud:案件": {
+           "@id": "#Na"
+          },
+          "urn:bud:金額": {
+           "@id": "#Y2"
+          }
+         }
+        },
+        {
+         "@id": "urn:node:確定の和",
+         "@type": "urn:bud:Equals",
+         "arg1": {
+          "@id": "#T"
+         },
+         "arg2": {
+          "@id": "#Y1"
+         }
+        },
+        {
+         "@id": "urn:node:予定の和",
+         "@type": "urn:bud:Equals",
+         "arg1": {
+          "@id": "#P"
+         },
+         "arg2": {
+          "@id": "#Y2"
+         }
+        },
+        {
+         "_comment": "確定合計が限度額に収まるか（承認の後の合計で、承認済みの案件が超えていれば偽。追記R567）",
+         "@id": "urn:node:限度額の確かめ.予算",
+         "@type": "urn:bud:予算",
+         "existing": "_true",
+         "urn:bud:予算コード": {
+          "@id": "#K"
+         },
+         "urn:bud:限度額": {
+          "@id": "#L"
+         }
+        },
+        {
+         "@id": "urn:node:限度額の確かめ",
+         "@type": "urn:bud:Geq",
+         "arg1": {
+          "@id": "#L"
+         },
+         "arg2": {
+          "@id": "#T"
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "_comment": "マスターのチャネル設定。チャネルを作れるのは管理者だけ（ontoCC。追記R566）",
+     "@id": "urn:bud:設定.マスター",
+     "@type": "ONTOc",
+     "onto0": "マスター",
+     "ontoCC": [
+      {
+       "@id": "urn:entity:管理者"
+      }
+     ],
+     "ontoG": [
+      {
+       "_comment": "予算(予算コード: K, 限度額: L, agent: M) :- 予算合計(予算: K, agent: M).  予算の登録で、空の合計（確定合計 0・予定合計 0）を作る（追記R563）。登録するのは予算担当（予算のレコードの担当者）",
+       "@id": "urn:node:予算.登録",
+       "@type": "urn:bud:予算",
+       "urn:bud:予算コード": {
+        "@id": "#K"
+       },
+       "urn:bud:限度額": {
+        "@id": "#L"
+       },
+       "agent": {
+        "@id": "#M"
+       },
+       "variables": [
+        {
+         "@id": "#K",
+         "variableName": "K"
+        },
+        {
+         "@id": "#L",
+         "variableName": "L"
+        },
+        {
+         "@id": "#M",
+         "variableName": "M"
+        }
+       ],
+       "internalGraph": [
+        {
+         "@id": "urn:node:空の合計",
+         "@type": "urn:bud:予算合計",
+         "urn:bud:予算": {
+          "@id": "#K"
+         },
+         "agent": {
+          "@id": "#M"
+         },
+         "okButton": "_noOk"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "_comment": "チャネル作成のチャネル設定。起案者がまだ分割チャネルを持たなければ、エンジンがこの節を走らせて作る（追記R433・R435・R546）",
+     "@id": "urn:bud:設定.チャネル",
+     "@type": "ONTOc",
+     "onto0": "チャネル",
+     "ontoG": [
+      {
+       "_comment": "ONTOc1(ontoC: S, agent: O) :- 基幹業務を含む(設定: S). 名前の無いチャネル（分割チャネル）",
+       "@id": "urn:node:チャネル.head",
+       "@type": "ONTOc1",
+       "ontoC": {
+        "@id": "#S"
+       },
+       "agent": {
+        "@id": "#O"
+       },
+       "variables": [
+        {
+         "@id": "#S",
+         "variableName": "S"
+        },
+        {
+         "@id": "#O",
+         "variableName": "O"
+        }
+       ],
+       "internalGraph": [
+        {
+         "@id": "urn:node:基幹業務を含む",
+         "@type": "基幹業務を含む",
+         "設定": {
+          "@id": "#S"
+         }
+        }
+       ]
+      }
+     ]
+    }
    ]
   }
  ],
- "urn:bud:調達": [
+ "ONTOc1": [
   {
-   "@id": "urn:entity:調達.A",
-   "urn:bud:案件": "A",
-   "urn:bud:金額": 300000
+   "_comment": "マスターのチャネル（管理者が作った）",
+   "@id": "urn:channel:マスター",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:bud:設定.マスター"
+   },
+   "onto0": "マスター",
+   "agent": {
+    "@id": "urn:entity:管理者"
+   },
+   "_initiator": {
+    "@id": "urn:entity:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:entity:管理者"
+   }
   },
   {
-   "_comment": "調達(案件: N, 金額: X) :- 起案(案件: N, 金額: X, 担当者: 山田).  予算の要素になった調達は、それぞれ山田の起案として走る（追記237：要素は制約ノード）。",
-   "@id": "urn:node:調達.head",
-   "@type": "urn:bud:調達",
-   "urn:bud:案件": {
-    "@id": "#N"
+   "_comment": "予算合計のチャネル（管理者が作った）。TaskAccess：予算合計を作るのは予算担当（予算-1 は佐藤、予算-山田は山田）、読むのは予算の利用者（追記R563・R565・R568）",
+   "@id": "urn:channel:予算合計",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:bud:設定.予算合計"
    },
-   "urn:bud:金額": {
-    "@id": "#X"
+   "onto0": "予算合計",
+   "agent": {
+    "@id": "urn:entity:管理者"
    },
-   "variables": [
+   "_initiator": {
+    "@id": "urn:entity:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:entity:管理者"
+   },
+   "TaskAccess": [
     {
-     "@id": "#N",
-     "variableName": "N"
-    },
-    {
-     "@id": "#X",
-     "variableName": "X"
-    }
-   ],
-   "internalGraph": [
-    {
-     "@id": "urn:node:起案",
-     "@type": "urn:bud:起案",
-     "urn:bud:案件": {
-      "@id": "#N"
+     "@type": "TaskAccess",
+     "channel": {
+      "@id": "urn:channel:予算合計",
+      "onto0": "予算合計"
      },
-     "urn:bud:金額": {
-      "@id": "#X"
+     "task": {
+      "@id": "urn:bud:予算合計"
      },
-     "urn:bud:agent": "urn:entity:山田"
+     "taskAgent": [
+      {
+       "@id": "urn:entity:佐藤"
+      },
+      {
+       "@id": "urn:entity:山田"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:entity:利用者"
+      }
+     ],
+     "agent": {
+      "@id": "urn:entity:管理者"
+     },
+     "completeByOkButton": {
+      "@id": "urn:entity:管理者"
+     }
     }
    ]
   }
  ],
- "urn:bud:予算チェック": [
+ "urn:bud:予算": [
   {
-   "_comment": "予算チェック() :- 予算(利用者: 山田, 限度額: L, 調達: 調達(金額: X)), ≧(L, X).  X は山田の調達の金額を集めた多値で、≧ はその和に掛かる。",
-   "@id": "urn:node:予算チェック.head",
-   "@type": "urn:bud:予算チェック",
-   "variables": [
-    {
-     "@id": "#L",
-     "variableName": "L"
-    },
-    {
-     "@id": "#X",
-     "variableName": "X"
-    }
+   "_comment": "利用者が複数人の予算",
+   "@id": "urn:entity:予算-1",
+   "urn:bud:予算コード": "予算-1",
+   "urn:bud:限度額": 500000,
+   "urn:bud:利用者": [
+    "urn:entity:山田",
+    "urn:entity:高橋",
+    "urn:entity:佐藤"
    ],
-   "internalGraph": [
-    {
-     "@id": "urn:node:山田の予算",
-     "@type": "urn:bud:予算",
-     "urn:bud:利用者": "urn:entity:山田",
-     "urn:bud:限度額": {
-      "@id": "#L"
-     },
-     "urn:bud:調達一覧": {
-      "@type": "urn:bud:調達",
-      "urn:bud:金額": {
-       "@id": "#X"
-      }
-     }
-    },
-    {
-     "@id": "urn:node:限度額チェック",
-     "@type": "urn:bud:Geq",
-     "arg1": {
-      "@id": "#L"
-     },
-     "arg2": {
-      "@id": "#X"
-     }
-    }
+   "agent": "urn:entity:佐藤",
+   "completeByOkButton": "urn:entity:佐藤",
+   "inChannel": {
+    "@id": "urn:channel:マスター"
+   }
+  },
+  {
+   "_comment": "利用者が1人の予算。合計を作り承認するのも、その人である（追記R568）",
+   "@id": "urn:entity:予算-山田",
+   "urn:bud:予算コード": "予算-山田",
+   "urn:bud:限度額": 100000,
+   "urn:bud:利用者": [
+    "urn:entity:山田"
    ],
-   "urn:bud:channel": "urn:channel:山田"
+   "agent": "urn:entity:山田",
+   "completeByOkButton": "urn:entity:山田",
+   "inChannel": {
+    "@id": "urn:channel:マスター"
+   }
   }
  ],
- "urn:bud:起案": [
+ "urn:bud:予算合計": [
   {
-   "@id": "urn:node:起案.head",
-   "@type": "urn:bud:起案"
+   "_comment": "予算を登録したときにできた空の合計",
+   "@id": "urn:entity:合計-0",
+   "urn:bud:予算": "予算-1",
+   "urn:bud:確定合計": 0,
+   "urn:bud:予定合計": 0,
+   "agent": "urn:entity:佐藤",
+   "okButton": "_noOk",
+   "complete": true,
+   "completedAt": "2026-10-01T09:00:00.000Z",
+   "inChannel": {
+    "@id": "urn:channel:予算合計"
+   }
+  },
+  {
+   "_comment": "予算-山田を登録したときにできた空の合計",
+   "@id": "urn:entity:合計-山田-0",
+   "urn:bud:予算": "予算-山田",
+   "urn:bud:確定合計": 0,
+   "urn:bud:予定合計": 0,
+   "agent": "urn:entity:山田",
+   "okButton": "_noOk",
+   "complete": true,
+   "completedAt": "2026-10-01T09:00:00.000Z",
+   "inChannel": {
+    "@id": "urn:channel:予算合計"
+   }
+  }
+ ],
+ "Person": [
+  {
+   "_comment": "人もレコードとして置く（追記R529）",
+   "@id": "urn:entity:山田",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:entity:高橋",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:entity:佐藤",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:entity:管理者",
+   "@type": "Person"
+  }
+ ],
+ "urn:bud:グループ": [
+  {
+   "_comment": "予算の利用者（起案者と予算担当）",
+   "@id": "urn:entity:利用者",
+   "メンバー": [
+    {
+     "@id": "urn:entity:山田"
+    },
+    {
+     "@id": "urn:entity:高橋"
+    },
+    {
+     "@id": "urn:entity:佐藤"
+    }
+   ]
   }
  ]
 }
