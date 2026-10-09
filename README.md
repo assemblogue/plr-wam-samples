@@ -29,5 +29,5 @@ AI 用のプロンプトです。
 ```
 prompts/GDdef.md     グラフ文書の定義（ノードと関係の種類）
 prompts/GDconv.md    文章をグラフ文書に変換する手順
-prompts/GDgen.md     グラフ文書から文章を生成する手順
+prompts/GDgen.md     目的（問い・課題・相談など）に沿ってグラフ文書を作る手順
 ```
