@@ -11,19 +11,25 @@
     {
       "@id": "urn:e:dc1",
       "urn:pr:対象": "鉛筆4B",
-      "urn:pr:カテゴリ": "鉛筆"
+      "urn:pr:カテゴリ": "鉛筆",
+      "agent": "urn:entity:admin",
+      "completeByOkButton": "urn:entity:admin"
     },
     {
       "@id": "urn:e:dc2",
       "urn:pr:対象": "鉛筆",
-      "urn:pr:カテゴリ": "文具"
+      "urn:pr:カテゴリ": "文具",
+      "agent": "urn:entity:admin",
+      "completeByOkButton": "urn:entity:admin"
     }
   ],
   "urn:pr:カテゴリ・掛率": [
     {
       "@id": "urn:e:c2",
       "urn:pr:カテゴリ": "文具",
-      "urn:pr:掛率": 0.85
+      "urn:pr:掛率": 0.85,
+      "agent": "urn:entity:admin",
+      "completeByOkButton": "urn:entity:admin"
     }
   ]
 }
