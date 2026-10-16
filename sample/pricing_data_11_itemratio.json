@@ -4,7 +4,11 @@
     {
       "@id": "urn:e:ir1",
       "urn:pr:商品": "鉛筆4B",
-      "urn:pr:掛率": 0.5
+      "urn:pr:掛率": 0.5,
+      "agent": "urn:entity:admin",
+      "completeByOkButton": "urn:entity:admin",
+      "begin": "2026-10-01T00:00:00.000Z",
+      "creator": "urn:entity:admin"
     }
   ]
 }

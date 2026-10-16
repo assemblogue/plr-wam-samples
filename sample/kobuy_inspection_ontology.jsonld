@@ -3,10 +3,6 @@
  "@id": "urn:kinsp:ontology",
  "@type": "Ontology",
  "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
- "ontoG": [
-  "urn:kinsp:消費税の計算例",
-  "urn:kinsp:検収ゴール"
- ],
  "agentProperty": "urn:kinsp:agent",
  "defines": [
   {
@@ -15,7 +11,7 @@
    "subClassOf": [
     {
      "@type": "Restriction",
-     "onProperty": "wam:isComplete",
+     "onProperty": "#isComplete",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -32,7 +28,10 @@
    "label": {
     "ja": "補償タスク",
     "en": "Compensates with"
-   }
+   },
+   "subPropertyOf": [
+    "#compensatesWith"
+   ]
   },
   {
    "@id": "urn:kinsp:Atom",
@@ -79,21 +78,12 @@
    }
   },
   {
-   "@id": "wam:isComplete",
-   "@type": "DatatypeProperty",
-   "domain": "urn:kinsp:Template",
-   "range": "string",
-   "label": {
-    "ja": "完成",
-    "en": "Is complete"
-   }
-  },
-  {
    "_comment": "取消可能性の3分類。検収は取消可能（マニュアル §3.2.7.1「検収取消」）。訂正は補償可能で、赤伝票を起こして打ち消す。",
    "@id": "urn:kinsp:Cancelable",
    "@type": "Class",
    "subClassOf": [
-    "urn:kinsp:Task"
+    "urn:kinsp:Task",
+    "#Cancelable"
    ],
    "label": {
     "ja": "取消可能タスク",
@@ -104,7 +94,8 @@
    "@id": "urn:kinsp:Compensable",
    "@type": "Class",
    "subClassOf": [
-    "urn:kinsp:Task"
+    "urn:kinsp:Task",
+    "#Compensable"
    ],
    "label": {
     "ja": "補償可能タスク",
@@ -115,7 +106,8 @@
    "@id": "urn:kinsp:Incompensable",
    "@type": "Class",
    "subClassOf": [
-    "urn:kinsp:Task"
+    "urn:kinsp:Task",
+    "#Incompensable"
    ],
    "label": {
     "ja": "補償不能タスク",
@@ -128,7 +120,10 @@
    "label": {
     "ja": "人",
     "en": "Person"
-   }
+   },
+   "subClassOf": [
+    "#Person"
+   ]
   },
   {
    "@id": "urn:kinsp:agent",
@@ -137,7 +132,10 @@
    "label": {
     "ja": "担当者",
     "en": "Agent"
-   }
+   },
+   "subPropertyOf": [
+    "#agent"
+   ]
   },
   {
    "@id": "urn:kinsp:Geq",
@@ -207,11 +205,13 @@
   {
    "@id": "urn:kinsp:Then",
    "@type": "Class",
-   "linkKind": "then",
    "label": {
     "ja": "Then",
     "en": "Then"
-   }
+   },
+   "subClassOf": [
+    "#Then"
+   ]
   },
   {
    "@id": "arg1",
@@ -451,7 +451,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "wam:completeOrSuspendByOkButton",
+     "onProperty": "#completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -462,7 +462,7 @@
    }
   },
   {
-   "_comment": "売上伝票は検収の結果として自動的に計上される（マニュアル §6.5.1）。担当者を持たないので人の操作を待たない——Then の後続として、検収が成立した時点で立つ。**補償可能である**——計上は取り消せないので、打ち消すには赤伝票を立てる（マニュアル §6.5.5・§6.5.6：訂正も取消も赤伝票で行う）。検収を引き戻すと、バックトラック伝播がこの伝票をまたぐところで赤伝票が起きる。",
+   "_comment": "売上伝票は検収の結果として自動的に計上される（マニュアル §6.5.1）。担当者はサプライヤの担当者で、節が指定する（R511）。OK ボタンを持たないので人の操作を待たない——Then の後続として、検収が成立した時点で立つ。**補償可能である**——計上は取り消せないので、打ち消すには赤伝票を立てる（マニュアル §6.5.5・§6.5.6：訂正も取消も赤伝票で行う）。検収を引き戻すと、バックトラック伝播がこの伝票をまたぐところで赤伝票が起きる。",
    "@id": "urn:kinsp:売上伝票",
    "@type": "Class",
    "subClassOf": [
@@ -490,6 +490,12 @@
      "onProperty": "urn:kinsp:税抜金額",
      "minCardinality": 1,
      "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:agent",
+     "minCardinality": 1,
+     "maxCardinality": 1
     }
    ],
    "label": {
@@ -499,7 +505,7 @@
    "urn:kinsp:compensatesWith": "urn:kinsp:赤伝票"
   },
   {
-   "_comment": "サプライヤ。消費税の端数処理の方式と計算パターンを持つ（Wiki「各外部連携の端数処理について」の表）。",
+   "_comment": "サプライヤ。消費税の端数処理の方式と計算パターンを持つ（Wiki「各外部連携の端数処理について」の表）。担当者は、そのサプライヤの売上伝票の担当者になる。",
    "@id": "urn:kinsp:サプライヤ",
    "@type": "Class",
    "subClassOf": [
@@ -519,6 +525,12 @@
      "@type": "Restriction",
      "onProperty": "urn:kinsp:計算パターン",
      "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:agent",
+     "minCardinality": 0,
      "maxCardinality": 1
     }
    ],
@@ -663,7 +675,7 @@
    }
   },
   {
-   "_comment": "赤伝票は売上伝票の補償タスクである。元の伝票の引数がそのままコピーされて渡る。",
+   "_comment": "赤伝票は売上伝票の補償タスクである。元の伝票の引数がそのままコピーされて渡る。担当者も元の伝票のもの（サプライヤの担当者）が渡る。",
    "@id": "urn:kinsp:赤伝票",
    "@type": "Class",
    "subClassOf": [
@@ -689,6 +701,12 @@
     {
      "@type": "Restriction",
      "onProperty": "urn:kinsp:税抜金額",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:agent",
      "minCardinality": 0,
      "maxCardinality": 1
     }

@@ -1,0 +1,159 @@
+{
+ "_comment": "見積 :- 注文(担当者: buyer, 明細一覧: [明細(商品: えんぴつ, 個数: Q1, 金額: W1), 明細(商品: ノート, 個数: Q2, 金額: W2)]), ＝(合計, [W1, W2]).  注文(明細一覧: 明細(商品: S, 個数: N)).  明細(個数: N, 金額: W) :- ×([N, 100], W).",
+ "ONTO2": [
+  {
+   "@id": "urn:wamtest:workplace.element_pair_graph_data",
+   "@type": "ONTO2",
+   "onto7": [
+    {
+     "_comment": "注文(明細一覧: 明細(商品: S, 個数: N)).——頭部はパターン1個（条件C）",
+     "@id": "urn:node:PairOrder.head",
+     "@type": "PairOrder",
+     "variables": [
+      {
+       "@id": "#S",
+       "variableName": "S"
+      },
+      {
+       "@id": "#N",
+       "variableName": "N"
+      }
+     ],
+     "lines": {
+      "@type": "PairLine",
+      "product": {
+       "@id": "#S"
+      },
+      "qty": {
+       "@id": "#N"
+      }
+     }
+    },
+    {
+     "_comment": "明細(個数: N, 金額: W) :- ×([N, 100], W).——要素ごとの計算は要素の述語の節に",
+     "@id": "urn:node:PairLine.head",
+     "@type": "PairLine",
+     "variables": [
+      {
+       "@id": "#N",
+       "variableName": "N"
+      },
+      {
+       "@id": "#W",
+       "variableName": "W"
+      }
+     ],
+     "qty": {
+      "@id": "#N"
+     },
+     "amount": {
+      "@id": "#W"
+     },
+     "internalGraph": [
+      {
+       "@id": "urn:node:PairLine.times",
+       "@type": "PairTimes",
+       "arg1": [
+        {
+         "@id": "#N"
+        },
+        100
+       ],
+       "arg2": {
+        "@id": "#W"
+       }
+      }
+     ]
+    }
+   ],
+   "ontoC": [
+    {
+     "@id": "urn:wamtest:設定.element_pair_graph_data",
+     "@type": "ONTOc",
+     "ontoG": [
+      {
+       "_comment": "見積(合計: T) :- 注文(…), ＝(T, [W1, W2]).",
+       "@id": "urn:node:PairQuote.head",
+       "@type": "PairQuote",
+       "variables": [
+        {
+         "@id": "#T",
+         "variableName": "T"
+        },
+        {
+         "@id": "#Q1",
+         "variableName": "Q1"
+        },
+        {
+         "@id": "#Q2",
+         "variableName": "Q2"
+        },
+        {
+         "@id": "#W1",
+         "variableName": "W1"
+        },
+        {
+         "@id": "#W2",
+         "variableName": "W2"
+        }
+       ],
+       "total": {
+        "@id": "#T"
+       },
+       "internalGraph": [
+        {
+         "@id": "urn:node:pair.order",
+         "@type": "PairOrder",
+         "pairAgent": "urn:entity:buyer",
+         "okButton": "_suspendingOk",
+         "lines": [
+          {
+           "@type": "PairLine",
+           "product": "えんぴつ",
+           "qty": {
+            "@id": "#Q1"
+           },
+           "amount": {
+            "@id": "#W1"
+           }
+          },
+          {
+           "@type": "PairLine",
+           "product": "ノート",
+           "qty": {
+            "@id": "#Q2"
+           },
+           "amount": {
+            "@id": "#W2"
+           }
+          }
+         ]
+        },
+        {
+         "@id": "urn:node:pair.total",
+         "@type": "PairEquals",
+         "arg1": {
+          "@id": "#T"
+         },
+         "arg2": [
+          {
+           "@id": "#W1"
+          },
+          {
+           "@id": "#W2"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "PairQuote": [
+  {
+   "@id": "urn:entity:quote-1"
+  }
+ ]
+}

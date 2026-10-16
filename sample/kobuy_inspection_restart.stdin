@@ -1,0 +1,10 @@
+as urn:entity:バイヤー
+1.1 50
+1
+restart
+unok urn:node:検収
+restart
+1.1 40
+1
+restart
+end

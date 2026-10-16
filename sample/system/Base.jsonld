@@ -1,0 +1,1005 @@
+{
+ "_source": {
+  "path": "/mnt/c/home/doc/PLR/dist/schemata/Base.xlsx",
+  "sha256": "8902a2728ecf26ad662512b9194e48de5964899a5062290b215b96afacf43599"
+ },
+ "@context": "http://PUBLIC/ontologies/menuContext.jsonld",
+ "@id": "Base!",
+ "@type": "PlrOntology",
+ "defines": [
+  {
+   "@id": "#Event",
+   "@type": "Class",
+   "label": {
+    "": "Event",
+    "ja": "事象"
+   },
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "cardinality": 1,
+     "onProperty": "#begin"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#end"
+    },
+    {
+     "@type": "Restriction",
+     "cardinality": 1,
+     "onProperty": "#creator"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#editor"
+    },
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#im"
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#cnt"
+    },
+    {
+     "@id": "#_AutomaticGeneration_Super_0000000002_SuperClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#begin",
+   "@type": "DatatypeProperty",
+   "domain": "#_AutomaticGeneration_Super_0000000002_SuperClass",
+   "label": {
+    "": "time",
+    "ja": "日時"
+   },
+   "range": "dateTime"
+  },
+  {
+   "@id": "#end",
+   "@type": "DatatypeProperty",
+   "domain": "#Event",
+   "label": {
+    "": "end",
+    "ja": "終了"
+   },
+   "range": "dateTime"
+  },
+  {
+   "@id": "#creator",
+   "@type": "DatatypeProperty",
+   "domain": "#Event",
+   "label": {
+    "": "reporter",
+    "ja": "記録者"
+   },
+   "range": "string"
+  },
+  {
+   "@id": "#editor",
+   "@type": "DatatypeProperty",
+   "domain": "#Event",
+   "label": {
+    "": "editor",
+    "ja": "編集者"
+   },
+   "range": "string"
+  },
+  {
+   "@id": "#im",
+   "@type": "ObjectProperty",
+   "domain": "#Event",
+   "label": {
+    "": "importance",
+    "ja": "重要度"
+   },
+   "range": "#_AutomaticGeneration_im_0000000003_SelectorClass"
+  },
+  {
+   "@id": "#_I0",
+   "@type": "Class",
+   "label": {
+    "": "0"
+   },
+   "selected": true,
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_im_0000000003_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_I1",
+   "@type": "Class",
+   "label": {
+    "": "1"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_im_0000000003_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_AutomaticGeneration_im_0000000003_SelectorClass",
+   "@type": "Class"
+  },
+  {
+   "@id": "#_I2",
+   "@type": "Class",
+   "label": {
+    "": "2"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_im_0000000003_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#cnt",
+   "@type": "DatatypeProperty",
+   "domain": "#Event",
+   "format": {
+    "": "[]"
+   },
+   "label": {
+    "": "content",
+    "ja": "内容"
+   },
+   "range": "mmdata"
+  },
+  {
+   "@id": "#M",
+   "@type": "Class",
+   "comment": {
+    "": "Message",
+    "ja": "メッセージ"
+   },
+   "subClassOf": [
+    {
+     "@id": "#Event",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "cardinality": 1,
+     "onProperty": "#cnt"
+    },
+    {
+     "@type": "Restriction",
+     "cardinality": 0,
+     "onProperty": "#end"
+    },
+    {
+     "@id": "#Hidden",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#Meeting",
+   "@type": "Class",
+   "label": {
+    "": "Meeting",
+    "ja": "会合"
+   },
+   "subClassOf": [
+    {
+     "@id": "#Event",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "cardinality": 1,
+     "onProperty": "#cnt"
+    },
+    {
+     "@id": "#Hidden",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#GraphRelation",
+   "@type": "Class",
+   "label": {
+    "": "Relation",
+    "ja": "関係",
+    "zh": "关系"
+   },
+   "subClassOf": [
+    {
+     "@id": "#Event",
+     "@type": "Class"
+    },
+    {
+     "@type": "Restriction",
+     "minCardinality": 1,
+     "onProperty": "#arg1"
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#arg2"
+    }
+   ]
+  },
+  {
+   "@id": "#arg1",
+   "@type": "Property",
+   "domain": "#GraphRelation",
+   "label": {
+    "": "arg1",
+    "ja": "第1項"
+   },
+   "subPropertyOf": [
+    "#argument1"
+   ]
+  },
+  {
+   "@id": "#arg2",
+   "@type": "Property",
+   "domain": "#GraphRelation",
+   "label": {
+    "": "arg2",
+    "ja": "第2項"
+   },
+   "subPropertyOf": [
+    "#argument2"
+   ]
+  },
+  {
+   "@id": "#RareEvent",
+   "@type": "Class",
+   "label": {
+    "": "Rare Event",
+    "ja": "希少事象"
+   },
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "cardinality": 1,
+     "onProperty": "#begin"
+    },
+    {
+     "@id": "#_AutomaticGeneration_Super_0000000002_SuperClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_AutomaticGeneration_Super_0000000002_SuperClass",
+   "@type": "Class"
+  },
+  {
+   "@id": "#UpdateBegin",
+   "@type": "Class"
+  },
+  {
+   "@id": "#Index",
+   "@type": "Class",
+   "label": {
+    "": "Index",
+    "ja": "索引"
+   },
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "maxCardinality": 1,
+     "onProperty": "#index"
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#notificationLeadTime"
+    }
+   ]
+  },
+  {
+   "@id": "#index",
+   "@type": "DatatypeProperty",
+   "domain": "#Index",
+   "format": {
+    "": "[]"
+   },
+   "label": {
+    "": "retrieval key",
+    "ja": "検索キー"
+   },
+   "range": "string"
+  },
+  {
+   "@id": "#notificationLeadTime",
+   "@type": "DatatypeProperty",
+   "comment": {
+    "": "duration between prior notification and event",
+    "ja": "事前の通知と事象の間の時間"
+   },
+   "domain": "#Index",
+   "format": {
+    "": "[]"
+   },
+   "label": {
+    "": "notification lead time",
+    "ja": "通知リードタイム"
+   },
+   "range": "duration"
+  },
+  {
+   "@id": "#channelSetting",
+   "@type": "ObjectProperty",
+   "range": "#ChannelSetting"
+  },
+  {
+   "@id": "#_NONE",
+   "@type": "Class",
+   "label": {
+    "": "N/A",
+    "ja": "該当なし",
+    "zh": "不适用"
+   },
+   "subClassOf": [
+    {
+     "@id": "#Hidden",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_UNENTERED",
+   "@type": "Class",
+   "label": {
+    "": "Unentered",
+    "ja": "未入力"
+   },
+   "subClassOf": [
+    {
+     "@id": "#Hidden",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#OTHER",
+   "@type": "Class",
+   "format": {
+    "": "[%content]"
+   },
+   "label": {
+    "": "Other",
+    "ja": "その他"
+   },
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "cardinality": 1,
+     "onProperty": "#content"
+    }
+   ]
+  },
+  {
+   "@id": "#content",
+   "@type": "DatatypeProperty",
+   "domain": "#OTHER",
+   "label": {
+    "": "content",
+    "ja": "内容"
+   },
+   "range": "string"
+  },
+  {
+   "@id": "#NONE",
+   "@type": "Class",
+   "label": {
+    "": "None",
+    "ja": "なし"
+   },
+   "subClassOf": [
+    {
+     "@id": "#Hidden",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#UNENTERED",
+   "@type": "Class",
+   "label": {
+    "": "Unentered",
+    "ja": "未入力"
+   },
+   "subClassOf": [
+    {
+     "@id": "#Hidden",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#Hidden",
+   "@type": "Class",
+   "label": {
+    "": "Hidden Class",
+    "ja": "隠しクラス"
+   }
+  },
+  {
+   "@id": "#argument",
+   "@type": "Property",
+   "label": {
+    "": "argument",
+    "ja": "項"
+   }
+  },
+  {
+   "@id": "#argument1",
+   "@type": "Property",
+   "label": {
+    "": "argument1",
+    "ja": "第1項"
+   }
+  },
+  {
+   "@id": "#taskArg1",
+   "@type": "Property",
+   "subPropertyOf": [
+    "#argument1"
+   ]
+  },
+  {
+   "@id": "#argument2",
+   "@type": "Property",
+   "label": {
+    "": "argument2",
+    "ja": "第2項"
+   }
+  },
+  {
+   "@id": "#taskArg2",
+   "@type": "Property",
+   "subPropertyOf": [
+    "#argument2"
+   ]
+  },
+  {
+   "@id": "#durationValue",
+   "@type": "DatatypeProperty",
+   "label": {
+    "": "duration",
+    "ja": "持続時間"
+   },
+   "range": "duration"
+  },
+  {
+   "@id": "#duration1hour",
+   "@type": "DatatypeProperty",
+   "defaultValue": "PT1H",
+   "range": "duration",
+   "subPropertyOf": [
+    "#durationValue"
+   ]
+  },
+  {
+   "@id": "#duration10minutes",
+   "@type": "DatatypeProperty",
+   "defaultValue": "PT10M",
+   "range": "duration",
+   "subPropertyOf": [
+    "#durationValue"
+   ]
+  },
+  {
+   "@id": "#duration20minutes",
+   "@type": "DatatypeProperty",
+   "defaultValue": "PT20M",
+   "range": "duration",
+   "subPropertyOf": [
+    "#durationValue"
+   ]
+  },
+  {
+   "@id": "#duration30minutes",
+   "@type": "DatatypeProperty",
+   "defaultValue": "PT30M",
+   "range": "duration",
+   "subPropertyOf": [
+    "#durationValue"
+   ]
+  },
+  {
+   "@id": "#beginTime",
+   "@type": "DatatypeProperty",
+   "label": {
+    "": "begin",
+    "ja": "開始"
+   },
+   "range": "time"
+  },
+  {
+   "@id": "#ChannelSetting",
+   "@type": "Class",
+   "label": {
+    "": "Channel Setting",
+    "ja": "チャネル設定"
+   }
+  },
+  {
+   "@id": "#reusable",
+   "@type": "Property",
+   "label": {
+    "": "reusable",
+    "ja": "再利用可"
+   }
+  },
+  {
+   "@id": "#reuse",
+   "@type": "Property",
+   "comment": {
+    "": "no creation",
+    "ja": "新規作成不可"
+   },
+   "label": {
+    "": "reuse",
+    "ja": "再利用"
+   }
+  },
+  {
+   "@id": "#next",
+   "@type": "Property",
+   "label": {
+    "": "next",
+    "ja": "次"
+   }
+  },
+  {
+   "@id": "#constituent",
+   "@type": "Property",
+   "label": {
+    "": "constituent",
+    "ja": "構成素"
+   }
+  },
+  {
+   "@id": "#sensitive",
+   "@type": "Property",
+   "comment": {
+    "": "shown to owner only",
+    "ja": "所有者だけに表示"
+   },
+   "label": {
+    "": "sensitive",
+    "ja": "機微"
+   }
+  },
+  {
+   "@id": "#title",
+   "@type": "DatatypeProperty",
+   "comment": {
+    "": "title to distinguish multiple names, homes, meetings, etc.",
+    "ja": "複数の名前や自宅や会議を区別するためのタイトル"
+   },
+   "label": {
+    "": "title",
+    "ja": "タイトル"
+   },
+   "range": "string",
+   "subPropertyOf": [
+    "#sensitive"
+   ]
+  },
+  {
+   "@id": "#count",
+   "@type": "DatatypeProperty",
+   "defaultValue": 1,
+   "format": {
+    "": "[] times",
+    "ja": "[]回"
+   },
+   "label": {
+    "": "number of times",
+    "ja": "回数"
+   },
+   "minInclusive": 1,
+   "range": "integer"
+  },
+  {
+   "@id": "#state",
+   "@type": "ObjectProperty",
+   "label": {
+    "": "state",
+    "ja": "状態"
+   },
+   "range": "#_AutomaticGeneration_state_0000000002_SelectorClass"
+  },
+  {
+   "@id": "#_good",
+   "@type": "Class",
+   "label": {
+    "": "good",
+    "ja": "良"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_state_0000000002_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_bad",
+   "@type": "Class",
+   "label": {
+    "": "bad",
+    "ja": "不良"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_state_0000000002_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_AutomaticGeneration_state_0000000002_SelectorClass",
+   "@type": "Class"
+  },
+  {
+   "@id": "#existence",
+   "@type": "DatatypeProperty",
+   "falseLabel": {
+    "": "absent",
+    "ja": "無"
+   },
+   "label": {
+    "": "existence",
+    "ja": "有無"
+   },
+   "range": "boolean",
+   "trueLabel": {
+    "": "present",
+    "ja": "有"
+   }
+  },
+  {
+   "@id": "#percentage",
+   "@type": "DatatypeProperty",
+   "format": {
+    "": "[]%"
+   },
+   "label": {
+    "": "value",
+    "ja": "値"
+   },
+   "maxInclusive": 100,
+   "minInclusive": 0,
+   "range": "integer"
+  },
+  {
+   "@id": "#valCm",
+   "@type": "DatatypeProperty",
+   "format": {
+    "": "[]cm"
+   },
+   "label": {
+    "": "value",
+    "ja": "値"
+   },
+   "minExclusive": 0,
+   "range": "decimal"
+  },
+  {
+   "@id": "#weightVal",
+   "@type": "DatatypeProperty",
+   "format": {
+    "": "[]kg"
+   },
+   "label": {
+    "": "value",
+    "ja": "値"
+   },
+   "maxInclusive": 300,
+   "minExclusive": 0,
+   "range": "decimal"
+  },
+  {
+   "@id": "#valDecimal",
+   "@type": "DatatypeProperty",
+   "label": {
+    "": "value",
+    "ja": "値"
+   },
+   "range": "decimal"
+  },
+  {
+   "@id": "#valNaturalNumber",
+   "@type": "DatatypeProperty",
+   "label": {
+    "": "value",
+    "ja": "値"
+   },
+   "range": "nonNegativeInteger"
+  },
+  {
+   "@id": "#plusMinus3",
+   "@type": "ObjectProperty",
+   "label": {
+    "": "status",
+    "ja": "状態"
+   },
+   "range": "#_AutomaticGeneration_plusMinus3_0000000002_SelectorClass"
+  },
+  {
+   "@id": "#_Minus",
+   "@type": "Class",
+   "label": {
+    "": "-"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_plusMinus3_0000000002_SelectorClass",
+     "@type": "Class"
+    },
+    {
+     "@id": "#_AutomaticGeneration_plusMinus4_0000000002_SelectorClass",
+     "@type": "Class"
+    },
+    {
+     "@id": "#_AutomaticGeneration_plusMinus5_0000000002_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_PlusMinus",
+   "@type": "Class",
+   "label": {
+    "": "±"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_plusMinus3_0000000002_SelectorClass",
+     "@type": "Class"
+    },
+    {
+     "@id": "#_AutomaticGeneration_plusMinus4_0000000002_SelectorClass",
+     "@type": "Class"
+    },
+    {
+     "@id": "#_AutomaticGeneration_plusMinus5_0000000002_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_AutomaticGeneration_plusMinus3_0000000002_SelectorClass",
+   "@type": "Class"
+  },
+  {
+   "@id": "#_Plus1",
+   "@type": "Class",
+   "label": {
+    "": "＋"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_plusMinus3_0000000002_SelectorClass",
+     "@type": "Class"
+    },
+    {
+     "@id": "#_AutomaticGeneration_plusMinus4_0000000002_SelectorClass",
+     "@type": "Class"
+    },
+    {
+     "@id": "#_AutomaticGeneration_plusMinus5_0000000002_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#plusMinus4",
+   "@type": "ObjectProperty",
+   "label": {
+    "": "status",
+    "ja": "状態"
+   },
+   "range": "#_AutomaticGeneration_plusMinus4_0000000002_SelectorClass"
+  },
+  {
+   "@id": "#_AutomaticGeneration_plusMinus4_0000000002_SelectorClass",
+   "@type": "Class"
+  },
+  {
+   "@id": "#_Plus2",
+   "@type": "Class",
+   "label": {
+    "": "＋＋"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_plusMinus4_0000000002_SelectorClass",
+     "@type": "Class"
+    },
+    {
+     "@id": "#_AutomaticGeneration_plusMinus5_0000000002_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#plusMinus5",
+   "@type": "ObjectProperty",
+   "label": {
+    "": "status",
+    "ja": "状態"
+   },
+   "range": "#_AutomaticGeneration_plusMinus5_0000000002_SelectorClass"
+  },
+  {
+   "@id": "#_AutomaticGeneration_plusMinus5_0000000002_SelectorClass",
+   "@type": "Class"
+  },
+  {
+   "@id": "#_Plus3",
+   "@type": "Class",
+   "label": {
+    "": "＋＋＋"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_plusMinus5_0000000002_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#reactionPN",
+   "@type": "ObjectProperty",
+   "label": {
+    "": "反応"
+   },
+   "range": "#_AutomaticGeneration_reactionPN_0000000002_SelectorClass"
+  },
+  {
+   "@id": "#_positive",
+   "@type": "Class",
+   "label": {
+    "": "positive",
+    "ja": "陽性"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_reactionPN_0000000002_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_pseudoPositive",
+   "@type": "Class",
+   "label": {
+    "": "pseudo-positive",
+    "ja": "疑陽性"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_reactionPN_0000000002_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_AutomaticGeneration_reactionPN_0000000002_SelectorClass",
+   "@type": "Class"
+  },
+  {
+   "@id": "#_negative",
+   "@type": "Class",
+   "label": {
+    "": "negative",
+    "ja": "陰性"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_reactionPN_0000000002_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#assistance",
+   "@type": "ObjectProperty",
+   "label": {
+    "": "assistance",
+    "ja": "支援"
+   },
+   "range": "#_AutomaticGeneration_assistance_0000000002_SelectorClass"
+  },
+  {
+   "@id": "#_total",
+   "@type": "Class",
+   "comment": {
+    "": "total assistance or agency",
+    "ja": "全介助または代行"
+   },
+   "label": {
+    "": "total",
+    "ja": "全"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_assistance_0000000002_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_partial",
+   "@type": "Class",
+   "comment": {
+    "": "partial assistance or collaboration",
+    "ja": "部分介助または共同作業"
+   },
+   "label": {
+    "": "partial",
+    "ja": "部分"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_assistance_0000000002_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_AutomaticGeneration_assistance_0000000002_SelectorClass",
+   "@type": "Class"
+  },
+  {
+   "@id": "#_confirmation",
+   "@type": "Class",
+   "comment": {
+    "": "confirmation of data-subject's action (such as taking medicine)",
+    "ja": "本人の行為(服薬など)を確認"
+   },
+   "label": {
+    "": "confirmation",
+    "ja": "確認"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_assistance_0000000002_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  },
+  {
+   "@id": "#_none",
+   "@type": "Class",
+   "comment": {
+    "": "autonomous",
+    "ja": "自立"
+   },
+   "label": {
+    "": "none",
+    "ja": "無"
+   },
+   "subClassOf": [
+    {
+     "@id": "#_AutomaticGeneration_assistance_0000000002_SelectorClass",
+     "@type": "Class"
+    }
+   ]
+  }
+ ],
+ "label": {
+  "": "Base!",
+  "ja": "基本!"
+ }
+}

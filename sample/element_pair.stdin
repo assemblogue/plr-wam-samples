@@ -1,0 +1,2 @@
+set urn:node:pair.order qty 3 where product ノート
+set urn:node:pair.order qty 2 where product えんぴつ
