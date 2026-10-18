@@ -3,6 +3,10 @@
  "@id": "urn:kobuy:ontology",
  "@type": "Ontology",
  "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
+ "ontoG": [
+  "urn:kobuy:購買ゴール",
+  "urn:kobuy:購買ゴールB"
+ ],
  "agentProperty": "urn:kobuy:agent",
  "defines": [
   {
@@ -11,7 +15,7 @@
    "subClassOf": [
     {
      "@type": "Restriction",
-     "onProperty": "#isComplete",
+     "onProperty": "wam:isComplete",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -66,15 +70,22 @@
    }
   },
   {
+   "@id": "wam:isComplete",
+   "@type": "DatatypeProperty",
+   "domain": "urn:kobuy:Template",
+   "range": "string",
+   "label": {
+    "ja": "完成",
+    "en": "Is complete"
+   }
+  },
+  {
    "@id": "urn:kobuy:Person",
    "@type": "Class",
    "label": {
     "ja": "人",
     "en": "Person"
-   },
-   "subClassOf": [
-    "#Person"
-   ]
+   }
   },
   {
    "@id": "urn:kobuy:agent",
@@ -83,10 +94,7 @@
    "label": {
     "ja": "担当者",
     "en": "Agent"
-   },
-   "subPropertyOf": [
-    "#agent"
-   ]
+   }
   },
   {
    "@id": "urn:kobuy:refersTo",
@@ -112,13 +120,11 @@
   {
    "@id": "urn:kobuy:Then",
    "@type": "Class",
+   "linkKind": "then",
    "label": {
     "ja": "Then",
     "en": "Then"
-   },
-   "subClassOf": [
-    "#Then"
-   ]
+   }
   },
   {
    "@id": "arg1",
@@ -223,7 +229,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "#completeOrSuspendByOkButton",
+     "onProperty": "wam:completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
@@ -253,7 +259,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "#completeOrSuspendByOkButton",
+     "onProperty": "wam:completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     },
@@ -288,7 +294,7 @@
     },
     {
      "@type": "Restriction",
-     "onProperty": "#completeOrSuspendByOkButton",
+     "onProperty": "wam:completeOrSuspendByOkButton",
      "minCardinality": 0,
      "maxCardinality": 1
     }
