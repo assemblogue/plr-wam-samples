@@ -1,0 +1,26 @@
+as urn:person:田中
+set urn:tw:rule.調達#起案 urn:tw:金額 120000
+ok urn:tw:rule.調達#起案
+as urn:person:山田
+set urn:tw:rule.調達#承認 urn:tw:判断 承認
+ok urn:tw:rule.調達#承認
+as urn:person:太木
+set urn:tw:rule.調達#発注 urn:tw:発注日 2026-10-22
+ok urn:tw:rule.調達#発注
+as urn:person:佐藤
+set urn:tw:rule.調達#出荷 urn:tw:出荷数 3
+ok urn:tw:rule.調達#出荷
+as urn:person:田中
+set urn:tw:rule.調達#検収 urn:tw:検収数 3
+ok urn:tw:rule.調達#検収
+as urn:person:高橋
+set urn:tw:rule.調達#請求 urn:tw:請求書番号 INV-0001
+ok urn:tw:rule.調達#請求
+as urn:person:太木
+set urn:tw:rule.調達#支払い urn:tw:支払日 2026-10-31
+ok urn:tw:rule.調達#支払い
+as urn:person:田中
+list
+ok urn:entity:created-4
+list
+end

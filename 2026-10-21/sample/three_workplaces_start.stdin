@@ -1,0 +1,6 @@
+as urn:person:山田
+start urn:tw:予算 urn:tw:予算コード 予算-1 urn:tw:限度額 200000 urn:tw:利用者 [urn:person:田中]
+ok urn:entity:created-1
+as urn:person:田中
+start urn:tw:調達 urn:tw:件名 会議室のプロジェクタ urn:tw:予算 予算-1
+as -

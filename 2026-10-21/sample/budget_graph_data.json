@@ -1,0 +1,692 @@
+{
+ "_comment": "予算-1（限度額 50万）を、山田と高橋が分け合う。予算-山田（限度額 10万）は山田1人の予算である。予算と最初の予算合計（空の合計。確定 0・予定 0）はデータに無く、予算管理担当の佐藤が起案の筋書き（sample/budget_start.stdin）で2つの予算を登録して作る（追記R748・R802）。調達のレコードもまだ無く、budget.stdin が起案する。読み取りは、承認者（予算管理担当）が起案中の調達を読むのは規則3、起案者が予算合計を読むのは規則4による。アプリでの読み取りの制限は #109 の後（ハーネスは読み取りを制限しない）",
+ "ONTO2": [
+  {
+   "_comment": "ワークプレース。ゴールでない節は onto7、ゴール節はチャネル設定の ontoG にある（追記R474・R488）",
+   "@id": "urn:wamtest:workplace.budget_graph_data",
+   "@type": "ONTO2",
+   "onto7": [
+    {
+     "@id": "urn:node:起案.head",
+     "@type": "urn:bud:起案",
+     "okButton": "_suspendingOk"
+    },
+    {
+     "@id": "urn:node:承認.head",
+     "@type": "urn:bud:承認"
+    }
+   ],
+   "ontoC": [
+    {
+     "_comment": "調達のチャネル設定（基幹業務。起案者ごとの分割チャネル）",
+     "@id": "urn:bud:設定.調達",
+     "@type": "ONTOc",
+     "onto0": "調達",
+     "ontoG": [
+      {
+       "_comment": "調達(案件: N, 金額: X, 予算: K, agent: U) :- 予算(予算コード: K, 限度額: L, 利用者: Us, agent: M, existing: _true), 成員(主体: Us, 人: U), 予算合計(予算: K, 確定合計: T, agent: M, existing: _latest) ─Then→ 起案(agent: U, 案件: N, 金額: X, 予算: K) ─Then→ 予算合計(予算: K, 確定合計: T1, agent: M) ─Then→ 承認(agent: M, 承認案件: N, 承認金額: X, 承認予算: K) ─Then→ 予算合計(予算: K, agent: M), ≧(L, [X, T]), ≧(L, [X, T1]).  承認の承認案件・承認金額・承認予算は refersTo の下位属性で、起案者が入れた値を承認者が読む（受け渡しの定石。追記R517）——承認者はそれらを書けないので、承認の OK をきっかけにした制約処理でも起案者の金額は手放されない（追記R626）。利用者が1人の予算も複数人の予算も、この1本の節で扱う（違いは予算のレコードの利用者だけ。追記R568・R802）。予算管理担当 M は予算のレコードから引く。起案の限度は、M が作った最新の予算合計の確定合計 T で掛ける（ほかの人が作った合計は当たらない。追記R563・R565）。起案の後に M が予算合計を作り、その確定合計で確かめる（≧(L, [X, T1])）。確かめは欄（起案の金額）の値を制約する条件なので Then につながず常に起動しておき、T1 が決まるまで待つ。承認は合計の後に置く（追記R642）。確かめの元になる検索（起案の前の最新の合計）は起案と Then で繋ぐ（追記R578）——偽になったときは、まず手放す順で解き直し、解が無ければバックトラックする（追記R594）。関わる選択点（ここでは起案の OK）が依存する検索が変わっていればそこからやり直し、起案は Then/Else による制御で起動条件を失って OK が外れ、新しい上限とともに起案者に戻る。起案の金額は OK で凍結されていない欄への入力（作業中）なので残り、≧(L, [X, T]) はその範囲として働く（追記R593）。変わっていなければ起案の OK を外す。承認の後にも予算合計を作り、その中で限度額を確かめる——偽なら、起案の前の最新の合計を選び直し、起案と承認の OK は Then/Else による制御で外れて起案者に戻る（追記R578・R593）",
+       "@id": "urn:node:調達.head",
+       "@type": "urn:bud:調達",
+       "urn:bud:案件": {
+        "@id": "#N"
+       },
+       "urn:bud:金額": {
+        "@id": "#X"
+       },
+       "urn:bud:予算": {
+        "@id": "#K"
+       },
+       "agent": {
+        "@id": "#U"
+       },
+       "okButton": "_noOk",
+       "variables": [
+        {
+         "@id": "#N",
+         "variableName": "N"
+        },
+        {
+         "@id": "#X",
+         "variableName": "X"
+        },
+        {
+         "@id": "#K",
+         "variableName": "K"
+        },
+        {
+         "@id": "#U",
+         "variableName": "U"
+        },
+        {
+         "@id": "#L",
+         "variableName": "L"
+        },
+        {
+         "@id": "#M",
+         "variableName": "M"
+        },
+        {
+         "@id": "#T",
+         "variableName": "T"
+        },
+        {
+         "@id": "#Us",
+         "variableName": "Us"
+        },
+        {
+         "@id": "#T1",
+         "variableName": "T1"
+        }
+       ],
+       "internalGraph": [
+        {
+         "_comment": "予算のレコードを検索する。その担当者 M が予算管理担当である",
+         "@id": "urn:node:予算参照",
+         "@type": "urn:bud:予算",
+         "existing": "_true",
+         "urn:bud:予算コード": {
+          "@id": "#K"
+         },
+         "urn:bud:限度額": {
+          "@id": "#L"
+         },
+         "urn:bud:利用者": {
+          "@id": "#Us"
+         },
+         "agent": {
+          "@id": "#M"
+         }
+        },
+        {
+         "_comment": "起案者は予算の利用者である——担当者 U を本体が制約するので基幹業務である（追記R546）",
+         "@id": "urn:node:利用者",
+         "@type": "成員",
+         "主体": {
+          "@id": "#Us"
+         },
+         "人": {
+          "@id": "#U"
+         }
+        },
+        {
+         "_comment": "予算管理担当 M が作った最新の予算合計（existing: _latest。追記R563・R564）。作った人を条件に入れるので、ほかの人が作った合計は当たらない（追記R565）",
+         "@id": "urn:node:最新合計",
+         "@type": "urn:bud:予算合計",
+         "existing": "_latest",
+         "urn:bud:予算": {
+          "@id": "#K"
+         },
+         "urn:bud:確定合計": {
+          "@id": "#T"
+         },
+         "agent": {
+          "@id": "#M"
+         }
+        },
+        {
+         "@id": "urn:node:起案",
+         "@type": "urn:bud:起案",
+         "urn:bud:案件": {
+          "@id": "#N"
+         },
+         "urn:bud:金額": {
+          "@id": "#X"
+         },
+         "urn:bud:予算": {
+          "@id": "#K"
+         },
+         "agent": {
+          "@id": "#U"
+         },
+         "okButton": "_suspendingOk"
+        },
+        {
+         "_comment": "起案の限度：自分の金額 ≦ 限度額 − 確定合計。起案の時点では自分の案件はまだ承認されておらず、確定合計に入っていない（追記R563）",
+         "@id": "urn:node:限度額チェック",
+         "@type": "urn:bud:Geq",
+         "operand1": {
+          "@id": "#L"
+         },
+         "operand2": [
+          {
+           "@id": "#X"
+          },
+          {
+           "@id": "#T"
+          }
+         ]
+        },
+        {
+         "_comment": "起案の後に、予算管理担当が新しい合計を作る（予算合計のゴール節を本体から実行する。1件のレコードになり、予算合計のチャネルに入る。追記R488・R491・R563）",
+         "@id": "urn:node:合計",
+         "@type": "urn:bud:予算合計",
+         "urn:bud:予算": {
+          "@id": "#K"
+         },
+         "urn:bud:確定合計": {
+          "@id": "#T1"
+         },
+         "agent": {
+          "@id": "#M"
+         },
+         "okButton": "_noOk"
+        },
+        {
+         "_comment": "承認の前の確かめ：自分の金額 ≦ 限度額 − 起案の後の合計の確定合計（追記R571）。Then につながず常に起動しておく——合計が確定合計を決めるまで待つ（追記R642）。偽なら起案に戻る",
+         "@id": "urn:node:確かめ",
+         "@type": "urn:bud:Geq",
+         "operand1": {
+          "@id": "#L"
+         },
+         "operand2": [
+          {
+           "@id": "#X"
+          },
+          {
+           "@id": "#T1"
+          }
+         ]
+        },
+        {
+         "@id": "urn:node:承認",
+         "@type": "urn:bud:承認",
+         "urn:bud:承認案件": {
+          "@id": "#N"
+         },
+         "urn:bud:承認金額": {
+          "@id": "#X"
+         },
+         "urn:bud:承認予算": {
+          "@id": "#K"
+         },
+         "agent": {
+          "@id": "#M"
+         }
+        },
+        {
+         "_comment": "承認の後にも予算管理担当が合計を作る。承認済みの合計が限度額を超えれば偽——起案の前の最新の合計を選び直し、起案と承認の OK は Then/Else による制御で外れて起案者に戻る（追記R567・R578・R593）",
+         "@id": "urn:node:承認後の合計",
+         "@type": "urn:bud:予算合計",
+         "urn:bud:予算": {
+          "@id": "#K"
+         },
+         "agent": {
+          "@id": "#M"
+         },
+         "okButton": "_noOk"
+        },
+        {
+         "@id": "urn:node:調達.head#then0",
+         "@type": "urn:bud:Then",
+         "arg1": {
+          "@id": "urn:node:最新合計"
+         },
+         "arg2": {
+          "@id": "urn:node:起案"
+         }
+        },
+        {
+         "@id": "urn:node:調達.head#then1",
+         "@type": "urn:bud:Then",
+         "arg1": {
+          "@id": "urn:node:起案"
+         },
+         "arg2": {
+          "@id": "urn:node:合計"
+         }
+        },
+        {
+         "@id": "urn:node:調達.head#then3",
+         "@type": "urn:bud:Then",
+         "arg1": {
+          "@id": "urn:node:合計"
+         },
+         "arg2": {
+          "@id": "urn:node:承認"
+         }
+        },
+        {
+         "@id": "urn:node:調達.head#then4",
+         "@type": "urn:bud:Then",
+         "arg1": {
+          "@id": "urn:node:承認"
+         },
+         "arg2": {
+          "@id": "urn:node:承認後の合計"
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "_comment": "予算合計のチャネル設定（トーク的業務）。チャネルを作れるのは管理者だけ（ontoCC。追記R566・R803——予算の登録は基幹業務だが、マスターのチャネルの TaskAccess の taskUser（全社員）に、予算の登録の節が担当者に課す成員の主体（予算管理担当）が含まれるので、分割チャネルを作らず名前付きのチャネルに置く。R805・R809）。管理者がチャネルを作るときに TaskAccess で、作るのは予算管理担当・読むのは全社員と決める（追記R802）",
+     "@id": "urn:bud:設定.予算合計",
+     "@type": "ONTOc",
+     "onto0": "予算合計",
+     "ontoCC": [
+      {
+       "@id": "urn:entity:管理者"
+      }
+     ],
+     "ontoG": [
+      {
+       "_comment": "予算合計(予算: K, 確定合計: T, 確定案件: Nc, 予定合計: P, 予定案件: Na, agent: A) :- 予算(予算コード: K, 承認一覧: 承認(承認予算: K, 承認案件: Nc, 承認金額: Y1, completeByOkButton: Person()), existing: _true), 予算(予算コード: K, 調達一覧: 調達(予算: K, 案件: Na, 金額: Y2), existing: _true), =(T, Y1), =(P, Y2), 予算(予算コード: K, 限度額: L, existing: _true), ≧(L, T).  承認一覧・調達一覧は誰も書かない refersTo の多値で、エンジンが検索した時点の状態で値を作る（追記R554・R558・R560）。確定は承認の OK（押した人のある承認）、予定は金額の入った調達。毎回全部を数え直す。担当者 A は頭部にしか現れない（トーク的業務）ので、挿入される TaskAgent が、チャネルの TaskAccess の taskAgent（予算管理担当）に属するかを確かめる（追記R491）",
+       "@id": "urn:node:予算合計.head",
+       "@type": "urn:bud:予算合計",
+       "urn:bud:予算": {
+        "@id": "#K"
+       },
+       "urn:bud:確定合計": {
+        "@id": "#T"
+       },
+       "urn:bud:確定案件": {
+        "@id": "#Nc"
+       },
+       "urn:bud:予定合計": {
+        "@id": "#P"
+       },
+       "urn:bud:予定案件": {
+        "@id": "#Na"
+       },
+       "agent": {
+        "@id": "#A"
+       },
+       "okButton": "_noOk",
+       "variables": [
+        {
+         "@id": "#K",
+         "variableName": "K"
+        },
+        {
+         "@id": "#T",
+         "variableName": "T"
+        },
+        {
+         "@id": "#Nc",
+         "variableName": "Nc"
+        },
+        {
+         "@id": "#P",
+         "variableName": "P"
+        },
+        {
+         "@id": "#Na",
+         "variableName": "Na"
+        },
+        {
+         "@id": "#A",
+         "variableName": "A"
+        },
+        {
+         "@id": "#Y1",
+         "variableName": "Y1"
+        },
+        {
+         "@id": "#Y2",
+         "variableName": "Y2"
+        },
+        {
+         "@id": "#L",
+         "variableName": "L"
+        }
+       ],
+       "internalGraph": [
+        {
+         "@id": "urn:node:確定の検索",
+         "@type": "urn:bud:予算",
+         "existing": "_true",
+         "urn:bud:予算コード": {
+          "@id": "#K"
+         },
+         "urn:bud:承認一覧": {
+          "@type": "urn:bud:承認",
+          "urn:bud:承認予算": {
+           "@id": "#K"
+          },
+          "urn:bud:承認案件": {
+           "@id": "#Nc"
+          },
+          "urn:bud:承認金額": {
+           "@id": "#Y1"
+          },
+          "completeByOkButton": {
+           "@type": "Person"
+          }
+         }
+        },
+        {
+         "@id": "urn:node:予定の検索",
+         "@type": "urn:bud:予算",
+         "existing": "_true",
+         "urn:bud:予算コード": {
+          "@id": "#K"
+         },
+         "urn:bud:調達一覧": {
+          "@type": "urn:bud:調達",
+          "urn:bud:予算": {
+           "@id": "#K"
+          },
+          "urn:bud:案件": {
+           "@id": "#Na"
+          },
+          "urn:bud:金額": {
+           "@id": "#Y2"
+          }
+         }
+        },
+        {
+         "@id": "urn:node:確定の和",
+         "@type": "urn:bud:Equals",
+         "operand1": {
+          "@id": "#T"
+         },
+         "operand2": {
+          "@id": "#Y1"
+         }
+        },
+        {
+         "@id": "urn:node:予定の和",
+         "@type": "urn:bud:Equals",
+         "operand1": {
+          "@id": "#P"
+         },
+         "operand2": {
+          "@id": "#Y2"
+         }
+        },
+        {
+         "_comment": "確定合計が限度額に収まるか（承認の後の合計で、承認済みの案件が超えていれば偽。偽のときの扱いは調達の節の注のとおり。追記R567・R578・R593）",
+         "@id": "urn:node:限度額の確かめ.予算",
+         "@type": "urn:bud:予算",
+         "existing": "_true",
+         "urn:bud:予算コード": {
+          "@id": "#K"
+         },
+         "urn:bud:限度額": {
+          "@id": "#L"
+         }
+        },
+        {
+         "@id": "urn:node:限度額の確かめ",
+         "@type": "urn:bud:Geq",
+         "operand1": {
+          "@id": "#L"
+         },
+         "operand2": {
+          "@id": "#T"
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "_comment": "マスターのチャネル設定。チャネルを作れるのは管理者だけ（ontoCC。追記R566・R803——予算の登録は基幹業務だが、マスターのチャネルの TaskAccess の taskUser（全社員）に、予算の登録の節が担当者に課す成員の主体（予算管理担当）が含まれるので、分割チャネルを作らず名前付きのチャネルに置く。R805・R809）",
+     "@id": "urn:bud:設定.マスター",
+     "@type": "ONTOc",
+     "onto0": "マスター",
+     "ontoCC": [
+      {
+       "@id": "urn:entity:管理者"
+      }
+     ],
+     "ontoG": [
+      {
+       "_comment": "予算(予算コード: K, 限度額: L, agent: M) :- 成員(主体: 予算管理担当, 人: M), 予算合計(予算: K, agent: M).  予算の登録で、空の合計（確定合計 0・予定合計 0）を作る（追記R563）。登録するのは予算管理担当の人（追記R802。担当者は個人なので、役職は担当者に直に書かず、本体の成員で確かめる）。M が本体にも現れるので基幹業務だが、マスターのチャネルの TaskAccess の予算の taskUser（全社員）に、この節が担当者に課す成員の主体（予算管理担当）が含まれるので、分割チャネルではなく名前付きのマスターのチャネルに置く（R803・R805・R809）",
+       "@id": "urn:node:予算.登録",
+       "@type": "urn:bud:予算",
+       "urn:bud:予算コード": {
+        "@id": "#K"
+       },
+       "urn:bud:限度額": {
+        "@id": "#L"
+       },
+       "agent": {
+        "@id": "#M"
+       },
+       "variables": [
+        {
+         "@id": "#K",
+         "variableName": "K"
+        },
+        {
+         "@id": "#L",
+         "variableName": "L"
+        },
+        {
+         "@id": "#M",
+         "variableName": "M"
+        }
+       ],
+       "internalGraph": [
+        {
+         "_comment": "M は予算管理担当の就任者（追記R802）",
+         "@id": "urn:node:予算管理担当か",
+         "@type": "成員",
+         "主体": {
+          "@id": "urn:entity:予算管理担当"
+         },
+         "人": {
+          "@id": "#M"
+         }
+        },
+        {
+         "@id": "urn:node:空の合計",
+         "@type": "urn:bud:予算合計",
+         "urn:bud:予算": {
+          "@id": "#K"
+         },
+         "agent": {
+          "@id": "#M"
+         },
+         "okButton": "_noOk"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "_comment": "チャネル作成のチャネル設定。起案者がまだ分割チャネルを持たなければ、エンジンがこの節を走らせて作る（追記R433・R435・R546）",
+     "@id": "urn:bud:設定.チャネル",
+     "@type": "ONTOc",
+     "onto0": "チャネル",
+     "ontoG": [
+      {
+       "_comment": "ONTOc1(ontoC: S, agent: O) :- 基幹業務を含む(設定: S), チャネル作成者(設定: S, 人: O). 名前の無いチャネル（分割チャネル）。作れるのはその設定のチャネル作成者だけ（追記R566）",
+       "@id": "urn:node:チャネル.head",
+       "@type": "ONTOc1",
+       "ontoC": {
+        "@id": "#S"
+       },
+       "agent": {
+        "@id": "#O"
+       },
+       "variables": [
+        {
+         "@id": "#S",
+         "variableName": "S"
+        },
+        {
+         "@id": "#O",
+         "variableName": "O"
+        }
+       ],
+       "internalGraph": [
+        {
+         "@id": "urn:node:基幹業務を含む",
+         "@type": "基幹業務を含む",
+         "設定": {
+          "@id": "#S"
+         }
+        },
+        {
+         "@id": "urn:node:チャネル作成者",
+         "@type": "チャネル作成者",
+         "設定": {
+          "@id": "#S"
+         },
+         "人": {
+          "@id": "#O"
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "ONTOc1": [
+  {
+   "_comment": "チャネル作成のチャネル（作った分割チャネルのレコードがここに並ぶ。設定 urn:bud:設定.チャネル の名前付きのチャネルが1つ要る——無いと分割チャネルを置けず、起案できない。96e825ea・追記R570 の後）",
+   "@id": "urn:channel:チャネル",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:bud:設定.チャネル"
+   },
+   "onto0": "チャネル",
+   "completeByOkButton": {
+    "@id": "urn:entity:管理者"
+   }
+  },
+  {
+   "_comment": "マスターのチャネル（管理者が作った）",
+   "@id": "urn:channel:マスター",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:bud:設定.マスター"
+   },
+   "onto0": "マスター",
+   "agent": {
+    "@id": "urn:entity:管理者"
+   },
+   "_initiator": {
+    "@id": "urn:entity:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:entity:管理者"
+   },
+   "TaskAccess": [
+    {
+     "_comment": "予算を登録するのは予算管理担当、読むのは全社員（追記R802）。登録できる人は予算の登録の節（成員）が決めるので、TaskAccess には taskUser だけを書く（R809）。taskUser に、予算の登録の節が担当者に課す成員の主体（予算管理担当）が含まれるので、予算の登録は基幹業務でも分割チャネルに置かず、このチャネルに置く（R803・R805・R809）。鍵（taskUser の分で包む）はまだ実装が無い——ハーネスは全員がすべてを読むので、例題には差が出ない",
+     "@type": "TaskAccess",
+     "channel": {
+      "@id": "urn:channel:マスター",
+      "onto0": "マスター"
+     },
+     "task": {
+      "@id": "urn:bud:予算"
+     },
+     "taskUser": [
+      {
+       "@id": "urn:entity:全社員"
+      }
+     ],
+     "agent": {
+      "@id": "urn:entity:管理者"
+     },
+     "completeByOkButton": {
+      "@id": "urn:entity:管理者"
+     }
+    }
+   ]
+  },
+  {
+   "_comment": "予算合計のチャネル（管理者が作った）。TaskAccess：予算合計を作るのは予算管理担当、読むのは全社員（追記R563・R565・R802）",
+   "@id": "urn:channel:予算合計",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:bud:設定.予算合計"
+   },
+   "onto0": "予算合計",
+   "agent": {
+    "@id": "urn:entity:管理者"
+   },
+   "_initiator": {
+    "@id": "urn:entity:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:entity:管理者"
+   },
+   "TaskAccess": [
+    {
+     "@type": "TaskAccess",
+     "channel": {
+      "@id": "urn:channel:予算合計",
+      "onto0": "予算合計"
+     },
+     "task": {
+      "@id": "urn:bud:予算合計"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:entity:予算管理担当"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:entity:全社員"
+      }
+     ],
+     "agent": {
+      "@id": "urn:entity:管理者"
+     },
+     "completeByOkButton": {
+      "@id": "urn:entity:管理者"
+     }
+    }
+   ]
+  }
+ ],
+ "Person": [
+  {
+   "_comment": "人もレコードとして置く（追記R529）",
+   "@id": "urn:entity:山田",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:entity:高橋",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:entity:佐藤",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:entity:管理者",
+   "@type": "Person"
+  }
+ ],
+ "urn:bud:グループ": [
+  {
+   "_comment": "全社員（予算と予算合計を読む人。追記R802）",
+   "@id": "urn:entity:全社員",
+   "メンバー": [
+    {
+     "@id": "urn:entity:山田"
+    },
+    {
+     "@id": "urn:entity:高橋"
+    },
+    {
+     "@id": "urn:entity:佐藤"
+    },
+    {
+     "@id": "urn:entity:管理者"
+    }
+   ]
+  }
+ ],
+ "urn:bud:役職": [
+  {
+   "_comment": "予算管理担当（追記R802）。すべての予算を登録し、予算合計を作り、調達を承認する。就任者は佐藤",
+   "@id": "urn:entity:予算管理担当",
+   "就任者": [
+    {
+     "@id": "urn:entity:佐藤"
+    }
+   ]
+  }
+ ]
+}

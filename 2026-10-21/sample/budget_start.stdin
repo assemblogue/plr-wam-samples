@@ -1,0 +1,6 @@
+as urn:entity:佐藤
+start urn:bud:予算 urn:bud:予算コード 予算-1 urn:bud:限度額 500000 urn:bud:利用者 [urn:entity:山田,urn:entity:高橋,urn:entity:佐藤]
+ok urn:entity:created-1
+start urn:bud:予算 urn:bud:予算コード 予算-山田 urn:bud:限度額 100000 urn:bud:利用者 [urn:entity:山田]
+ok urn:entity:created-3
+as -

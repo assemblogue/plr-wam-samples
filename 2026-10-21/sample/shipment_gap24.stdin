@@ -1,0 +1,23 @@
+/as urn:entity:サプライヤー
+/start urn:ship:納品ゴール
+/as -
+/as urn:entity:サプライヤー
+/ok urn:node:出荷
+/set urn:node:出荷 urn:ship:個数 5
+/ok urn:node:出荷
+/as urn:entity:バイヤー
+/ok urn:node:検収
+/as urn:entity:サプライヤー
+/set urn:node:出荷 urn:ship:個数 2
+/ok urn:node:出荷
+/as urn:entity:バイヤー
+/ok urn:node:検収#2
+/set urn:node:検収#1 urn:ship:返品数 3
+/ok urn:node:検収#1
+/set urn:node:検収 urn:ship:返品数 0
+/ok urn:node:検収
+/as urn:entity:サプライヤー
+/set urn:node:出荷 urn:ship:個数 6
+/ok urn:node:出荷
+/as urn:entity:サプライヤー
+/set urn:node:検収 urn:ship:返品数 0

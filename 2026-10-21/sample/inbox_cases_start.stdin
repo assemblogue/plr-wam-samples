@@ -1,0 +1,18 @@
+as urn:entity:鈴木
+start urn:inbox:予算 urn:inbox:予算コード 予算.山田 urn:inbox:限度額 500000 urn:inbox:利用者 [urn:entity:山田]
+ok urn:entity:created-1
+start urn:inbox:予算 urn:inbox:予算コード 予算.佐藤 urn:inbox:限度額 1000000 urn:inbox:利用者 [urn:entity:佐藤]
+ok urn:entity:created-3
+start urn:inbox:予算 urn:inbox:予算コード 予算.高橋 urn:inbox:限度額 300000 urn:inbox:利用者 [urn:entity:高橋]
+ok urn:entity:created-5
+as urn:entity:山田
+start urn:inbox:調達 urn:inbox:案件 A urn:inbox:予算 予算.山田
+as urn:entity:佐藤
+start urn:inbox:調達 urn:inbox:案件 B urn:inbox:予算 予算.佐藤
+as urn:entity:山田
+start urn:inbox:調達 urn:inbox:案件 C urn:inbox:予算 予算.山田
+as urn:entity:佐藤
+start urn:inbox:検収 urn:inbox:案件 D
+as urn:entity:山田
+start urn:inbox:検収 urn:inbox:案件 E
+as -

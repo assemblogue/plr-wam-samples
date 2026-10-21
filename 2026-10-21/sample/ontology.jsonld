@@ -1,0 +1,127 @@
+{
+  "@id": "urn:wamtest:ontology",
+  "@type": "Ontology",
+  "defines": [
+    {
+      "@id": "urn:wamtest:Task",
+      "@type": "Class",
+      "label": {
+        "ja": "タスクノード",
+        "en": "Task"
+      }
+    },
+    {
+      "@id": "urn:wamtest:Constraint",
+      "@type": "Class",
+      "label": {
+        "ja": "制約ノード",
+        "en": "Constraint"
+      }
+    },
+    {
+      "@id": "urn:wamtest:申請",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:wamtest:Task"
+      ],
+      "label": {
+        "ja": "申請",
+        "en": "Request"
+      }
+    },
+    {
+      "@id": "urn:wamtest:承認",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:wamtest:Task"
+      ],
+      "label": {
+        "ja": "承認",
+        "en": "Approval"
+      }
+    },
+    {
+      "@id": "urn:wamtest:発注",
+      "@type": "Class",
+      "subClassOf": [
+        "urn:wamtest:Task"
+      ],
+      "label": {
+        "ja": "発注",
+        "en": "Order"
+      }
+    },
+    {
+      "@id": "urn:wamtest:調達申請ワークフロー",
+      "@type": "Class",
+      "label": {
+        "ja": "調達申請ワークフロー",
+        "en": "Procurement workflow"
+      }
+    },
+    {
+      "@id": "urn:wamtest:Then",
+      "@type": "Class",
+      "_comment": "リンクは属性ではなくクラスである。arg1 が始点、arg2 が終点。",
+      "label": {
+        "ja": "Then",
+        "en": "Then"
+      },
+      "subClassOf": [
+        "#Then"
+      ]
+    },
+    {
+      "@id": "urn:wamtest:Else",
+      "@type": "Class",
+      "label": {
+        "ja": "Else",
+        "en": "Else"
+      },
+      "subClassOf": [
+        "#Else"
+      ]
+    },
+    {
+      "@id": "arg1",
+      "@type": "ObjectProperty",
+      "label": {
+        "ja": "第1引数",
+        "en": "Arg 1"
+      }
+    },
+    {
+      "@id": "arg2",
+      "@type": "ObjectProperty",
+      "label": {
+        "ja": "第2引数",
+        "en": "Arg 2"
+      }
+    },
+    {
+      "@id": "urn:wamtest:Person",
+      "@type": "Class",
+      "label": {
+        "ja": "人",
+        "en": "Person"
+      },
+      "subClassOf": [
+        "#Person"
+      ]
+    },
+    {
+      "@id": "urn:wamtest:agent",
+      "@type": "ObjectProperty",
+      "range": "urn:wamtest:Person",
+      "label": {
+        "ja": "担当者",
+        "en": "Agent"
+      },
+      "subPropertyOf": [
+        "#agent"
+      ]
+    }
+  ],
+  "_comment_agent": "起案者（agent）と人のノード（追記R684・R748・R772）——計算だけの例題で、担当のあるタスクが無い。業務フローは起案者が start で起動し、頭部に担当者の無いゴールは起動しない（R684）ので、起案者として人を1人置く",
+  "agentProperty": "urn:wamtest:agent"
+}

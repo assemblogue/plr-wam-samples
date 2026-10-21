@@ -1,0 +1,772 @@
+{
+ "_comment": "KOBUY の検収 → 売上伝票の自動計上 → 検収取消 の例題。マニュアル §6.5.1「バイヤーが検収処理を実施した際に、その検収データを元に自動的に売上伝票が計上されます」を、Then の後続として書く。金額と消費税は組込述語（× ÷ 端数処理）で出す——消費税の計算は KOBUY の Wiki「消費税計算について」のとおり——明細ごとに計算し、端数処理の方式（切り捨て／四捨五入）と計算パターン（①／②）はサプライヤごとに決まっている。",
+ "@id": "urn:kinsp:ontology",
+ "@type": "Ontology",
+ "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
+ "agentProperty": "urn:kinsp:agent",
+ "defines": [
+  {
+   "@id": "urn:kinsp:Template",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "#isComplete",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "テンプレート",
+    "en": "Template"
+   }
+  },
+  {
+   "_comment": "補償タスク述語を指すクラスレベル属性。**完全なURIで書く**——JSON-LD の素の鍵（compensatesWith）は文脈に定義が無ければ保たれず、読めない（追記317）。",
+   "@id": "urn:kinsp:compensatesWith",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "補償タスク",
+    "en": "Compensates with"
+   },
+   "subPropertyOf": [
+    "#compensatesWith"
+   ]
+  },
+  {
+   "@id": "urn:kinsp:Atom",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Template"
+   ],
+   "label": {
+    "ja": "アトムノード",
+    "en": "Atom"
+   }
+  },
+  {
+   "@id": "urn:kinsp:Task",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Atom"
+   ],
+   "label": {
+    "ja": "タスクノード",
+    "en": "Task"
+   }
+  },
+  {
+   "@id": "urn:kinsp:Constraint",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Atom"
+   ],
+   "label": {
+    "ja": "制約ノード",
+    "en": "Constraint"
+   }
+  },
+  {
+   "@id": "urn:kinsp:OtherAtom",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Atom"
+   ],
+   "label": {
+    "ja": "その他のアトムノード",
+    "en": "Other atom"
+   }
+  },
+  {
+   "_comment": "取消可能性の3分類。検収は取消可能（マニュアル §3.2.7.1「検収取消」）。訂正は補償可能で、赤伝票を起こして打ち消す。",
+   "@id": "urn:kinsp:Cancelable",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Task",
+    "#Cancelable"
+   ],
+   "label": {
+    "ja": "取消可能タスク",
+    "en": "Cancelable"
+   }
+  },
+  {
+   "@id": "urn:kinsp:Compensable",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Task",
+    "#Compensable"
+   ],
+   "label": {
+    "ja": "補償可能タスク",
+    "en": "Compensable"
+   }
+  },
+  {
+   "@id": "urn:kinsp:Incompensable",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Task",
+    "#Incompensable"
+   ],
+   "label": {
+    "ja": "補償不能タスク",
+    "en": "Incompensable"
+   }
+  },
+  {
+   "@id": "urn:kinsp:Person",
+   "@type": "Class",
+   "label": {
+    "ja": "人",
+    "en": "Person"
+   },
+   "subClassOf": [
+    "#Person"
+   ]
+  },
+  {
+   "@id": "urn:kinsp:agent",
+   "@type": "ObjectProperty",
+   "range": "urn:kinsp:Person",
+   "label": {
+    "ja": "担当者",
+    "en": "Agent"
+   },
+   "subPropertyOf": [
+    "#agent"
+   ]
+  },
+  {
+   "@id": "urn:kinsp:バイヤー",
+   "@type": "ObjectProperty",
+   "domain": "urn:kinsp:検収フロー",
+   "range": "urn:kinsp:Person",
+   "label": {
+    "ja": "バイヤー",
+    "en": "Buyer"
+   }
+  },
+  {
+   "@id": "urn:kinsp:Geq",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Constraint"
+   ],
+   "builtInFunction": "≧",
+   "isConstraint": true,
+   "label": {
+    "ja": "≧",
+    "en": "AtLeast"
+   }
+  },
+  {
+   "@id": "urn:kinsp:Times",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Constraint"
+   ],
+   "builtInFunction": "×",
+   "isConstraint": true,
+   "label": {
+    "ja": "×",
+    "en": "Times"
+   }
+  },
+  {
+   "@id": "urn:kinsp:Plus",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Constraint"
+   ],
+   "builtInFunction": "+",
+   "isConstraint": true,
+   "label": {
+    "ja": "+",
+    "en": "Plus"
+   }
+  },
+  {
+   "@id": "urn:kinsp:Divide",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Constraint"
+   ],
+   "builtInFunction": "÷",
+   "isConstraint": true,
+   "label": {
+    "ja": "÷",
+    "en": "Divide"
+   }
+  },
+  {
+   "@id": "urn:kinsp:Round",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Constraint"
+   ],
+   "builtInFunction": "端数処理",
+   "isConstraint": true,
+   "label": {
+    "ja": "端数処理",
+    "en": "Round"
+   }
+  },
+  {
+   "@id": "urn:kinsp:Then",
+   "@type": "Class",
+   "label": {
+    "ja": "Then",
+    "en": "Then"
+   },
+   "subClassOf": [
+    "#Then"
+   ]
+  },
+  {
+   "@id": "arg1",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "第1引数",
+    "en": "Arg 1"
+   }
+  },
+  {
+   "@id": "arg2",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "第2引数",
+    "en": "Arg 2"
+   }
+  },
+  {
+   "@id": "被除数",
+   "@type": "DatatypeProperty",
+   "range": "decimal",
+   "label": {
+    "ja": "被除数",
+    "en": "Dividend"
+   }
+  },
+  {
+   "@id": "除数",
+   "@type": "DatatypeProperty",
+   "range": "decimal",
+   "label": {
+    "ja": "除数",
+    "en": "Divisor"
+   }
+  },
+  {
+   "@id": "商",
+   "@type": "DatatypeProperty",
+   "range": "decimal",
+   "label": {
+    "ja": "商",
+    "en": "Quotient"
+   }
+  },
+  {
+   "@id": "方式",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": {
+    "ja": "方式",
+    "en": "Mode"
+   }
+  },
+  {
+   "@id": "値",
+   "@type": "DatatypeProperty",
+   "range": "decimal",
+   "label": {
+    "ja": "値",
+    "en": "Value"
+   }
+  },
+  {
+   "@id": "結果",
+   "@type": "DatatypeProperty",
+   "range": "decimal",
+   "label": {
+    "ja": "結果",
+    "en": "Result"
+   }
+  },
+  {
+   "@id": "urn:kinsp:単価",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "単価",
+    "en": "Unit price"
+   }
+  },
+  {
+   "@id": "urn:kinsp:出荷数",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "出荷数",
+    "en": "Shipped"
+   }
+  },
+  {
+   "@id": "urn:kinsp:検収数",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "検収数",
+    "en": "Accepted"
+   }
+  },
+  {
+   "@id": "urn:kinsp:税込金額",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "税込金額",
+    "en": "Gross"
+   }
+  },
+  {
+   "@id": "urn:kinsp:消費税額",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "消費税額",
+    "en": "Tax"
+   }
+  },
+  {
+   "@id": "urn:kinsp:税抜金額",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "税抜金額",
+    "en": "Net"
+   }
+  },
+  {
+   "@id": "urn:kinsp:数量",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "数量",
+    "en": "Quantity"
+   }
+  },
+  {
+   "_comment": "消費税率（%）。8 や 10。",
+   "@id": "urn:kinsp:税率",
+   "@type": "DatatypeProperty",
+   "range": "positiveInteger",
+   "label": {
+    "ja": "消費税率(%)",
+    "en": "Tax rate (%)"
+   }
+  },
+  {
+   "_comment": "商品単価が税抜か税込か。「税抜」か「税込」。",
+   "@id": "urn:kinsp:単価区分",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": {
+    "ja": "単価区分",
+    "en": "Price basis"
+   }
+  },
+  {
+   "_comment": "消費税の端数処理の方式。組込述語 端数処理 の方式名（「切捨て」か「四捨五入」）。サプライヤごとに決まっている。",
+   "@id": "urn:kinsp:端数処理",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": {
+    "ja": "端数処理",
+    "en": "Rounding"
+   }
+  },
+  {
+   "_comment": "消費税の計算パターン。①は 端数処理(単価 × 数量 × 税率)、②は 端数処理(単価 × 税率) × 数量。サプライヤごとに決まっている。",
+   "@id": "urn:kinsp:計算パターン",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": {
+    "ja": "計算パターン",
+    "en": "Tax pattern"
+   }
+  },
+  {
+   "@id": "urn:kinsp:名前",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": {
+    "ja": "名前",
+    "en": "Name"
+   }
+  },
+  {
+   "@id": "urn:kinsp:サプライヤ",
+   "@type": "ObjectProperty",
+   "range": "urn:kinsp:サプライヤ",
+   "label": {
+    "ja": "サプライヤ",
+    "en": "Supplier"
+   }
+  },
+  {
+   "@id": "urn:kinsp:計算例一覧",
+   "@type": "ObjectProperty",
+   "range": "urn:kinsp:消費税計算",
+   "label": {
+    "ja": "計算例",
+    "en": "Examples"
+   }
+  },
+  {
+   "@id": "urn:kinsp:税抜相当",
+   "@type": "DatatypeProperty",
+   "range": "decimal",
+   "label": {
+    "ja": "税抜相当",
+    "en": "Net (raw)"
+   }
+  },
+  {
+   "@id": "urn:kinsp:税額素",
+   "@type": "DatatypeProperty",
+   "range": "decimal",
+   "label": {
+    "ja": "端数処理前の税額",
+    "en": "Tax (raw)"
+   }
+  },
+  {
+   "_comment": "検収は取消可能タスクである（マニュアル §3.2.7.1「検収取消」）。担当はバイヤー。",
+   "@id": "urn:kinsp:検収",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:検収数",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:agent",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#completeOrSuspendByOkButton",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "検収",
+    "en": "Accept"
+   }
+  },
+  {
+   "_comment": "売上伝票は検収の結果として自動的に計上される（マニュアル §6.5.1）。担当者はサプライヤの担当者で、節が指定する（R511）。OK ボタンを持たないので人の操作を待たない——Then の後続として、検収が成立した時点で立つ。**補償可能である**——計上は取り消せないので、打ち消すには赤伝票を立てる（マニュアル §6.5.5・§6.5.6：訂正も取消も赤伝票で行う）。検収を引き戻すと、バックトラック伝播がこの伝票をまたぐところで赤伝票が起きる。",
+   "@id": "urn:kinsp:売上伝票",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Compensable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:検収数",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:税込金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:消費税額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:税抜金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:agent",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "売上伝票",
+    "en": "Sales slip"
+   },
+   "urn:kinsp:compensatesWith": "urn:kinsp:赤伝票"
+  },
+  {
+   "_comment": "サプライヤ。消費税の端数処理の方式と計算パターンを持つ（Wiki「各外部連携の端数処理について」の表）。担当者は、そのサプライヤの売上伝票の担当者になる。",
+   "@id": "urn:kinsp:サプライヤ",
+   "@type": "Class",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:名前",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:端数処理",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:計算パターン",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "サプライヤ",
+    "en": "Supplier"
+   }
+  },
+  {
+   "_comment": "明細1行の消費税を計算する（Wiki「Kobuyでの消費税計算方法」）。単価区分と計算パターンで代替節が選ばれる。税抜・税込・消費税のどれも整数（円）。",
+   "@id": "urn:kinsp:消費税計算",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:単価",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:数量",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:税率",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:端数処理",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:計算パターン",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:単価区分",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:税抜金額",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:消費税額",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:税込金額",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "消費税計算",
+    "en": "Tax calculation"
+   }
+  },
+  {
+   "_comment": "消費税の計算例を出す業務フロー（ゴール節の頭部）——起案者が最初のタスク（計算例の作成）をし、本体で消費税の計算例を解く（R789）",
+   "@id": "urn:kinsp:計算例",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Task",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:計算例一覧",
+     "minCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "計算例",
+    "en": "Tax example work"
+   }
+  },
+  {
+   "_comment": "計算例の作成——起案者のタスク。OK ボタンは無い（okButton: _noOk。担当者が決まれば完成）（R789）",
+   "@id": "urn:kinsp:計算例作成",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Task",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:agent",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "計算例の作成",
+    "en": "Tax example draft"
+   }
+  },
+  {
+   "_comment": "Wiki の計算例を並べる計算の節の頭部。計算例一覧の各行が 消費税計算 のノードで、その節が解かれて税抜・消費税・税込が入る。本体にタスクの無い計算の節なので、起動するゴールにせず、上位の業務フロー（計算例）から呼ぶ（ふつうの節。onto7。R789）",
+   "@id": "urn:kinsp:消費税の計算例",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:計算例一覧",
+     "minCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "消費税の計算例",
+    "en": "Tax examples"
+   }
+  },
+  {
+   "@id": "urn:kinsp:検収フロー",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:単価",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:出荷数",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:サプライヤ",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:単価区分",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:税率",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:バイヤー",
+     "minCardinality": 1,
+     "maxCardinality": 1,
+     "_comment": "起案者を、最初のタスクの担当者へ渡す（追記R784）"
+    }
+   ],
+   "label": {
+    "ja": "検収フロー",
+    "en": "Inspection flow"
+   }
+  },
+  {
+   "@id": "urn:kinsp:検収ゴール",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Task"
+   ],
+   "label": {
+    "ja": "検収ゴール",
+    "en": "Inspection goal"
+   }
+  },
+  {
+   "_comment": "赤伝票は売上伝票の補償タスクである。元の伝票の引数がそのままコピーされて渡る。担当者も元の伝票のもの（サプライヤの担当者）が渡る。",
+   "@id": "urn:kinsp:赤伝票",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:kinsp:Task",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:検収数",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:税込金額",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:消費税額",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:税抜金額",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:kinsp:agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "赤伝票",
+    "en": "Reversal slip"
+   }
+  }
+ ]
+}

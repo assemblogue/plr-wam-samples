@@ -1,0 +1,7 @@
+{
+  "sessionId": "sess-golden",
+  "start": {"by": "urn:entity:person-m", "predicate": "urn:golden:調達申請ワークフロー"},
+  "_comment": "golden_scenario.md ステップ3: Bが承認を完成させOKボタンを押す。",
+  "agentProperty": "urn:golden:agent",
+  "okButtons": ["urn:entity:ninka-001"]
+}

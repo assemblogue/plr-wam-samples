@@ -1,0 +1,192 @@
+{
+ "_comment": "見積書レコード1件と、その明細3件、商品カタログ3件。明細の本数はホーン節に書かれていない——データが決める。",
+ "ONTO2": [
+  {
+   "_comment": "ワークプレース。ホーン節はその onto7 の値である（実際の系と同じ形。追記R474・K439）",
+   "@id": "urn:wamtest:workplace.quote_pattern_data",
+   "@type": "ONTO2",
+   "onto7": [
+    {
+     "_comment": "見積作成（ふつうの節。タスクは頭部だけの節を持つ——担当者が OK を押すことがタスクの中身）",
+     "@id": "urn:node:quoteDraft.head",
+     "@type": "urn:quote:QuoteDraft",
+     "urn:quote:agent": {
+      "@id": "#A"
+     },
+     "variables": [
+      {
+       "@id": "#A",
+       "variableName": "A"
+      }
+     ]
+    },
+    {
+     "@id": "urn:node:quoteTotal.head",
+     "@type": "urn:quote:QuoteTotal",
+     "urn:quote:total": {
+      "@id": "#T"
+     },
+     "variables": [
+      {
+       "@id": "#Amount",
+       "variableName": "Amount"
+      },
+      {
+       "@id": "#Label",
+       "variableName": "Label"
+      },
+      {
+       "@id": "#Qty",
+       "variableName": "Qty"
+      },
+      {
+       "@id": "#T",
+       "variableName": "T"
+      },
+      {
+       "@id": "#Unit",
+       "variableName": "Unit"
+      }
+     ],
+     "internalGraph": [
+      {
+       "@id": "urn:node:lines",
+       "@type": "urn:quote:QuoteRecord",
+       "urn:quote:lineItem": {
+        "@type": "urn:quote:QuoteLine",
+        "urn:quote:lineAmount": {
+         "@id": "#Amount"
+        },
+        "urn:quote:lineQuantity": {
+         "@id": "#Qty"
+        },
+        "urn:quote:lineProduct": {
+         "@type": "urn:quote:CatalogItem",
+         "urn:quote:itemLabel": {
+          "@id": "#Label"
+         },
+         "urn:quote:itemPrice": {
+          "@id": "#Unit"
+         }
+        }
+       },
+       "okButton": "_suspendingOk"
+      },
+      {
+       "@id": "urn:node:total",
+       "@type": "urn:quote:Equals",
+       "operand1": {
+        "@id": "#T"
+       },
+       "operand2": {
+        "@id": "#Amount"
+       }
+      }
+     ],
+     "_comment": "見積総額（ふつうの節。onto7。R789）——明細が何本あっても総額が定まる。パターンが各明細へ分配され、金額が多値に集まり、= がその和を総額に入れる。"
+    }
+   ],
+   "ontoC": [
+    {
+     "_comment": "チャネル設定。ゴール節はその ontoG の値である（追記R488）",
+     "@id": "urn:wamtest:設定.quote_pattern_data",
+     "@type": "ONTOc",
+     "ontoG": [
+      {
+       "_comment": "見積（ゴール節。R789）——起案者が見積作成をし、本体から計算の節（見積総額）を呼ぶ。頭部の担当者は最初のタスクの担当者と同じ変数（R784・R785）",
+       "@id": "urn:node:quote.head",
+       "@type": "urn:quote:Quote",
+       "urn:quote:agent": {
+        "@id": "#起案者"
+       },
+       "urn:quote:total": {
+        "@id": "#T"
+       },
+       "variables": [
+        {
+         "@id": "#T",
+         "variableName": "T"
+        },
+        {
+         "@id": "#起案者",
+         "variableName": "起案者"
+        }
+       ],
+       "internalGraph": [
+        {
+         "@id": "urn:node:見積作成",
+         "@type": "urn:quote:QuoteDraft",
+         "urn:quote:agent": {
+          "@id": "#起案者"
+         }
+        },
+        {
+         "@id": "urn:node:総額",
+         "@type": "urn:quote:QuoteTotal",
+         "urn:quote:total": {
+          "@id": "#T"
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "urn:quote:QuoteRecord": [
+  {
+   "@id": "urn:entity:quote-001",
+   "urn:quote:lineItem": [
+    "urn:entity:line-1",
+    "urn:entity:line-2",
+    "urn:entity:line-3"
+   ],
+   "okButton": "_suspendingOk"
+  }
+ ],
+ "urn:quote:QuoteLine": [
+  {
+   "@id": "urn:entity:line-1",
+   "urn:quote:lineQuantity": 60,
+   "urn:quote:lineAmount": 4800,
+   "urn:quote:lineProduct": "urn:entity:pencil-2b"
+  },
+  {
+   "@id": "urn:entity:line-2",
+   "urn:quote:lineQuantity": 10,
+   "urn:quote:lineAmount": 1500,
+   "urn:quote:lineProduct": "urn:entity:notebook"
+  },
+  {
+   "@id": "urn:entity:line-3",
+   "urn:quote:lineQuantity": 2,
+   "urn:quote:lineAmount": 240,
+   "urn:quote:lineProduct": "urn:entity:eraser"
+  }
+ ],
+ "urn:quote:CatalogItem": [
+  {
+   "@id": "urn:entity:pencil-2b",
+   "urn:quote:itemLabel": "2Bのえんぴつ",
+   "urn:quote:itemPrice": 80
+  },
+  {
+   "@id": "urn:entity:notebook",
+   "urn:quote:itemLabel": "ノート",
+   "urn:quote:itemPrice": 150
+  },
+  {
+   "@id": "urn:entity:eraser",
+   "urn:quote:itemLabel": "消しゴム",
+   "urn:quote:itemPrice": 120
+  }
+ ],
+ "_comment_person": "起案者（agent）と人のノード（追記R684・R748・R772）——業務フローは起案者が start で起動し、最初のタスク（見積作成）の担当者は起案者である（R789）",
+ "urn:quote:Person": [
+  {
+   "@id": "urn:entity:利用者",
+   "@type": "urn:quote:Person"
+  }
+ ]
+}

@@ -1,0 +1,34 @@
+as urn:entity:山田
+start urn:bud:調達 urn:bud:案件 A urn:bud:予算 予算-1
+set urn:node:起案 urn:bud:金額 300000
+ok urn:node:起案
+as urn:entity:佐藤
+ok urn:node:承認
+as urn:entity:高橋
+start urn:bud:調達 urn:bud:案件 B urn:bud:予算 予算-1
+set urn:node:起案 urn:bud:金額 100000
+ok urn:node:起案
+as urn:entity:山田
+start urn:bud:調達 urn:bud:案件 C urn:bud:予算 予算-1
+set urn:node:起案 urn:bud:金額 150000
+as urn:entity:佐藤
+ok urn:node:承認
+as urn:entity:山田
+ok urn:node:起案
+set urn:node:起案 urn:bud:金額 100000
+ok urn:node:起案
+as urn:entity:高橋
+start urn:bud:調達 urn:bud:案件 E urn:bud:予算 予算-1
+set urn:node:起案 urn:bud:金額 100000
+ok urn:node:起案
+as urn:entity:佐藤
+ok urn:node:承認#1
+ok urn:node:承認
+as urn:entity:山田
+start urn:bud:調達 urn:bud:案件 D urn:bud:予算 予算-山田
+set urn:node:起案 urn:bud:金額 120000
+set urn:node:起案 urn:bud:金額 80000
+ok urn:node:起案
+as urn:entity:佐藤
+ok urn:node:承認
+end

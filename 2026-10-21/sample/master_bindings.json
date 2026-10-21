@@ -1,0 +1,9 @@
+{
+  "sessionId": "sess-master",
+  "start": {"by": "urn:entity:person-m", "predicate": "urn:wamtest:購買検討"},
+  "_comment": "起案者（M）が起案して申請の OK を押し、上司照会で求まった承認者（B）が承認の OK を押す。",
+  "steps": [
+    {"task": "urn:entity:master-shinsei", "ok": true, "comment": "起案者 M が申請の OK を押す"},
+    {"task": "urn:entity:master-shonin", "ok": true, "comment": "上司照会で求まった承認者 B が承認の OK を押す"}
+  ]
+}

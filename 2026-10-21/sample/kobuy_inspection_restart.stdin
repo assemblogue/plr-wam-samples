@@ -1,0 +1,13 @@
+as urn:entity:バイヤー
+start urn:kinsp:検収ゴール
+as -
+as urn:entity:バイヤー
+set urn:node:検収 urn:kinsp:検収数 50
+ok urn:node:検収
+restart
+unok urn:node:検収
+restart
+set urn:node:検収 urn:kinsp:検収数 40
+ok urn:node:検収
+restart
+end

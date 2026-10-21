@@ -1,0 +1,14 @@
+as urn:person:田中
+set urn:tw:rule.調達#起案 urn:tw:金額 120000
+ok urn:tw:rule.調達#起案
+start urn:tw:調達 urn:tw:件名 会議室の椅子 urn:tw:予算 予算-1
+set urn:tw:rule.調達#起案 urn:tw:金額 120000
+ok urn:tw:rule.調達#起案
+as urn:person:山田
+set urn:tw:rule.調達#承認#1 urn:tw:判断 承認
+ok urn:tw:rule.調達#承認#1
+set urn:tw:rule.調達#承認 urn:tw:判断 承認
+ok urn:tw:rule.調達#承認
+as urn:person:田中
+list
+end

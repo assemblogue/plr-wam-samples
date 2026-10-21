@@ -1,0 +1,50 @@
+{
+  "_comment": "**答えが実体の属性に住む問合せ**（追記333）。金額は節が解いて実体の属性へ入るので、問合せの答えを読むには実体属性キャッシュを通す読み口が要る。渡し忘れると値ではなく参照が出る（実測。追記328・329 で2箇所が実際に壊れていた）。",
+  "@id": "urn:aq:ontology",
+  "@type": "Ontology",
+  "defines": [
+    {
+      "@id": "urn:aq:明細",
+      "@type": "Class",
+      "label": { "ja": "明細", "en": "Line item" }
+    },
+    {
+      "@id": "urn:aq:積",
+      "@type": "Class",
+      "builtInFunction": "×",
+      "_comment": "単価 × 数量 → 金額。金額の住処は実体属性キャッシュになる。",
+      "label": { "ja": "積", "en": "Product" }
+    },
+    {
+      "@id": "urn:aq:数量",
+      "@type": "DatatypeProperty",
+      "domain": "urn:aq:明細",
+      "range": "nonNegativeInteger",
+      "label": { "ja": "数量", "en": "Quantity" }
+    },
+    {
+      "@id": "urn:aq:単価",
+      "@type": "DatatypeProperty",
+      "domain": "urn:aq:明細",
+      "range": "nonNegativeInteger",
+      "label": { "ja": "単価", "en": "Unit price" }
+    },
+    {
+      "@id": "urn:aq:金額",
+      "@type": "DatatypeProperty",
+      "domain": "urn:aq:明細",
+      "range": "nonNegativeInteger",
+      "label": { "ja": "金額", "en": "Amount" }
+    },
+    {
+      "@id": "arg1",
+      "@type": "ObjectProperty",
+      "label": { "ja": "第1引数", "en": "Arg 1" }
+    },
+    {
+      "@id": "arg2",
+      "@type": "ObjectProperty",
+      "label": { "ja": "第2引数", "en": "Arg 2" }
+    }
+  ]
+}

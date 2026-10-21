@@ -1,0 +1,477 @@
+{
+ "_comment": "3つのワークプレースの例題のデータ（起動の前の状態。業務フローのレコードと分割チャネルは起案して初めてできる。追記R748）。人は、バイヤーの田中（起案・検収）・山田（課長・予算管理担当。予算の登録・承認）・太木（購買担当。発注・支払い）、サプライヤーの佐藤（出荷担当）、管理会社の高橋（請求担当）。組織マスターは1つで、3社の人を全構成員に入れる（会社ごとの組織マスターへの置き分けは、まだしない）",
+ "Person": [
+  {
+   "@id": "urn:person:田中",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:山田",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:太木",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:佐藤",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:高橋",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:管理者",
+   "@type": "Person"
+  }
+ ],
+ "ONTOc1": [
+  {
+   "_comment": "チャネル作成のチャネル（名前付き）。分割チャネルのレコードがここに並ぶ（追記R570）",
+   "@id": "urn:channel:チャネル",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:tw:設定.チャネル"
+   },
+   "onto0": "チャネル",
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:channel:組織マスター",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:system:設定.組織マスター"
+   },
+   "onto0": "組織マスター",
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "TaskAccess": [
+    {
+     "@type": "TaskAccess",
+     "channel": {
+      "@id": "urn:channel:組織マスター",
+      "onto0": "組織マスター"
+     },
+     "task": {
+      "@id": "urn:system:役職"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:person:管理者"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者"
+     }
+    },
+    {
+     "@type": "TaskAccess",
+     "channel": {
+      "@id": "urn:channel:組織マスター",
+      "onto0": "組織マスター"
+     },
+     "task": {
+      "@id": "urn:system:グループ"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:person:管理者"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者"
+     }
+    },
+    {
+     "@type": "TaskAccess",
+     "channel": {
+      "@id": "urn:channel:組織マスター",
+      "onto0": "組織マスター"
+     },
+     "task": {
+      "@id": "urn:system:構成員"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:person:管理者"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者"
+     }
+    }
+   ]
+  },
+  {
+   "_comment": "マスターのチャネル（管理者が作った）",
+   "@id": "urn:channel:マスター",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:tw:設定.マスター"
+   },
+   "onto0": "マスター",
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "TaskAccess": [
+    {
+     "_comment": "予算を登録するのは予算管理担当、読むのは全構成員（R802）。登録できる人は予算の登録の節（成員）が決めるので、TaskAccess には taskUser だけを書く（R809）。taskUser に、その節が担当者に課す成員の主体（予算管理担当）が含まれるので、予算の登録は基幹業務でも分割チャネルに置かず、このチャネルに置く（R803・R805・R809）。鍵（taskUser の分で包む）はまだ実装が無い",
+     "@type": "TaskAccess",
+     "channel": {
+      "@id": "urn:channel:マスター",
+      "onto0": "マスター"
+     },
+     "task": {
+      "@id": "urn:tw:予算"
+     },
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者"
+     }
+    }
+   ]
+  },
+  {
+   "_comment": "予算合計のチャネル（管理者が作った）",
+   "@id": "urn:channel:予算合計",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:tw:設定.予算合計"
+   },
+   "onto0": "予算合計",
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "TaskAccess": [
+    {
+     "@type": "TaskAccess",
+     "channel": {
+      "@id": "urn:channel:予算合計",
+      "onto0": "予算合計"
+     },
+     "task": {
+      "@id": "urn:tw:予算合計"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:org:役職.予算管理担当"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者"
+     }
+    }
+   ]
+  }
+ ],
+ "urn:system:構成員": [
+  {
+   "@id": "urn:org:構成員.田中",
+   "@type": "urn:system:構成員",
+   "人": {
+    "@id": "urn:person:田中"
+   },
+   "publicフォルダ": "https://example.invalid/田中/public",
+   "公開鍵": "…",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:org:構成員.山田",
+   "@type": "urn:system:構成員",
+   "人": {
+    "@id": "urn:person:山田"
+   },
+   "publicフォルダ": "https://example.invalid/山田/public",
+   "公開鍵": "…",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:org:構成員.太木",
+   "@type": "urn:system:構成員",
+   "人": {
+    "@id": "urn:person:太木"
+   },
+   "publicフォルダ": "https://example.invalid/太木/public",
+   "公開鍵": "…",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:org:構成員.佐藤",
+   "@type": "urn:system:構成員",
+   "人": {
+    "@id": "urn:person:佐藤"
+   },
+   "publicフォルダ": "https://example.invalid/佐藤/public",
+   "公開鍵": "…",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:org:構成員.高橋",
+   "@type": "urn:system:構成員",
+   "人": {
+    "@id": "urn:person:高橋"
+   },
+   "publicフォルダ": "https://example.invalid/高橋/public",
+   "公開鍵": "…",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:org:構成員.管理者",
+   "@type": "urn:system:構成員",
+   "人": {
+    "@id": "urn:person:管理者"
+   },
+   "publicフォルダ": "https://example.invalid/管理者/public",
+   "公開鍵": "…",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  }
+ ],
+ "urn:system:役職": [
+  {
+   "@id": "urn:org:役職.課長",
+   "@type": "urn:system:役職",
+   "名前": "バイヤー 購買課 課長",
+   "就任者": [
+    {
+     "@id": "urn:person:山田"
+    }
+   ],
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:org:役職.予算管理担当",
+   "@type": "urn:system:役職",
+   "名前": "バイヤー 予算管理担当",
+   "就任者": [
+    {
+     "@id": "urn:person:山田"
+    }
+   ],
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:org:役職.購買担当",
+   "@type": "urn:system:役職",
+   "名前": "バイヤー 購買担当",
+   "就任者": [
+    {
+     "@id": "urn:person:太木"
+    }
+   ],
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:org:役職.出荷担当",
+   "@type": "urn:system:役職",
+   "名前": "サプライヤー 出荷担当",
+   "就任者": [
+    {
+     "@id": "urn:person:佐藤"
+    }
+   ],
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  },
+  {
+   "@id": "urn:org:役職.請求担当",
+   "@type": "urn:system:役職",
+   "名前": "管理会社 請求担当",
+   "就任者": [
+    {
+     "@id": "urn:person:高橋"
+    }
+   ],
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  }
+ ],
+ "urn:system:グループ": [
+  {
+   "@id": "urn:org:グループ.全構成員",
+   "@type": "urn:system:グループ",
+   "名前": "全構成員",
+   "メンバー": [
+    {
+     "@id": "urn:person:田中"
+    },
+    {
+     "@id": "urn:person:山田"
+    },
+    {
+     "@id": "urn:person:太木"
+    },
+    {
+     "@id": "urn:person:佐藤"
+    },
+    {
+     "@id": "urn:person:高橋"
+    },
+    {
+     "@id": "urn:person:管理者"
+    }
+   ],
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   }
+  }
+ ]
+}

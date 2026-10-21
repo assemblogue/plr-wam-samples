@@ -1,0 +1,5 @@
+as urn:entity:サプライヤー
+start urn:ship:納品ゴール
+set urn:node:出荷 urn:ship:個数 3
+show urn:entity:created-1
+end

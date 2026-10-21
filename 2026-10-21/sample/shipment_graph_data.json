@@ -1,0 +1,279 @@
+{
+  "_comment": "ホーン節（追記207 の新形式）。ホーン節は「ノード1つ ＋ その内部グラフ」である。",
+  "ONTO2": [
+    {
+      "_comment": "ワークプレース。ホーン節はその onto7 の値である（実際の系と同じ形。追記R474・K439）",
+      "@id": "urn:wamtest:workplace.shipment_graph_data",
+      "@type": "ONTO2",
+      "onto7": [
+        {
+          "@id": "urn:node:出荷+検収.完了.head",
+          "@type": "urn:ship:出荷+検収",
+          "urn:ship:出荷済数": {
+            "@id": "#Shipped"
+          },
+          "urn:ship:要出荷数": {
+            "@id": "#ToShip"
+          },
+          "variables": [
+            {
+              "@id": "#Shipped",
+              "variableName": "Shipped"
+            },
+            {
+              "@id": "#ToShip",
+              "variableName": "ToShip"
+            },
+            {
+              "@id": "#出荷担当",
+              "variableName": "出荷担当"
+            }
+          ],
+          "internalGraph": [
+            {
+              "@id": "urn:node:完了判定",
+              "@type": "urn:ship:＝",
+              "operand1": {
+                "@id": "#Shipped"
+              },
+              "operand2": {
+                "@id": "#ToShip"
+              }
+            }
+          ],
+          "_comment": "出荷+検収(出荷済数:Shipped, 要出荷数:ToShip) :- ＝(1:Shipped, 2:ToShip).",
+          "urn:ship:出荷担当": {
+            "@id": "#出荷担当"
+          }
+        },
+        {
+          "@id": "urn:node:出荷+検収.継続.head",
+          "@type": "urn:ship:出荷+検収",
+          "urn:ship:出荷済数": {
+            "@id": "#Shipped"
+          },
+          "urn:ship:要出荷数": {
+            "@id": "#ToShip"
+          },
+          "variables": [
+            {
+              "@id": "#R",
+              "variableName": "R"
+            },
+            {
+              "@id": "#S",
+              "variableName": "S"
+            },
+            {
+              "@id": "#Shipped",
+              "variableName": "Shipped"
+            },
+            {
+              "@id": "#ToShip",
+              "variableName": "ToShip"
+            },
+            {
+              "@id": "#T出荷",
+              "variableName": "T出荷"
+            },
+            {
+              "@id": "#T検収",
+              "variableName": "T検収"
+            },
+            {
+              "@id": "#出荷担当",
+              "variableName": "出荷担当"
+            }
+          ],
+          "internalGraph": [
+            {
+              "@id": "urn:node:出荷",
+              "@type": "urn:ship:出荷",
+              "urn:ship:個数": {
+                "@id": "#S"
+              },
+              "urn:ship:agent": {
+                "@id": "#出荷担当"
+              },
+              "truthValue": {
+                "@id": "#T出荷"
+              },
+              "okButton": "_suspendingOk"
+            },
+            {
+              "@id": "urn:node:検収",
+              "@type": "urn:ship:検収",
+              "urn:ship:納入数": {
+                "@id": "#S"
+              },
+              "urn:ship:返品数": {
+                "@id": "#R"
+              },
+              "urn:ship:agent": "urn:entity:バイヤー",
+              "truthValue": {
+                "@id": "#T検収"
+              },
+              "okButton": "_suspendingOk"
+            },
+            {
+              "@id": "urn:node:再帰",
+              "@type": "urn:ship:出荷+検収",
+              "urn:ship:出荷済数": [
+                {
+                  "@id": "#Shipped"
+                },
+                {
+                  "@id": "#S"
+                }
+              ],
+              "urn:ship:要出荷数": [
+                {
+                  "@id": "#ToShip"
+                },
+                {
+                  "@id": "#R"
+                }
+              ],
+              "urn:ship:出荷担当": {
+                "@id": "#出荷担当"
+              }
+            },
+            {
+              "@id": "urn:node:出荷上限",
+              "@type": "urn:ship:≧",
+              "operand1": {
+                "@id": "#ToShip"
+              },
+              "operand2": [
+                {
+                  "@id": "#Shipped"
+                },
+                {
+                  "@id": "#S"
+                }
+              ]
+            },
+            {
+              "@id": "urn:node:出荷+検収.継続.head#link1",
+              "@type": "urn:wamtest:Then",
+              "arg1": {
+                "@id": "urn:node:出荷"
+              },
+              "arg2": {
+                "@id": "urn:node:検収"
+              }
+            },
+            {
+              "@id": "urn:node:出荷+検収.継続.head#link2",
+              "@type": "urn:wamtest:Then",
+              "arg1": {
+                "@id": "urn:node:出荷"
+              },
+              "arg2": {
+                "@id": "urn:node:再帰"
+              }
+            }
+          ],
+          "_comment": "出荷+検収(出荷済数:Shipped, 要出荷数:ToShip) :- 出荷(個数:S), ├Then→検収(納入数:S, 返品数:R), └Then→出荷+検収(出荷済数:[Shipped,S], 要出荷数:[ToShip,R]), ≧(1:ToShip, 2:[Shipped,S]).",
+          "urn:ship:出荷担当": {
+            "@id": "#出荷担当"
+          }
+        },
+        {
+          "@id": "urn:node:検収.head",
+          "@type": "urn:ship:検収",
+          "urn:ship:納入数": {
+            "@id": "#納入"
+          },
+          "urn:ship:返品数": {
+            "@id": "#返品"
+          },
+          "variables": [
+            {
+              "@id": "#納入",
+              "variableName": "納入"
+            },
+            {
+              "@id": "#返品",
+              "variableName": "返品"
+            }
+          ],
+          "internalGraph": [
+            {
+              "@id": "urn:node:返品上限",
+              "@type": "urn:ship:≧",
+              "operand1": {
+                "@id": "#納入"
+              },
+              "operand2": {
+                "@id": "#返品"
+              }
+            }
+          ],
+          "_comment": "検収(納入数:S, 返品数:R) :- ≧(1:S, 2:R).",
+          "okButton": "_suspendingOk"
+        },
+        {
+          "@id": "urn:node:出荷.head",
+          "@type": "urn:ship:出荷",
+          "urn:ship:個数": {
+            "@id": "#S"
+          },
+          "variables": [
+            {
+              "@id": "#S",
+              "variableName": "S"
+            }
+          ],
+          "_comment": "出荷(個数:S). 出荷数の上限 ≧(要出荷数, [出荷済数, 個数]) は 出荷+検収 の本体にある制約ノードで、連立で解かれるのでどちらに書いても同じ",
+          "okButton": "_suspendingOk"
+        }
+      ],
+      "ontoC": [
+        {
+          "_comment": "チャネル設定。ゴール節はその ontoG の値である（追記R488）",
+          "@id": "urn:wamtest:設定.shipment_graph_data",
+          "@type": "ONTOc",
+          "ontoG": [
+            {
+              "@id": "urn:node:ゴール.head",
+              "@type": "urn:ship:納品ゴール",
+              "urn:ship:agent": {
+                "@id": "#起案者"
+              },
+              "internalGraph": [
+                {
+                  "@id": "urn:node:納品",
+                  "@type": "urn:ship:出荷+検収",
+                  "urn:ship:出荷済数": 0,
+                  "urn:ship:要出荷数": 10,
+                  "urn:ship:出荷担当": {
+                    "@id": "#起案者"
+                  }
+                }
+              ],
+              "_comment": ":- 出荷+検収(出荷済数:0, 要出荷数:10). ゴールは初期束縛を受け取れないので、定数を渡すだけの包み節にしてある",
+              "variables": [
+                {
+                  "@id": "#起案者",
+                  "variableName": "起案者"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "_comment_person": "担当者・起案者になる人（業務フローを start で起動すると、起案者を担当者の欄に人の入力として入れる。値域が人であることを確かめる。追記R748・R772）",
+  "urn:ship:Person": [
+    {
+      "@id": "urn:entity:サプライヤー",
+      "@type": "urn:ship:Person"
+    },
+    {
+      "@id": "urn:entity:バイヤー",
+      "@type": "urn:ship:Person"
+    }
+  ]
+}

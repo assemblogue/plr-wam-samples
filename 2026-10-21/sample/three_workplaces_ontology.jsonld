@@ -1,0 +1,746 @@
+{
+ "_comment": "管理会社・バイヤー・サプライヤーの3つのワークプレースの例題（#219・R798）のオントロジー。ハーネスはオントロジーを1つしか受け取らないので、3つのワークプレースのクラスをここにまとめる（ワークプレースごとのオントロジー（onto6）への置き分けは、ハーネスがワークプレースごとに読めるようになってから）。組込述語と組織マスターのクラスは kobuy_workplace_ontology.jsonld と同じもの",
+ "@id": "urn:tw:ontology",
+ "@type": "Ontology",
+ "agentProperty": "agent",
+ "channelProperty": "inChannel",
+ "_taskAccess": "業務フロー定義が担当者を制約しないタスクは、チャネルの TaskAccess が担当者を決める（spec_ops.md）。エンジンへ渡す述語と属性。class はエンジンが節に入れる標準の節の述語、recordClass はチャネルの要素",
+ "taskAccess": {
+  "class": "TaskAgent",
+  "channel": "channel",
+  "task": "task",
+  "agent": "person",
+  "recordClass": "TaskAccess",
+  "recordAgent": "taskAgent",
+  "recordUser": "taskUser",
+  "memberProperties": [
+   "就任者",
+   "メンバー"
+  ]
+ },
+ "defines": [
+  {
+   "@id": "urn:tw:調達",
+   "@type": "Class",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:件名",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:予算",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:金額",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#inChannel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "調達",
+   "_comment": "ゴール（管理会社のチャネル設定 設定.調達 の ontoG）。調達の起案から支払いまでを1つの業務フローとして持つ"
+  },
+  {
+   "@id": "urn:tw:起案C",
+   "@type": "Class",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "起案",
+   "_comment": "バイヤーのワークプレースで定義する"
+  },
+  {
+   "@id": "urn:tw:承認C",
+   "@type": "Class",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:判断",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:承認件名",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:承認金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:承認予算",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "承認",
+   "_comment": "バイヤーのワークプレースで定義する。判断は 承認 か 却下。承認するのは予算管理担当（R802）。承認の OK を、予算の上での確定とみなす（追記R562・R563）。承認件名・承認金額・承認予算は、起案者が入れた値を承認者が読む refersTo の下位属性（受け渡しの定石。R517・R626）"
+  },
+  {
+   "@id": "urn:tw:予算",
+   "@type": "Class",
+   "label": "予算",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:予算コード",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:限度額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:利用者",
+     "minCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:調達一覧",
+     "minCardinality": 0
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:承認一覧",
+     "minCardinality": 0
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#inChannel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "_comment": "バイヤーのワークプレースで定義する（設定.マスター）。予算管理担当が登録する（基幹業務。R802）。調達の節が existing: _true で検索する"
+  },
+  {
+   "@id": "urn:tw:予算合計",
+   "@type": "Class",
+   "label": "予算合計",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:予算",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:確定合計",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:確定案件",
+     "minCardinality": 0
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:予定合計",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:予定案件",
+     "minCardinality": 0
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#inChannel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "_comment": "バイヤーのワークプレースで定義する（設定.予算合計）。予算管理担当が作る、予算の合計のレコード（トーク的業務。取消可能——巻き戻しでレコードも取り消す。R573）。合計と案件の件名だけを持つ（R547・R562・R563）"
+  },
+  {
+   "@id": "urn:tw:承認された",
+   "@type": "Class",
+   "isConstraint": true,
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:判断",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "承認された",
+   "_comment": "判断が 承認 であること（副作用の無いアトムノード。Then／Else の始点）。節は 承認された(判断: 承認). の1本だけで、頭部の定数と判断の値の単一化で決まる——却下なら合う節が無く偽になり、Else の先へ移る。= は数の線形の等式なので、文字列の比較には使わない（spec_builtin「Equal は、operand1 の和 = operand2 の和 という線形の等式の制約である」）"
+  },
+  {
+   "@id": "urn:tw:却下確認C",
+   "@type": "Class",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "却下の確認",
+   "_comment": "バイヤーのワークプレースで定義する。承認が却下されたとき、起案者が確かめる（Else の先）"
+  },
+  {
+   "@id": "urn:tw:発注C",
+   "@type": "Class",
+   "subClassOf": [
+    "#Incompensable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:発注日",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:承認を差し戻す",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "発注",
+   "_comment": "バイヤーのワークプレースで定義する。補償不能（注文を出したら取り消せない）。承認を差し戻す は承認の真偽値を指す（差し戻し可Then）が、下流に補償不能なタスク（発注そのもの）があるので、差し戻しの操作は出ない（spec_exec「Then/Else による制御・引き戻し・差し戻し」の手順2）"
+  },
+  {
+   "@id": "urn:tw:出荷C",
+   "@type": "Class",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:出荷数",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "出荷",
+   "_comment": "サプライヤーのワークプレースで定義する"
+  },
+  {
+   "@id": "urn:tw:検収C",
+   "@type": "Class",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:検収数",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "検収",
+   "_comment": "バイヤーのワークプレースで定義する"
+  },
+  {
+   "@id": "urn:tw:請求C",
+   "@type": "Class",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:請求書番号",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:請求額",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "請求",
+   "_comment": "管理会社のワークプレースで定義する"
+  },
+  {
+   "@id": "urn:tw:支払いC",
+   "@type": "Class",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:支払日",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:請求を差し戻す",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "支払い",
+   "_comment": "バイヤーのワークプレースで定義する。請求を差し戻す は請求の真偽値を指す（差し戻し可Then）。請求の下流は支払いだけで補償不能なタスクが無いので、差し戻せる"
+  },
+  {
+   "@id": "urn:tw:件名",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "件名"
+  },
+  {
+   "@id": "urn:tw:金額",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": "金額"
+  },
+  {
+   "@id": "urn:tw:判断",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "判断"
+  },
+  {
+   "@id": "urn:tw:発注日",
+   "@type": "DatatypeProperty",
+   "range": "date",
+   "label": "発注日"
+  },
+  {
+   "@id": "urn:tw:出荷数",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": "出荷数"
+  },
+  {
+   "@id": "urn:tw:検収数",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": "検収数"
+  },
+  {
+   "@id": "urn:tw:請求書番号",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "請求書番号"
+  },
+  {
+   "@id": "urn:tw:請求額",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": "請求額"
+  },
+  {
+   "@id": "urn:tw:支払日",
+   "@type": "DatatypeProperty",
+   "range": "date",
+   "label": "支払日"
+  },
+  {
+   "@id": "urn:tw:予算",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "予算",
+   "_comment": "予算の識別子（予算コード）。調達・承認・予算合計が、どの予算の話かをこれで持つ"
+  },
+  {
+   "@id": "urn:tw:予算コード",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "予算コード"
+  },
+  {
+   "@id": "urn:tw:限度額",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": "限度額"
+  },
+  {
+   "@id": "urn:tw:利用者",
+   "@type": "ObjectProperty",
+   "range": "#Person",
+   "label": "利用者",
+   "_comment": "その予算で起案できる人"
+  },
+  {
+   "@id": "urn:tw:調達一覧",
+   "@type": "ObjectProperty",
+   "range": "urn:tw:調達",
+   "subPropertyOf": "#refersTo",
+   "label": "調達",
+   "_comment": "誰も書かない refersTo の多値。予算合計の節が検索で値を作る（R554・R558・R560）"
+  },
+  {
+   "@id": "urn:tw:承認一覧",
+   "@type": "ObjectProperty",
+   "range": "urn:tw:承認C",
+   "subPropertyOf": "#refersTo",
+   "label": "承認",
+   "_comment": "同上。調達のレコードの中の承認タスクを検索する（R530）"
+  },
+  {
+   "@id": "urn:tw:確定合計",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": "確定合計"
+  },
+  {
+   "@id": "urn:tw:予定合計",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": "予定合計"
+  },
+  {
+   "@id": "urn:tw:確定案件",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "確定案件",
+   "_comment": "確定合計に含めた案件の件名。調達のレコードを指さない（合計を読める人に調達の中身を読ませない）"
+  },
+  {
+   "@id": "urn:tw:予定案件",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "予定案件"
+  },
+  {
+   "@id": "urn:tw:承認件名",
+   "@type": "DatatypeProperty",
+   "domain": "urn:tw:承認C",
+   "range": "string",
+   "label": "件名",
+   "subPropertyOf": "#refersTo",
+   "_comment": "承認から見た件名——起案者が入れた値を承認者が読む（R517）。承認者は書けない（R626）"
+  },
+  {
+   "@id": "urn:tw:承認金額",
+   "@type": "DatatypeProperty",
+   "domain": "urn:tw:承認C",
+   "range": "nonNegativeInteger",
+   "label": "金額",
+   "subPropertyOf": "#refersTo",
+   "_comment": "承認から見た金額——起案者が入れた値を承認者が読む（R517）。承認者は書けない（R626）"
+  },
+  {
+   "@id": "urn:tw:承認予算",
+   "@type": "DatatypeProperty",
+   "domain": "urn:tw:承認C",
+   "range": "string",
+   "label": "予算",
+   "subPropertyOf": "#refersTo",
+   "_comment": "承認から見た予算——起案者が入れた値を承認者が読む（R517）。承認者は書けない（R626）"
+  },
+  {
+   "@id": "urn:tw:承認を差し戻す",
+   "@type": "ObjectProperty",
+   "label": "承認を差し戻す",
+   "_comment": "returnable（refersTo でない属性）。差し戻し可Then の終点が始点の真偽値を指す"
+  },
+  {
+   "@id": "urn:tw:請求を差し戻す",
+   "@type": "ObjectProperty",
+   "label": "請求を差し戻す",
+   "_comment": "returnable（refersTo でない属性）。差し戻し可Then の終点が始点の真偽値を指す"
+  },
+  {
+   "@id": "#成員",
+   "@type": "Class",
+   "builtInFunction": "成員",
+   "isConstraint": true,
+   "_comment": "組込述語 成員(主体: G, 人: A)。A が G そのものか、G の就任者・メンバー（入れ子も辿る）",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "#主体",
+     "minCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#人",
+     "minCardinality": 1
+    }
+   ],
+   "label": "成員"
+  },
+  {
+   "@id": "#GreaterEqual",
+   "@type": "Class",
+   "builtInFunction": "≧",
+   "isConstraint": true,
+   "_comment": "システムの組込（Equals・Times と同じ）。≧(1, 2) は operand1 ≧ operand2",
+   "label": "≧"
+  },
+  {
+   "@id": "#Equal",
+   "@type": "Class",
+   "builtInFunction": "=",
+   "isConstraint": true,
+   "_comment": "足した（見積書の例題と同じ形）",
+   "label": "＝"
+  },
+  {
+   "@id": "urn:system:構成員",
+   "@type": "Class",
+   "label": "構成員",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "#人",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#publicフォルダ",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#公開鍵",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#inChannel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ]
+  },
+  {
+   "@id": "urn:system:役職",
+   "@type": "Class",
+   "label": "役職",
+   "subClassOf": [
+    "#TaskPrincipal",
+    {
+     "@type": "Restriction",
+     "onProperty": "#名前",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#就任者",
+     "minCardinality": 0
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#inChannel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ]
+  },
+  {
+   "@id": "urn:system:グループ",
+   "@type": "Class",
+   "label": "グループ",
+   "subClassOf": [
+    "#TaskPrincipal",
+    {
+     "@type": "Restriction",
+     "onProperty": "#名前",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#メンバー",
+     "minCardinality": 0
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#inChannel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ]
+  },
+  {
+   "@id": "#主体",
+   "@type": "ObjectProperty",
+   "label": "主体"
+  },
+  {
+   "@id": "#人",
+   "@type": "ObjectProperty",
+   "label": "人"
+  },
+  {
+   "@id": "#名前",
+   "@type": "DatatypeProperty",
+   "label": "名前",
+   "range": "string"
+  },
+  {
+   "@id": "#就任者",
+   "@type": "ObjectProperty",
+   "label": "就任者"
+  },
+  {
+   "@id": "#メンバー",
+   "@type": "ObjectProperty",
+   "label": "メンバー"
+  },
+  {
+   "@id": "#publicフォルダ",
+   "@type": "DatatypeProperty",
+   "label": "public フォルダ",
+   "range": "string"
+  },
+  {
+   "@id": "#公開鍵",
+   "@type": "DatatypeProperty",
+   "label": "公開鍵",
+   "range": "string"
+  },
+  {
+   "@id": "#基幹業務を含む",
+   "@type": "Class",
+   "builtInFunction": "基幹業務を含む",
+   "isConstraint": true,
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "#設定",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "基幹業務を含む",
+   "_comment": "組込述語とその引数。宣言は系のオントロジーが持つ（追記R778）——系のオントロジーを作り直すまでのつなぎに、ここに手で足した（convert_workplace.py の出力には無い。#Times と同じ）"
+  },
+  {
+   "@id": "#チャネル作成者",
+   "@type": "Class",
+   "builtInFunction": "チャネル作成者",
+   "isConstraint": true,
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "#設定",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#人",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "チャネル作成者",
+   "_comment": "組込述語とその引数。宣言は系のオントロジーが持つ（追記R778）——系のオントロジーを作り直すまでのつなぎに、ここに手で足した（convert_workplace.py の出力には無い。#Times と同じ）"
+  },
+  {
+   "@id": "#設定",
+   "@type": "ObjectProperty",
+   "label": "設定",
+   "_comment": "組込述語とその引数。宣言は系のオントロジーが持つ（追記R778）——系のオントロジーを作り直すまでのつなぎに、ここに手で足した（convert_workplace.py の出力には無い。#Times と同じ）"
+  }
+ ]
+}

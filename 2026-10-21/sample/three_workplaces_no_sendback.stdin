@@ -1,0 +1,10 @@
+as urn:person:田中
+set urn:tw:rule.調達#起案 urn:tw:金額 120000
+ok urn:tw:rule.調達#起案
+as urn:person:山田
+set urn:tw:rule.調達#承認 urn:tw:判断 承認
+ok urn:tw:rule.調達#承認
+as urn:person:太木
+sendback urn:tw:rule.調達#発注 urn:tw:承認を差し戻す
+list
+end

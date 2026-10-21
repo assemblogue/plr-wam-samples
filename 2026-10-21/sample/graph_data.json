@@ -1,0 +1,108 @@
+{
+ "_comment": "--graph-clauses の最小例。ホーン節も商品マスターも同じ知識グラフに載っている——これが追記207 の「ホーン節は『ノード1つ ＋ その内部グラフ』である」の形である。旧形式（節レベルの predicate ＋ head/body ＋ termType）は使わない。",
+ "ONTO2": [
+  {
+   "_comment": "ワークプレース。ホーン節はその onto7 の値である（実際の系と同じ形。追記R474・K439）",
+   "@id": "urn:wamtest:workplace.graph_data",
+   "@type": "ONTO2",
+   "onto7": [
+    {
+     "_comment": "見積作成（ふつうの節。タスクは頭部だけの節を持つ）",
+     "@id": "urn:gc:clause:quoteDraft",
+     "@type": "urn:gc:QuoteDraft",
+     "urn:gc:agent": {
+      "@id": "#A"
+     },
+     "variables": [
+      {
+       "@id": "#A",
+       "variableName": "A"
+      }
+     ]
+    },
+    {
+     "_comment": "ホーン節（ふつうの節。onto7。本体にタスクの無い計算の節なので、起動するゴールにせず上位の業務フローから呼ぶ。R789）。頭部はこのノード自身、本体は internalGraph に並ぶ。変数は variables に定義し、使用側は @id で指す（⚠️ 同一性は @id であって variableName ではない）。",
+     "@id": "urn:gc:clause:quote",
+     "@type": "urn:gc:Quote",
+     "variables": [
+      {
+       "@id": "#price",
+       "variableName": "Price"
+      }
+     ],
+     "urn:gc:total": {
+      "@id": "#price"
+     },
+     "internalGraph": [
+      {
+       "_comment": "本体のアトムノード1つ。商品名は定数、単価は頭部と共有する変数。商品マスターのレコード（下）と頭部単一化して Price が決まる。",
+       "@id": "urn:gc:clause:quote:body1",
+       "@type": "urn:gc:Product",
+       "urn:gc:name": "2Bのえんぴつ",
+       "urn:gc:unitPrice": {
+        "@id": "#price"
+       }
+      }
+     ]
+    }
+   ],
+   "ontoC": [
+    {
+     "_comment": "チャネル設定。ゴール節はその ontoG の値である（追記R488）",
+     "@id": "urn:wamtest:設定.graph_data",
+     "@type": "ONTOc",
+     "ontoG": [
+      {
+       "_comment": "見積（ゴール節。R789）——起案者が見積作成をし、本体から計算の節（見積書）を呼ぶ。頭部の担当者は最初のタスクの担当者と同じ変数（R784・R785）",
+       "@id": "urn:gc:clause:quoteWork",
+       "@type": "urn:gc:QuoteWork",
+       "urn:gc:agent": {
+        "@id": "#起案者"
+       },
+       "variables": [
+        {
+         "@id": "#起案者",
+         "variableName": "起案者"
+        }
+       ],
+       "internalGraph": [
+        {
+         "@id": "urn:gc:clause:quoteWork:draft",
+         "@type": "urn:gc:QuoteDraft",
+         "urn:gc:agent": {
+          "@id": "#起案者"
+         },
+         "okButton": "_noOk"
+        },
+        {
+         "@id": "urn:gc:clause:quoteWork:quote",
+         "@type": "urn:gc:Quote"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "urn:gc:Product": [
+  {
+   "_comment": "商品マスター。内部グラフを持たないので事実である（RecordHornClausePort が供給する）。",
+   "@id": "urn:gc:product:pencil2b",
+   "urn:gc:name": "2Bのえんぴつ",
+   "urn:gc:unitPrice": 120
+  },
+  {
+   "@id": "urn:gc:product:eraser",
+   "urn:gc:name": "消しゴム",
+   "urn:gc:unitPrice": 80
+  }
+ ],
+ "_comment_person": "起案者（agent）と人のノード（追記R684・R748・R772）——業務フローは起案者が start で起動し、最初のタスク（見積作成）の担当者は起案者である（R789）",
+ "urn:gc:Person": [
+  {
+   "@id": "urn:entity:利用者",
+   "@type": "urn:gc:Person"
+  }
+ ]
+}

@@ -1,0 +1,386 @@
+{
+ "_comment": "発注書1件・明細3本。鉛筆（文具）24本は箱単位2箱・社内、付箋（文具）25枚は割り切れずばら・外注、煎餅（食品）40枚は箱単位2箱・社内。総額 1200 + 2000 + 1200 = 4400。",
+ "ONTO2": [
+  {
+   "_comment": "ワークプレース。ホーン節はその onto7 の値である（実際の系と同じ形。追記R474・K439）",
+   "@id": "urn:wamtest:workplace.unification_variety_graph_data",
+   "@type": "ONTO2",
+   "onto7": [
+    {
+     "_comment": "発注書作成（ふつうの節。タスクは頭部だけの節を持つ）",
+     "@id": "urn:node:発注書作成.head",
+     "@type": "urn:uv:発注書作成",
+     "agent": {
+      "@id": "#U"
+     },
+     "variables": [
+      {
+       "@id": "#U",
+       "variableName": "U"
+      }
+     ]
+    },
+    {
+     "_comment": "発注書(明細一覧: 明細(金額: A), 総額: T) :- ＝(T, A).（ふつうの節。onto7。本体にタスクの無い計算の節なので、上位の業務フロー（発注）から呼ぶ。R789）",
+     "@id": "urn:node:発注書.head",
+     "@type": "urn:uv:発注書",
+     "variables": [
+      {
+       "@id": "#T",
+       "variableName": "T"
+      },
+      {
+       "@id": "#A",
+       "variableName": "A"
+      }
+     ],
+     "urn:uv:明細一覧": {
+      "@type": "urn:uv:明細",
+      "urn:uv:金額": {
+       "@id": "#A"
+      }
+     },
+     "urn:uv:総額": {
+      "@id": "#T"
+     },
+     "internalGraph": [
+      {
+       "@id": "urn:node:発注書.総額",
+       "@type": "urn:uv:Equals",
+       "operand1": {
+        "@id": "#T"
+       },
+       "operand2": {
+        "@id": "#A"
+       }
+      }
+     ]
+    },
+    {
+     "_comment": "明細(品目: 品目(入数: N), 担当: W, 数量: Q, 値: P, 金額: A, 区分: K, 箱数: B, 手配: H) :- 梱包(数量: Q, 入数: N, 区分: K, 箱数: B), ×([P, Q], A), 手配先(担当: W, 手配: H).",
+     "@id": "urn:node:明細.head",
+     "@type": "urn:uv:明細",
+     "variables": [
+      {
+       "@id": "#N",
+       "variableName": "N"
+      },
+      {
+       "@id": "#W",
+       "variableName": "W"
+      },
+      {
+       "@id": "#Q",
+       "variableName": "Q"
+      },
+      {
+       "@id": "#P",
+       "variableName": "P"
+      },
+      {
+       "@id": "#A",
+       "variableName": "A"
+      },
+      {
+       "@id": "#K",
+       "variableName": "K"
+      },
+      {
+       "@id": "#B",
+       "variableName": "B"
+      },
+      {
+       "@id": "#H",
+       "variableName": "H"
+      }
+     ],
+     "urn:uv:品目": {
+      "@type": "urn:uv:品目",
+      "urn:uv:入数": {
+       "@id": "#N"
+      }
+     },
+     "urn:uv:担当": {
+      "@id": "#W"
+     },
+     "urn:uv:数量": {
+      "@id": "#Q"
+     },
+     "urn:uv:値": {
+      "@id": "#P"
+     },
+     "urn:uv:金額": {
+      "@id": "#A"
+     },
+     "urn:uv:区分": {
+      "@id": "#K"
+     },
+     "urn:uv:箱数": {
+      "@id": "#B"
+     },
+     "urn:uv:手配": {
+      "@id": "#H"
+     },
+     "internalGraph": [
+      {
+       "@id": "urn:node:明細.梱包",
+       "@type": "urn:uv:梱包",
+       "urn:uv:数量": {
+        "@id": "#Q"
+       },
+       "urn:uv:入数": {
+        "@id": "#N"
+       },
+       "urn:uv:区分": {
+        "@id": "#K"
+       },
+       "urn:uv:箱数": {
+        "@id": "#B"
+       }
+      },
+      {
+       "@id": "urn:node:明細.金額",
+       "@type": "urn:uv:Times",
+       "operand1": [
+        {
+         "@id": "#P"
+        },
+        {
+         "@id": "#Q"
+        }
+       ],
+       "operand2": {
+        "@id": "#A"
+       }
+      },
+      {
+       "@id": "urn:node:明細.手配先",
+       "@type": "urn:uv:手配先",
+       "urn:uv:担当": {
+        "@id": "#W"
+       },
+       "urn:uv:手配": {
+        "@id": "#H"
+       }
+      }
+     ]
+    },
+    {
+     "_comment": "梱包(数量: Q, 入数: N, 区分: 箱単位, 箱数: B) :- ÷(被除数: Q, 除数: N, 商: B).  箱数は非負整数——割り切れなければ入らない。",
+     "@id": "urn:node:梱包1.head",
+     "@type": "urn:uv:梱包",
+     "variables": [
+      {
+       "@id": "#Q",
+       "variableName": "Q"
+      },
+      {
+       "@id": "#N",
+       "variableName": "N"
+      },
+      {
+       "@id": "#B",
+       "variableName": "B"
+      }
+     ],
+     "urn:uv:数量": {
+      "@id": "#Q"
+     },
+     "urn:uv:入数": {
+      "@id": "#N"
+     },
+     "urn:uv:区分": "箱単位",
+     "urn:uv:箱数": {
+      "@id": "#B"
+     },
+     "internalGraph": [
+      {
+       "@id": "urn:node:梱包1.箱数",
+       "@type": "urn:uv:Divide",
+       "被除数": {
+        "@id": "#Q"
+       },
+       "除数": {
+        "@id": "#N"
+       },
+       "商": {
+        "@id": "#B"
+       }
+      }
+     ]
+    },
+    {
+     "_comment": "梱包(数量: Q, 区分: ばら, 箱数: 0).",
+     "@id": "urn:node:梱包2.head",
+     "@type": "urn:uv:梱包",
+     "variables": [
+      {
+       "@id": "#Q",
+       "variableName": "Q"
+      }
+     ],
+     "urn:uv:数量": {
+      "@id": "#Q"
+     },
+     "urn:uv:区分": "ばら",
+     "urn:uv:箱数": 0
+    },
+    {
+     "_comment": "手配先(社内担当: W, 手配: 社内).  社内担当の値域は社員。",
+     "@id": "urn:node:手配先1.head",
+     "@type": "urn:uv:手配先",
+     "variables": [
+      {
+       "@id": "#W",
+       "variableName": "W"
+      }
+     ],
+     "urn:uv:社内担当": {
+      "@id": "#W"
+     },
+     "urn:uv:手配": "社内"
+    },
+    {
+     "_comment": "手配先(外注先: W, 手配: 外注).  外注先の値域は取引先。",
+     "@id": "urn:node:手配先2.head",
+     "@type": "urn:uv:手配先",
+     "variables": [
+      {
+       "@id": "#W",
+       "variableName": "W"
+      }
+     ],
+     "urn:uv:外注先": {
+      "@id": "#W"
+     },
+     "urn:uv:手配": "外注"
+    }
+   ],
+   "ontoC": [
+    {
+     "_comment": "チャネル設定。ゴール節はその ontoG の値である（追記R488）",
+     "@id": "urn:wamtest:設定.unification_variety_graph_data",
+     "@type": "ONTOc",
+     "ontoG": [
+      {
+       "_comment": "発注(agent: U, 明細一覧: L, 総額: T) :- 発注書作成(agent: U), 発注書(明細一覧: L, 総額: T).（ゴール節。R789）——起案者が発注書作成をし、本体から計算の節（発注書）を呼ぶ。頭部の担当者は最初のタスクの担当者と同じ変数（R784・R785）",
+       "@id": "urn:node:発注.head",
+       "@type": "urn:uv:発注",
+       "agent": {
+        "@id": "#起案者"
+       },
+       "urn:uv:明細一覧": {
+        "@id": "#L"
+       },
+       "urn:uv:総額": {
+        "@id": "#T"
+       },
+       "variables": [
+        {
+         "@id": "#L",
+         "variableName": "L"
+        },
+        {
+         "@id": "#T",
+         "variableName": "T"
+        },
+        {
+         "@id": "#起案者",
+         "variableName": "起案者"
+        }
+       ],
+       "internalGraph": [
+        {
+         "@id": "urn:node:発注書作成",
+         "@type": "urn:uv:発注書作成",
+         "agent": {
+          "@id": "#起案者"
+         },
+         "okButton": "_noOk"
+        },
+        {
+         "@id": "urn:node:発注書",
+         "@type": "urn:uv:発注書",
+         "urn:uv:明細一覧": {
+          "@id": "#L"
+         },
+         "urn:uv:総額": {
+          "@id": "#T"
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "urn:uv:明細": [
+  {
+   "_comment": "鉛筆（文具・12本入り）24本。24 ÷ 12 = 2 箱。担当は社員。",
+   "@id": "urn:entity:line-1",
+   "urn:uv:品目": "urn:entity:pencil",
+   "urn:uv:担当": "urn:entity:yamada",
+   "urn:uv:数量": 24,
+   "urn:uv:価格": 50
+  },
+  {
+   "_comment": "付箋（文具・10枚入り）25枚。25 ÷ 10 は割り切れない → ばら。担当は取引先。",
+   "@id": "urn:entity:line-2",
+   "urn:uv:品目": "urn:entity:sticky",
+   "urn:uv:担当": "urn:entity:sato-shoji",
+   "urn:uv:数量": 25,
+   "urn:uv:価格": 80
+  },
+  {
+   "_comment": "煎餅（食品・20枚入り）40枚。40 ÷ 20 = 2 箱。担当は社員。",
+   "@id": "urn:entity:line-3",
+   "urn:uv:品目": "urn:entity:senbei",
+   "urn:uv:担当": "urn:entity:suzuki",
+   "urn:uv:数量": 40,
+   "urn:uv:価格": 30
+  }
+ ],
+ "urn:uv:文具": [
+  {
+   "@id": "urn:entity:pencil",
+   "urn:uv:名前": "鉛筆",
+   "urn:uv:入数": 12
+  },
+  {
+   "@id": "urn:entity:sticky",
+   "urn:uv:名前": "付箋",
+   "urn:uv:入数": 10
+  }
+ ],
+ "urn:uv:食品": [
+  {
+   "@id": "urn:entity:senbei",
+   "urn:uv:名前": "煎餅",
+   "urn:uv:入数": 20
+  }
+ ],
+ "urn:uv:社員": [
+  {
+   "@id": "urn:entity:yamada",
+   "urn:uv:名前": "山田"
+  },
+  {
+   "@id": "urn:entity:suzuki",
+   "urn:uv:名前": "鈴木"
+  }
+ ],
+ "urn:uv:取引先": [
+  {
+   "@id": "urn:entity:sato-shoji",
+   "urn:uv:名前": "佐藤商事"
+  }
+ ],
+ "Person": [
+  {
+   "@id": "urn:entity:利用者",
+   "@type": "Person",
+   "_comment": "発注書の起案者（start で起案する。追記R748・R784）"
+  }
+ ]
+}

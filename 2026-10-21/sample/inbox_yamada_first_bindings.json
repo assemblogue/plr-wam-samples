@@ -1,0 +1,161 @@
+{
+  "_comment": "順序①: 山田が自分の3件（起案A・起案C・検収E）を先に片付け、次に佐藤、最後に承認者（予算管理担当の鈴木）。⚠️ nth は「記録された順」で、OKを押し終えたものも数に残る——起案は A=1・B=2・C=3 で固定である。 ⚠️ 予算の登録（R802）：bindings では start がすべて steps より先に走り、steps は起案できないので、予算の OK（steps の先頭）より前に調達を起案する——OK を押す前の予算を検索が見つけるのは、検索が完成したノードにだけ当たる形の未実装（R733〜R735）に頼っている（既知）。stdin と起案の筋書きの例題（inbox_cases_start.stdin・budget_start.stdin）は、OK の後に調達を起案する。",
+  "sessionId": "sess-inbox-1",
+  "agentProperty": "agent",
+  "start": [
+    {
+      "by": "urn:entity:鈴木",
+      "predicate": "urn:inbox:予算",
+      "values": {
+        "urn:inbox:予算コード": "予算.山田",
+        "urn:inbox:限度額": 500000,
+        "urn:inbox:利用者": [
+          "urn:entity:山田"
+        ]
+      }
+    },
+    {
+      "by": "urn:entity:鈴木",
+      "predicate": "urn:inbox:予算",
+      "values": {
+        "urn:inbox:予算コード": "予算.佐藤",
+        "urn:inbox:限度額": 1000000,
+        "urn:inbox:利用者": [
+          "urn:entity:佐藤"
+        ]
+      }
+    },
+    {
+      "by": "urn:entity:鈴木",
+      "predicate": "urn:inbox:予算",
+      "values": {
+        "urn:inbox:予算コード": "予算.高橋",
+        "urn:inbox:限度額": 300000,
+        "urn:inbox:利用者": [
+          "urn:entity:高橋"
+        ]
+      }
+    },
+    {
+      "by": "urn:entity:山田",
+      "predicate": "urn:inbox:調達",
+      "values": {
+        "urn:inbox:案件": "A",
+        "urn:inbox:予算": "予算.山田"
+      }
+    },
+    {
+      "by": "urn:entity:佐藤",
+      "predicate": "urn:inbox:調達",
+      "values": {
+        "urn:inbox:案件": "B",
+        "urn:inbox:予算": "予算.佐藤"
+      }
+    },
+    {
+      "by": "urn:entity:山田",
+      "predicate": "urn:inbox:調達",
+      "values": {
+        "urn:inbox:案件": "C",
+        "urn:inbox:予算": "予算.山田"
+      }
+    },
+    {
+      "by": "urn:entity:佐藤",
+      "predicate": "urn:inbox:検収",
+      "values": {
+        "urn:inbox:案件": "D"
+      }
+    },
+    {
+      "by": "urn:entity:山田",
+      "predicate": "urn:inbox:検収",
+      "values": {
+        "urn:inbox:案件": "E"
+      }
+    }
+  ],
+  "steps": [
+    {
+      "task": "urn:entity:created-1",
+      "nth": 1,
+      "ok": true,
+      "comment": "鈴木（予算管理担当）: 予算.山田 の登録を確定（追記R802）"
+    },
+    {
+      "task": "urn:entity:created-3",
+      "nth": 1,
+      "ok": true,
+      "comment": "鈴木（予算管理担当）: 予算.佐藤 の登録を確定（追記R802）"
+    },
+    {
+      "task": "urn:entity:created-5",
+      "nth": 1,
+      "ok": true,
+      "comment": "鈴木（予算管理担当）: 予算.高橋 の登録を確定（追記R802）"
+    },
+    {
+      "task": "urn:node:起案",
+      "nth": 1,
+      "values": {
+        "urn:inbox:金額": 300000
+      },
+      "ok": true,
+      "comment": "山田: 起案A に30万"
+    },
+    {
+      "task": "urn:node:起案",
+      "nth": 3,
+      "values": {
+        "urn:inbox:金額": 150000
+      },
+      "ok": true,
+      "comment": "山田: 起案C に15万（A と合わせて45万。限度額50万以内）"
+    },
+    {
+      "task": "urn:node:検収作業",
+      "nth": 2,
+      "values": {
+        "urn:inbox:数量": 10
+      },
+      "ok": true,
+      "comment": "山田: 検収E"
+    },
+    {
+      "task": "urn:node:起案",
+      "nth": 2,
+      "values": {
+        "urn:inbox:金額": 800000
+      },
+      "ok": true,
+      "comment": "佐藤: 起案B に80万（佐藤の限度額100万以内）"
+    },
+    {
+      "task": "urn:node:検収作業",
+      "nth": 1,
+      "values": {
+        "urn:inbox:数量": 5
+      },
+      "ok": true,
+      "comment": "佐藤: 検収D"
+    },
+    {
+      "task": "urn:node:承認",
+      "nth": 1,
+      "ok": true,
+      "comment": "鈴木: 承認A"
+    },
+    {
+      "task": "urn:node:承認",
+      "nth": 2,
+      "ok": true,
+      "comment": "鈴木: 承認C（予算管理担当。追記R802）"
+    },
+    {
+      "task": "urn:node:承認",
+      "nth": 3,
+      "ok": true,
+      "comment": "鈴木: 承認B"
+    }
+  ]
+}

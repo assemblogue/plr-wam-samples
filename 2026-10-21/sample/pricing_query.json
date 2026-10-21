@@ -1,0 +1,26 @@
+{
+  "nodeUri": "urn:node:問合せ",
+  "predicate": "urn:pr:単価・掛率",
+  "args": {
+    "urn:pr:商品": {
+      "value": "鉛筆4B",
+      "termType": "constant"
+    },
+    "urn:pr:バイヤー": {
+      "value": "田中商店",
+      "termType": "constant"
+    },
+    "urn:pr:単価": {
+      "name": "Price",
+      "termType": "variable"
+    },
+    "urn:pr:掛率": {
+      "name": "Rate",
+      "termType": "variable"
+    }
+  },
+  "isConstraint": false,
+  "builtInFunction": null,
+  "quant": null,
+  "completionMode": null
+}

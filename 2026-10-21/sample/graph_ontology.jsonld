@@ -1,0 +1,144 @@
+{
+ "@id": "urn:gc:ontology",
+ "@type": "Ontology",
+ "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
+ "_comment": "--graph-clauses の最小例。ホーン節が知識グラフ側（graph_data.json）に、追記207 の新形式（ノード1つ ＋ その internalGraph）で書かれている。クラスid・属性idは ASCII の絶対URI（追記181）。",
+ "defines": [
+  {
+   "@id": "urn:gc:Template",
+   "@type": "Class",
+   "label": {
+    "ja": "テンプレート",
+    "en": "Template"
+   }
+  },
+  {
+   "@id": "urn:gc:Atom",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:gc:Template"
+   ],
+   "label": {
+    "ja": "アトムノード",
+    "en": "Atom"
+   }
+  },
+  {
+   "_comment": "タスクノード（副作用を伴う。真偽値を持つ）。Goal の親である（追記261）。",
+   "@id": "urn:gc:Task",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:gc:Atom"
+   ],
+   "label": {
+    "ja": "タスクノード",
+    "en": "Task"
+   }
+  },
+  {
+   "_comment": "見積の業務フロー（ゴール節の頭部）——起案者が最初のタスク（見積作成）をし、本体で見積書の総額を求める（R789）",
+   "@id": "urn:gc:QuoteWork",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:gc:Task"
+   ],
+   "label": {
+    "ja": "見積",
+    "en": "Quote work"
+   }
+  },
+  {
+   "_comment": "見積作成——起案者のタスク。OK ボタンは無い（okButton: _noOk。担当者が決まれば完成）（R789）",
+   "@id": "urn:gc:QuoteDraft",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:gc:Task",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:gc:agent",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "見積作成",
+    "en": "Quote draft"
+   }
+  },
+  {
+   "@id": "urn:gc:Quote",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:gc:Atom"
+   ],
+   "label": {
+    "ja": "見積書",
+    "en": "Quote"
+   },
+   "_comment": "本体にタスクの無い計算の節の頭部（ふつうの節。onto7）——起動するゴールにせず、上位の業務フロー（見積）の本体から呼ぶ（R789）"
+  },
+  {
+   "@id": "urn:gc:total",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "総額",
+    "en": "Total"
+   }
+  },
+  {
+   "@id": "urn:gc:Product",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:gc:Atom"
+   ],
+   "label": {
+    "ja": "商品",
+    "en": "Product"
+   }
+  },
+  {
+   "@id": "urn:gc:name",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": {
+    "ja": "名称",
+    "en": "Name"
+   }
+  },
+  {
+   "@id": "urn:gc:unitPrice",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "単価",
+    "en": "Unit price"
+   }
+  },
+  {
+   "@id": "urn:gc:Person",
+   "@type": "Class",
+   "label": {
+    "ja": "人",
+    "en": "Person"
+   },
+   "subClassOf": [
+    "#Person"
+   ]
+  },
+  {
+   "@id": "urn:gc:agent",
+   "@type": "ObjectProperty",
+   "range": "urn:gc:Person",
+   "label": {
+    "ja": "担当者",
+    "en": "Agent"
+   },
+   "subPropertyOf": [
+    "#agent"
+   ]
+  }
+ ],
+ "_comment_agent": "起案者（agent）と人のノード（追記R684・R748・R772）——計算だけの例題で、担当のあるタスクが無い。業務フローは起案者が start で起動し、頭部に担当者の無いゴールは起動しない（R684）ので、起案者として人を1人置く",
+ "agentProperty": "urn:gc:agent"
+}

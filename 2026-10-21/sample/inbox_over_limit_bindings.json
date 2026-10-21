@@ -1,0 +1,128 @@
+{
+  "_comment": "限度額超過の筋: 山田が案件Aに30万、案件Cに30万を起案する。合計60万で限度額50万を超える。A と C は同時に起動し（bindings の start で、山田が起案する）、起案の限度は起動した時点の最新の予算合計（確定 0）で掛かるので、起案では C の30万も断られない。承認の前の確かめ（起案の後の合計の確定合計で掛ける）も、まだどちらも承認されていないので通る。鈴木が A を承認すると、承認の後の合計は確定30万で収まる。鈴木が C を承認すると、承認の後の合計で確定60万になって偽になる。バックトラックは計算を取り消し、人の入力は取り消さない（追記R577）。C の起案の前の最新の合計を選び直す（A の承認の後の合計。確定30万）と、起案の確かめが偽になるので、原因の人の入力である C の起案の OK を取り消す。C の承認の OK は Then の仕組みで外れ（承認者は跳ね返されない）、C は山田の起案に戻る ⚠️ 予算の登録（R802）：bindings では start がすべて steps より先に走り、steps は起案できないので、予算の OK（steps の先頭）より前に調達を起案する——OK を押す前の予算を検索が見つけるのは、検索が完成したノードにだけ当たる形の未実装（R733〜R735）に頼っている（既知）。stdin と起案の筋書きの例題（inbox_cases_start.stdin・budget_start.stdin）は、OK の後に調達を起案する。",
+  "sessionId": "sess-inbox-over",
+  "agentProperty": "agent",
+  "start": [
+    {
+      "by": "urn:entity:鈴木",
+      "predicate": "urn:inbox:予算",
+      "values": {
+        "urn:inbox:予算コード": "予算.山田",
+        "urn:inbox:限度額": 500000,
+        "urn:inbox:利用者": [
+          "urn:entity:山田"
+        ]
+      }
+    },
+    {
+      "by": "urn:entity:鈴木",
+      "predicate": "urn:inbox:予算",
+      "values": {
+        "urn:inbox:予算コード": "予算.佐藤",
+        "urn:inbox:限度額": 1000000,
+        "urn:inbox:利用者": [
+          "urn:entity:佐藤"
+        ]
+      }
+    },
+    {
+      "by": "urn:entity:鈴木",
+      "predicate": "urn:inbox:予算",
+      "values": {
+        "urn:inbox:予算コード": "予算.高橋",
+        "urn:inbox:限度額": 300000,
+        "urn:inbox:利用者": [
+          "urn:entity:高橋"
+        ]
+      }
+    },
+    {
+      "by": "urn:entity:山田",
+      "predicate": "urn:inbox:調達",
+      "values": {
+        "urn:inbox:案件": "A",
+        "urn:inbox:予算": "予算.山田"
+      }
+    },
+    {
+      "by": "urn:entity:佐藤",
+      "predicate": "urn:inbox:調達",
+      "values": {
+        "urn:inbox:案件": "B",
+        "urn:inbox:予算": "予算.佐藤"
+      }
+    },
+    {
+      "by": "urn:entity:山田",
+      "predicate": "urn:inbox:調達",
+      "values": {
+        "urn:inbox:案件": "C",
+        "urn:inbox:予算": "予算.山田"
+      }
+    },
+    {
+      "by": "urn:entity:佐藤",
+      "predicate": "urn:inbox:検収",
+      "values": {
+        "urn:inbox:案件": "D"
+      }
+    },
+    {
+      "by": "urn:entity:山田",
+      "predicate": "urn:inbox:検収",
+      "values": {
+        "urn:inbox:案件": "E"
+      }
+    }
+  ],
+  "steps": [
+    {
+      "task": "urn:entity:created-1",
+      "nth": 1,
+      "ok": true,
+      "comment": "鈴木（予算管理担当）: 予算.山田 の登録を確定（追記R802）"
+    },
+    {
+      "task": "urn:entity:created-3",
+      "nth": 1,
+      "ok": true,
+      "comment": "鈴木（予算管理担当）: 予算.佐藤 の登録を確定（追記R802）"
+    },
+    {
+      "task": "urn:entity:created-5",
+      "nth": 1,
+      "ok": true,
+      "comment": "鈴木（予算管理担当）: 予算.高橋 の登録を確定（追記R802）"
+    },
+    {
+      "task": "urn:node:起案",
+      "nth": 1,
+      "values": {
+        "urn:inbox:金額": 300000
+      },
+      "ok": true,
+      "comment": "山田: 起案A に30万"
+    },
+    {
+      "task": "urn:node:起案",
+      "nth": 3,
+      "values": {
+        "urn:inbox:金額": 300000
+      },
+      "ok": true,
+      "comment": "山田: 起案C に30万（起動した時点の合計で掛かるので、起案では断られない）"
+    },
+    {
+      "task": "urn:node:承認",
+      "nth": 1,
+      "ok": true,
+      "comment": "鈴木: 承認A（承認の後の合計で確定30万。収まる）"
+    },
+    {
+      "task": "urn:node:承認",
+      "nth": 2,
+      "ok": true,
+      "comment": "鈴木: 承認C（承認の後の合計で確定60万。偽になる。最新の合計を選び直し、C の起案の OK を取り消す。承認の OK は Then の仕組みで外れる）"
+    }
+  ]
+}
