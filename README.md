@@ -13,7 +13,7 @@
 | フォルダ | 読む EXE（作ったコミット） |
 |---|---|
 | `sample/`（main の直下） | 2026-10-02 版（plrDart のタグ `harness-legacy-2026-10-02`） |
-| `2026-10-21/sample/` | 2026-10-21 版（plrDart の master `dd8f4f2d`） |
+| `2026-10-21/sample/` | 2026-10-21 版（plrDart の master `4e925d76`） |
 
 ```
 sample/quote_graph_*      見積書（空から作る）
