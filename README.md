@@ -5,6 +5,16 @@
 
 `wam_test` の GUI はここから最新のものを読みます（読めなければ同梱のものを使います）。
 
+## フォルダと EXE の版
+
+配布する Windows の EXE（`wam_test_gui.exe`）は、版ごとに読むフォルダが違います。古い EXE が
+動かなくならないよう、例題を同期するのは、その版のフォルダだけです。
+
+| フォルダ | 読む EXE（作ったコミット） |
+|---|---|
+| `sample/`（main の直下） | 2026-10-02 版（plrDart のタグ `harness-legacy-2026-10-02`） |
+| `2026-10-21/sample/` | 2026-10-21 版（plrDart の master `dd8f4f2d`） |
+
 ```
 sample/quote_graph_*      見積書（空から作る）
 sample/quote_shared_*     見積書（共有データ版）
