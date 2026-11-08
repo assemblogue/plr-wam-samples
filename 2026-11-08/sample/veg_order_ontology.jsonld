@@ -1,0 +1,405 @@
+{
+ "@id": "urn:veg:ontology",
+ "@type": "Ontology",
+ "_ontoG": "ゴールはオントロジーの ontoG が指す（spec_kg.md 追記R367。Goal クラスは廃止した。追記K374）",
+ "_comment": "野菜の発注書の例題（veg_order。quote_graph と同じ節の形）。id は ASCII、ラベルは日本語。発注書（ゴール。Task の下位）が明細を持ち、明細（quote_graph の明細と同じく Constraint の下位）は野菜と数量を持つ。金額 = 単価 × 数量、総額 = Σ金額",
+ "agentProperty": "urn:veg:agent",
+ "defines": [
+  {
+   "@id": "urn:veg:Template",
+   "@type": "Class",
+   "subClassOf": [
+    "#Template",
+    {
+     "@type": "Restriction",
+     "onProperty": "#isComplete",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "テンプレート",
+    "en": "Template"
+   }
+  },
+  {
+   "@id": "urn:veg:Atom",
+   "@type": "Class",
+   "subClassOf": [
+    "#Atom",
+    "urn:veg:Template"
+   ],
+   "label": {
+    "ja": "アトムノード",
+    "en": "Atom"
+   }
+  },
+  {
+   "_comment": "タスクノード（副作用を伴う。真偽値を持つ）。Goal の親である（追記261）。",
+   "@id": "urn:veg:Task",
+   "@type": "Class",
+   "subClassOf": [
+    "#Task",
+    "urn:veg:Atom"
+   ],
+   "label": {
+    "ja": "タスクノード",
+    "en": "Task"
+   }
+  },
+  {
+   "@id": "urn:veg:Constraint",
+   "@type": "Class",
+   "subClassOf": [
+    "#Constraint",
+    "urn:veg:Atom"
+   ],
+   "label": {
+    "ja": "制約ノード",
+    "en": "Constraint"
+   }
+  },
+  {
+   "@id": "urn:veg:OtherAtom",
+   "@type": "Class",
+   "subClassOf": [
+    "#OtherAtom",
+    "urn:veg:Atom"
+   ],
+   "label": {
+    "ja": "その他のアトムノード",
+    "en": "Other atom"
+   }
+  },
+  {
+   "@id": "urn:veg:Cancelable",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:veg:Task",
+    "#Cancelable"
+   ],
+   "_comment": "取消可能タスクのマーカークラス（`spec_kg.md`「決定: Template の下位クラス構成」）。判定は TaskPolicyProjection が isSubClassOf で行う——ハーネスが文字列で持たない。",
+   "label": {
+    "ja": "取消可能タスク",
+    "en": "Cancelable"
+   }
+  },
+  {
+   "@id": "urn:veg:refersTo",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "参照",
+    "en": "Refers to"
+   }
+  },
+  {
+   "@id": "urn:veg:total",
+   "@type": "DatatypeProperty",
+   "domain": "urn:veg:Order",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "総額",
+    "en": "Total"
+   }
+  },
+  {
+   "@id": "urn:veg:Order",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:veg:Task",
+    "urn:veg:Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:veg:lineItem",
+     "minCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:veg:total",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#completeOrSuspendByOkButton",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:veg:agent",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "発注書",
+    "en": "Order"
+   },
+   "_comment": "発注書そのものがゴールである。頭部が明細のパターンと総額を持ち、この頭部がトップレベルのタスクノードになる。⚠️ 発注書はどの本体にも現れないので呼ばれない。 ⚠️ **OKボタンは発注書が持つ**——`wam:completeByOkButton` を宣言することがそれである（追記249。`completionMode` は使わない）——発注書全体の完成を担当ユーザが確認する。明細は持たない（値が入った時点で金額も総額も解けるので、確認を待たせる理由が無い）。 ⚠️ Cancelable を継承して取消可能タスクだと宣言する（追記232）——OK を押した後に直すには引き戻しが要り、引き戻しには取消可能性の宣言が要る。下書き中の発注書と明細は外界に副作用を持たないので取消可能である。"
+  },
+  {
+   "@id": "urn:veg:lineItem",
+   "@type": "ObjectProperty",
+   "domain": "urn:veg:Order",
+   "range": "urn:veg:OrderLine",
+   "label": {
+    "ja": "明細",
+    "en": "Line item"
+   },
+   "_comment": "発注書の明細。**値域を宣言する**——宣言が無いと「この欄に何のノードを入れるのか」に答えられず、**新しい明細を作ろうとする側はクラスidを当てるしかない**（実測で AI が`urn:veg:LineItem` という存在しないクラスを発明した）。⚠️ **`DatatypeProperty` で `range: string` と宣言していた**のが誤りだった——実際にはノードを指す。"
+  },
+  {
+   "@id": "urn:veg:OrderLine",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:veg:Constraint",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:veg:lineQuantity",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:veg:lineAmount",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:veg:lineProduct",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "明細",
+    "en": "Order line"
+   },
+   "_comment": "⚠️ **明細はアトムノードではない。制約ノードである**（追記237）——ホーン節のアトムノードに埋め込まれたアトムノードは制約ノードであり、明細は発注書の節の頭部の引数の中に入れ子で現れる。ユーザ作成制約ノードと同様に処理する。 ⚠️ ただし**ユーザ作成制約ノードではない**（追記223）——あちらはユーザ作成データに含まれる制約ノードのことで、明細はホーン節に現れる。扱いが同じだというだけである。 ⚠️ **OKボタンは持たない**（`wam:completeByOkButton` を宣言しない）——数量が入った時点で金額も総額も解けて知識グラフへ書き戻るので、明細ごとに確認を待たせる理由が無い（総額が OK の前に出ることを実測で確かめた）。確認するのは発注書全体である。",
+   "isConstraint": true
+  },
+  {
+   "@id": "urn:veg:lineQuantity",
+   "@type": "DatatypeProperty",
+   "domain": "urn:veg:OrderLine",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "数量",
+    "en": "Quantity"
+   }
+  },
+  {
+   "@id": "urn:veg:lineAmount",
+   "@type": "DatatypeProperty",
+   "domain": "urn:veg:OrderLine",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "金額",
+    "en": "Amount"
+   }
+  },
+  {
+   "@id": "urn:veg:lineProduct",
+   "@type": "ObjectProperty",
+   "subPropertyOf": "urn:veg:refersTo",
+   "domain": "urn:veg:OrderLine",
+   "label": {
+    "ja": "野菜",
+    "en": "Vegetable"
+   },
+   "range": "urn:veg:Vegetable",
+   "_comment": "値域を宣言する。宣言が無いと「何を入れられるか」に答えられない（範囲の問い合わせはオントロジー側の答えとエンジン側の答えを突き合わせるものなので、片方が空だと絞れない）。"
+  },
+  {
+   "@id": "urn:veg:Vegetable",
+   "@type": "Class",
+   "subClassOf": [
+    "#Event",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:veg:itemLabel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:veg:itemPrice",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:veg:itemUnit",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": {
+    "ja": "野菜",
+    "en": "Vegetable"
+   },
+   "isConstraint": true,
+   "_comment": "⚠️ **制約ノードである**（追記237）——頭部の引数の中に入れ子で現れるアトムノードは、トップレベルでないので制約ノードであり、ユーザ作成制約ノードと同様に処理する。"
+  },
+  {
+   "@id": "urn:veg:itemLabel",
+   "@type": "DatatypeProperty",
+   "domain": "urn:veg:Vegetable",
+   "range": "string",
+   "label": {
+    "ja": "品名",
+    "en": "Item name"
+   }
+  },
+  {
+   "@id": "urn:veg:itemPrice",
+   "@type": "DatatypeProperty",
+   "domain": "urn:veg:Vegetable",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "単価",
+    "en": "Unit price"
+   }
+  },
+  {
+   "@id": "urn:veg:itemUnit",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": {
+    "ja": "単位",
+    "en": "Unit"
+   }
+  },
+  {
+   "@id": "urn:veg:Equals",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:veg:Constraint"
+   ],
+   "#builtInFunction": "equal",
+   "isConstraint": true,
+   "label": {
+    "ja": "＝",
+    "en": "Equals"
+   }
+  },
+  {
+   "@id": "urn:veg:Times",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:veg:Constraint"
+   ],
+   "#builtInFunction": "times",
+   "isConstraint": true,
+   "label": {
+    "ja": "×",
+    "en": "Times"
+   }
+  },
+  {
+   "@id": "urn:veg:AtLeast",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:veg:Constraint"
+   ],
+   "#builtInFunction": "greaterEqual",
+   "isConstraint": true,
+   "label": {
+    "ja": "≧",
+    "en": "At least"
+   }
+  },
+  {
+   "_comment": "在庫の記録。**制約ノードである**——頭部が制約ノード（明細）のホーン節の本体は、すべて制約ノードだからである。",
+   "@id": "urn:veg:Stock",
+   "@type": "Class",
+   "subClassOf": [
+    "urn:veg:Constraint",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:veg:stockProduct",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:veg:stockRemaining",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "isConstraint": true,
+   "label": {
+    "ja": "在庫",
+    "en": "Stock"
+   }
+  },
+  {
+   "@id": "urn:veg:stockProduct",
+   "@type": "ObjectProperty",
+   "subPropertyOf": "urn:veg:refersTo",
+   "domain": "urn:veg:Stock",
+   "range": "urn:veg:Vegetable",
+   "label": {
+    "ja": "野菜",
+    "en": "Vegetable"
+   }
+  },
+  {
+   "@id": "urn:veg:stockRemaining",
+   "@type": "DatatypeProperty",
+   "domain": "urn:veg:Stock",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "残数",
+    "en": "Remaining"
+   }
+  },
+  {
+   "@id": "urn:veg:lineUnitPrice",
+   "@type": "DatatypeProperty",
+   "domain": "urn:veg:OrderLine",
+   "range": "nonNegativeInteger",
+   "label": {
+    "ja": "単価",
+    "en": "Unit price"
+   }
+  },
+  {
+   "@id": "urn:veg:Person",
+   "@type": "Class",
+   "label": {
+    "ja": "人",
+    "en": "Person"
+   },
+   "subClassOf": [
+    "#Person"
+   ]
+  },
+  {
+   "@id": "urn:veg:personName",
+   "@type": "DatatypeProperty",
+   "domain": "urn:veg:Person",
+   "range": "string",
+   "label": {
+    "ja": "氏名",
+    "en": "Name"
+   }
+  },
+  {
+   "@id": "urn:veg:agent",
+   "@type": "ObjectProperty",
+   "range": "urn:veg:Person",
+   "label": {
+    "ja": "担当者",
+    "en": "Agent"
+   },
+   "_comment": "担当ユーザ。**個数はホーン節が決める**（橋田さん）——頭部に書けば1個、書かなければ0個であり、「任意」という中間は無い。この例では**発注書だけが持つ**：明細にも持たせると、両者が同じ担当者を指して**担当者が共有ノードになる**（追記250・252）。⚠️ **誰かが作らなければならないデータの根ノードは、agent 属性でその人を指す**——ここでは発注書がそれである。",
+   "subPropertyOf": [
+    "#agent"
+   ]
+  }
+ ]
+}

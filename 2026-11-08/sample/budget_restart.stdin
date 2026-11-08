@@ -1,0 +1,43 @@
+as urn:entity:山田
+start urn:bud:Procurement urn:bud:matter A urn:bud:budget 予算-1
+set urn:node:起案 urn:bud:amount 300000
+ok urn:node:起案
+restart
+as urn:entity:佐藤
+ok urn:node:承認
+restart
+as urn:entity:高橋
+start urn:bud:Procurement urn:bud:matter B urn:bud:budget 予算-1
+set urn:node:起案 urn:bud:amount 100000
+ok urn:node:起案
+restart
+as urn:entity:山田
+start urn:bud:Procurement urn:bud:matter C urn:bud:budget 予算-1
+set urn:node:起案 urn:bud:amount 150000
+restart
+as urn:entity:佐藤
+ok urn:node:承認
+restart
+as urn:entity:山田
+ok urn:node:起案
+set urn:node:起案 urn:bud:amount 100000
+ok urn:node:起案
+restart
+as urn:entity:高橋
+start urn:bud:Procurement urn:bud:matter E urn:bud:budget 予算-1
+set urn:node:起案 urn:bud:amount 100000
+ok urn:node:起案
+restart
+as urn:entity:佐藤
+ok urn:node:承認#1
+ok urn:node:承認
+restart
+as urn:entity:山田
+start urn:bud:Procurement urn:bud:matter D urn:bud:budget 予算-山田 as @調達D
+set urn:node:起案 urn:bud:amount 120000
+set urn:node:起案 urn:bud:amount 80000
+ok urn:node:起案
+restart
+as urn:entity:佐藤
+ok urn:node:承認 in @調達D
+end

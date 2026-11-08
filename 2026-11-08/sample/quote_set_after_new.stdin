@@ -1,0 +1,3 @@
+new urn:entity:line-x urn:quote:QuoteLine urn:quote:lineQuantity 60 into 見積書 urn:quote:lineItem
+set urn:entity:line-x urn:quote:lineProduct urn:entity:pencil-2b
+end

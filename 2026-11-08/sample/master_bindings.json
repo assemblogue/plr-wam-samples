@@ -1,0 +1,10 @@
+{
+  "sessionId": "sess-master",
+  "start": {"by": "urn:entity:person-m", "predicate": "urn:wamtest:購買検討", "as": "@購買検討"},
+  "_comment": "起案者（M）が起案して申請の OK を押し、上司照会で求まった承認者（B）が承認の OK を押し、起案者（M）が購買検討（ゴール。Task の下位）の OK を押して業務フローを確定する（R771）。",
+  "steps": [
+    {"task": "urn:entity:master-shinsei", "ok": true, "comment": "起案者 M が申請の OK を押す"},
+    {"task": "urn:entity:master-shonin", "ok": true, "comment": "上司照会で求まった承認者 B が承認の OK を押す"},
+    {"task": "@購買検討", "ok": true, "comment": "起案者 M がゴールの OK を押して業務フローを確定する（R771）"}
+  ]
+}

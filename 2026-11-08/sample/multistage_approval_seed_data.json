@@ -1,0 +1,525 @@
+{
+ "_comment": "多段承認の例題のデータ（起動の前の状態。稟議のレコードと分割チャネルは起案して初めてできる。追記R748）。人は、起案する田中、課長の鈴木、部長の佐々木、役員の小林。承認段マスターに3つの段が順に並ぶ：課長（上限額 10万）→ 部長（上限額 100万）→ 役員（上限額 1億）。金額が 10万以下なら課長だけ、100万以下なら課長 → 部長、それを超えれば課長 → 部長 → 役員の承認を受ける",
+ "Person": [
+  {
+   "@id": "urn:person:田中",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:鈴木",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:佐々木",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:小林",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:管理者",
+   "@type": "Person"
+  }
+ ],
+ "ONTOc1": [
+  {
+   "_comment": "チャネル作成のチャネル（名前付き）。分割チャネルのレコードがここに並ぶ（追記R570）",
+   "@id": "urn:channel:チャネル",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:ma:設定.チャネル"
+   },
+   "onto0": "チャネル",
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  },
+  {
+   "@id": "urn:channel:組織マスター",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:ma:設定.組織マスター"
+   },
+   "onto0": "組織マスター",
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "TaskAccess": [
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者",
+     "channel": {
+      "@id": "urn:channel:組織マスター",
+      "onto0": "組織マスター"
+     },
+     "task": {
+      "@id": "Post"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:person:管理者"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者"
+     }
+    },
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者",
+     "channel": {
+      "@id": "urn:channel:組織マスター",
+      "onto0": "組織マスター"
+     },
+     "task": {
+      "@id": "Group"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:person:管理者"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者"
+     }
+    },
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者",
+     "channel": {
+      "@id": "urn:channel:組織マスター",
+      "onto0": "組織マスター"
+     },
+     "task": {
+      "@id": "OrgMember"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:person:管理者"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者"
+     }
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  },
+  {
+   "_comment": "承認段マスターのチャネル（管理者が作った）。書くのは管理者、読むのは全構成員",
+   "@id": "urn:channel:承認段マスター",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:ma:設定.承認段マスター"
+   },
+   "onto0": "承認段マスター",
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "TaskAccess": [
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者",
+     "channel": {
+      "@id": "urn:channel:承認段マスター",
+      "onto0": "承認段マスター"
+     },
+     "task": {
+      "@id": "urn:ma:承認段"
+     },
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者"
+     }
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  },
+  {
+   "_comment": "稟議のチャネル（管理者が作った。R867：基幹業務のチャネルも分割せず、名前付きのチャネルに置く）",
+   "@id": "urn:channel:稟議",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:ma:設定.稟議"
+   },
+   "onto0": "稟議",
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "TaskAccess": [
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者",
+     "channel": {
+      "@id": "urn:channel:稟議",
+      "onto0": "稟議"
+     },
+     "task": {
+      "@id": "urn:ma:稟議"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者"
+     }
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  }
+ ],
+ "OrgMember": [
+  {
+   "@id": "urn:org:構成員.田中",
+   "@type": "OrgMember",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "person": {
+    "@id": "urn:person:田中"
+   },
+   "publicFolder": "https://example.invalid/田中/public",
+   "publicKey": "…",
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  },
+  {
+   "@id": "urn:org:構成員.鈴木",
+   "@type": "OrgMember",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "person": {
+    "@id": "urn:person:鈴木"
+   },
+   "publicFolder": "https://example.invalid/鈴木/public",
+   "publicKey": "…",
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  },
+  {
+   "@id": "urn:org:構成員.佐々木",
+   "@type": "OrgMember",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "person": {
+    "@id": "urn:person:佐々木"
+   },
+   "publicFolder": "https://example.invalid/佐々木/public",
+   "publicKey": "…",
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  },
+  {
+   "@id": "urn:org:構成員.小林",
+   "@type": "OrgMember",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "person": {
+    "@id": "urn:person:小林"
+   },
+   "publicFolder": "https://example.invalid/小林/public",
+   "publicKey": "…",
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  },
+  {
+   "@id": "urn:org:構成員.管理者",
+   "@type": "OrgMember",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "person": {
+    "@id": "urn:person:管理者"
+   },
+   "publicFolder": "https://example.invalid/管理者/public",
+   "publicKey": "…",
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  }
+ ],
+ "Post": [
+  {
+   "@id": "urn:org:役職.課長",
+   "@type": "Post",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "name": "課長",
+   "incumbent": [
+    {
+     "@id": "urn:person:鈴木"
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  },
+  {
+   "@id": "urn:org:役職.部長",
+   "@type": "Post",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "name": "部長",
+   "incumbent": [
+    {
+     "@id": "urn:person:佐々木"
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  },
+  {
+   "@id": "urn:org:役職.役員",
+   "@type": "Post",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "name": "役員",
+   "incumbent": [
+    {
+     "@id": "urn:person:小林"
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  }
+ ],
+ "Group": [
+  {
+   "@id": "urn:org:グループ.全構成員",
+   "@type": "Group",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "name": "全構成員",
+   "hasMember": [
+    {
+     "@id": "urn:person:田中"
+    },
+    {
+     "@id": "urn:person:鈴木"
+    },
+    {
+     "@id": "urn:person:佐々木"
+    },
+    {
+     "@id": "urn:person:小林"
+    },
+    {
+     "@id": "urn:person:管理者"
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  }
+ ],
+ "urn:ma:承認段": [
+  {
+   "@id": "urn:stage:課長",
+   "@type": "urn:ma:承認段",
+   "urn:ma:段名": "課長",
+   "urn:ma:順": 1,
+   "urn:ma:役職": {
+    "@id": "urn:org:役職.課長"
+   },
+   "urn:ma:上限額": 100000,
+   "urn:ma:次段": {
+    "@id": "urn:stage:部長"
+   },
+   "inChannel": {
+    "@id": "urn:channel:承認段マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  },
+  {
+   "@id": "urn:stage:部長",
+   "@type": "urn:ma:承認段",
+   "urn:ma:段名": "部長",
+   "urn:ma:順": 2,
+   "urn:ma:役職": {
+    "@id": "urn:org:役職.部長"
+   },
+   "urn:ma:上限額": 1000000,
+   "urn:ma:次段": {
+    "@id": "urn:stage:役員"
+   },
+   "inChannel": {
+    "@id": "urn:channel:承認段マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  },
+  {
+   "@id": "urn:stage:役員",
+   "@type": "urn:ma:承認段",
+   "urn:ma:段名": "役員",
+   "urn:ma:順": 3,
+   "urn:ma:役職": {
+    "@id": "urn:org:役職.役員"
+   },
+   "urn:ma:上限額": 100000000,
+   "inChannel": {
+    "@id": "urn:channel:承認段マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  }
+ ]
+}

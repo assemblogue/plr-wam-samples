@@ -1,0 +1,13 @@
+as urn:person:田中
+set urn:ma:rule.稟議#起案 urn:ma:金額 500000
+ok urn:ma:rule.稟議#起案
+as urn:person:鈴木
+set urn:ma:rule.承認経路.途中#承認 urn:ma:判断 承認
+ok urn:ma:rule.承認経路.途中#承認
+as urn:person:佐々木
+set urn:ma:rule.承認経路.最後#承認 urn:ma:判断 承認
+ok urn:ma:rule.承認経路.最後#承認
+as urn:person:田中
+ok @稟議
+list
+end

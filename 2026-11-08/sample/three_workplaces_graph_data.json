@@ -1,0 +1,1516 @@
+{
+ "_comment": "管理会社・バイヤー・サプライヤーの3つのワークプレース（#219・R798）。バイヤーとサプライヤーのワークプレースは、body で管理会社のワークプレースを参照する（ワークプレースの木。spec_ops）。ゴール節は管理会社のチャネル設定の ontoG、ゴールでない節はそれぞれのワークプレースの onto7 に置く。商品マスターと請求のチャネル設定は管理会社のワークプレースにある",
+ "ONTO2": [
+  {
+   "@id": "urn:tw:wp.管理会社",
+   "@type": "ONTO2",
+   "currentPublicMark": {
+    "@id": "urn:tw:mark.管理会社.1"
+   },
+   "onto0": "管理会社",
+   "onto7": [
+    {
+     "@id": "urn:tw:rule.請求C",
+     "@type": "urn:tw:Billing",
+     "okButton": "_suspendingOk",
+     "_comment": "請求C(請求書: 請求書(請求明細: 請求明細C(金額: M)), 請求額: A) :- Equal(A, M). 請求額は請求明細の金額の和",
+     "variables": [
+      {
+       "@id": "urn:tw:rule.請求C#v.A",
+       "variableName": "A"
+      },
+      {
+       "@id": "urn:tw:rule.請求C#v.M",
+       "variableName": "M"
+      }
+     ],
+     "urn:tw:invoice": {
+      "@type": "urn:tw:Invoice",
+      "urn:tw:invoiceLines": {
+       "@type": "urn:tw:InvoiceLine",
+       "urn:tw:amount": {
+        "@id": "urn:tw:rule.請求C#v.M"
+       }
+      }
+     },
+     "urn:tw:billedAmount": {
+      "@id": "urn:tw:rule.請求C#v.A"
+     },
+     "internalGraph": [
+      {
+       "@id": "urn:tw:rule.請求C#和",
+       "@type": "Equal",
+       "operand1": {
+        "@id": "urn:tw:rule.請求C#v.A"
+       },
+       "operand2": {
+        "@id": "urn:tw:rule.請求C#v.M"
+       }
+      }
+     ]
+    },
+    {
+     "_comment": "請求取消（請求の補償タスク。R816）。頭部だけの節——引数と担当者は元の請求から渡る（赤伝票と同じ）",
+     "@id": "urn:tw:rule.請求取消",
+     "@type": "urn:tw:BillingCancel"
+    },
+    {
+     "@id": "urn:tw:rule.締め処理C",
+     "@type": "urn:tw:Closing",
+     "okButton": "_suspendingOk"
+    },
+    {
+     "_comment": "支払い群(請求書: Bs) :- 成員(主体: 購買担当, 人: A支払い), 支払い+(行: 支払い単位(請求書: Bs), agent: A支払い). 請求締めの帳票集約が作った請求書の並び Bs（統合の値。R882）の1通ごとに 請求 → 支払い を立てる",
+     "@id": "urn:tw:rule.支払い群",
+     "@type": "urn:tw:PaymentGroup",
+     "variables": [
+      {
+       "@id": "urn:tw:rule.支払い群#v.Bs",
+       "variableName": "Bs"
+      },
+      {
+       "@id": "urn:tw:rule.支払い群#v.A支払い",
+       "variableName": "A支払い"
+      }
+     ],
+     "internalGraph": [
+      {
+       "@id": "urn:tw:rule.支払い群#支払いの担当",
+       "@type": "Member",
+       "set": {
+        "@id": "urn:org:役職.購買担当"
+       },
+       "element": {
+        "@id": "urn:tw:rule.支払い群#v.A支払い"
+       },
+       "_comment": "支払いの担当者は購買担当の誰か（R875。once なしで手分けと引き継ぎができる。R876）"
+      },
+      {
+       "@id": "urn:tw:rule.支払い群#支払い",
+       "@type": "urn:tw:PaymentSeq",
+       "okButton": "_noOk",
+       "agent": {
+        "@id": "urn:tw:rule.支払い群#v.A支払い"
+       },
+       "urn:tw:row": {
+        "@type": "urn:tw:PaymentUnit",
+        "urn:tw:invoice": {
+         "@id": "urn:tw:rule.支払い群#v.Bs"
+        }
+       }
+      }
+     ],
+     "urn:tw:invoice": {
+      "@id": "urn:tw:rule.支払い群#v.Bs"
+     }
+    },
+    {
+     "@id": "urn:tw:rule.支払い+",
+     "@type": "urn:tw:PaymentSeq",
+     "urn:tw:row": {
+      "@type": "urn:tw:PaymentUnit"
+     },
+     "_comment": "支払い+(行: 支払い単位()). 要素ごとの仕事は 支払い単位 の節にある"
+    },
+    {
+     "_comment": "支払い単位(請求書: 請求書(node: B, サプライヤー: P)) :- 成員(主体: P, 人: A請求), 請求C(請求書: B, 請求額: A, agent: A請求) ─Then→ 成員(主体: 購買担当, 人: A支払い), 支払いC(請求書: B, agent: A支払い), Sendback(支払い, 請求). 請求はその請求書のサプライヤーが、支払いは購買担当がする。請求額は請求C の節が入れる（要素の中の多値は分配軸にしない。spec_branch「分配は1段だけ」）",
+     "@id": "urn:tw:rule.支払い単位",
+     "@type": "urn:tw:PaymentUnit",
+     "variables": [
+      {
+       "@id": "urn:tw:rule.支払い単位#v.B",
+       "variableName": "B"
+      },
+      {
+       "@id": "urn:tw:rule.支払い単位#v.P",
+       "variableName": "P"
+      },
+      {
+       "@id": "urn:tw:rule.支払い単位#v.A",
+       "variableName": "A"
+      },
+      {
+       "@id": "urn:tw:rule.支払い単位#v.T請求",
+       "variableName": "T請求"
+      },
+      {
+       "@id": "urn:tw:rule.支払い単位#v.A支払い",
+       "variableName": "A支払い"
+      },
+      {
+       "@id": "urn:tw:rule.支払い単位#v.A請求",
+       "variableName": "A請求"
+      }
+     ],
+     "urn:tw:invoice": {
+      "@type": "urn:tw:Invoice",
+      "node": {
+       "@id": "urn:tw:rule.支払い単位#v.B"
+      },
+      "urn:tw:supplier": {
+       "@id": "urn:tw:rule.支払い単位#v.P"
+      }
+     },
+     "internalGraph": [
+      {
+       "@id": "urn:tw:rule.支払い単位#請求の担当",
+       "@type": "Member",
+       "set": {
+        "@id": "urn:tw:rule.支払い単位#v.P"
+       },
+       "element": {
+        "@id": "urn:tw:rule.支払い単位#v.A請求"
+       },
+       "_comment": "請求の担当者は、その請求書のサプライヤー（グループ）の誰か（R875。once なしで手分けと引き継ぎができる。R876）"
+      },
+      {
+       "@id": "urn:tw:rule.支払い単位#請求",
+       "@type": "urn:tw:Billing",
+       "urn:tw:invoice": {
+        "@id": "urn:tw:rule.支払い単位#v.B"
+       },
+       "urn:tw:billedAmount": {
+        "@id": "urn:tw:rule.支払い単位#v.A"
+       },
+       "agent": {
+        "@id": "urn:tw:rule.支払い単位#v.A請求"
+       },
+       "truthValue": {
+        "@id": "urn:tw:rule.支払い単位#v.T請求"
+       }
+      },
+      {
+       "@id": "urn:tw:rule.支払い単位#支払いの担当",
+       "@type": "Member",
+       "set": {
+        "@id": "urn:org:役職.購買担当"
+       },
+       "element": {
+        "@id": "urn:tw:rule.支払い単位#v.A支払い"
+       },
+       "_comment": "支払いの担当者は購買担当の誰か（R875。once なしで手分けと引き継ぎができる。R876）"
+      },
+      {
+       "@id": "urn:tw:rule.支払い単位#支払い",
+       "@type": "urn:tw:Payment",
+       "urn:tw:invoice": {
+        "@id": "urn:tw:rule.支払い単位#v.B"
+       },
+       "agent": {
+        "@id": "urn:tw:rule.支払い単位#v.A支払い"
+       }
+      },
+      {
+       "@type": "Then",
+       "arg1": {
+        "@id": "urn:tw:rule.支払い単位#請求"
+       },
+       "arg2": {
+        "@id": "urn:tw:rule.支払い単位#支払い"
+       }
+      },
+      {
+       "@type": "Sendback",
+       "arg1": {
+        "@id": "urn:tw:rule.支払い単位#支払い"
+       },
+       "arg2": {
+        "@id": "urn:tw:rule.支払い単位#請求"
+       },
+       "_comment": "支払いの担当者は、請求の真偽値を T から未定に戻すことができる（差し戻し。R844・R845）"
+      }
+     ]
+    }
+   ],
+   "ontoChS": [
+    {
+     "@id": "urn:tw:設定.調達",
+     "@type": "ONTOc",
+     "onto0": "調達",
+     "_note": "基幹業務（調達）のチャネル設定。調達のレコードは起案者の分割チャネルに入る",
+     "ontoCs": [
+      {
+       "@id": "urn:tw:設定.調達.cs1",
+       "@type": "ONTOcS",
+       "ontoG": [
+        {
+         "_comment": "調達(件名: S, 予算: K, 金額: M, agent: U) :- 予算(予算コード: K, 限度額: L, 利用者: Us, agent: B, existing: _true), 成員(主体: Us, 人: U), 予算合計(予算: K, 確定合計: T, agent: B, existing: _latest) ─Then→ 起案C(金額: M, 明細: Ls, agent: U) ─Then→ 予算合計(予算: K, 確定合計: T1, agent: B) ─Then→ 承認C(判断: J, 承認件名: S, 承認金額: M, 承認予算: K, agent: B) ─Then→ 承認された(判断: J) ─Then→ 予算合計(予算: K, agent: B) ─Then→ 明細処理+(行: 明細処理(対象明細: Ls, 起案者: U), agent: U), 承認された ─Else→ 却下確認C(agent: U), ≧(L, [M, T]), ≧(L, [M, T1]). 起案の金額は起案の節が明細金額の和で入れる。承認の後、明細の1行ごとに 発注 → 納品 → 検収 が立つ（明細処理の節）。請求と支払いはこの業務フローに無く、期間ごとの請求締め（設定.請求）が、すべての調達の検収済みの明細をサプライヤーごとにまとめる。予算は例題 budget と同じ形（R563〜R568・R802）",
+         "@id": "urn:tw:rule.調達",
+         "@type": "urn:tw:Procurement",
+         "variables": [
+          {
+           "@id": "urn:tw:rule.調達#v.U",
+           "variableName": "U"
+          },
+          {
+           "@id": "urn:tw:rule.調達#v.S",
+           "variableName": "S"
+          },
+          {
+           "@id": "urn:tw:rule.調達#v.M",
+           "variableName": "M"
+          },
+          {
+           "@id": "urn:tw:rule.調達#v.J",
+           "variableName": "J"
+          },
+          {
+           "@id": "urn:tw:rule.調達#v.T承認",
+           "variableName": "T承認"
+          },
+          {
+           "@id": "urn:tw:rule.調達#v.K",
+           "variableName": "K"
+          },
+          {
+           "@id": "urn:tw:rule.調達#v.L",
+           "variableName": "L"
+          },
+          {
+           "@id": "urn:tw:rule.調達#v.Us",
+           "variableName": "Us"
+          },
+          {
+           "@id": "urn:tw:rule.調達#v.B",
+           "variableName": "B"
+          },
+          {
+           "@id": "urn:tw:rule.調達#v.T",
+           "variableName": "T"
+          },
+          {
+           "@id": "urn:tw:rule.調達#v.T1",
+           "variableName": "T1"
+          },
+          {
+           "@id": "urn:tw:rule.調達#v.Ls",
+           "variableName": "Ls"
+          }
+         ],
+         "urn:tw:subject": {
+          "@id": "urn:tw:rule.調達#v.S"
+         },
+         "urn:tw:budget": {
+          "@id": "urn:tw:rule.調達#v.K"
+         },
+         "urn:tw:amount": {
+          "@id": "urn:tw:rule.調達#v.M"
+         },
+         "agent": {
+          "@id": "urn:tw:rule.調達#v.U"
+         },
+         "internalGraph": [
+          {
+           "@id": "urn:tw:rule.調達#予算参照",
+           "@type": "urn:tw:Budget",
+           "existing": "_true",
+           "urn:tw:budgetCode": {
+            "@id": "urn:tw:rule.調達#v.K"
+           },
+           "urn:tw:limit": {
+            "@id": "urn:tw:rule.調達#v.L"
+           },
+           "urn:tw:users": {
+            "@id": "urn:tw:rule.調達#v.Us"
+           },
+           "agent": {
+            "@id": "urn:tw:rule.調達#v.B"
+           },
+           "_comment": "予算のレコードを検索する。その担当者 B が予算管理担当（承認者）である"
+          },
+          {
+           "@id": "urn:tw:rule.調達#利用者",
+           "@type": "Member",
+           "set": {
+            "@id": "urn:tw:rule.調達#v.Us"
+           },
+           "element": {
+            "@id": "urn:tw:rule.調達#v.U"
+           },
+           "_comment": "起案者は予算の利用者である"
+          },
+          {
+           "@id": "urn:tw:rule.調達#最新合計",
+           "@type": "urn:tw:BudgetTotal",
+           "existing": "_latest",
+           "urn:tw:budget": {
+            "@id": "urn:tw:rule.調達#v.K"
+           },
+           "urn:tw:confirmedTotal": {
+            "@id": "urn:tw:rule.調達#v.T"
+           },
+           "agent": {
+            "@id": "urn:tw:rule.調達#v.B"
+           },
+           "_comment": "B が作った最新の予算合計（R563〜R565）"
+          },
+          {
+           "@id": "urn:tw:rule.調達#限度額チェック",
+           "@type": "GreaterEqual",
+           "operand1": {
+            "@id": "urn:tw:rule.調達#v.L"
+           },
+           "operand2": [
+            {
+             "@id": "urn:tw:rule.調達#v.M"
+            },
+            {
+             "@id": "urn:tw:rule.調達#v.T"
+            }
+           ],
+           "_comment": "起案の限度：金額 ≦ 限度額 − 確定合計（R563）"
+          },
+          {
+           "@id": "urn:tw:rule.調達#起案",
+           "@type": "urn:tw:Draft",
+           "urn:tw:amount": {
+            "@id": "urn:tw:rule.調達#v.M"
+           },
+           "agent": {
+            "@id": "urn:tw:rule.調達#v.U"
+           },
+           "urn:tw:budget": {
+            "@id": "urn:tw:rule.調達#v.K"
+           },
+           "urn:tw:subject": {
+            "@id": "urn:tw:rule.調達#v.S"
+           },
+           "urn:tw:lines": {
+            "@id": "urn:tw:rule.調達#v.Ls"
+           }
+          },
+          {
+           "@id": "urn:tw:rule.調達#合計",
+           "@type": "urn:tw:BudgetTotal",
+           "urn:tw:budget": {
+            "@id": "urn:tw:rule.調達#v.K"
+           },
+           "urn:tw:confirmedTotal": {
+            "@id": "urn:tw:rule.調達#v.T1"
+           },
+           "agent": {
+            "@id": "urn:tw:rule.調達#v.B"
+           },
+           "okButton": "_noOk",
+           "_comment": "起案の後に、予算管理担当が新しい合計を作る（予算合計のチャネルのレコードになる。R488・R491・R563）",
+           "urn:tw:limit": {
+            "@id": "urn:tw:rule.調達#v.L"
+           }
+          },
+          {
+           "@id": "urn:tw:rule.調達#確かめ",
+           "@type": "GreaterEqual",
+           "operand1": {
+            "@id": "urn:tw:rule.調達#v.L"
+           },
+           "operand2": [
+            {
+             "@id": "urn:tw:rule.調達#v.M"
+            },
+            {
+             "@id": "urn:tw:rule.調達#v.T1"
+            }
+           ],
+           "_comment": "承認の前の確かめ：金額 ≦ 限度額 − 起案の後の合計の確定合計（R571。Then につながない。R642）"
+          },
+          {
+           "@id": "urn:tw:rule.調達#承認",
+           "@type": "urn:tw:Approval",
+           "urn:tw:decision": {
+            "@id": "urn:tw:rule.調達#v.J"
+           },
+           "urn:tw:approvedSubject": {
+            "@id": "urn:tw:rule.調達#v.S"
+           },
+           "urn:tw:approvedAmount": {
+            "@id": "urn:tw:rule.調達#v.M"
+           },
+           "urn:tw:approvedBudget": {
+            "@id": "urn:tw:rule.調達#v.K"
+           },
+           "agent": {
+            "@id": "urn:tw:rule.調達#v.B"
+           },
+           "truthValue": {
+            "@id": "urn:tw:rule.調達#v.T承認"
+           }
+          },
+          {
+           "@id": "urn:tw:rule.調達#承認後の合計",
+           "@type": "urn:tw:BudgetTotal",
+           "urn:tw:budget": {
+            "@id": "urn:tw:rule.調達#v.K"
+           },
+           "agent": {
+            "@id": "urn:tw:rule.調達#v.B"
+           },
+           "okButton": "_noOk",
+           "_comment": "承認の後にも予算管理担当が合計を作る。確定合計が限度額を超えれば偽——起案の前の最新の合計を選び直し、起案と承認の OK を外す（R567・R578・R593）",
+           "urn:tw:limit": {
+            "@id": "urn:tw:rule.調達#v.L"
+           }
+          },
+          {
+           "@id": "urn:tw:rule.調達#承認済み",
+           "@type": "urn:tw:Approved",
+           "urn:tw:decision": {
+            "@id": "urn:tw:rule.調達#v.J"
+           },
+           "_comment": "承認か却下か。偽なら Else の先（却下確認）へ移る"
+          },
+          {
+           "@id": "urn:tw:rule.調達#却下確認",
+           "@type": "urn:tw:RejectionCheck",
+           "agent": {
+            "@id": "urn:tw:rule.調達#v.U"
+           }
+          },
+          {
+           "@id": "urn:tw:rule.調達#明細処理",
+           "@type": "urn:tw:LineProcessSeq",
+           "okButton": "_noOk",
+           "agent": {
+            "@id": "urn:tw:rule.調達#v.U"
+           },
+           "urn:tw:row": {
+            "@type": "urn:tw:LineProcess",
+            "urn:tw:targetLine": {
+             "@id": "urn:tw:rule.調達#v.Ls"
+            },
+            "urn:tw:drafter": {
+             "@id": "urn:tw:rule.調達#v.U"
+            }
+           },
+           "_comment": "明細の1行ごとに要素ができ、要素ごとに 明細処理 の節が走る"
+          },
+          {
+           "@type": "Then",
+           "arg1": {
+            "@id": "urn:tw:rule.調達#最新合計"
+           },
+           "arg2": {
+            "@id": "urn:tw:rule.調達#起案",
+            "urn:tw:budget": {
+             "@id": "urn:tw:rule.調達#v.K"
+            },
+            "urn:tw:subject": {
+             "@id": "urn:tw:rule.調達#v.S"
+            }
+           }
+          },
+          {
+           "@type": "Then",
+           "arg1": {
+            "@id": "urn:tw:rule.調達#起案",
+            "urn:tw:budget": {
+             "@id": "urn:tw:rule.調達#v.K"
+            },
+            "urn:tw:subject": {
+             "@id": "urn:tw:rule.調達#v.S"
+            }
+           },
+           "arg2": {
+            "@id": "urn:tw:rule.調達#合計",
+            "urn:tw:limit": {
+             "@id": "urn:tw:rule.調達#v.L"
+            }
+           }
+          },
+          {
+           "@type": "Then",
+           "arg1": {
+            "@id": "urn:tw:rule.調達#合計",
+            "urn:tw:limit": {
+             "@id": "urn:tw:rule.調達#v.L"
+            }
+           },
+           "arg2": {
+            "@id": "urn:tw:rule.調達#承認"
+           }
+          },
+          {
+           "@type": "Then",
+           "arg1": {
+            "@id": "urn:tw:rule.調達#承認"
+           },
+           "arg2": {
+            "@id": "urn:tw:rule.調達#承認済み"
+           }
+          },
+          {
+           "@type": "Then",
+           "arg1": {
+            "@id": "urn:tw:rule.調達#承認済み"
+           },
+           "arg2": {
+            "@id": "urn:tw:rule.調達#承認後の合計",
+            "urn:tw:limit": {
+             "@id": "urn:tw:rule.調達#v.L"
+            }
+           }
+          },
+          {
+           "@type": "Else",
+           "arg1": {
+            "@id": "urn:tw:rule.調達#承認済み"
+           },
+           "arg2": {
+            "@id": "urn:tw:rule.調達#却下確認"
+           }
+          },
+          {
+           "@type": "Then",
+           "arg1": {
+            "@id": "urn:tw:rule.調達#承認後の合計",
+            "urn:tw:limit": {
+             "@id": "urn:tw:rule.調達#v.L"
+            }
+           },
+           "arg2": {
+            "@id": "urn:tw:rule.調達#明細処理"
+           }
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "@id": "urn:tw:設定.チャネル",
+     "@type": "ONTOc",
+     "onto0": "チャネル",
+     "_note": "チャネル作成のチャネル設定（kobuy_workplace と同じ）",
+     "ontoCs": [
+      {
+       "@id": "urn:tw:設定.チャネル.cs1",
+       "@type": "ONTOcS",
+       "ontoG": [
+        {
+         "_comment": "ONTOc1(ontoC: S, agent: O) :- 基幹業務を含む(設定: S), チャネル作成者(設定: S, 人: O). 起案者の分割チャネルを作る節（kobuy_workplace と同じ。追記R433・R570）",
+         "@id": "urn:tw:rule.チャネル",
+         "@type": "ONTOc1",
+         "pullBack": true,
+         "variables": [
+          {
+           "@id": "urn:tw:rule.チャネル#v.S",
+           "variableName": "S"
+          },
+          {
+           "@id": "urn:tw:rule.チャネル#v.O",
+           "variableName": "O"
+          }
+         ],
+         "ontoC": {
+          "@id": "urn:tw:rule.チャネル#v.S"
+         },
+         "agent": {
+          "@id": "urn:tw:rule.チャネル#v.O"
+         },
+         "internalGraph": [
+          {
+           "@id": "urn:tw:rule.チャネル#基幹業務を含む",
+           "@type": "IncludesCoreBusiness",
+           "setting": {
+            "@id": "urn:tw:rule.チャネル#v.S"
+           }
+          },
+          {
+           "@id": "urn:tw:rule.チャネル#チャネル作成者",
+           "@type": "ChannelCreator",
+           "setting": {
+            "@id": "urn:tw:rule.チャネル#v.S"
+           },
+           "person": {
+            "@id": "urn:tw:rule.チャネル#v.O"
+           }
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "@id": "urn:tw:設定.商品マスター",
+     "@type": "ONTOc",
+     "onto0": "商品マスター",
+     "ontoCC": [
+      {
+       "@id": "urn:person:管理者"
+      }
+     ],
+     "_note": "商品マスターのチャネル設定。書くのはサプライヤー、読むのは全構成員（TaskAccess）",
+     "ontoCs": [
+      {
+       "@id": "urn:tw:設定.商品マスター.cs1",
+       "@type": "ONTOcS",
+       "ontoG": [
+        {
+         "_comment": "商品C(商品名: N, 単価: U, サプライヤー: P, agent: A) :- 成員(主体: P, 人: A). 商品を登録するのはそのサプライヤーの人",
+         "@id": "urn:tw:rule.商品",
+         "@type": "urn:tw:Product",
+         "variables": [
+          {
+           "@id": "urn:tw:rule.商品#v.N",
+           "variableName": "N"
+          },
+          {
+           "@id": "urn:tw:rule.商品#v.U",
+           "variableName": "U"
+          },
+          {
+           "@id": "urn:tw:rule.商品#v.P",
+           "variableName": "P"
+          },
+          {
+           "@id": "urn:tw:rule.商品#v.A",
+           "variableName": "A"
+          }
+         ],
+         "urn:tw:productName": {
+          "@id": "urn:tw:rule.商品#v.N"
+         },
+         "urn:tw:unitPrice": {
+          "@id": "urn:tw:rule.商品#v.U"
+         },
+         "urn:tw:supplier": {
+          "@id": "urn:tw:rule.商品#v.P"
+         },
+         "agent": {
+          "@id": "urn:tw:rule.商品#v.A"
+         },
+         "internalGraph": [
+          {
+           "@id": "urn:tw:rule.商品#サプライヤーの人か",
+           "@type": "Member",
+           "set": {
+            "@id": "urn:tw:rule.商品#v.P"
+           },
+           "element": {
+            "@id": "urn:tw:rule.商品#v.A"
+           }
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "@id": "urn:tw:設定.請求",
+     "@type": "ONTOc",
+     "onto0": "請求",
+     "ontoCC": [
+      {
+       "@id": "urn:person:管理者"
+      }
+     ],
+     "_note": "請求締めのチャネル設定。締めるのは管理会社の請求担当",
+     "ontoCs": [
+      {
+       "@id": "urn:tw:設定.請求.cs1",
+       "@type": "ONTOcS",
+       "ontoG": [
+        {
+         "_comment": "請求締め(請求月: Mo, agent: B) :- 成員(主体: 請求担当, 人: B), 締め処理C(請求月: Mo, agent: B) ─Then→ FormAggregation(faCommon: 検収C(請求月: Mo, completeByOkButton: Person(), 対象明細: 明細C(商品: 商品C(サプライヤー: P))), faIndividual: 検収C(検収数: R, 対象明細: 明細C(node: X, 商品: 商品C(商品名: N, 単価: U), 明細金額: M)), faAggregation: 請求書(node: Bs, 請求月: Mo, サプライヤー: P, 請求明細: 請求明細C(対象明細: X, 商品名: N, 単価: U, 検収数: R, 金額: M))) ─Then→ 支払い群(請求書: Bs). その請求月に検収の済んだ（OK の押された）すべての調達の明細を、サプライヤーごとに請求書1通にまとめる（kobuy_billing と同じ形）。帳票集約が作った請求書は統合の値として Bs に返り、支払い群は検索し直さずにそれを使う（R882）",
+         "@id": "urn:tw:rule.請求締め",
+         "@type": "urn:tw:BillingClose",
+         "variables": [
+          {
+           "@id": "urn:tw:rule.請求締め#v.Mo",
+           "variableName": "Mo"
+          },
+          {
+           "@id": "urn:tw:rule.請求締め#v.B",
+           "variableName": "B"
+          },
+          {
+           "@id": "urn:tw:rule.請求締め#v.P",
+           "variableName": "P"
+          },
+          {
+           "@id": "urn:tw:rule.請求締め#v.R",
+           "variableName": "R"
+          },
+          {
+           "@id": "urn:tw:rule.請求締め#v.X",
+           "variableName": "X"
+          },
+          {
+           "@id": "urn:tw:rule.請求締め#v.N",
+           "variableName": "N"
+          },
+          {
+           "@id": "urn:tw:rule.請求締め#v.U",
+           "variableName": "U"
+          },
+          {
+           "@id": "urn:tw:rule.請求締め#v.M",
+           "variableName": "M"
+          },
+          {
+           "@id": "urn:tw:rule.請求締め#v.Bs",
+           "variableName": "Bs"
+          }
+         ],
+         "urn:tw:billingMonth": {
+          "@id": "urn:tw:rule.請求締め#v.Mo"
+         },
+         "agent": {
+          "@id": "urn:tw:rule.請求締め#v.B"
+         },
+         "internalGraph": [
+          {
+           "@id": "urn:tw:rule.請求締め#請求担当か",
+           "@type": "Member",
+           "set": {
+            "@id": "urn:org:役職.請求担当"
+           },
+           "element": {
+            "@id": "urn:tw:rule.請求締め#v.B"
+           }
+          },
+          {
+           "@id": "urn:tw:rule.請求締め#締め処理",
+           "@type": "urn:tw:Closing",
+           "urn:tw:billingMonth": {
+            "@id": "urn:tw:rule.請求締め#v.Mo"
+           },
+           "agent": {
+            "@id": "urn:tw:rule.請求締め#v.B"
+           }
+          },
+          {
+           "@id": "urn:tw:rule.請求締め#集約",
+           "@type": "FormAggregation",
+           "faCommon": {
+            "@type": "urn:tw:Inspection",
+            "urn:tw:billingMonth": {
+             "@id": "urn:tw:rule.請求締め#v.Mo"
+            },
+            "completeByOkButton": {
+             "@type": "Person"
+            },
+            "urn:tw:targetLine": {
+             "@type": "urn:tw:Line",
+             "urn:tw:product": {
+              "@type": "urn:tw:Product",
+              "urn:tw:supplier": {
+               "@id": "urn:tw:rule.請求締め#v.P"
+              }
+             }
+            }
+           },
+           "faIndividual": {
+            "@type": "urn:tw:Inspection",
+            "urn:tw:inspectedQuantity": {
+             "@id": "urn:tw:rule.請求締め#v.R"
+            },
+            "urn:tw:targetLine": {
+             "@type": "urn:tw:Line",
+             "node": {
+              "@id": "urn:tw:rule.請求締め#v.X"
+             },
+             "urn:tw:lineAmount": {
+              "@id": "urn:tw:rule.請求締め#v.M"
+             },
+             "urn:tw:product": {
+              "@type": "urn:tw:Product",
+              "urn:tw:productName": {
+               "@id": "urn:tw:rule.請求締め#v.N"
+              },
+              "urn:tw:unitPrice": {
+               "@id": "urn:tw:rule.請求締め#v.U"
+              }
+             }
+            }
+           },
+           "faAggregation": {
+            "@type": "urn:tw:Invoice",
+            "node": {
+             "@id": "urn:tw:rule.請求締め#v.Bs"
+            },
+            "urn:tw:billingMonth": {
+             "@id": "urn:tw:rule.請求締め#v.Mo"
+            },
+            "urn:tw:supplier": {
+             "@id": "urn:tw:rule.請求締め#v.P"
+            },
+            "urn:tw:invoiceLines": {
+             "@type": "urn:tw:InvoiceLine",
+             "urn:tw:targetLine": {
+              "@id": "urn:tw:rule.請求締め#v.X"
+             },
+             "urn:tw:productName": {
+              "@id": "urn:tw:rule.請求締め#v.N"
+             },
+             "urn:tw:unitPrice": {
+              "@id": "urn:tw:rule.請求締め#v.U"
+             },
+             "urn:tw:inspectedQuantity": {
+              "@id": "urn:tw:rule.請求締め#v.R"
+             },
+             "urn:tw:amount": {
+              "@id": "urn:tw:rule.請求締め#v.M"
+             }
+            }
+           },
+           "_comment": "系のクラス FormAggregation（Cancelable の下位。builtInFunction formAggregation）と、その引数 faCommon（共通）・faIndividual（個別）・faAggregation（統合）で書く（R787・R880・R882）。統合の値は作った請求書の並びで、パターンの同一性 Bs に返る"
+          },
+          {
+           "@id": "urn:tw:rule.請求締め#支払い群",
+           "@type": "urn:tw:PaymentGroup",
+           "urn:tw:invoice": {
+            "@id": "urn:tw:rule.請求締め#v.Bs"
+           }
+          },
+          {
+           "@type": "Then",
+           "arg1": {
+            "@id": "urn:tw:rule.請求締め#締め処理"
+           },
+           "arg2": {
+            "@id": "urn:tw:rule.請求締め#集約"
+           }
+          },
+          {
+           "@type": "Then",
+           "arg1": {
+            "@id": "urn:tw:rule.請求締め#集約"
+           },
+           "arg2": {
+            "@id": "urn:tw:rule.請求締め#支払い群"
+           }
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "_note": "管理会社の組織マスターのチャネル設定（R1028：組織マスターは組織ごと。ゴール節は系の組織マスターの設定のものを参照で持つ）",
+     "@id": "urn:tw:設定.組織マスター.管理会社",
+     "@type": "ONTOc",
+     "onto0": "管理会社 組織マスター",
+     "ontoCs": [
+      {
+       "@id": "urn:tw:設定.組織マスター.管理会社.cs1",
+       "@type": "ONTOcS",
+       "ontoG": [
+        {
+         "@id": "urn:system:rule.構成員"
+        },
+        {
+         "@id": "urn:system:rule.役職"
+        },
+        {
+         "@id": "urn:system:rule.グループ"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "@id": "urn:tw:wp.バイヤー",
+   "@type": "ONTO2",
+   "currentPublicMark": {
+    "@id": "urn:tw:mark.バイヤー.1"
+   },
+   "onto0": "バイヤー",
+   "body": {
+    "@id": "urn:tw:wp.管理会社"
+   },
+   "onto": [
+    {
+     "@id": "urn:tw:wp.サプライヤー"
+    }
+   ],
+   "ontoChS": [
+    {
+     "@id": "urn:tw:設定.マスター",
+     "@type": "ONTOc",
+     "onto0": "マスター",
+     "ontoCC": [
+      {
+       "@id": "urn:person:管理者.バイヤー"
+      }
+     ],
+     "_note": "予算のチャネル設定。予算の登録は基幹業務だが、マスターのチャネルの TaskAccess の予算の taskUser（全構成員）に、予算の登録の節が担当者に課す成員の主体（予算管理担当）が含まれるので、分割せず名前付きのマスターのチャネルに置く（R802・R803・R805・R809）。チャネルを作れるのは管理者だけ",
+     "ontoCs": [
+      {
+       "@id": "urn:tw:設定.マスター.cs1",
+       "@type": "ONTOcS",
+       "ontoG": [
+        {
+         "_comment": "予算(予算コード: K, 限度額: L, 利用者: Us, agent: B) :- 成員(主体: 予算管理担当, 人: B), 予算合計(予算: K, agent: B). 予算の登録で、空の合計（確定合計 0）を作る（R563）。登録するのは予算管理担当の人（R802。担当者は個人なので、役職は担当者に直に書かず、本体の成員で確かめる）。B が本体にも現れるので基幹業務だが、マスターのチャネルの TaskAccess の taskUser（全構成員）にこの節の成員の主体（予算管理担当）が含まれるので、分割せずマスターのチャネルに置く（R803・R805・R809）",
+         "@id": "urn:tw:rule.予算",
+         "@type": "urn:tw:Budget",
+         "variables": [
+          {
+           "@id": "urn:tw:rule.予算#v.K",
+           "variableName": "K"
+          },
+          {
+           "@id": "urn:tw:rule.予算#v.L",
+           "variableName": "L"
+          },
+          {
+           "@id": "urn:tw:rule.予算#v.Us",
+           "variableName": "Us"
+          },
+          {
+           "@id": "urn:tw:rule.予算#v.B",
+           "variableName": "B"
+          }
+         ],
+         "urn:tw:budgetCode": {
+          "@id": "urn:tw:rule.予算#v.K"
+         },
+         "urn:tw:limit": {
+          "@id": "urn:tw:rule.予算#v.L"
+         },
+         "urn:tw:users": {
+          "@id": "urn:tw:rule.予算#v.Us"
+         },
+         "agent": {
+          "@id": "urn:tw:rule.予算#v.B"
+         },
+         "internalGraph": [
+          {
+           "@id": "urn:tw:rule.予算#予算管理担当か",
+           "@type": "Member",
+           "set": {
+            "@id": "urn:org:役職.予算管理担当"
+           },
+           "element": {
+            "@id": "urn:tw:rule.予算#v.B"
+           }
+          },
+          {
+           "@id": "urn:tw:rule.予算#空の合計",
+           "@type": "urn:tw:BudgetTotal",
+           "urn:tw:budget": {
+            "@id": "urn:tw:rule.予算#v.K"
+           },
+           "agent": {
+            "@id": "urn:tw:rule.予算#v.B"
+           },
+           "okButton": "_noOk",
+           "urn:tw:limit": {
+            "@id": "urn:tw:rule.予算#v.L"
+           }
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "@id": "urn:tw:設定.予算合計",
+     "@type": "ONTOc",
+     "onto0": "予算合計",
+     "ontoCC": [
+      {
+       "@id": "urn:person:管理者.バイヤー"
+      }
+     ],
+     "_note": "予算合計のチャネル設定（トーク的業務）。作るのは予算管理担当、読むのは全構成員（TaskAccess。R802）",
+     "ontoCs": [
+      {
+       "@id": "urn:tw:設定.予算合計.cs1",
+       "@type": "ONTOcS",
+       "ontoG": [
+        {
+         "_comment": "予算合計(予算: K, 限度額: L, 確定一覧: 承認C(承認予算: K, 判断: 承認, 承認件名: Nc, 承認金額: Y1), 確定合計: T, 確定案件: Nc, agent: A) :- =(T, Y1), ≧(L, T). 確定一覧は retrieveAll の下位で、当たるもの（完成した承認）をすべて集める（R736・R910）。限度額は呼ぶ側が渡す——予算の登録の本体から呼ばれたとき、未完成の予算そのものを検索して待ち合わないように（review の A3）。判断: 承認 の承認だけを確定に数える。担当者 A は頭部にしか現れない（トーク的業務）ので、チャネルの TaskAccess の taskAgent（予算管理担当）が決める（R491）",
+         "@id": "urn:tw:rule.予算合計",
+         "@type": "urn:tw:BudgetTotal",
+         "okButton": "_noOk",
+         "variables": [
+          {
+           "@id": "urn:tw:rule.予算合計#v.K",
+           "variableName": "K"
+          },
+          {
+           "@id": "urn:tw:rule.予算合計#v.T",
+           "variableName": "T"
+          },
+          {
+           "@id": "urn:tw:rule.予算合計#v.Nc",
+           "variableName": "Nc"
+          },
+          {
+           "@id": "urn:tw:rule.予算合計#v.A",
+           "variableName": "A"
+          },
+          {
+           "@id": "urn:tw:rule.予算合計#v.Y1",
+           "variableName": "Y1"
+          },
+          {
+           "@id": "urn:tw:rule.予算合計#v.L",
+           "variableName": "L"
+          }
+         ],
+         "urn:tw:budget": {
+          "@id": "urn:tw:rule.予算合計#v.K"
+         },
+         "urn:tw:limit": {
+          "@id": "urn:tw:rule.予算合計#v.L"
+         },
+         "urn:tw:confirmedList": {
+          "@type": "urn:tw:Approval",
+          "urn:tw:approvedBudget": {
+           "@id": "urn:tw:rule.予算合計#v.K"
+          },
+          "urn:tw:decision": "承認",
+          "urn:tw:approvedSubject": {
+           "@id": "urn:tw:rule.予算合計#v.Nc"
+          },
+          "urn:tw:approvedAmount": {
+           "@id": "urn:tw:rule.予算合計#v.Y1"
+          }
+         },
+         "urn:tw:confirmedTotal": {
+          "@id": "urn:tw:rule.予算合計#v.T"
+         },
+         "urn:tw:confirmedMatters": {
+          "@id": "urn:tw:rule.予算合計#v.Nc"
+         },
+         "agent": {
+          "@id": "urn:tw:rule.予算合計#v.A"
+         },
+         "internalGraph": [
+          {
+           "@id": "urn:tw:rule.予算合計#確定の和",
+           "@type": "Equal",
+           "operand1": {
+            "@id": "urn:tw:rule.予算合計#v.T"
+           },
+           "operand2": {
+            "@id": "urn:tw:rule.予算合計#v.Y1"
+           }
+          },
+          {
+           "@id": "urn:tw:rule.予算合計#限度額の確かめ",
+           "@type": "GreaterEqual",
+           "operand1": {
+            "@id": "urn:tw:rule.予算合計#v.L"
+           },
+           "operand2": {
+            "@id": "urn:tw:rule.予算合計#v.T"
+           },
+           "_comment": "確定合計が限度額に収まるか（承認の後の合計で、承認済みの案件が超えていれば偽）"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "_note": "バイヤーの組織マスターのチャネル設定（R1028：組織マスターは組織ごと。ゴール節は系の組織マスターの設定のものを参照で持つ）",
+     "@id": "urn:tw:設定.組織マスター.バイヤー",
+     "@type": "ONTOc",
+     "onto0": "バイヤー 組織マスター",
+     "ontoCs": [
+      {
+       "@id": "urn:tw:設定.組織マスター.バイヤー.cs1",
+       "@type": "ONTOcS",
+       "ontoG": [
+        {
+         "@id": "urn:system:rule.構成員"
+        },
+        {
+         "@id": "urn:system:rule.役職"
+        },
+        {
+         "@id": "urn:system:rule.グループ"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "onto7": [
+    {
+     "@id": "urn:tw:rule.起案C",
+     "@type": "urn:tw:Draft",
+     "okButton": "_suspendingOk",
+     "_comment": "起案C(明細: 明細C(明細金額: M), 金額: A, agent: U) :- 成員(主体: 全構成員, 人: U), Equal(A, M). 金額は明細金額の和（tut.md「集計はパターン1個で書く」）",
+     "variables": [
+      {
+       "@id": "urn:tw:rule.起案C#v.A",
+       "variableName": "A"
+      },
+      {
+       "@id": "urn:tw:rule.起案C#v.M",
+       "variableName": "M"
+      },
+      {
+       "@id": "urn:tw:rule.起案C#v.U",
+       "variableName": "U"
+      }
+     ],
+     "agent": {
+      "@id": "urn:tw:rule.起案C#v.U"
+     },
+     "urn:tw:amount": {
+      "@id": "urn:tw:rule.起案C#v.A"
+     },
+     "urn:tw:lines": {
+      "@type": "urn:tw:Line",
+      "urn:tw:lineAmount": {
+       "@id": "urn:tw:rule.起案C#v.M"
+      }
+     },
+     "internalGraph": [
+      {
+       "@id": "urn:tw:rule.起案C#社員",
+       "@type": "Member",
+       "set": {
+        "@id": "urn:org:グループ.全構成員"
+       },
+       "element": {
+        "@id": "urn:tw:rule.起案C#v.U"
+       },
+       "_comment": "起案者 U がバイヤーの全構成員であること（基幹業務。R1028：共通の手順（管理会社の調達の節）は組織を名指さず、バイヤーの部品の起案の節が名指す）",
+       "once": true
+      },
+      {
+       "@id": "urn:tw:rule.起案C#和",
+       "@type": "Equal",
+       "operand1": {
+        "@id": "urn:tw:rule.起案C#v.A"
+       },
+       "operand2": {
+        "@id": "urn:tw:rule.起案C#v.M"
+       }
+      }
+     ]
+    },
+    {
+     "_comment": "明細C(商品: 商品C(単価: U), 数量: Q, 明細金額: M) :- Times([U, Q], M). 単価は商品から引く（商品は refersTo なので検索する）",
+     "@id": "urn:tw:rule.明細C",
+     "@type": "urn:tw:Line",
+     "variables": [
+      {
+       "@id": "urn:tw:rule.明細C#v.U",
+       "variableName": "U"
+      },
+      {
+       "@id": "urn:tw:rule.明細C#v.Q",
+       "variableName": "Q"
+      },
+      {
+       "@id": "urn:tw:rule.明細C#v.M",
+       "variableName": "M"
+      }
+     ],
+     "urn:tw:product": {
+      "@type": "urn:tw:Product",
+      "urn:tw:unitPrice": {
+       "@id": "urn:tw:rule.明細C#v.U"
+      }
+     },
+     "urn:tw:quantity": {
+      "@id": "urn:tw:rule.明細C#v.Q"
+     },
+     "urn:tw:lineAmount": {
+      "@id": "urn:tw:rule.明細C#v.M"
+     },
+     "internalGraph": [
+      {
+       "@id": "urn:tw:rule.明細C#積",
+       "@type": "Times",
+       "operand1": [
+        {
+         "@id": "urn:tw:rule.明細C#v.U"
+        },
+        {
+         "@id": "urn:tw:rule.明細C#v.Q"
+        }
+       ],
+       "operand2": {
+        "@id": "urn:tw:rule.明細C#v.M"
+       }
+      }
+     ]
+    },
+    {
+     "@id": "urn:tw:rule.承認C",
+     "@type": "urn:tw:Approval",
+     "okButton": "_suspendingOk"
+    },
+    {
+     "_comment": "承認された(判断: 承認). 判断が 承認 のときだけ成り立つ",
+     "@id": "urn:tw:rule.承認された",
+     "@type": "urn:tw:Approved",
+     "urn:tw:decision": "承認"
+    },
+    {
+     "@id": "urn:tw:rule.却下確認C",
+     "@type": "urn:tw:RejectionCheck",
+     "okButton": "_suspendingOk"
+    },
+    {
+     "@id": "urn:tw:rule.発注C",
+     "@type": "urn:tw:Order",
+     "okButton": "_suspendingOk"
+    },
+    {
+     "@id": "urn:tw:rule.検収C",
+     "@type": "urn:tw:Inspection",
+     "okButton": "_suspendingOk"
+    },
+    {
+     "@id": "urn:tw:rule.支払いC",
+     "@type": "urn:tw:Payment",
+     "okButton": "_suspendingOk"
+    },
+    {
+     "_comment": "明細処理+(行: 明細処理()). 要素ごとの仕事は 明細処理 の節にある",
+     "@id": "urn:tw:rule.明細処理+",
+     "@type": "urn:tw:LineProcessSeq",
+     "urn:tw:row": {
+      "@type": "urn:tw:LineProcess"
+     }
+    },
+    {
+     "_comment": "明細処理(対象明細: 明細C(node: X, 商品: 商品C(サプライヤー: P), 数量: Q), 起案者: U) :- 発注C(対象明細: X, agent: 購買担当) ─Then→ 納品C(対象明細: X, 納品数: S, agent: A) ─Then→ 検収C(対象明細: X, 検収数: R, 請求月: Mo, agent: U), ≧(Q, S), ≧(S, R). 成員(主体: P, 人: A). 納品の担当者 A は、その行の商品のサプライヤーの成員（R872）",
+     "@id": "urn:tw:rule.明細処理",
+     "@type": "urn:tw:LineProcess",
+     "variables": [
+      {
+       "@id": "urn:tw:rule.明細処理#v.X",
+       "variableName": "X"
+      },
+      {
+       "@id": "urn:tw:rule.明細処理#v.P",
+       "variableName": "P"
+      },
+      {
+       "@id": "urn:tw:rule.明細処理#v.Q",
+       "variableName": "Q"
+      },
+      {
+       "@id": "urn:tw:rule.明細処理#v.U",
+       "variableName": "U"
+      },
+      {
+       "@id": "urn:tw:rule.明細処理#v.S",
+       "variableName": "S"
+      },
+      {
+       "@id": "urn:tw:rule.明細処理#v.R",
+       "variableName": "R"
+      },
+      {
+       "@id": "urn:tw:rule.明細処理#v.Mo",
+       "variableName": "Mo"
+      },
+      {
+       "@id": "urn:tw:rule.明細処理#v.A",
+       "variableName": "A"
+      },
+      {
+       "@id": "urn:tw:rule.明細処理#v.A発注",
+       "variableName": "A発注"
+      }
+     ],
+     "urn:tw:targetLine": {
+      "@type": "urn:tw:Line",
+      "node": {
+       "@id": "urn:tw:rule.明細処理#v.X"
+      },
+      "urn:tw:product": {
+       "@type": "urn:tw:Product",
+       "urn:tw:supplier": {
+        "@id": "urn:tw:rule.明細処理#v.P"
+       }
+      },
+      "urn:tw:quantity": {
+       "@id": "urn:tw:rule.明細処理#v.Q"
+      }
+     },
+     "urn:tw:drafter": {
+      "@id": "urn:tw:rule.明細処理#v.U"
+     },
+     "internalGraph": [
+      {
+       "@id": "urn:tw:rule.明細処理#発注の担当",
+       "@type": "Member",
+       "set": {
+        "@id": "urn:org:役職.購買担当"
+       },
+       "element": {
+        "@id": "urn:tw:rule.明細処理#v.A発注"
+       },
+       "_comment": "発注の担当者は購買担当の誰か（R875。once なしで手分けと引き継ぎができる。R876）"
+      },
+      {
+       "@id": "urn:tw:rule.明細処理#発注",
+       "@type": "urn:tw:Order",
+       "urn:tw:targetLine": {
+        "@id": "urn:tw:rule.明細処理#v.X"
+       },
+       "agent": {
+        "@id": "urn:tw:rule.明細処理#v.A発注"
+       }
+      },
+      {
+       "@id": "urn:tw:rule.明細処理#納品",
+       "@type": "urn:tw:Delivery",
+       "urn:tw:targetLine": {
+        "@id": "urn:tw:rule.明細処理#v.X"
+       },
+       "urn:tw:deliveredQuantity": {
+        "@id": "urn:tw:rule.明細処理#v.S"
+       },
+       "agent": {
+        "@id": "urn:tw:rule.明細処理#v.A"
+       }
+      },
+      {
+       "@id": "urn:tw:rule.明細処理#サプライヤーの人か",
+       "@type": "Member",
+       "set": {
+        "@id": "urn:tw:rule.明細処理#v.P"
+       },
+       "element": {
+        "@id": "urn:tw:rule.明細処理#v.A"
+       },
+       "_comment": "納品の担当者 A は個人の変数で、その行の商品のサプライヤー（グループ）の成員に限る（R872）"
+      },
+      {
+       "@id": "urn:tw:rule.明細処理#検収",
+       "@type": "urn:tw:Inspection",
+       "urn:tw:targetLine": {
+        "@id": "urn:tw:rule.明細処理#v.X"
+       },
+       "urn:tw:inspectedQuantity": {
+        "@id": "urn:tw:rule.明細処理#v.R"
+       },
+       "urn:tw:billingMonth": {
+        "@id": "urn:tw:rule.明細処理#v.Mo"
+       },
+       "agent": {
+        "@id": "urn:tw:rule.明細処理#v.U"
+       }
+      },
+      {
+       "@id": "urn:tw:rule.明細処理#納品数の上限",
+       "@type": "GreaterEqual",
+       "operand1": {
+        "@id": "urn:tw:rule.明細処理#v.Q"
+       },
+       "operand2": {
+        "@id": "urn:tw:rule.明細処理#v.S"
+       },
+       "_comment": "納品数は数量を超えない（Then につながない）"
+      },
+      {
+       "@id": "urn:tw:rule.明細処理#検収数の上限",
+       "@type": "GreaterEqual",
+       "operand1": {
+        "@id": "urn:tw:rule.明細処理#v.S"
+       },
+       "operand2": {
+        "@id": "urn:tw:rule.明細処理#v.R"
+       },
+       "_comment": "検収数は納品数を超えない（Then につながない）"
+      },
+      {
+       "@type": "Then",
+       "arg1": {
+        "@id": "urn:tw:rule.明細処理#発注"
+       },
+       "arg2": {
+        "@id": "urn:tw:rule.明細処理#納品"
+       }
+      },
+      {
+       "@type": "Then",
+       "arg1": {
+        "@id": "urn:tw:rule.明細処理#納品"
+       },
+       "arg2": {
+        "@id": "urn:tw:rule.明細処理#検収"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "@id": "urn:tw:wp.サプライヤー",
+   "@type": "ONTO2",
+   "currentPublicMark": {
+    "@id": "urn:tw:mark.サプライヤー.1"
+   },
+   "onto0": "サプライヤー",
+   "body": {
+    "@id": "urn:tw:wp.管理会社"
+   },
+   "onto7": [
+    {
+     "@id": "urn:tw:rule.納品C",
+     "@type": "urn:tw:Delivery",
+     "okButton": "_suspendingOk"
+    }
+   ],
+   "ontoChS": [
+    {
+     "_note": "佐藤商店の組織マスターのチャネル設定（R1028：組織マスターは組織ごと。ゴール節は系の組織マスターの設定のものを参照で持つ）",
+     "@id": "urn:tw:設定.組織マスター.佐藤商店",
+     "@type": "ONTOc",
+     "onto0": "佐藤商店 組織マスター",
+     "ontoCs": [
+      {
+       "@id": "urn:tw:設定.組織マスター.佐藤商店.cs1",
+       "@type": "ONTOcS",
+       "ontoG": [
+        {
+         "@id": "urn:system:rule.構成員"
+        },
+        {
+         "@id": "urn:system:rule.役職"
+        },
+        {
+         "@id": "urn:system:rule.グループ"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "_note": "伊藤商店の組織マスターのチャネル設定（R1028：組織マスターは組織ごと。ゴール節は系の組織マスターの設定のものを参照で持つ）",
+     "@id": "urn:tw:設定.組織マスター.伊藤商店",
+     "@type": "ONTOc",
+     "onto0": "伊藤商店 組織マスター",
+     "ontoCs": [
+      {
+       "@id": "urn:tw:設定.組織マスター.伊藤商店.cs1",
+       "@type": "ONTOcS",
+       "ontoG": [
+        {
+         "@id": "urn:system:rule.構成員"
+        },
+        {
+         "@id": "urn:system:rule.役職"
+        },
+        {
+         "@id": "urn:system:rule.グループ"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

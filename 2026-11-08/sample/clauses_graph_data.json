@@ -1,0 +1,152 @@
+{
+  "_comment": "ホーン節（追記207 の新形式）。ホーン節は「ノード1つ ＋ その内部グラフ」である。",
+  "ONTO2": [
+    {
+      "_comment": "ワークプレース。ホーン節はその onto7 の値である（実際の系と同じ形。追記R474・K439）",
+      "@id": "urn:wamtest:workplace.clauses_graph_data",
+      "@type": "ONTO2",
+      "onto7": [
+        {
+          "@id": "urn:node:申請.head",
+          "@type": "urn:wamtest:申請"
+        },
+        {
+          "@id": "urn:node:承認.head",
+          "@type": "urn:wamtest:承認",
+          "okButton": "_suspendingOk"
+        },
+        {
+          "@id": "urn:node:発注.head",
+          "@type": "urn:wamtest:発注"
+        }
+      ],
+      "ontoChS": [
+        {
+          "_comment": "チャネル設定。ゴール節（調達申請ワークフロー）はその ontoG の値である（追記R488・R851：ゴールはチャネル設定から決まる）",
+          "@id": "urn:wamtest:設定.clauses_graph_data",
+          "@type": "ONTOc",
+          "onto0": "調達申請",
+          "ontoCs": [
+            {
+              "@id": "urn:wamtest:設定.clauses_graph_data.cs1",
+              "@type": "ONTOcS",
+              "ontoG": [
+                {
+                  "@id": "urn:node:chotatsu.head",
+                  "@type": "urn:wamtest:調達申請ワークフロー",
+                  "okButton": "_noOk",
+                  "urn:wamtest:agent": {
+                    "@id": "#起案者"
+                  },
+                  "variables": [
+                    {
+                      "@id": "#T1",
+                      "variableName": "T1"
+                    },
+                    {
+                      "@id": "#T2",
+                      "variableName": "T2"
+                    },
+                    {
+                      "@id": "#T3",
+                      "variableName": "T3"
+                    },
+                    {
+                      "@id": "#起案者",
+                      "variableName": "起案者"
+                    }
+                  ],
+                  "internalGraph": [
+                    {
+                      "@id": "urn:node:sinsei-001",
+                      "@type": "urn:wamtest:申請",
+                      "urn:wamtest:agent": {
+                        "@id": "#起案者"
+                      },
+                      "okButton": "_noOk",
+                      "truthValue": {
+                        "@id": "#T1"
+                      }
+                    },
+                    {
+                      "@id": "urn:node:shonin-001",
+                      "@type": "urn:wamtest:承認",
+                      "urn:wamtest:agent": {
+                        "@id": "#起案者"
+                      },
+                      "truthValue": {
+                        "@id": "#T2"
+                      },
+                      "okButton": "_noOk"
+                    },
+                    {
+                      "@id": "urn:node:hacchu-001",
+                      "@type": "urn:wamtest:発注",
+                      "urn:wamtest:agent": {
+                        "@id": "#起案者"
+                      },
+                      "okButton": "_noOk",
+                      "truthValue": {
+                        "@id": "#T3"
+                      }
+                    },
+                    {
+                      "@id": "urn:node:chotatsu.head#link1",
+                      "@type": "urn:wamtest:Then",
+                      "arg1": {
+                        "@id": "urn:node:sinsei-001"
+                      },
+                      "arg2": {
+                        "@id": "urn:node:shonin-001"
+                      }
+                    },
+                    {
+                      "@id": "urn:node:chotatsu.head#link2",
+                      "@type": "urn:wamtest:Then",
+                      "arg1": {
+                        "@id": "urn:node:shonin-001"
+                      },
+                      "arg2": {
+                        "@id": "urn:node:hacchu-001"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "ONTOc1": [
+    {
+      "_comment": "調達申請のチャネル（利用者が作った、名前付きの完成したチャネル。R860・R851・R1017：業務フローは設定の名前付きのチャネルに置く）",
+      "@id": "urn:channel:調達申請",
+      "@type": "ONTOc1",
+      "ontoC": {
+        "@id": "urn:wamtest:設定.clauses_graph_data"
+      },
+      "onto0": "調達申請",
+      "agent": {
+        "@id": "urn:entity:利用者"
+      },
+      "_initiator": {
+        "@id": "urn:entity:利用者"
+      },
+      "completeByOkButton": {
+        "@id": "urn:entity:利用者"
+      },
+      "complete": true,
+      "begin": "2026-10-01T00:00:00.000Z",
+      "creator": "urn:entity:利用者"
+    }
+  ],
+  "_comment_person": "起案者（agent）と人のノード（追記R684・R748・R772）——計算だけの例題で、担当のあるタスクが無い。業務フローは起案者が start で起動し、頭部に担当者の無いゴールは起動しない（R684）ので、起案者として人を1人置く",
+  "urn:wamtest:Person": [
+    {
+      "@id": "urn:entity:利用者",
+      "@type": "urn:wamtest:Person"
+    }
+  ]
+}

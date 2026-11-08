@@ -1,0 +1,3 @@
+new urn:entity:line-pencil2b urn:quote:QuoteLine urn:quote:lineProduct urn:entity:pencil-2b urn:quote:lineQuantity 60 into 見積書 urn:quote:lineItem
+new urn:entity:line-eraser urn:quote:QuoteLine urn:quote:lineProduct urn:entity:eraser urn:quote:lineQuantity 20 into 見積書 urn:quote:lineItem
+end

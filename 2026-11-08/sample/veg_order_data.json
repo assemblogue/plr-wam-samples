@@ -1,0 +1,300 @@
+{
+ "_comment": "野菜の発注書の例題（veg_order）。発注書は空の状態から始まる——明細が1本も無いので、明細を作って野菜と数量を入れ、発注書に足す。トマトには大玉とミニの2種類があり、野菜を選ぶ欄の候補に両方が並ぶ。ホーン節に明細は1個しか書かれていない——本数はデータが決める",
+ "ONTO2": [
+  {
+   "_comment": "ワークプレース。ホーン節はその onto7 の値である（実際の系と同じ形。追記R474・K439）",
+   "@id": "urn:wamtest:workplace.veg_order_data",
+   "@type": "ONTO2",
+   "onto7": [
+    {
+     "_comment": "明細のホーン節。⚠️ 単価は商品の属性であって明細の欄ではない——頭部に入れ子のパターンで書き、商品から取る。 ⚠️ **担当者は明細の欄ではない**——頭部に書かなければ明細は担当者を持たない（個数はホーン節が決める）。持たせると、発注書と明細が同じ担当者を指して**担当者が共有ノードになる**（追記250・252）。根である発注書が指せば足りる。 ⚠️ **`node:` はノード自身を指す**——商品ノードを在庫の検索鍵として使うために取る。使わないところでは書かない。",
+     "@id": "urn:node:OrderLine.head",
+     "@type": "urn:veg:OrderLine",
+     "variables": [
+      {
+       "@id": "#Q",
+       "variableName": "Q",
+       "@type": "nonNegativeInteger"
+      },
+      {
+       "@id": "#U",
+       "variableName": "U",
+       "@type": "nonNegativeInteger"
+      },
+      {
+       "@id": "#A",
+       "variableName": "A",
+       "@type": "nonNegativeInteger"
+      },
+      {
+       "@id": "#P",
+       "variableName": "P"
+      },
+      {
+       "@id": "#R",
+       "variableName": "R",
+       "@type": "nonNegativeInteger"
+      }
+     ],
+     "urn:veg:lineQuantity": {
+      "@id": "#Q"
+     },
+     "urn:veg:lineAmount": {
+      "@id": "#A"
+     },
+     "internalGraph": [
+      {
+       "_comment": "金額 = 単価 × 数量。要素ごとの計算はここにある。",
+       "@id": "urn:node:lineAmount",
+       "@type": "urn:veg:Times",
+       "operand1": [
+        {
+         "@id": "#U"
+        },
+        {
+         "@id": "#Q"
+        }
+       ],
+       "operand2": {
+        "@id": "#A"
+       }
+      },
+      {
+       "_comment": "在庫を引く。**商品ノードそのもの**（`node:` で取った #P）が引くための鍵であり、商品名や単価では引けない——同じ名前の別ノードがありうるし、名前を持たない商品もありうる。",
+       "@id": "urn:node:lineStock",
+       "@type": "urn:veg:Stock",
+       "urn:veg:stockProduct": {
+        "@id": "#P"
+       },
+       "urn:veg:stockRemaining": {
+        "@id": "#R"
+       }
+      },
+      {
+       "_comment": "数量は残数を超えられない。",
+       "@id": "urn:node:lineStockCheck",
+       "@type": "urn:veg:AtLeast",
+       "operand1": {
+        "@id": "#R"
+       },
+       "operand2": {
+        "@id": "#Q"
+       }
+      }
+     ],
+     "urn:veg:lineProduct": {
+      "@type": "urn:veg:Vegetable",
+      "urn:veg:itemPrice": {
+       "@id": "#U"
+      },
+      "node": {
+       "@id": "#P"
+      }
+     }
+    }
+   ],
+   "ontoChS": [
+    {
+     "_comment": "チャネル設定。ゴール節はその ontoG の値である（追記R488）",
+     "@id": "urn:wamtest:設定.veg_order_data",
+     "@type": "ONTOc",
+     "onto0": "発注書",
+     "ontoCs": [
+      {
+       "@id": "urn:wamtest:設定.veg_order_data.cs1",
+       "@type": "ONTOcS",
+       "ontoG": [
+        {
+         "_comment": "発注書のホーン節。**頭部がトップレベルのタスクノードである**——明細のパターンと総額をどちらも頭部が持つ。パターンを書くことが「各要素へ分配せよ」の宣言であり（追記205）、頭部に現れたアトムノードは本体のアトムノードでもある（追記215・216）ので、明細1本ずつがそれ自身のタスクノードとして解かれる。",
+         "@id": "urn:node:Order.head",
+         "@type": "urn:veg:Order",
+         "variables": [
+          {
+           "@id": "#T",
+           "variableName": "T",
+           "@type": "nonNegativeInteger"
+          },
+          {
+           "@id": "#Amount",
+           "variableName": "Amount",
+           "@type": "nonNegativeInteger"
+          },
+          {
+           "@id": "#Qty",
+           "variableName": "Qty",
+           "@type": "nonNegativeInteger"
+          },
+          {
+           "@id": "#Label",
+           "variableName": "Label",
+           "@type": "string"
+          },
+          {
+           "@id": "#Unit",
+           "variableName": "Unit",
+           "@type": "nonNegativeInteger"
+          },
+          {
+           "@id": "#Agent",
+           "variableName": "Agent"
+          }
+         ],
+         "urn:veg:lineItem": {
+          "@type": "urn:veg:OrderLine",
+          "urn:veg:lineAmount": {
+           "@id": "#Amount"
+          },
+          "urn:veg:lineQuantity": {
+           "@id": "#Qty"
+          },
+          "urn:veg:lineProduct": {
+           "@type": "urn:veg:Vegetable",
+           "urn:veg:itemLabel": {
+            "@id": "#Label"
+           },
+           "urn:veg:itemPrice": {
+            "@id": "#Unit"
+           }
+          }
+         },
+         "urn:veg:agent": {
+          "@id": "#Agent"
+         },
+         "urn:veg:total": {
+          "@id": "#T"
+         },
+         "internalGraph": [
+          {
+           "_comment": "多値引数の値は和である。= は総額の側を束縛する（追記204）。",
+           "@id": "urn:node:total",
+           "@type": "urn:veg:Equals",
+           "operand1": {
+            "@id": "#T"
+           },
+           "operand2": {
+            "@id": "#Amount"
+           }
+          }
+         ],
+         "okButton": "_suspendingOk"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "ONTOc1": [
+  {
+   "_comment": "発注のチャネル（buyer が作った。R867・R860：業務フローは設定の名前付きのチャネルに置く）",
+   "@id": "urn:channel:発注",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:wamtest:設定.veg_order_data"
+   },
+   "onto0": "発注",
+   "agent": {
+    "@id": "urn:entity:buyer"
+   },
+   "_initiator": {
+    "@id": "urn:entity:buyer"
+   },
+   "completeByOkButton": {
+    "@id": "urn:entity:buyer"
+   },
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:entity:buyer"
+  }
+ ],
+ "urn:veg:Vegetable": [
+  {
+   "@id": "urn:entity:tomato-large",
+   "urn:veg:itemLabel": "トマト（大玉）",
+   "urn:veg:itemPrice": 120,
+   "urn:veg:itemUnit": "個",
+   "inChannel": {
+    "@id": "urn:channel:発注"
+   },
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "system"
+  },
+  {
+   "@id": "urn:entity:tomato-mini",
+   "urn:veg:itemLabel": "トマト（ミニ）",
+   "urn:veg:itemPrice": 300,
+   "urn:veg:itemUnit": "パック",
+   "inChannel": {
+    "@id": "urn:channel:発注"
+   },
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "system"
+  },
+  {
+   "@id": "urn:entity:potato",
+   "urn:veg:itemLabel": "じゃがいも",
+   "urn:veg:itemPrice": 250,
+   "urn:veg:itemUnit": "袋",
+   "inChannel": {
+    "@id": "urn:channel:発注"
+   },
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "system"
+  },
+  {
+   "@id": "urn:entity:onion",
+   "urn:veg:itemLabel": "たまねぎ",
+   "urn:veg:itemPrice": 200,
+   "urn:veg:itemUnit": "袋",
+   "inChannel": {
+    "@id": "urn:channel:発注"
+   },
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "system"
+  },
+  {
+   "@id": "urn:entity:carrot",
+   "urn:veg:itemLabel": "にんじん",
+   "urn:veg:itemPrice": 180,
+   "urn:veg:itemUnit": "袋",
+   "inChannel": {
+    "@id": "urn:channel:発注"
+   },
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "system"
+  }
+ ],
+ "urn:veg:Person": [
+  {
+   "@id": "urn:entity:buyer",
+   "urn:veg:personName": "購買担当"
+  }
+ ],
+ "urn:veg:Stock": [
+  {
+   "@id": "urn:entity:stock-tomato-large",
+   "urn:veg:stockProduct": "urn:entity:tomato-large",
+   "urn:veg:stockRemaining": 200
+  },
+  {
+   "@id": "urn:entity:stock-tomato-mini",
+   "urn:veg:stockProduct": "urn:entity:tomato-mini",
+   "urn:veg:stockRemaining": 100
+  },
+  {
+   "@id": "urn:entity:stock-potato",
+   "urn:veg:stockProduct": "urn:entity:potato",
+   "urn:veg:stockRemaining": 80
+  },
+  {
+   "@id": "urn:entity:stock-onion",
+   "urn:veg:stockProduct": "urn:entity:onion",
+   "urn:veg:stockRemaining": 80
+  },
+  {
+   "@id": "urn:entity:stock-carrot",
+   "urn:veg:stockProduct": "urn:entity:carrot",
+   "urn:veg:stockRemaining": 80
+  }
+ ]
+}

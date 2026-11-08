@@ -1,0 +1,15 @@
+{
+ "_comment": "例題 inbox_ontology.jsonld のメニュー制限定義（系の Base.jsonld・Base_restriction.jsonld と同じ並べ方。ハーネスは並べて置けば読む）。予算合計の確定合計・確定案件は、＝ と retrieveAll が決める欄で、人が入れる欄ではないので h（入力させないが、系が埋めて見せる）。review の決め",
+ "@context": "http://PUBLIC/ontologies/menuContext.jsonld",
+ "restriction": {
+  "@id": "urn:inbox:ontology.restriction",
+  "defines": [
+   {
+    "urn:inbox:confirmedTotal": "h"
+   },
+   {
+    "urn:inbox:confirmedMatters": "h"
+   }
+  ]
+ }
+}

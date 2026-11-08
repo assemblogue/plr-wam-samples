@@ -1,0 +1,3 @@
+as urn:entity:buyer
+start urn:quote:QuoteRecord urn:quote:lineItem [urn:entity:line-1,urn:entity:line-2]
+as -

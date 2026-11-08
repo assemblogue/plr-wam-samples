@@ -1,0 +1,14 @@
+{
+  "_comment": "商品マスター だけ → 第7節（掛率1）",
+  "urn:pr:商品マスター": [
+    {
+      "@id": "urn:e:m1",
+      "urn:pr:商品": "鉛筆4B",
+      "urn:pr:単価": 120,
+      "agent": "urn:entity:admin",
+      "completeByOkButton": "urn:entity:admin",
+      "begin": "2026-10-01T00:00:00.000Z",
+      "creator": "urn:entity:admin"
+    }
+  ]
+}

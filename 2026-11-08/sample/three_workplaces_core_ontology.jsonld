@@ -1,0 +1,946 @@
+{
+ "_comment": "管理会社・バイヤー・サプライヤーの3つのワークプレースの例題（#219・R798）のオントロジー。ハーネスはオントロジーを1つしか受け取らないので、3つのワークプレースのクラスをここにまとめる（ワークプレースごとのオントロジー（onto6）への置き分けは、ハーネスがワークプレースごとに読めるようになってから）。組込述語と組織マスターのクラスは kobuy_workplace_ontology.jsonld と同じもの。商品マスター（管理会社）・明細・期間ごとの請求（請求締め）を持つ",
+ "@id": "urn:tw:ontology",
+ "@type": "Ontology",
+ "agentProperty": "agent",
+ "channelProperty": "inChannel",
+ "_taskAccess": "業務フロー定義が担当者を制約しないタスクは、チャネルの TaskAccess が担当者を決める（spec_ops.md）。エンジンへ渡す述語と属性。class はエンジンが節に入れる標準の節の述語、recordClass はチャネルの要素",
+ "taskAccess": {
+  "class": "TaskAgent",
+  "channel": "channel",
+  "task": "task",
+  "agent": "person",
+  "recordClass": "TaskAccess",
+  "recordAgent": "taskAgent",
+  "recordUser": "taskUser",
+  "memberProperties": [
+   "incumbent",
+   "hasMember"
+  ]
+ },
+ "defines": [
+  {
+   "_comment": "補償タスク述語を指すクラスレベル属性。**完全なURIで書く**——JSON-LD の素の鍵（compensatesWith）は文脈に定義が無ければ保たれず、読めない（追記317）。",
+   "@id": "urn:tw:compensatesWith",
+   "@type": "ObjectProperty",
+   "label": {
+    "ja": "補償タスク",
+    "en": "Compensates with"
+   },
+   "subPropertyOf": [
+    "#compensatesWith"
+   ]
+  },
+  {
+   "@id": "urn:tw:Procurement",
+   "@type": "Class",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:subject",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:budget",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:amount",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#inChannel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "調達",
+   "_comment": "ゴール（管理会社のチャネル設定 設定.調達 の ontoG）。調達の起案から支払いまでを1つの業務フローとして持つ"
+  },
+  {
+   "@id": "urn:tw:Draft",
+   "@type": "Class",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:lines",
+     "minCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:amount",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:budget",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:subject",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "起案",
+   "_comment": "バイヤーのワークプレースで定義する。明細は1段で、まとめない。金額は明細金額の和で、起案の節の Equal が入れる（tut.md「集計はパターン1個で書く」）"
+  },
+  {
+   "@id": "urn:tw:Approval",
+   "@type": "Class",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:decision",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:approvedSubject",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:approvedAmount",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:approvedBudget",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "承認",
+   "_comment": "バイヤーのワークプレースで定義する。判断は 承認 か 却下。承認するのは予算管理担当（R802）。承認の OK を、予算の上での確定とみなす（追記R562・R563）。承認件名・承認金額・承認予算は、起案者が入れた値を承認者が読む refersTo の下位属性（受け渡しの定石。R517・R626）"
+  },
+  {
+   "@id": "urn:tw:Budget",
+   "@type": "Class",
+   "label": "予算",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:budgetCode",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:limit",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:users",
+     "minCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#inChannel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "_comment": "バイヤーのワークプレースで定義する（設定.マスター）。予算管理担当が登録する（基幹業務。R802）。調達の節が existing: _true で検索する"
+  },
+  {
+   "@id": "urn:tw:BudgetTotal",
+   "@type": "Class",
+   "label": "予算合計",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:budget",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:limit",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:confirmedList",
+     "minCardinality": 0
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:confirmedTotal",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:confirmedMatters",
+     "minCardinality": 0
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#inChannel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "_comment": "バイヤーのワークプレースで定義する（設定.予算合計）。予算管理担当が作る、予算の合計のレコード（トーク的業務。取消可能——巻き戻しでレコードも取り消す。R573）。合計と案件の件名だけを持つ（R547・R562・R563）"
+  },
+  {
+   "@id": "urn:tw:Approved",
+   "@type": "Class",
+   "isConstraint": true,
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:decision",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "承認された",
+   "_comment": "判断が 承認 であること（副作用の無いアトムノード。Then／Else の始点）。節は 承認された(判断: 承認). の1本だけで、頭部の定数と判断の値の単一化で決まる——却下なら合う節が無く偽になり、Else の先へ移る。= は数の線形の等式なので、文字列の比較には使わない（spec_builtin「Equal は、operand1 の和 = operand2 の和 という線形の等式の制約である」）"
+  },
+  {
+   "@id": "urn:tw:RejectionCheck",
+   "@type": "Class",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "却下の確認",
+   "_comment": "バイヤーのワークプレースで定義する。承認が却下されたとき、起案者が確かめる（Else の先）"
+  },
+  {
+   "@id": "urn:tw:Order",
+   "@type": "Class",
+   "subClassOf": [
+    "#Incompensable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:targetLine",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:orderDate",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "発注",
+   "_comment": "バイヤーのワークプレースで定義する。明細の1行ごとに立つ。補償不能（注文を出したら取り消せない）。節に Sendback(発注, 承認) を書かないので、発注からは承認へ差し戻せない（R844）"
+  },
+  {
+   "@id": "urn:tw:Delivery",
+   "@type": "Class",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:targetLine",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:deliveredQuantity",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "納品",
+   "_comment": "サプライヤーのワークプレースで定義する。明細の1行ごとに立ち、担当者はその行の商品のサプライヤー"
+  },
+  {
+   "@id": "urn:tw:Inspection",
+   "@type": "Class",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:targetLine",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:billingMonth",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:inspectedQuantity",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "検収",
+   "_comment": "バイヤーのワークプレースで定義する。明細の1行ごとに立つ。請求月は、この検収をどの期間の請求に入れるか（請求締めの帳票集約の共通部分。kobuy_billing の 締日 と同じ形）"
+  },
+  {
+   "@id": "urn:tw:Billing",
+   "@type": "Class",
+   "subClassOf": [
+    "#Compensable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:invoice",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:invoiceNumber",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:billedAmount",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "請求",
+   "_comment": "管理会社のワークプレースで定義する。請求書1通ごとに立ち、担当者はその請求書のサプライヤー。請求額は請求明細の金額の和（節が入れる）。補償可能で、補償タスクは請求取消（R816）",
+   "urn:tw:compensatesWith": "urn:tw:BillingCancel"
+  },
+  {
+   "_comment": "請求の補償タスク（R816）。元の請求の引数がそのまま渡り、担当者も元の請求の担当者（管理会社の請求担当）である——売上伝票に対する赤伝票・発注に対する発注取消と同じ形",
+   "@id": "urn:tw:BillingCancel",
+   "@type": "Class",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:invoice",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:invoiceNumber",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:billedAmount",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "請求取消"
+  },
+  {
+   "@id": "urn:tw:Payment",
+   "@type": "Class",
+   "subClassOf": [
+    "#Incompensable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:invoice",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:paymentDate",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "支払い",
+   "_comment": "バイヤーのワークプレースで定義する。請求書1通ごとに立つ。支払いの担当者は、節の Sendback(支払い, 請求) で、支払いが OK 待ちのあいだ請求へ差し戻せる（R844・R849）"
+  },
+  {
+   "@id": "urn:tw:Product",
+   "@type": "Class",
+   "label": "商品",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:productName",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:unitPrice",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:supplier",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#inChannel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "_comment": "商品マスターのチャネルのレコード（R455。業務フローの頭部で、Task の下位）。登録するのはそのサプライヤーの人"
+  },
+  {
+   "@id": "urn:tw:Line",
+   "@type": "Class",
+   "label": "明細",
+   "subClassOf": [
+    "#OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:product",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:quantity",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:lineAmount",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "_comment": "起案の明細の1行。単価は持たず、商品から引く。明細金額は明細の節が 単価 × 数量 で入れる（tut.md「要素ごとの計算は、要素の述語の節に書く」）"
+  },
+  {
+   "@id": "urn:tw:LineProcessSeq",
+   "@type": "Class",
+   "label": "明細ごとの処理",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:row",
+     "minCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "_comment": "明細の1行ごとに 発注 → 納品 → 検収 を立てる。行のパターン1個が要素ごとに分配され、要素ごとに 明細処理 の節が走る（spec_branch「パターンは1つで、要素ごとに付属フレームができ…」）。OK ボタンの無いタスクで、実体になるときに要素も実体になり、要素の節のタスクは要素の内部グラフに入る（R373・R505）"
+  },
+  {
+   "@id": "urn:tw:LineProcess",
+   "@type": "Class",
+   "label": "明細の処理",
+   "subClassOf": [
+    "#OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:targetLine",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:drafter",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "_comment": "明細処理+ の要素。節が、その行の 発注 → 納品 → 検収 を立てる"
+  },
+  {
+   "@id": "urn:tw:BillingClose",
+   "@type": "Class",
+   "label": "請求締め",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:billingMonth",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#inChannel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "_comment": "ゴール（管理会社のチャネル設定 設定.請求）。請求担当が請求月を締め、その月に検収の済んだすべての調達の明細を、サプライヤーごとに請求書にまとめる（帳票集約。kobuy_billing と同じ形）"
+  },
+  {
+   "@id": "urn:tw:Closing",
+   "@type": "Class",
+   "label": "締め処理",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:billingMonth",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "_comment": "管理会社のワークプレースで定義する。請求担当が請求月を入れて OK を押すと、帳票集約（FormAggregation）が請求書を作る"
+  },
+  {
+   "@id": "urn:tw:Invoice",
+   "@type": "Class",
+   "label": "請求書",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:billingMonth",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:supplier",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:invoiceLines",
+     "minCardinality": 1
+    }
+   ],
+   "_comment": "帳票集約が、請求月・サプライヤーごとに1通作る"
+  },
+  {
+   "@id": "urn:tw:InvoiceLine",
+   "@type": "Class",
+   "label": "請求明細",
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:targetLine",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:productName",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:unitPrice",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:inspectedQuantity",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:amount",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "_comment": "請求書の明細。帳票集約が、検収1件につき1行作る"
+  },
+  {
+   "@id": "urn:tw:PaymentGroup",
+   "@type": "Class",
+   "label": "支払い群",
+   "subClassOf": [
+    "#OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:invoice",
+     "minCardinality": 0
+    }
+   ],
+   "_comment": "請求締めの帳票集約が作った請求書の並び（統合の値。R882）の1通ごとに 請求 → 支払い を立てる",
+   "isConstraint": true
+  },
+  {
+   "@id": "urn:tw:PaymentSeq",
+   "@type": "Class",
+   "label": "請求書ごとの支払い",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:row",
+     "minCardinality": 0
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "_comment": "請求書1通ごとに 請求 → 支払い を立てる。OK ボタンの無いタスクで、実体になるときに要素も実体になり、要素の節のタスクは要素の内部グラフに入る（明細処理+ と同じ）"
+  },
+  {
+   "@id": "urn:tw:PaymentUnit",
+   "@type": "Class",
+   "label": "請求書の支払い",
+   "subClassOf": [
+    "#OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:tw:invoice",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "_comment": "支払い+ の要素。節が、その請求書の 請求 → 支払い を立てる"
+  },
+  {
+   "@id": "urn:tw:subject",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "件名"
+  },
+  {
+   "@id": "urn:tw:amount",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": "金額"
+  },
+  {
+   "@id": "urn:tw:decision",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "判断"
+  },
+  {
+   "@id": "urn:tw:orderDate",
+   "@type": "DatatypeProperty",
+   "range": "date",
+   "label": "発注日"
+  },
+  {
+   "@id": "urn:tw:deliveredQuantity",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": "納品数"
+  },
+  {
+   "@id": "urn:tw:inspectedQuantity",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": "検収数"
+  },
+  {
+   "@id": "urn:tw:invoiceNumber",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "請求書番号"
+  },
+  {
+   "@id": "urn:tw:billedAmount",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": "請求額"
+  },
+  {
+   "@id": "urn:tw:paymentDate",
+   "@type": "DatatypeProperty",
+   "range": "date",
+   "label": "支払日"
+  },
+  {
+   "@id": "urn:tw:lines",
+   "@type": "ObjectProperty",
+   "range": "urn:tw:Line",
+   "label": "明細"
+  },
+  {
+   "@id": "urn:tw:product",
+   "@type": "ObjectProperty",
+   "range": "urn:tw:Product",
+   "label": "商品",
+   "subPropertyOf": "#refersTo",
+   "_comment": "明細が指す商品。refersTo の下位なので、商品マスターの編集権限と OK の凍結を明細に持ち込まない"
+  },
+  {
+   "@id": "urn:tw:quantity",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": "数量"
+  },
+  {
+   "@id": "urn:tw:lineAmount",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": "明細金額"
+  },
+  {
+   "@id": "urn:tw:productName",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "商品名"
+  },
+  {
+   "@id": "urn:tw:unitPrice",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": "単価"
+  },
+  {
+   "@id": "urn:tw:supplier",
+   "@type": "ObjectProperty",
+   "range": "#Group",
+   "label": "サプライヤー",
+   "_comment": "その商品を納品し請求する会社（グループ）。納品・請求の担当者の欄に渡し、メンバーが引き受ける"
+  },
+  {
+   "@id": "urn:tw:targetLine",
+   "@type": "ObjectProperty",
+   "range": "urn:tw:Line",
+   "label": "明細",
+   "subPropertyOf": "#refersTo",
+   "_comment": "タスクが扱う明細の1行"
+  },
+  {
+   "@id": "urn:tw:drafter",
+   "@type": "ObjectProperty",
+   "range": "#Person",
+   "label": "起案者"
+  },
+  {
+   "@id": "urn:tw:row",
+   "@type": "ObjectProperty",
+   "label": "行"
+  },
+  {
+   "@id": "urn:tw:billingMonth",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "請求月",
+   "_comment": "請求の期間（例：2026-10）"
+  },
+  {
+   "@id": "urn:tw:invoice",
+   "@type": "ObjectProperty",
+   "range": "urn:tw:Invoice",
+   "label": "請求書",
+   "subPropertyOf": "#refersTo"
+  },
+  {
+   "@id": "urn:tw:invoiceLines",
+   "@type": "ObjectProperty",
+   "range": "urn:tw:InvoiceLine",
+   "label": "請求明細"
+  },
+  {
+   "@id": "urn:tw:budget",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "予算",
+   "_comment": "予算の識別子（予算コード）。調達・承認・予算合計が、どの予算の話かをこれで持つ"
+  },
+  {
+   "@id": "urn:tw:budgetCode",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "予算コード"
+  },
+  {
+   "@id": "urn:tw:limit",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": "限度額"
+  },
+  {
+   "@id": "urn:tw:users",
+   "@type": "ObjectProperty",
+   "range": "#Person",
+   "label": "利用者",
+   "_comment": "その予算で起案できる人"
+  },
+  {
+   "@id": "urn:tw:confirmedTotal",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": "確定合計"
+  },
+  {
+   "@id": "urn:tw:confirmedMatters",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "確定案件",
+   "_comment": "確定合計に含めた案件の件名。調達のレコードを指さない（合計を読める人に調達の中身を読ませない）"
+  },
+  {
+   "@id": "urn:tw:approvedSubject",
+   "@type": "DatatypeProperty",
+   "domain": "urn:tw:Approval",
+   "range": "string",
+   "label": "件名",
+   "subPropertyOf": "#refersTo",
+   "_comment": "承認から見た件名——起案者が入れた値を承認者が読む（R517）。承認者は書けない（R626）"
+  },
+  {
+   "@id": "urn:tw:approvedAmount",
+   "@type": "DatatypeProperty",
+   "domain": "urn:tw:Approval",
+   "range": "nonNegativeInteger",
+   "label": "金額",
+   "subPropertyOf": "#refersTo",
+   "_comment": "承認から見た金額——起案者が入れた値を承認者が読む（R517）。承認者は書けない（R626）"
+  },
+  {
+   "@id": "urn:tw:approvedBudget",
+   "@type": "DatatypeProperty",
+   "domain": "urn:tw:Approval",
+   "range": "string",
+   "label": "予算",
+   "subPropertyOf": "#refersTo",
+   "_comment": "承認から見た予算——起案者が入れた値を承認者が読む（R517）。承認者は書けない（R626）"
+  },
+  {
+   "@id": "#retrieveAll",
+   "@type": "ObjectProperty",
+   "subPropertyOf": [
+    "#retrieve",
+    "#refersTo"
+   ],
+   "label": "検索してすべて集める",
+   "_comment": "仮の宣言（R736・R910。系のオントロジーに入るまで）。当たるものをすべて集める検索の欄。新しい核だけが読む"
+  },
+  {
+   "@id": "urn:tw:confirmedList",
+   "@type": "ObjectProperty",
+   "range": "urn:tw:Approval",
+   "subPropertyOf": "#retrieveAll",
+   "label": "確定一覧",
+   "_comment": "その予算の、判断が承認の完成した承認（R736）"
+  },
+  {
+   "@id": "#suspendedBy",
+   "@type": "ObjectProperty",
+   "range": "#Person",
+   "label": "中断した人",
+   "_comment": "仮の宣言（R912。系のオントロジーを直すのは切り替えのとき）。中断ありの OK で中断した人。最大1。新しい核だけが読み、completeOrSuspendByOkButton は読まない"
+  }
+ ]
+}

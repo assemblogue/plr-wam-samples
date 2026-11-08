@@ -1,0 +1,64 @@
+{
+ "_source": {
+  "path": "/mnt/c/home/doc/PLR/dist/schemata/Ontology.xlsx",
+  "sha256": "1b786de03c48559a33c17844a4b17b7073896bbf6b68131e24ffc8e940b63f72"
+ },
+ "@context": "http://PUBLIC/ontologies/menuContext.jsonld",
+ "restriction": {
+  "@id": "ONTO",
+  "defines": [
+   {
+    "#ontoID": "h"
+   },
+   {
+    "#Next": "i"
+   },
+   {
+    "#Task": "I"
+   },
+   {
+    "#Constraint": "I"
+   },
+   {
+    "#existing": "n"
+   },
+   {
+    "#once": "n"
+   },
+   {
+    "#completeByOkButton": "h"
+   },
+   {
+    "#isComplete": "n"
+   },
+   {
+    "#complete": "n"
+   },
+   {
+    "#completeOrSuspendByOkButton": "n"
+   },
+   {
+    "#truthValue": "n"
+   },
+   {
+    "#okButton": "n"
+   },
+   {
+    "#pullBack": "n"
+   },
+   {
+    "#workplaceMark": "h"
+   },
+   {
+    "#ontoMark": "h"
+   },
+   {
+    "#currentPublicMark": "h"
+   }
+  ],
+  "label": {
+   "": "Ontology",
+   "ja": "オントロジー"
+  }
+ }
+}

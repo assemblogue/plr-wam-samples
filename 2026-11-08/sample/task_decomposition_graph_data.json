@@ -1,0 +1,99 @@
+{
+ "_comment": "タスク分解の試しのワークプレース。課題のチャネル設定だけを持つ",
+ "ONTO2": [
+  {
+   "@id": "urn:td:wp",
+   "@type": "ONTO2",
+   "onto0": "タスク分解",
+   "onto7": [],
+   "ontoChS": [
+    {
+     "@id": "urn:td:設定.課題",
+     "@type": "ONTOc",
+     "onto0": "課題",
+     "ontoCC": [
+      {
+       "@id": "urn:person:管理者"
+      }
+     ],
+     "_note": "課題のチャネル設定（トーク的業務）。起動して書くのも読むのも参加者（TaskAccess）",
+     "ontoCs": [
+      {
+       "@id": "urn:td:設定.課題.cs1",
+       "@type": "ONTOcS",
+       "ontoG": [
+        {
+         "_comment": "課題(題名: T, agent: A). 本体は無い。担当者 A は頭部にしか現れない（トーク的業務）ので、チャネルの TaskAccess が決める（起動した人）",
+         "@id": "urn:td:rule.課題",
+         "@type": "urn:td:課題",
+         "variables": [
+          {
+           "@id": "urn:td:rule.課題#v.A",
+           "variableName": "A"
+          },
+          {
+           "@id": "urn:td:rule.課題#v.T",
+           "variableName": "T"
+          }
+         ],
+         "urn:td:題名": {
+          "@id": "urn:td:rule.課題#v.T"
+         },
+         "agent": {
+          "@id": "urn:td:rule.課題#v.A"
+         },
+         "internalGraph": []
+        },
+        {
+         "_comment": "発言(本文: B, agent: A). 本体は無い（トーク的業務）。対象（課題）は起動の後に入れる",
+         "@id": "urn:td:rule.発言",
+         "@type": "urn:td:発言",
+         "variables": [
+          {
+           "@id": "urn:td:rule.発言#v.A",
+           "variableName": "A"
+          },
+          {
+           "@id": "urn:td:rule.発言#v.B",
+           "variableName": "B"
+          }
+         ],
+         "urn:td:本文": {
+          "@id": "urn:td:rule.発言#v.B"
+         },
+         "agent": {
+          "@id": "urn:td:rule.発言#v.A"
+         },
+         "internalGraph": []
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "_note": "この組織の組織マスターのチャネル設定（R1028：組織マスターは組織ごとで、その組織のワークプレースが設定を挙げる。ゴール節は系の組織マスターの設定のものを参照で持つ）",
+     "@id": "urn:td:設定.組織マスター",
+     "@type": "ONTOc",
+     "onto0": "組織マスター",
+     "ontoCs": [
+      {
+       "@id": "urn:td:設定.組織マスター.cs1",
+       "@type": "ONTOcS",
+       "ontoG": [
+        {
+         "@id": "urn:system:rule.構成員"
+        },
+        {
+         "@id": "urn:system:rule.役職"
+        },
+        {
+         "@id": "urn:system:rule.グループ"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

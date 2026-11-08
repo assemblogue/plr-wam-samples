@@ -1,0 +1,14 @@
+{
+  "_comment": "明細(数量:60, 単価:80, 金額:A) を問う。答え A の住処は実体属性キャッシュである——**値（4800）が出なければならない。参照が出たら、読み口に実体属性キャッシュを渡し忘れている**（追記328・329）。",
+  "nodeUri": "urn:entity:line-1",
+  "predicate": "urn:aq:明細",
+  "args": {
+    "urn:aq:数量": { "value": 60, "termType": "constant" },
+    "urn:aq:単価": { "value": 80, "termType": "constant" },
+    "urn:aq:金額": { "name": "A", "termType": "variable" }
+  },
+  "isConstraint": true,
+  "builtInFunction": null,
+  "quant": null,
+  "completionMode": null
+}

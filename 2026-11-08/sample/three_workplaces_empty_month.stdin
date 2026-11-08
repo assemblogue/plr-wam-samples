@@ -1,0 +1,7 @@
+as urn:person:高橋
+start urn:tw:BillingClose urn:tw:billingMonth 2026-10 as @請求締め
+set urn:tw:rule.請求締め#締め処理 urn:tw:billingMonth 2026-10
+ok urn:tw:rule.請求締め#締め処理
+ok @請求締め
+list
+end

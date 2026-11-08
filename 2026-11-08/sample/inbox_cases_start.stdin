@@ -1,0 +1,20 @@
+as urn:entity:鈴木
+trial urn:wamtest:workplace.inbox_graph_data
+publish trial-7
+start urn:inbox:Budget urn:inbox:budgetCode 予算.山田 urn:inbox:limit 500000 urn:inbox:users [urn:entity:山田] as @予算1
+ok @予算1
+start urn:inbox:Budget urn:inbox:budgetCode 予算.佐藤 urn:inbox:limit 1000000 urn:inbox:users [urn:entity:佐藤] as @予算2
+ok @予算2
+start urn:inbox:Budget urn:inbox:budgetCode 予算.高橋 urn:inbox:limit 300000 urn:inbox:users [urn:entity:高橋] as @予算3
+ok @予算3
+as urn:entity:山田
+start urn:inbox:Procurement urn:inbox:matter A urn:inbox:budget 予算.山田
+as urn:entity:佐藤
+start urn:inbox:Procurement urn:inbox:matter B urn:inbox:budget 予算.佐藤
+as urn:entity:山田
+start urn:inbox:Procurement urn:inbox:matter C urn:inbox:budget 予算.山田
+as urn:entity:佐藤
+start urn:inbox:Inspection urn:inbox:matter D
+as urn:entity:山田
+start urn:inbox:Inspection urn:inbox:matter E
+as -

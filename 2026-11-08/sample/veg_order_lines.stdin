@@ -1,0 +1,5 @@
+new urn:entity:line-1 urn:veg:OrderLine urn:veg:lineProduct urn:entity:tomato-large urn:veg:lineQuantity 4 into 発注書 urn:veg:lineItem
+new urn:entity:line-2 urn:veg:OrderLine urn:veg:lineQuantity 2 into 発注書 urn:veg:lineItem
+set urn:entity:line-2 urn:veg:lineProduct urn:entity:tomato-mini
+new urn:entity:line-3 urn:veg:OrderLine urn:veg:lineProduct urn:entity:onion urn:veg:lineQuantity 2 into 発注書 urn:veg:lineItem
+end

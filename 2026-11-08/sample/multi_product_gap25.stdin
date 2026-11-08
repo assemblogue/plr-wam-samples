@@ -1,0 +1,14 @@
+/as urn:entity:サプライヤー
+/start urn:mship:ゴール
+/as -
+/as urn:entity:サプライヤー
+/set urn:node:出荷 urn:mship:出荷数 20 where urn:mship:商品 えんぴつ
+/set urn:node:出荷 urn:mship:出荷数 20 where urn:mship:商品 消しゴム
+/ok urn:node:出荷
+/as urn:entity:バイヤー
+/set urn:node:検収 urn:mship:返品数 5 where urn:mship:商品 えんぴつ
+/set urn:node:検収 urn:mship:返品数 0 where urn:mship:商品 消しゴム
+/ok urn:node:検収
+/as urn:entity:サプライヤー
+/set urn:node:出荷 urn:mship:出荷数 45 where urn:mship:商品 えんぴつ
+/set urn:node:出荷 urn:mship:出荷数 80 where urn:mship:商品 消しゴム

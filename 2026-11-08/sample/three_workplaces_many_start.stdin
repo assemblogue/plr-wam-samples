@@ -1,0 +1,6 @@
+as urn:person:山田
+start urn:tw:Budget urn:tw:budgetCode 予算-1 urn:tw:limit 200000 urn:tw:users [urn:person:田中,urn:person:鈴木] as @予算
+ok @予算
+as urn:person:田中
+start urn:tw:Procurement urn:tw:subject えんぴつ urn:tw:budget 予算-1 as @調達A
+new urn:entity:line-A1 urn:tw:Line urn:tw:product urn:item:えんぴつ urn:tw:quantity 5 into urn:tw:rule.調達#起案 urn:tw:lines in @調達A

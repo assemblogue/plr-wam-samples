@@ -1,0 +1,8 @@
+as urn:entity:佐藤
+trial urn:wamtest:workplace.budget_graph_data
+publish trial-7
+start urn:bud:Budget urn:bud:budgetCode 予算-1 urn:bud:limit 500000 urn:bud:users [urn:entity:山田,urn:entity:高橋,urn:entity:佐藤] as @予算1
+ok @予算1
+start urn:bud:Budget urn:bud:budgetCode 予算-山田 urn:bud:limit 100000 urn:bud:users [urn:entity:山田] as @予算2
+ok @予算2
+as -

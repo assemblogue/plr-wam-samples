@@ -1,0 +1,3 @@
+as urn:entity:バイヤー
+start urn:kinsp:計算例 urn:kinsp:計算例一覧 [urn:entity:tax-ex-1,urn:entity:tax-ex-2,urn:entity:tax-ex-3,urn:entity:tax-ex-4]
+as -

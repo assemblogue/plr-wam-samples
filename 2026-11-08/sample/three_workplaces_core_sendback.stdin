@@ -1,0 +1,55 @@
+ok urn:tw:rule.調達#起案
+as urn:person:山田
+set urn:tw:rule.調達#承認 urn:tw:decision 承認
+ok urn:tw:rule.調達#承認
+as urn:person:太木
+set urn:tw:rule.明細処理#発注#1 urn:tw:orderDate 2026-10-22
+ok urn:tw:rule.明細処理#発注#1
+set urn:tw:rule.明細処理#発注#1 urn:tw:orderDate 2026-10-22
+ok urn:tw:rule.明細処理#発注#1
+set urn:tw:rule.明細処理#発注#1 urn:tw:orderDate 2026-10-22
+ok urn:tw:rule.明細処理#発注#1
+as urn:person:佐藤
+set urn:tw:rule.明細処理#納品#1 urn:tw:deliveredQuantity 5
+ok urn:tw:rule.明細処理#納品#1
+set urn:tw:rule.明細処理#納品#1 urn:tw:deliveredQuantity 30
+ok urn:tw:rule.明細処理#納品#1
+as urn:person:伊藤
+set urn:tw:rule.明細処理#納品#1 urn:tw:deliveredQuantity 10
+ok urn:tw:rule.明細処理#納品#1
+as urn:person:田中
+set urn:tw:rule.明細処理#検収#1 urn:tw:inspectedQuantity 5
+set urn:tw:rule.明細処理#検収#1 urn:tw:billingMonth 2026-10
+ok urn:tw:rule.明細処理#検収#1
+set urn:tw:rule.明細処理#検収#1 urn:tw:inspectedQuantity 30
+set urn:tw:rule.明細処理#検収#1 urn:tw:billingMonth 2026-10
+ok urn:tw:rule.明細処理#検収#1
+set urn:tw:rule.明細処理#検収#1 urn:tw:inspectedQuantity 10
+set urn:tw:rule.明細処理#検収#1 urn:tw:billingMonth 2026-10
+ok urn:tw:rule.明細処理#検収#1
+ok urn:tw:rule.調達
+as urn:person:高橋
+start urn:tw:BillingClose urn:tw:billingMonth 2026-10
+set urn:tw:rule.請求締め#締め処理 urn:tw:billingMonth 2026-10
+ok urn:tw:rule.請求締め#締め処理
+as urn:person:佐藤
+set urn:tw:rule.支払い単位#請求#1 urn:tw:invoiceNumber INV-0001
+ok urn:tw:rule.支払い単位#請求#1
+as urn:person:伊藤
+set urn:tw:rule.支払い単位#請求#1 urn:tw:invoiceNumber INV-0002
+ok urn:tw:rule.支払い単位#請求#1
+as urn:person:太木
+set urn:tw:rule.支払い単位#支払い#1 urn:tw:paymentDate 2026-10-31
+ok urn:tw:rule.支払い単位#支払い#1
+sendback urn:tw:rule.支払い単位#請求 from urn:tw:rule.支払い単位#支払い
+list
+as urn:person:伊藤
+set urn:tw:rule.支払い単位#請求#1 urn:tw:invoiceNumber INV-0003
+ok urn:tw:rule.支払い単位#請求#1
+as urn:person:太木
+set urn:tw:rule.支払い単位#支払い#1 urn:tw:paymentDate 2026-10-31
+ok urn:tw:rule.支払い単位#支払い#1
+as urn:person:高橋
+ok urn:tw:rule.請求締め
+list
+end

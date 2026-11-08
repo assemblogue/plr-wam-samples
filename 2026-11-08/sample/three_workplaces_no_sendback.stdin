@@ -1,0 +1,9 @@
+as urn:person:田中
+ok urn:tw:rule.調達#起案
+as urn:person:山田
+set urn:tw:rule.調達#承認 urn:tw:decision 承認
+ok urn:tw:rule.調達#承認
+as urn:person:太木
+sendback urn:tw:rule.調達#承認 from urn:tw:rule.明細処理#発注
+list
+end

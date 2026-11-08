@@ -1,0 +1,21 @@
+{
+  "sessionId": "sess-golden",
+  "start": {
+    "by": "urn:entity:person-m",
+    "predicate": "urn:golden:調達申請ワークフロー"
+  },
+  "_comment": "golden_scenario.md ステップ3 の前に、起案者 M が申請の OK を押す（本体のアトムの truthValue に書いた定数は条件であり、申請は人のタスクとして走る：spec_exec 56。review の決め）。そのあと B が承認を完成させ OK ボタンを押す。",
+  "agentProperty": "urn:golden:agent",
+  "steps": [
+    {
+      "task": "urn:entity:sinsei-001",
+      "ok": true,
+      "comment": "起案者 M が申請の OK を押す"
+    },
+    {
+      "task": "urn:entity:ninka-001",
+      "ok": true,
+      "comment": "上司照会で求まった承認者 B が承認の OK を押す"
+    }
+  ]
+}

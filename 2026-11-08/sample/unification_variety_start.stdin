@@ -1,0 +1,3 @@
+as urn:entity:利用者
+start urn:uv:発注 urn:uv:明細一覧 [urn:entity:line-1,urn:entity:line-2,urn:entity:line-3]
+as -

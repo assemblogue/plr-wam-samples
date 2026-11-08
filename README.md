@@ -14,6 +14,7 @@
 |---|---|
 | `sample/`（main の直下） | 2026-10-02 版（plrDart のタグ `harness-legacy-2026-10-02`） |
 | `2026-10-21/sample/` | 2026-10-21 版（plrDart の master `4e925d76`） |
+| `2026-11-08/sample/` | 2026-11-08 版（新しい核。plrDart の `wam/records-with-segments` `f4d7c9862` の例題。EXE を作ったコミットは、作った後に書く） |
 
 ```
 sample/quote_graph_*      見積書（空から作る）

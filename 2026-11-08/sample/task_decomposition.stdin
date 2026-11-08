@@ -1,0 +1,36 @@
+as urn:person:橋田
+start urn:td:課題 urn:td:題名 #336_タスク分解の試し as @課題1
+as urn:person:kgwf-2b
+start urn:td:課題 urn:td:題名 実装 as @課題2
+as urn:person:review
+start urn:td:課題 urn:td:題名 レビュー as @課題3
+as urn:person:docs
+start urn:td:課題 urn:td:題名 設計書への反映 as @課題4
+as urn:person:橋田
+start urn:td:課題 urn:td:題名 マージの承認 as @課題5
+add @課題1 conjSubTask @課題2
+add @課題1 conjSubTask @課題3
+add @課題1 conjSubTask @課題4
+add @課題1 conjSubTask @課題5
+as urn:person:review
+start urn:td:発言 urn:td:本文 置き場所を読むときに書き替えている as @発言1
+new urn:entity:rel-1 urn:td:Conflict arg1 @課題2 arg2 @発言1
+ok @発言1
+as urn:person:kgwf-2b
+start urn:td:発言 urn:td:本文 書き出しの仕分けを置き場所どおりにした as @発言2
+new urn:entity:rel-2 urn:td:Solution arg1 @発言1 arg2 @発言2
+ok @発言2
+as urn:person:橋田
+list
+as urn:person:kgwf-2b
+ok @課題2
+as urn:person:review
+ok @課題3
+as urn:person:docs
+ok @課題4
+as urn:person:橋田
+list
+ok @課題5
+ok @課題1
+list
+end

@@ -1,0 +1,67 @@
+as urn:person:田中
+ok urn:tw:rule.調達#起案 in @調達A
+as urn:person:山田
+set urn:tw:rule.調達#承認 urn:tw:decision 承認 in @調達A
+ok urn:tw:rule.調達#承認 in @調達A
+as urn:person:鈴木
+start urn:tw:Procurement urn:tw:subject ノート urn:tw:budget 予算-1 as @調達B
+new urn:entity:line-B1 urn:tw:Line urn:tw:product urn:item:ノート urn:tw:quantity 10 into urn:tw:rule.調達#起案 urn:tw:lines in @調達B
+as urn:person:田中
+start urn:tw:Procurement urn:tw:subject 消しゴム urn:tw:budget 予算-1 as @調達C
+new urn:entity:line-C1 urn:tw:Line urn:tw:product urn:item:消しゴム urn:tw:quantity 30 into urn:tw:rule.調達#起案 urn:tw:lines in @調達C
+ok urn:tw:rule.調達#起案 in @調達C
+as urn:person:鈴木
+ok urn:tw:rule.調達#起案 in @調達B
+as urn:person:山田
+set urn:tw:rule.調達#承認 urn:tw:decision 承認 in @調達B
+ok urn:tw:rule.調達#承認 in @調達B
+set urn:tw:rule.調達#承認 urn:tw:decision 承認 in @調達C
+ok urn:tw:rule.調達#承認 in @調達C
+as urn:person:太木
+set urn:tw:rule.明細処理#発注 urn:tw:orderDate 2026-10-22 in @調達C
+ok urn:tw:rule.明細処理#発注 in @調達C
+set urn:tw:rule.明細処理#発注 urn:tw:orderDate 2026-10-22 in @調達A
+ok urn:tw:rule.明細処理#発注 in @調達A
+set urn:tw:rule.明細処理#発注 urn:tw:orderDate 2026-10-22 in @調達B
+ok urn:tw:rule.明細処理#発注 in @調達B
+as urn:person:佐藤
+set urn:tw:rule.明細処理#納品 urn:tw:deliveredQuantity 30 in @調達C
+ok urn:tw:rule.明細処理#納品 in @調達C
+set urn:tw:rule.明細処理#納品 urn:tw:deliveredQuantity 5 in @調達A
+ok urn:tw:rule.明細処理#納品 in @調達A
+as urn:person:伊藤
+set urn:tw:rule.明細処理#納品 urn:tw:deliveredQuantity 10 in @調達B
+ok urn:tw:rule.明細処理#納品 in @調達B
+as urn:person:鈴木
+set urn:tw:rule.明細処理#検収 urn:tw:inspectedQuantity 10 in @調達B
+set urn:tw:rule.明細処理#検収 urn:tw:billingMonth 2026-10 in @調達B
+ok urn:tw:rule.明細処理#検収 in @調達B
+ok @調達B
+as urn:person:田中
+set urn:tw:rule.明細処理#検収 urn:tw:inspectedQuantity 5 in @調達A
+set urn:tw:rule.明細処理#検収 urn:tw:billingMonth 2026-10 in @調達A
+ok urn:tw:rule.明細処理#検収 in @調達A
+set urn:tw:rule.明細処理#検収 urn:tw:inspectedQuantity 30 in @調達C
+set urn:tw:rule.明細処理#検収 urn:tw:billingMonth 2026-10 in @調達C
+ok urn:tw:rule.明細処理#検収 in @調達C
+ok @調達C
+ok @調達A
+as urn:person:高橋
+start urn:tw:BillingClose urn:tw:billingMonth 2026-10 as @請求締め
+set urn:tw:rule.請求締め#締め処理 urn:tw:billingMonth 2026-10
+ok urn:tw:rule.請求締め#締め処理
+as urn:person:佐藤
+set urn:tw:rule.支払い単位#請求#1 urn:tw:invoiceNumber INV-0001
+ok urn:tw:rule.支払い単位#請求#1
+as urn:person:伊藤
+set urn:tw:rule.支払い単位#請求#1 urn:tw:invoiceNumber INV-0002
+ok urn:tw:rule.支払い単位#請求#1
+as urn:person:太木
+set urn:tw:rule.支払い単位#支払い#1 urn:tw:paymentDate 2026-10-31
+ok urn:tw:rule.支払い単位#支払い#1
+set urn:tw:rule.支払い単位#支払い#1 urn:tw:paymentDate 2026-10-31
+ok urn:tw:rule.支払い単位#支払い#1
+as urn:person:高橋
+ok @請求締め
+list
+end

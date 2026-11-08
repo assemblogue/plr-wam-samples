@@ -1,0 +1,626 @@
+{
+ "_comment": "多段承認の例題のワークプレース。稟議（起案 → 承認経路）と、承認段マスター・チャネル作成のチャネル設定を持つ",
+ "ONTO2": [
+  {
+   "@id": "urn:ma:wp",
+   "@type": "ONTO2",
+   "onto0": "多段承認",
+   "onto7": [
+    {
+     "_comment": "承認経路(段: 承認段(役職: P, 上限額: L), 件名: S, 金額: M, 起案者: U, 差戻し先: R) :- ≧(L, M), 承認C(承認件名: S, 承認金額: M, 判断: J, agent: A), 成員(主体: P, 人: A) ─Then→ 承認された(判断: J), 承認された ─Else→ 却下確認C(agent: U), Sendback(承認, R). 最後の段——金額がこの段の上限額以下。この段の承認で承認が済む",
+     "@id": "urn:ma:rule.承認経路.最後",
+     "@type": "urn:ma:承認経路",
+     "variables": [
+      {
+       "@id": "urn:ma:rule.承認経路.最後#v.P",
+       "variableName": "P"
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.最後#v.L",
+       "variableName": "L"
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.最後#v.S",
+       "variableName": "S"
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.最後#v.M",
+       "variableName": "M"
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.最後#v.U",
+       "variableName": "U"
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.最後#v.R",
+       "variableName": "R"
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.最後#v.A",
+       "variableName": "A"
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.最後#v.J",
+       "variableName": "J"
+      }
+     ],
+     "urn:ma:段": {
+      "@type": "urn:ma:承認段",
+      "urn:ma:役職": {
+       "@id": "urn:ma:rule.承認経路.最後#v.P"
+      },
+      "urn:ma:上限額": {
+       "@id": "urn:ma:rule.承認経路.最後#v.L"
+      }
+     },
+     "urn:ma:件名": {
+      "@id": "urn:ma:rule.承認経路.最後#v.S"
+     },
+     "urn:ma:金額": {
+      "@id": "urn:ma:rule.承認経路.最後#v.M"
+     },
+     "urn:ma:起案者": {
+      "@id": "urn:ma:rule.承認経路.最後#v.U"
+     },
+     "urn:ma:差戻し先": {
+      "@id": "urn:ma:rule.承認経路.最後#v.R"
+     },
+     "internalGraph": [
+      {
+       "@id": "urn:ma:rule.承認経路.最後#上限",
+       "@type": "GreaterEqual",
+       "operand1": {
+        "@id": "urn:ma:rule.承認経路.最後#v.L"
+       },
+       "operand2": {
+        "@id": "urn:ma:rule.承認経路.最後#v.M"
+       },
+       "_comment": "金額がこの段の上限額以下なら、この段が最後の段"
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.最後#承認者",
+       "@type": "Member",
+       "set": {
+        "@id": "urn:ma:rule.承認経路.最後#v.P"
+       },
+       "element": {
+        "@id": "urn:ma:rule.承認経路.最後#v.A"
+       },
+       "_comment": "この段の承認者は、この段の役職の人（R875）"
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.最後#承認",
+       "@type": "urn:ma:承認C",
+       "urn:ma:承認件名": {
+        "@id": "urn:ma:rule.承認経路.最後#v.S"
+       },
+       "urn:ma:承認金額": {
+        "@id": "urn:ma:rule.承認経路.最後#v.M"
+       },
+       "urn:ma:判断": {
+        "@id": "urn:ma:rule.承認経路.最後#v.J"
+       },
+       "agent": {
+        "@id": "urn:ma:rule.承認経路.最後#v.A"
+       }
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.最後#可",
+       "@type": "urn:ma:承認された",
+       "urn:ma:判断": {
+        "@id": "urn:ma:rule.承認経路.最後#v.J"
+       },
+       "_comment": "承認か却下か。偽なら Else の先（却下確認）へ移る"
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.最後#却下",
+       "@type": "urn:ma:却下確認C",
+       "agent": {
+        "@id": "urn:ma:rule.承認経路.最後#v.U"
+       }
+      },
+      {
+       "@type": "Then",
+       "arg1": {
+        "@id": "urn:ma:rule.承認経路.最後#承認"
+       },
+       "arg2": {
+        "@id": "urn:ma:rule.承認経路.最後#可"
+       }
+      },
+      {
+       "@type": "Else",
+       "arg1": {
+        "@id": "urn:ma:rule.承認経路.最後#可"
+       },
+       "arg2": {
+        "@id": "urn:ma:rule.承認経路.最後#却下"
+       }
+      },
+      {
+       "@type": "Sendback",
+       "arg1": {
+        "@id": "urn:ma:rule.承認経路.最後#承認"
+       },
+       "arg2": {
+        "@id": "urn:ma:rule.承認経路.最後#v.R"
+       },
+       "_comment": "この段の承認者は、起案へ差し戻すことができる（R844・R847）"
+      }
+     ]
+    },
+    {
+     "_comment": "承認経路(段: 承認段(役職: P, 上限額: L, 次段: N), 件名: S, 金額: M, 起案者: U, 差戻し先: R) :- ＞(M, L), 承認C(承認件名: S, 承認金額: M, 判断: J, agent: A), 成員(主体: P, 人: A) ─Then→ 承認された(判断: J) ─Then→ 承認経路(段: N, 件名: S, 金額: M, 起案者: U, 差戻し先: R), 承認された ─Else→ 却下確認C(agent: U), Sendback(承認, R). 途中の段——金額がこの段の上限額を超える。この段の承認の後に次段へ進む",
+     "@id": "urn:ma:rule.承認経路.途中",
+     "@type": "urn:ma:承認経路",
+     "variables": [
+      {
+       "@id": "urn:ma:rule.承認経路.途中#v.P",
+       "variableName": "P"
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.途中#v.L",
+       "variableName": "L"
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.途中#v.N",
+       "variableName": "N"
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.途中#v.S",
+       "variableName": "S"
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.途中#v.M",
+       "variableName": "M"
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.途中#v.U",
+       "variableName": "U"
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.途中#v.R",
+       "variableName": "R"
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.途中#v.A",
+       "variableName": "A"
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.途中#v.J",
+       "variableName": "J"
+      }
+     ],
+     "urn:ma:段": {
+      "@type": "urn:ma:承認段",
+      "urn:ma:役職": {
+       "@id": "urn:ma:rule.承認経路.途中#v.P"
+      },
+      "urn:ma:上限額": {
+       "@id": "urn:ma:rule.承認経路.途中#v.L"
+      },
+      "urn:ma:次段": {
+       "@id": "urn:ma:rule.承認経路.途中#v.N"
+      }
+     },
+     "urn:ma:件名": {
+      "@id": "urn:ma:rule.承認経路.途中#v.S"
+     },
+     "urn:ma:金額": {
+      "@id": "urn:ma:rule.承認経路.途中#v.M"
+     },
+     "urn:ma:起案者": {
+      "@id": "urn:ma:rule.承認経路.途中#v.U"
+     },
+     "urn:ma:差戻し先": {
+      "@id": "urn:ma:rule.承認経路.途中#v.R"
+     },
+     "internalGraph": [
+      {
+       "@id": "urn:ma:rule.承認経路.途中#上限",
+       "@type": "GreaterThan",
+       "operand1": {
+        "@id": "urn:ma:rule.承認経路.途中#v.M"
+       },
+       "operand2": {
+        "@id": "urn:ma:rule.承認経路.途中#v.L"
+       },
+       "_comment": "金額がこの段の上限額を超えるなら、次段へ進む"
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.途中#承認者",
+       "@type": "Member",
+       "set": {
+        "@id": "urn:ma:rule.承認経路.途中#v.P"
+       },
+       "element": {
+        "@id": "urn:ma:rule.承認経路.途中#v.A"
+       },
+       "_comment": "この段の承認者は、この段の役職の人（R875）"
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.途中#承認",
+       "@type": "urn:ma:承認C",
+       "urn:ma:承認件名": {
+        "@id": "urn:ma:rule.承認経路.途中#v.S"
+       },
+       "urn:ma:承認金額": {
+        "@id": "urn:ma:rule.承認経路.途中#v.M"
+       },
+       "urn:ma:判断": {
+        "@id": "urn:ma:rule.承認経路.途中#v.J"
+       },
+       "agent": {
+        "@id": "urn:ma:rule.承認経路.途中#v.A"
+       }
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.途中#可",
+       "@type": "urn:ma:承認された",
+       "urn:ma:判断": {
+        "@id": "urn:ma:rule.承認経路.途中#v.J"
+       },
+       "_comment": "承認か却下か。偽なら Else の先（却下確認）へ移る"
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.途中#却下",
+       "@type": "urn:ma:却下確認C",
+       "agent": {
+        "@id": "urn:ma:rule.承認経路.途中#v.U"
+       }
+      },
+      {
+       "@type": "Then",
+       "arg1": {
+        "@id": "urn:ma:rule.承認経路.途中#承認"
+       },
+       "arg2": {
+        "@id": "urn:ma:rule.承認経路.途中#可"
+       }
+      },
+      {
+       "@id": "urn:ma:rule.承認経路.途中#次",
+       "@type": "urn:ma:承認経路",
+       "urn:ma:段": {
+        "@id": "urn:ma:rule.承認経路.途中#v.N"
+       },
+       "urn:ma:件名": {
+        "@id": "urn:ma:rule.承認経路.途中#v.S"
+       },
+       "urn:ma:金額": {
+        "@id": "urn:ma:rule.承認経路.途中#v.M"
+       },
+       "urn:ma:起案者": {
+        "@id": "urn:ma:rule.承認経路.途中#v.U"
+       },
+       "urn:ma:差戻し先": {
+        "@id": "urn:ma:rule.承認経路.途中#v.R"
+       },
+       "_comment": "次段の承認経路（再帰）"
+      },
+      {
+       "@type": "Then",
+       "arg1": {
+        "@id": "urn:ma:rule.承認経路.途中#可"
+       },
+       "arg2": {
+        "@id": "urn:ma:rule.承認経路.途中#次"
+       }
+      },
+      {
+       "@type": "Else",
+       "arg1": {
+        "@id": "urn:ma:rule.承認経路.途中#可"
+       },
+       "arg2": {
+        "@id": "urn:ma:rule.承認経路.途中#却下"
+       }
+      },
+      {
+       "@type": "Sendback",
+       "arg1": {
+        "@id": "urn:ma:rule.承認経路.途中#承認"
+       },
+       "arg2": {
+        "@id": "urn:ma:rule.承認経路.途中#v.R"
+       },
+       "_comment": "この段の承認者は、起案へ差し戻すことができる（R844・R847）"
+      }
+     ]
+    },
+    {
+     "@id": "urn:ma:rule.起案C",
+     "@type": "urn:ma:起案C",
+     "okButton": "_suspendingOk"
+    },
+    {
+     "@id": "urn:ma:rule.承認C",
+     "@type": "urn:ma:承認C",
+     "okButton": "_suspendingOk"
+    },
+    {
+     "_comment": "承認された(判断: 承認). 判断が 承認 のときだけ成り立つ",
+     "@id": "urn:ma:rule.承認された",
+     "@type": "urn:ma:承認された",
+     "urn:ma:判断": "承認"
+    },
+    {
+     "@id": "urn:ma:rule.却下確認C",
+     "@type": "urn:ma:却下確認C",
+     "okButton": "_suspendingOk"
+    }
+   ],
+   "ontoChS": [
+    {
+     "@id": "urn:ma:設定.稟議",
+     "@type": "ONTOc",
+     "onto0": "稟議",
+     "_note": "基幹業務（稟議）のチャネル設定。稟議のレコードは起案者の分割チャネルに入る",
+     "ontoCs": [
+      {
+       "@id": "urn:ma:設定.稟議.cs1",
+       "@type": "ONTOcS",
+       "ontoG": [
+        {
+         "_comment": "稟議(件名: S, 金額: M, agent: U) :- 成員(主体: 全構成員, 人: U), 起案C(件名: S, 金額: M, agent: U) ─Then→ 承認経路(段: F, 件名: S, 金額: M, 起案者: U, 差戻し先: 起案), 承認段(node: F, 順: 1, existing: _true). 先頭の段（順 1）から承認経路を辿る",
+         "@id": "urn:ma:rule.稟議",
+         "@type": "urn:ma:稟議",
+         "variables": [
+          {
+           "@id": "urn:ma:rule.稟議#v.S",
+           "variableName": "S"
+          },
+          {
+           "@id": "urn:ma:rule.稟議#v.M",
+           "variableName": "M"
+          },
+          {
+           "@id": "urn:ma:rule.稟議#v.U",
+           "variableName": "U"
+          },
+          {
+           "@id": "urn:ma:rule.稟議#v.F",
+           "variableName": "F"
+          }
+         ],
+         "urn:ma:件名": {
+          "@id": "urn:ma:rule.稟議#v.S"
+         },
+         "urn:ma:金額": {
+          "@id": "urn:ma:rule.稟議#v.M"
+         },
+         "agent": {
+          "@id": "urn:ma:rule.稟議#v.U"
+         },
+         "internalGraph": [
+          {
+           "@id": "urn:ma:rule.稟議#社員",
+           "@type": "Member",
+           "set": {
+            "@id": "urn:org:グループ.全構成員"
+           },
+           "element": {
+            "@id": "urn:ma:rule.稟議#v.U"
+           },
+           "once": true,
+           "_comment": "起案者 U が全構成員であること（基幹業務。three_workplaces と同じ）"
+          },
+          {
+           "@id": "urn:ma:rule.稟議#起案",
+           "@type": "urn:ma:起案C",
+           "urn:ma:件名": {
+            "@id": "urn:ma:rule.稟議#v.S"
+           },
+           "urn:ma:金額": {
+            "@id": "urn:ma:rule.稟議#v.M"
+           },
+           "agent": {
+            "@id": "urn:ma:rule.稟議#v.U"
+           }
+          },
+          {
+           "@id": "urn:ma:rule.稟議#先頭",
+           "@type": "urn:ma:承認段",
+           "existing": "_true",
+           "node": {
+            "@id": "urn:ma:rule.稟議#v.F"
+           },
+           "urn:ma:順": 1,
+           "_comment": "先頭の段（承認段マスターの、順が 1 のレコード）を検索する"
+          },
+          {
+           "@id": "urn:ma:rule.稟議#経路",
+           "@type": "urn:ma:承認経路",
+           "urn:ma:段": {
+            "@id": "urn:ma:rule.稟議#v.F"
+           },
+           "urn:ma:件名": {
+            "@id": "urn:ma:rule.稟議#v.S"
+           },
+           "urn:ma:金額": {
+            "@id": "urn:ma:rule.稟議#v.M"
+           },
+           "urn:ma:起案者": {
+            "@id": "urn:ma:rule.稟議#v.U"
+           },
+           "urn:ma:差戻し先": {
+            "@id": "urn:ma:rule.稟議#起案"
+           }
+          },
+          {
+           "@type": "Then",
+           "arg1": {
+            "@id": "urn:ma:rule.稟議#起案"
+           },
+           "arg2": {
+            "@id": "urn:ma:rule.稟議#経路"
+           }
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "@id": "urn:ma:設定.チャネル",
+     "@type": "ONTOc",
+     "onto0": "チャネル",
+     "_note": "チャネル作成のチャネル設定（three_workplaces と同じ）",
+     "ontoCs": [
+      {
+       "@id": "urn:ma:設定.チャネル.cs1",
+       "@type": "ONTOcS",
+       "ontoG": [
+        {
+         "_comment": "ONTOc1(ontoC: S, agent: O) :- 基幹業務を含む(設定: S), チャネル作成者(設定: S, 人: O). 起案者の分割チャネルを作る節（three_workplaces と同じ。追記R433・R570）",
+         "@id": "urn:ma:rule.チャネル",
+         "@type": "ONTOc1",
+         "pullBack": true,
+         "variables": [
+          {
+           "@id": "urn:ma:rule.チャネル#v.S",
+           "variableName": "S"
+          },
+          {
+           "@id": "urn:ma:rule.チャネル#v.O",
+           "variableName": "O"
+          }
+         ],
+         "ontoC": {
+          "@id": "urn:ma:rule.チャネル#v.S"
+         },
+         "agent": {
+          "@id": "urn:ma:rule.チャネル#v.O"
+         },
+         "internalGraph": [
+          {
+           "@id": "urn:ma:rule.チャネル#基幹業務を含む",
+           "@type": "IncludesCoreBusiness",
+           "setting": {
+            "@id": "urn:ma:rule.チャネル#v.S"
+           }
+          },
+          {
+           "@id": "urn:ma:rule.チャネル#チャネル作成者",
+           "@type": "ChannelCreator",
+           "setting": {
+            "@id": "urn:ma:rule.チャネル#v.S"
+           },
+           "person": {
+            "@id": "urn:ma:rule.チャネル#v.O"
+           }
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "@id": "urn:ma:設定.承認段マスター",
+     "@type": "ONTOc",
+     "onto0": "承認段マスター",
+     "ontoCC": [
+      {
+       "@id": "urn:person:管理者"
+      }
+     ],
+     "_note": "承認段マスターのチャネル設定。書くのは管理者、読むのは全構成員（TaskAccess）",
+     "ontoCs": [
+      {
+       "@id": "urn:ma:設定.承認段マスター.cs1",
+       "@type": "ONTOcS",
+       "ontoG": [
+        {
+         "_comment": "承認段(段名: X, 順: O, 役職: P, 上限額: L, 次段: N, agent: A) :- 成員(主体: 管理者, 人: A). 承認の段を登録するのは管理者",
+         "@id": "urn:ma:rule.承認段",
+         "@type": "urn:ma:承認段",
+         "variables": [
+          {
+           "@id": "urn:ma:rule.承認段#v.X",
+           "variableName": "X"
+          },
+          {
+           "@id": "urn:ma:rule.承認段#v.O",
+           "variableName": "O"
+          },
+          {
+           "@id": "urn:ma:rule.承認段#v.P",
+           "variableName": "P"
+          },
+          {
+           "@id": "urn:ma:rule.承認段#v.L",
+           "variableName": "L"
+          },
+          {
+           "@id": "urn:ma:rule.承認段#v.N",
+           "variableName": "N"
+          },
+          {
+           "@id": "urn:ma:rule.承認段#v.A",
+           "variableName": "A"
+          }
+         ],
+         "urn:ma:段名": {
+          "@id": "urn:ma:rule.承認段#v.X"
+         },
+         "urn:ma:順": {
+          "@id": "urn:ma:rule.承認段#v.O"
+         },
+         "urn:ma:役職": {
+          "@id": "urn:ma:rule.承認段#v.P"
+         },
+         "urn:ma:上限額": {
+          "@id": "urn:ma:rule.承認段#v.L"
+         },
+         "urn:ma:次段": {
+          "@id": "urn:ma:rule.承認段#v.N"
+         },
+         "agent": {
+          "@id": "urn:ma:rule.承認段#v.A"
+         },
+         "internalGraph": [
+          {
+           "@id": "urn:ma:rule.承認段#管理者か",
+           "@type": "Member",
+           "set": {
+            "@id": "urn:person:管理者"
+           },
+           "element": {
+            "@id": "urn:ma:rule.承認段#v.A"
+           }
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "_note": "この組織の組織マスターのチャネル設定（R1028：組織マスターは組織ごとで、その組織のワークプレースが設定を挙げる。ゴール節は系の組織マスターの設定のものを参照で持つ）",
+     "@id": "urn:ma:設定.組織マスター",
+     "@type": "ONTOc",
+     "onto0": "組織マスター",
+     "ontoCs": [
+      {
+       "@id": "urn:ma:設定.組織マスター.cs1",
+       "@type": "ONTOcS",
+       "ontoG": [
+        {
+         "@id": "urn:system:rule.構成員"
+        },
+        {
+         "@id": "urn:system:rule.役職"
+        },
+        {
+         "@id": "urn:system:rule.グループ"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

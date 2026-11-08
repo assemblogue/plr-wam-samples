@@ -1,0 +1,9 @@
+as urn:entity:山田
+set urn:node:注文 urn:kobuy:金額 300000
+ok urn:node:注文
+as urn:entity:サプライヤ
+sendback urn:node:注文
+as urn:entity:A社課長
+sendback urn:node:注文
+as urn:entity:山田
+end

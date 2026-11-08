@@ -1,0 +1,324 @@
+{
+ "_comment": "多段承認の例題のオントロジー。承認の段（課長 → 部長 → 役員）を承認段マスターの列で持ち、金額で段の数が決まる。組込述語と組織マスターのクラスは three_workplaces_ontology.jsonld と同じもの",
+ "@id": "urn:ma:ontology",
+ "@type": "Ontology",
+ "agentProperty": "agent",
+ "channelProperty": "inChannel",
+ "_taskAccess": "業務フロー定義が担当者を制約しないタスクは、チャネルの TaskAccess が担当者を決める（spec_ops.md）。エンジンへ渡す述語と属性。class はエンジンが節に入れる標準の節の述語、recordClass はチャネルの要素",
+ "taskAccess": {
+  "class": "TaskAgent",
+  "channel": "channel",
+  "task": "task",
+  "agent": "person",
+  "recordClass": "TaskAccess",
+  "recordAgent": "taskAgent",
+  "recordUser": "taskUser",
+  "memberProperties": [
+   "incumbent",
+   "hasMember"
+  ]
+ },
+ "defines": [
+  {
+   "@id": "urn:ma:稟議",
+   "@type": "Class",
+   "label": "稟議",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:ma:件名",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:ma:金額",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#inChannel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "_comment": "ゴール（設定.稟議 の ontoG）。起案の後、金額で決まる段の数だけ承認を順に受ける"
+  },
+  {
+   "@id": "urn:ma:起案C",
+   "@type": "Class",
+   "label": "起案",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:ma:件名",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:ma:金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "_comment": "起案者が件名と金額を入れる"
+  },
+  {
+   "@id": "urn:ma:承認C",
+   "@type": "Class",
+   "label": "承認",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:ma:判断",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:ma:承認件名",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:ma:承認金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "_comment": "その段の役職の人が判断（承認 か 却下）を入れる。承認件名・承認金額は起案者が入れた値を読む（refersTo の下位）"
+  },
+  {
+   "@id": "urn:ma:承認された",
+   "@type": "Class",
+   "isConstraint": true,
+   "subClassOf": [
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:ma:判断",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "label": "承認された",
+   "_comment": "判断が 承認 であること（Then／Else の始点）。節は 承認された(判断: 承認). の1本だけ（three_workplaces と同じ）"
+  },
+  {
+   "@id": "urn:ma:却下確認C",
+   "@type": "Class",
+   "label": "却下の確認",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "_comment": "どこかの段で却下されたとき、起案者が確かめる（Else の先）"
+  },
+  {
+   "@id": "urn:ma:承認経路",
+   "@type": "Class",
+   "label": "承認経路",
+   "subClassOf": [
+    "#OtherAtom",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:ma:段",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:ma:件名",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:ma:金額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:ma:起案者",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:ma:差戻し先",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    }
+   ],
+   "_comment": "承認の段の列を、先頭の段から再帰で辿る（tut.md「前の項が次の項に効く列は、ホーン節の再帰で書く」）。金額がその段の上限額以下なら、その段が最後の段である"
+  },
+  {
+   "@id": "urn:ma:承認段",
+   "@type": "Class",
+   "label": "承認の段",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:ma:段名",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:ma:順",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:ma:役職",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:ma:上限額",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:ma:次段",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#inChannel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ],
+   "_comment": "承認段マスターのチャネルのレコード。役職の人がこの段を承認し、金額が上限額を超えれば次段へ進む。次段で列をつなぐ"
+  },
+  {
+   "@id": "urn:ma:件名",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "件名"
+  },
+  {
+   "@id": "urn:ma:金額",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": "金額"
+  },
+  {
+   "@id": "urn:ma:判断",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "判断"
+  },
+  {
+   "@id": "urn:ma:承認件名",
+   "@type": "DatatypeProperty",
+   "domain": "urn:ma:承認C",
+   "range": "string",
+   "label": "件名",
+   "subPropertyOf": "#refersTo",
+   "_comment": "承認から見た件名——起案者が入れた値を承認者が読む（R517）"
+  },
+  {
+   "@id": "urn:ma:承認金額",
+   "@type": "DatatypeProperty",
+   "domain": "urn:ma:承認C",
+   "range": "nonNegativeInteger",
+   "label": "金額",
+   "subPropertyOf": "#refersTo",
+   "_comment": "承認から見た金額——起案者が入れた値を承認者が読む（R517）"
+  },
+  {
+   "@id": "urn:ma:段",
+   "@type": "ObjectProperty",
+   "range": "urn:ma:承認段",
+   "label": "段",
+   "subPropertyOf": "#refersTo",
+   "_comment": "いまの段。承認段マスターのレコードを指す"
+  },
+  {
+   "@id": "urn:ma:起案者",
+   "@type": "ObjectProperty",
+   "range": "#Person",
+   "label": "起案者"
+  },
+  {
+   "@id": "urn:ma:差戻し先",
+   "@type": "ObjectProperty",
+   "label": "差戻し先",
+   "subPropertyOf": "#refersTo",
+   "_comment": "差し戻す先のタスク（起案）。tut.md「呼ばれる節の中から呼び出し元のタスクへ差し戻すには、差し戻す先を引数で渡す」"
+  },
+  {
+   "@id": "urn:ma:段名",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "段名"
+  },
+  {
+   "@id": "urn:ma:順",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": "順"
+  },
+  {
+   "@id": "urn:ma:役職",
+   "@type": "ObjectProperty",
+   "range": "#Post",
+   "label": "役職"
+  },
+  {
+   "@id": "urn:ma:上限額",
+   "@type": "DatatypeProperty",
+   "range": "nonNegativeInteger",
+   "label": "上限額"
+  },
+  {
+   "@id": "urn:ma:次段",
+   "@type": "ObjectProperty",
+   "range": "urn:ma:承認段",
+   "label": "次段",
+   "subPropertyOf": "#refersTo"
+  }
+ ]
+}

@@ -1,0 +1,25 @@
+as urn:person:田中
+start urn:kobuy:購買 urn:kobuy:件名 会議室のプロジェクタ as @購買
+as -
+as urn:person:田中
+new urn:record:購買-0001#本体1 urn:kobuy:明細本体C urn:kobuy:商品 urn:product:プロジェクタ-X200 urn:kobuy:数量 1
+new urn:record:購買-0001#本体2 urn:kobuy:明細本体C urn:kobuy:商品 urn:product:HDMIケーブル-3m urn:kobuy:数量 2
+new urn:record:購買-0001#明細1 urn:kobuy:注文明細C urn:kobuy:本体 urn:record:購買-0001#本体1
+new urn:record:購買-0001#明細2 urn:kobuy:注文明細C urn:kobuy:本体 urn:record:購買-0001#本体2
+as -
+set urn:kobuy:rule.購買#注文 urn:kobuy:注文明細一覧 [urn:record:購買-0001#明細1,urn:record:購買-0001#明細2]
+set urn:kobuy:rule.購買#注文 urn:kobuy:希望納期 2026-10-20
+as urn:person:田中
+ok urn:kobuy:rule.購買#注文
+as urn:person:山田
+set urn:kobuy:rule.承認経路#課長 urn:kobuy:判断 urn:kobuy:承認する
+set urn:kobuy:rule.承認経路#課長 urn:kobuy:勘定科目 urn:account:5201 where urn:kobuy:注文明細 urn:record:購買-0001#明細1
+set urn:kobuy:rule.承認経路#課長 urn:kobuy:可否 urn:kobuy:可 where urn:kobuy:注文明細 urn:record:購買-0001#明細1
+set urn:kobuy:rule.承認経路#課長 urn:kobuy:勘定科目 urn:account:5202 where urn:kobuy:注文明細 urn:record:購買-0001#明細2
+set urn:kobuy:rule.承認経路#課長 urn:kobuy:可否 urn:kobuy:可 where urn:kobuy:注文明細 urn:record:購買-0001#明細2
+ok urn:kobuy:rule.承認経路#課長
+as urn:person:太木
+start urn:kobuy:相談 urn:kobuy:関連する購買 @購買 as @相談
+set @相談 urn:kobuy:本文 プロジェクタは X200 と X300 のどちらがよいでしょうか
+as urn:person:田中
+restart

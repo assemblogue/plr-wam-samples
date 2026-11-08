@@ -1,0 +1,1307 @@
+{
+ "_comment": "3つのワークプレースの例題のデータ（起動の前の状態。業務フローのレコードと分割チャネルは起案して初めてできる。追記R748）。人は、バイヤーの田中（起案・検収）・山田（課長・予算管理担当。予算の登録・承認）・太木（購買担当。発注・支払い）、サプライヤーの佐藤（佐藤商店）・伊藤（伊藤商店）、管理会社の高橋（請求担当）。商品マスターに4つの商品が並ぶ（佐藤商店：えんぴつ・消しゴム、伊藤商店：ノート・ボールペン）。組織マスターは組織ごと（バイヤー・管理会社・佐藤商店・伊藤商店。R1028）。各組織に管理者がいて、その組織の組織マスターのレコードを作る（管理会社の管理者は urn:person:管理者）。全構成員も組織ごと（バイヤーの全構成員は urn:org:グループ.全構成員）",
+ "Person": [
+  {
+   "@id": "urn:person:田中",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:山田",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:太木",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:佐藤",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:伊藤",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:高橋",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:管理者",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:管理者.バイヤー",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:管理者.佐藤商店",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:管理者.伊藤商店",
+   "@type": "Person"
+  }
+ ],
+ "ONTOc1": [
+  {
+   "_comment": "チャネル作成のチャネル（名前付き）。分割チャネルのレコードがここに並ぶ（追記R570）",
+   "@id": "urn:channel:チャネル",
+   "@type": "ONTOc1",
+   "workplaceMark": "urn:tw:mark.管理会社.1",
+   "ontoC": {
+    "@id": "urn:tw:設定.チャネル"
+   },
+   "onto0": "チャネル",
+   "agent": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者.バイヤー"
+  },
+  {
+   "@id": "urn:channel:組織マスター.バイヤー",
+   "@type": "ONTOc1",
+   "workplaceMark": "urn:tw:mark.バイヤー.1",
+   "ontoC": {
+    "@id": "urn:tw:設定.組織マスター.バイヤー"
+   },
+   "onto0": "バイヤー 組織マスター",
+   "agent": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "TaskAccess": [
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者.バイヤー",
+     "channel": {
+      "@id": "urn:channel:組織マスター.バイヤー",
+      "onto0": "組織マスター"
+     },
+     "task": {
+      "@id": "Post"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:person:管理者.バイヤー"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者.バイヤー"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者.バイヤー"
+     }
+    },
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者.バイヤー",
+     "channel": {
+      "@id": "urn:channel:組織マスター.バイヤー",
+      "onto0": "組織マスター"
+     },
+     "task": {
+      "@id": "Group"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:person:管理者.バイヤー"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者.バイヤー"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者.バイヤー"
+     }
+    },
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者.バイヤー",
+     "channel": {
+      "@id": "urn:channel:組織マスター.バイヤー",
+      "onto0": "組織マスター"
+     },
+     "task": {
+      "@id": "OrgMember"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:person:管理者.バイヤー"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者.バイヤー"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者.バイヤー"
+     }
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者.バイヤー"
+  },
+  {
+   "@id": "urn:channel:組織マスター.管理会社",
+   "@type": "ONTOc1",
+   "workplaceMark": "urn:tw:mark.管理会社.1",
+   "ontoC": {
+    "@id": "urn:tw:設定.組織マスター.管理会社"
+   },
+   "onto0": "管理会社 組織マスター",
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "TaskAccess": [
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者",
+     "channel": {
+      "@id": "urn:channel:組織マスター.管理会社",
+      "onto0": "組織マスター"
+     },
+     "task": {
+      "@id": "Post"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:person:管理者"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員.管理会社"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者"
+     }
+    },
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者",
+     "channel": {
+      "@id": "urn:channel:組織マスター.管理会社",
+      "onto0": "組織マスター"
+     },
+     "task": {
+      "@id": "Group"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:person:管理者"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員.管理会社"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者"
+     }
+    },
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者",
+     "channel": {
+      "@id": "urn:channel:組織マスター.管理会社",
+      "onto0": "組織マスター"
+     },
+     "task": {
+      "@id": "OrgMember"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:person:管理者"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員.管理会社"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者"
+     }
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  },
+  {
+   "@id": "urn:channel:組織マスター.佐藤商店",
+   "@type": "ONTOc1",
+   "workplaceMark": "urn:tw:mark.サプライヤー.1",
+   "ontoC": {
+    "@id": "urn:tw:設定.組織マスター.佐藤商店"
+   },
+   "onto0": "佐藤商店 組織マスター",
+   "agent": {
+    "@id": "urn:person:管理者.佐藤商店"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者.佐藤商店"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者.佐藤商店"
+   },
+   "TaskAccess": [
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者.佐藤商店",
+     "channel": {
+      "@id": "urn:channel:組織マスター.佐藤商店",
+      "onto0": "組織マスター"
+     },
+     "task": {
+      "@id": "Post"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:person:管理者.佐藤商店"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員.佐藤商店"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者.佐藤商店"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者.佐藤商店"
+     }
+    },
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者.佐藤商店",
+     "channel": {
+      "@id": "urn:channel:組織マスター.佐藤商店",
+      "onto0": "組織マスター"
+     },
+     "task": {
+      "@id": "Group"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:person:管理者.佐藤商店"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員.佐藤商店"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者.佐藤商店"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者.佐藤商店"
+     }
+    },
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者.佐藤商店",
+     "channel": {
+      "@id": "urn:channel:組織マスター.佐藤商店",
+      "onto0": "組織マスター"
+     },
+     "task": {
+      "@id": "OrgMember"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:person:管理者.佐藤商店"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員.佐藤商店"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者.佐藤商店"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者.佐藤商店"
+     }
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者.佐藤商店"
+  },
+  {
+   "@id": "urn:channel:組織マスター.伊藤商店",
+   "@type": "ONTOc1",
+   "workplaceMark": "urn:tw:mark.サプライヤー.1",
+   "ontoC": {
+    "@id": "urn:tw:設定.組織マスター.伊藤商店"
+   },
+   "onto0": "伊藤商店 組織マスター",
+   "agent": {
+    "@id": "urn:person:管理者.伊藤商店"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者.伊藤商店"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者.伊藤商店"
+   },
+   "TaskAccess": [
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者.伊藤商店",
+     "channel": {
+      "@id": "urn:channel:組織マスター.伊藤商店",
+      "onto0": "組織マスター"
+     },
+     "task": {
+      "@id": "Post"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:person:管理者.伊藤商店"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員.伊藤商店"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者.伊藤商店"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者.伊藤商店"
+     }
+    },
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者.伊藤商店",
+     "channel": {
+      "@id": "urn:channel:組織マスター.伊藤商店",
+      "onto0": "組織マスター"
+     },
+     "task": {
+      "@id": "Group"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:person:管理者.伊藤商店"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員.伊藤商店"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者.伊藤商店"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者.伊藤商店"
+     }
+    },
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者.伊藤商店",
+     "channel": {
+      "@id": "urn:channel:組織マスター.伊藤商店",
+      "onto0": "組織マスター"
+     },
+     "task": {
+      "@id": "OrgMember"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:person:管理者.伊藤商店"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員.伊藤商店"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者.伊藤商店"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者.伊藤商店"
+     }
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者.伊藤商店"
+  },
+  {
+   "_comment": "マスターのチャネル（管理者が作った）",
+   "@id": "urn:channel:マスター",
+   "@type": "ONTOc1",
+   "workplaceMark": "urn:tw:mark.バイヤー.1",
+   "ontoC": {
+    "@id": "urn:tw:設定.マスター"
+   },
+   "onto0": "マスター",
+   "agent": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "TaskAccess": [
+    {
+     "_comment": "予算を登録するのは予算管理担当、読むのは全構成員（R802）。登録できる人は予算の登録の節（成員）が決めるので、TaskAccess には taskUser だけを書く（R809）。taskUser に、その節が担当者に課す成員の主体（予算管理担当）が含まれるので、予算の登録は基幹業務でも分割チャネルに置かず、このチャネルに置く（R803・R805・R809）。鍵（taskUser の分で包む）はまだ実装が無い",
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者.バイヤー",
+     "channel": {
+      "@id": "urn:channel:マスター",
+      "onto0": "マスター"
+     },
+     "task": {
+      "@id": "urn:tw:Budget"
+     },
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者.バイヤー"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者.バイヤー"
+     }
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者.バイヤー"
+  },
+  {
+   "_comment": "予算合計のチャネル（管理者が作った）",
+   "@id": "urn:channel:予算合計",
+   "@type": "ONTOc1",
+   "workplaceMark": "urn:tw:mark.バイヤー.1",
+   "ontoC": {
+    "@id": "urn:tw:設定.予算合計"
+   },
+   "onto0": "予算合計",
+   "agent": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "TaskAccess": [
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者.バイヤー",
+     "channel": {
+      "@id": "urn:channel:予算合計",
+      "onto0": "予算合計"
+     },
+     "task": {
+      "@id": "urn:tw:BudgetTotal"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:org:役職.予算管理担当"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者.バイヤー"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者.バイヤー"
+     }
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者.バイヤー"
+  },
+  {
+   "_comment": "調達のチャネル（管理者が作った。R867：基幹業務のチャネルも分割せず、名前付きのチャネルに置く）",
+   "@id": "urn:channel:調達",
+   "@type": "ONTOc1",
+   "workplaceMark": "urn:tw:mark.管理会社.1",
+   "ontoC": {
+    "@id": "urn:tw:設定.調達"
+   },
+   "onto0": "調達",
+   "agent": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "TaskAccess": [
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者.バイヤー",
+     "channel": {
+      "@id": "urn:channel:調達",
+      "onto0": "調達"
+     },
+     "task": {
+      "@id": "urn:tw:Procurement"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者.バイヤー"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者.バイヤー"
+     }
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者.バイヤー"
+  },
+  {
+   "_comment": "商品マスターのチャネル（管理者が作った）。書くのはサプライヤー、読むのは全構成員",
+   "@id": "urn:channel:商品マスター",
+   "@type": "ONTOc1",
+   "workplaceMark": "urn:tw:mark.管理会社.1",
+   "ontoC": {
+    "@id": "urn:tw:設定.商品マスター"
+   },
+   "onto0": "商品マスター",
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "TaskAccess": [
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者",
+     "channel": {
+      "@id": "urn:channel:商品マスター",
+      "onto0": "商品マスター"
+     },
+     "task": {
+      "@id": "urn:tw:Product"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:org:グループ.佐藤商店"
+      },
+      {
+       "@id": "urn:org:グループ.伊藤商店"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      },
+      {
+       "@id": "urn:org:グループ.全構成員.佐藤商店"
+      },
+      {
+       "@id": "urn:org:グループ.全構成員.伊藤商店"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者"
+     }
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  },
+  {
+   "_comment": "請求締めのチャネル（管理者が作った）。締めるのは請求担当（節の成員）、読むのは全構成員",
+   "@id": "urn:channel:請求",
+   "@type": "ONTOc1",
+   "workplaceMark": "urn:tw:mark.管理会社.1",
+   "ontoC": {
+    "@id": "urn:tw:設定.請求"
+   },
+   "onto0": "請求",
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "TaskAccess": [
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者",
+     "channel": {
+      "@id": "urn:channel:請求",
+      "onto0": "請求"
+     },
+     "task": {
+      "@id": "urn:tw:BillingClose"
+     },
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員.管理会社"
+      },
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者"
+     }
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  }
+ ],
+ "OrgMember": [
+  {
+   "@id": "urn:org:構成員.田中",
+   "@type": "OrgMember",
+   "workplaceMark": "urn:tw:mark.バイヤー.1",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター.バイヤー"
+   },
+   "agent": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "person": {
+    "@id": "urn:person:田中"
+   },
+   "publicFolder": "https://example.invalid/田中/public",
+   "publicKey": "…",
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者.バイヤー"
+  },
+  {
+   "@id": "urn:org:構成員.山田",
+   "@type": "OrgMember",
+   "workplaceMark": "urn:tw:mark.バイヤー.1",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター.バイヤー"
+   },
+   "agent": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "person": {
+    "@id": "urn:person:山田"
+   },
+   "publicFolder": "https://example.invalid/山田/public",
+   "publicKey": "…",
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者.バイヤー"
+  },
+  {
+   "@id": "urn:org:構成員.太木",
+   "@type": "OrgMember",
+   "workplaceMark": "urn:tw:mark.バイヤー.1",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター.バイヤー"
+   },
+   "agent": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "person": {
+    "@id": "urn:person:太木"
+   },
+   "publicFolder": "https://example.invalid/太木/public",
+   "publicKey": "…",
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者.バイヤー"
+  },
+  {
+   "@id": "urn:org:構成員.佐藤",
+   "@type": "OrgMember",
+   "workplaceMark": "urn:tw:mark.サプライヤー.1",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター.佐藤商店"
+   },
+   "agent": {
+    "@id": "urn:person:管理者.佐藤商店"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者.佐藤商店"
+   },
+   "person": {
+    "@id": "urn:person:佐藤"
+   },
+   "publicFolder": "https://example.invalid/佐藤/public",
+   "publicKey": "…",
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者.佐藤商店"
+  },
+  {
+   "@id": "urn:org:構成員.伊藤",
+   "@type": "OrgMember",
+   "workplaceMark": "urn:tw:mark.サプライヤー.1",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター.伊藤商店"
+   },
+   "agent": {
+    "@id": "urn:person:管理者.伊藤商店"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者.伊藤商店"
+   },
+   "person": {
+    "@id": "urn:person:伊藤"
+   },
+   "publicFolder": "https://example.invalid/伊藤/public",
+   "publicKey": "…",
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者.伊藤商店"
+  },
+  {
+   "@id": "urn:org:構成員.高橋",
+   "@type": "OrgMember",
+   "workplaceMark": "urn:tw:mark.管理会社.1",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター.管理会社"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "person": {
+    "@id": "urn:person:高橋"
+   },
+   "publicFolder": "https://example.invalid/高橋/public",
+   "publicKey": "…",
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  },
+  {
+   "@id": "urn:org:構成員.管理者",
+   "@type": "OrgMember",
+   "workplaceMark": "urn:tw:mark.管理会社.1",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター.管理会社"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "person": {
+    "@id": "urn:person:管理者"
+   },
+   "publicFolder": "https://example.invalid/管理者/public",
+   "publicKey": "…",
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  },
+  {
+   "@id": "urn:org:構成員.管理者.バイヤー",
+   "@type": "OrgMember",
+   "workplaceMark": "urn:tw:mark.バイヤー.1",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター.バイヤー"
+   },
+   "agent": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "person": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "publicFolder": "https://example.invalid/管理者.バイヤー/public",
+   "publicKey": "…",
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者.バイヤー"
+  },
+  {
+   "@id": "urn:org:構成員.管理者.佐藤商店",
+   "@type": "OrgMember",
+   "workplaceMark": "urn:tw:mark.サプライヤー.1",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター.佐藤商店"
+   },
+   "agent": {
+    "@id": "urn:person:管理者.佐藤商店"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者.佐藤商店"
+   },
+   "person": {
+    "@id": "urn:person:管理者.佐藤商店"
+   },
+   "publicFolder": "https://example.invalid/管理者.佐藤商店/public",
+   "publicKey": "…",
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者.佐藤商店"
+  },
+  {
+   "@id": "urn:org:構成員.管理者.伊藤商店",
+   "@type": "OrgMember",
+   "workplaceMark": "urn:tw:mark.サプライヤー.1",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター.伊藤商店"
+   },
+   "agent": {
+    "@id": "urn:person:管理者.伊藤商店"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者.伊藤商店"
+   },
+   "person": {
+    "@id": "urn:person:管理者.伊藤商店"
+   },
+   "publicFolder": "https://example.invalid/管理者.伊藤商店/public",
+   "publicKey": "…",
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者.伊藤商店"
+  }
+ ],
+ "Post": [
+  {
+   "@id": "urn:org:役職.課長",
+   "@type": "Post",
+   "workplaceMark": "urn:tw:mark.バイヤー.1",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター.バイヤー"
+   },
+   "agent": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "name": "バイヤー 購買課 課長",
+   "incumbent": [
+    {
+     "@id": "urn:person:山田"
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者.バイヤー"
+  },
+  {
+   "@id": "urn:org:役職.予算管理担当",
+   "@type": "Post",
+   "workplaceMark": "urn:tw:mark.バイヤー.1",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター.バイヤー"
+   },
+   "agent": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "name": "バイヤー 予算管理担当",
+   "incumbent": [
+    {
+     "@id": "urn:person:山田"
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者.バイヤー"
+  },
+  {
+   "@id": "urn:org:役職.購買担当",
+   "@type": "Post",
+   "workplaceMark": "urn:tw:mark.バイヤー.1",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター.バイヤー"
+   },
+   "agent": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "name": "バイヤー 購買担当",
+   "incumbent": [
+    {
+     "@id": "urn:person:太木"
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者.バイヤー"
+  },
+  {
+   "@id": "urn:org:役職.請求担当",
+   "@type": "Post",
+   "workplaceMark": "urn:tw:mark.管理会社.1",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター.管理会社"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "name": "管理会社 請求担当",
+   "incumbent": [
+    {
+     "@id": "urn:person:高橋"
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  }
+ ],
+ "Group": [
+  {
+   "@id": "urn:org:グループ.全構成員.伊藤商店",
+   "@type": "Group",
+   "workplaceMark": "urn:tw:mark.サプライヤー.1",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター.伊藤商店"
+   },
+   "agent": {
+    "@id": "urn:person:管理者.伊藤商店"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者.伊藤商店"
+   },
+   "name": "伊藤商店 全構成員",
+   "hasMember": [
+    {
+     "@id": "urn:person:伊藤"
+    },
+    {
+     "@id": "urn:person:管理者.伊藤商店"
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者.伊藤商店"
+  },
+  {
+   "@id": "urn:org:グループ.全構成員.佐藤商店",
+   "@type": "Group",
+   "workplaceMark": "urn:tw:mark.サプライヤー.1",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター.佐藤商店"
+   },
+   "agent": {
+    "@id": "urn:person:管理者.佐藤商店"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者.佐藤商店"
+   },
+   "name": "佐藤商店 全構成員",
+   "hasMember": [
+    {
+     "@id": "urn:person:佐藤"
+    },
+    {
+     "@id": "urn:person:管理者.佐藤商店"
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者.佐藤商店"
+  },
+  {
+   "@id": "urn:org:グループ.全構成員.管理会社",
+   "@type": "Group",
+   "workplaceMark": "urn:tw:mark.管理会社.1",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター.管理会社"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "name": "管理会社 全構成員",
+   "hasMember": [
+    {
+     "@id": "urn:person:高橋"
+    },
+    {
+     "@id": "urn:person:管理者"
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  },
+  {
+   "@id": "urn:org:グループ.全構成員",
+   "@type": "Group",
+   "workplaceMark": "urn:tw:mark.バイヤー.1",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター.バイヤー"
+   },
+   "agent": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者.バイヤー"
+   },
+   "name": "全構成員",
+   "hasMember": [
+    {
+     "@id": "urn:person:田中"
+    },
+    {
+     "@id": "urn:person:山田"
+    },
+    {
+     "@id": "urn:person:太木"
+    },
+    {
+     "@id": "urn:person:管理者.バイヤー"
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者.バイヤー"
+  },
+  {
+   "@id": "urn:org:グループ.佐藤商店",
+   "@type": "Group",
+   "workplaceMark": "urn:tw:mark.サプライヤー.1",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター.佐藤商店"
+   },
+   "agent": {
+    "@id": "urn:person:管理者.佐藤商店"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者.佐藤商店"
+   },
+   "name": "サプライヤー 佐藤商店",
+   "hasMember": [
+    {
+     "@id": "urn:person:佐藤"
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者.佐藤商店"
+  },
+  {
+   "@id": "urn:org:グループ.伊藤商店",
+   "@type": "Group",
+   "workplaceMark": "urn:tw:mark.サプライヤー.1",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター.伊藤商店"
+   },
+   "agent": {
+    "@id": "urn:person:管理者.伊藤商店"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者.伊藤商店"
+   },
+   "name": "サプライヤー 伊藤商店",
+   "hasMember": [
+    {
+     "@id": "urn:person:伊藤"
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者.伊藤商店"
+  }
+ ],
+ "urn:tw:Product": [
+  {
+   "@id": "urn:item:えんぴつ",
+   "@type": "urn:tw:Product",
+   "workplaceMark": "urn:tw:mark.管理会社.1",
+   "urn:tw:productName": "えんぴつ（1ダース）",
+   "urn:tw:unitPrice": 600,
+   "urn:tw:supplier": {
+    "@id": "urn:org:グループ.佐藤商店"
+   },
+   "inChannel": {
+    "@id": "urn:channel:商品マスター"
+   },
+   "agent": {
+    "@id": "urn:person:佐藤"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:佐藤"
+   },
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:佐藤"
+  },
+  {
+   "@id": "urn:item:消しゴム",
+   "@type": "urn:tw:Product",
+   "workplaceMark": "urn:tw:mark.管理会社.1",
+   "urn:tw:productName": "消しゴム",
+   "urn:tw:unitPrice": 100,
+   "urn:tw:supplier": {
+    "@id": "urn:org:グループ.佐藤商店"
+   },
+   "inChannel": {
+    "@id": "urn:channel:商品マスター"
+   },
+   "agent": {
+    "@id": "urn:person:佐藤"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:佐藤"
+   },
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:佐藤"
+  },
+  {
+   "@id": "urn:item:ノート",
+   "@type": "urn:tw:Product",
+   "workplaceMark": "urn:tw:mark.管理会社.1",
+   "urn:tw:productName": "ノート",
+   "urn:tw:unitPrice": 150,
+   "urn:tw:supplier": {
+    "@id": "urn:org:グループ.伊藤商店"
+   },
+   "inChannel": {
+    "@id": "urn:channel:商品マスター"
+   },
+   "agent": {
+    "@id": "urn:person:伊藤"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:伊藤"
+   },
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:伊藤"
+  },
+  {
+   "@id": "urn:item:ボールペン",
+   "@type": "urn:tw:Product",
+   "workplaceMark": "urn:tw:mark.管理会社.1",
+   "urn:tw:productName": "ボールペン",
+   "urn:tw:unitPrice": 120,
+   "urn:tw:supplier": {
+    "@id": "urn:org:グループ.伊藤商店"
+   },
+   "inChannel": {
+    "@id": "urn:channel:商品マスター"
+   },
+   "agent": {
+    "@id": "urn:person:伊藤"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:伊藤"
+   },
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:伊藤"
+  }
+ ]
+}

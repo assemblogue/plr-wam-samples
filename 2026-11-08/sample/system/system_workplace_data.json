@@ -1,0 +1,99 @@
+{
+ "_comment": "系のワークプレース（追記R1006・R1017）——初めから完成した系のチャネルに置くレコード。Base! とシステムワークプレース（Ontology）のノードと、システムワークプレースの部品のうちオントロジーの文書（Base.jsonld・Ontology.jsonld）に無いもの（系のチャネル設定）。形は --data と save の書き出し（graphDataOf）と同じ。ハーネスの配る関数（_distributeSystemWorkplaces）が、オントロジーの文書の部品と合わせて、最初の版を置き（plr_util の placeSystemWorkplaces・placeFirstVersion。R1055）、ここのレコードを保管先に置く。完成していることは完成の印 complete で表す（R1017）。系のチャネル自身は inChannel を持たない。系のチャネルの workplaceMark は、システムワークプレースの公開の印（配る関数が振る system-mark-4：Base! の試用・公開、システムワークプレースの試用・公開の順。R1055）",
+ "ONTOc1": [
+  {
+   "@id": "urn:system:チャネル.系",
+   "@type": "ONTOc1",
+   "workplaceMark": "system-mark-4",
+   "onto0": "系",
+   "complete": true
+  }
+ ],
+ "ONTO2": [
+  {
+   "@id": "urn:system:workplace.Base",
+   "@type": "ONTO2",
+   "onto0": "Base!",
+   "complete": true,
+   "inChannel": {
+    "@id": "urn:system:チャネル.系"
+   },
+   "onto7": []
+  },
+  {
+   "@id": "urn:system:workplace.Ontology",
+   "@type": "ONTO2",
+   "onto0": "Ontology",
+   "complete": true,
+   "inChannel": {
+    "@id": "urn:system:チャネル.系"
+   },
+   "onto7": [],
+   "ontoChS": [
+    {
+     "_note": "組織マスターのチャネル設定。組織マスターのチャネルが持つクラスは構成員・役職・グループで、それぞれの登録の節（頭部だけのゴール節）を ontoG に置く。組織マスターにゴール節（業務フロー）は無い",
+     "@id": "urn:system:設定.組織マスター",
+     "@type": "ONTOc",
+     "onto0": "組織マスター",
+     "complete": true,
+     "inChannel": {
+      "@id": "urn:system:チャネル.系"
+     },
+     "ontoCs": [
+      {
+       "@id": "urn:system:設定.組織マスター.cs1",
+       "@type": "ONTOcS",
+       "ontoG": [
+        {
+         "_comment": "構成員(…, agent: A). 本体は無い。誰が作れるかは組織マスターのチャネルの TaskAccess が決める",
+         "@id": "urn:system:rule.構成員",
+         "@type": "OrgMember",
+         "variables": [
+          {
+           "@id": "urn:system:rule.構成員#v.A",
+           "variableName": "A"
+          }
+         ],
+         "agent": {
+          "@id": "urn:system:rule.構成員#v.A"
+         },
+         "internalGraph": []
+        },
+        {
+         "_comment": "役職(…, agent: A). 本体は無い。誰が作れるかは組織マスターのチャネルの TaskAccess が決める",
+         "@id": "urn:system:rule.役職",
+         "@type": "Post",
+         "variables": [
+          {
+           "@id": "urn:system:rule.役職#v.A",
+           "variableName": "A"
+          }
+         ],
+         "agent": {
+          "@id": "urn:system:rule.役職#v.A"
+         },
+         "internalGraph": []
+        },
+        {
+         "_comment": "グループ(…, agent: A). 本体は無い。誰が作れるかは組織マスターのチャネルの TaskAccess が決める",
+         "@id": "urn:system:rule.グループ",
+         "@type": "Group",
+         "variables": [
+          {
+           "@id": "urn:system:rule.グループ#v.A",
+           "variableName": "A"
+          }
+         ],
+         "agent": {
+          "@id": "urn:system:rule.グループ#v.A"
+         },
+         "internalGraph": []
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

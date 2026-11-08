@@ -1,0 +1,3 @@
+as urn:entity:利用者
+start urn:qp:見積 urn:qp:明細一覧 [urn:entity:line-1,urn:entity:line-2,urn:entity:line-3,urn:entity:line-4,urn:entity:line-5,urn:entity:line-6,urn:entity:line-7]
+as -

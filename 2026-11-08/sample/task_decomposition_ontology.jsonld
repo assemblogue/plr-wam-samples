@@ -1,0 +1,137 @@
+{
+ "_comment": "タスク分解の試し（GUI のサーバを共有の場にして、複数のセッションが課題を分けて進める）。課題は頭部だけのゴール節のタスク（R852）で、下位の課題はそれぞれ別のレコード。上位は conjSubTask（and分解。retrieve の下位）の多値で下位を指し、上位の完成は先の完成で決まる（R890・R891）。組込述語と組織マスターのクラスは three_workplaces_ontology.jsonld と同じもの",
+ "@id": "urn:td:ontology",
+ "@type": "Ontology",
+ "agentProperty": "agent",
+ "channelProperty": "inChannel",
+ "taskAccess": {
+  "class": "TaskAgent",
+  "channel": "channel",
+  "task": "task",
+  "agent": "person",
+  "recordClass": "TaskAccess",
+  "recordAgent": "taskAgent",
+  "recordUser": "taskUser",
+  "memberProperties": [
+   "incumbent",
+   "hasMember"
+  ]
+ },
+ "defines": [
+  {
+   "@id": "urn:td:課題",
+   "@type": "Class",
+   "label": "課題",
+   "_comment": "課題（トーク的業務。担当者は起動した人）。and分解（conjSubTask）で下位の課題を指す",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:td:題名",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#inChannel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#conjSubTask",
+     "minCardinality": 0
+    }
+   ]
+  },
+  {
+   "@id": "urn:td:題名",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "題名"
+  },
+  {
+   "@id": "urn:td:発言",
+   "@type": "Class",
+   "label": "発言",
+   "_comment": "発言（トーク的業務のタスク。担当者は起動した人）。本文だけを持ち、相手を自分の属性で指さない——つながりは関係のノード（Conflict・Solution）だけで表す。発言の確定は本文だけで決まる",
+   "subClassOf": [
+    "#Cancelable",
+    {
+     "@type": "Restriction",
+     "onProperty": "urn:td:本文",
+     "minCardinality": 1,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#agent",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#inChannel",
+     "minCardinality": 0,
+     "maxCardinality": 1
+    }
+   ]
+  },
+  {
+   "@id": "urn:td:本文",
+   "@type": "DatatypeProperty",
+   "range": "string",
+   "label": "本文"
+  },
+  {
+   "@id": "urn:td:Conflict",
+   "@type": "Class",
+   "label": {
+    "": "Conflict",
+    "ja": "しかし"
+   },
+   "_comment": "DiscourseGraph の Conflict（しかし）。arg1・arg2 で両端を指すだけで、OK を持たない。関係のノードとして持つ（R887 の道の宣言は付けない）。試しのためにこの例題にだけ置く。本来の置き場所（Ontology.xlsx か DiscourseGraph.xlsx か）は試しの後で決める",
+   "subClassOf": [
+    "#GraphRelation",
+    {
+     "@type": "Restriction",
+     "onProperty": "#arg1",
+     "cardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#arg2",
+     "cardinality": 1
+    }
+   ]
+  },
+  {
+   "@id": "urn:td:Solution",
+   "@type": "Class",
+   "label": {
+    "": "Solution",
+    "ja": "解決案"
+   },
+   "_comment": "DiscourseGraph の Solution（解決案）。arg1・arg2 で両端を指すだけで、OK を持たない。関係のノードとして持つ（R887 の道の宣言は付けない）。試しのためにこの例題にだけ置く。本来の置き場所（Ontology.xlsx か DiscourseGraph.xlsx か）は試しの後で決める",
+   "subClassOf": [
+    "#GraphRelation",
+    {
+     "@type": "Restriction",
+     "onProperty": "#arg1",
+     "cardinality": 1
+    },
+    {
+     "@type": "Restriction",
+     "onProperty": "#arg2",
+     "cardinality": 1
+    }
+   ]
+  }
+ ]
+}

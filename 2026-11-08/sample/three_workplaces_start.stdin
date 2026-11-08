@@ -1,0 +1,14 @@
+as urn:person:山田
+trial urn:tw:wp.管理会社
+publish trial-11
+trial urn:tw:wp.サプライヤー
+publish trial-13
+trial urn:tw:wp.バイヤー
+publish trial-15
+start urn:tw:Budget urn:tw:budgetCode 予算-1 urn:tw:limit 200000 urn:tw:users [urn:person:田中] as @予算
+ok @予算
+as urn:person:田中
+start urn:tw:Procurement urn:tw:subject えんぴつと消しゴム urn:tw:budget 予算-1 as @調達
+new urn:entity:line-1 urn:tw:Line urn:tw:product urn:item:えんぴつ urn:tw:quantity 5 into urn:tw:rule.調達#起案 urn:tw:lines
+new urn:entity:line-2 urn:tw:Line urn:tw:product urn:item:消しゴム urn:tw:quantity 30 into urn:tw:rule.調達#起案 urn:tw:lines
+new urn:entity:line-3 urn:tw:Line urn:tw:product urn:item:ノート urn:tw:quantity 10 into urn:tw:rule.調達#起案 urn:tw:lines

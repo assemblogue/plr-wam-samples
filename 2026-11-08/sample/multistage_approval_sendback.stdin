@@ -1,0 +1,26 @@
+as urn:person:田中
+set urn:ma:rule.稟議#起案 urn:ma:金額 5000000
+ok urn:ma:rule.稟議#起案
+as urn:person:鈴木
+set urn:ma:rule.承認経路.途中#承認 urn:ma:判断 承認
+ok urn:ma:rule.承認経路.途中#承認
+as urn:person:佐々木
+sendback urn:ma:rule.稟議#起案 from urn:ma:rule.承認経路.途中#承認
+as urn:person:田中
+list
+set urn:ma:rule.稟議#起案 urn:ma:件名 備品の購入（見積もりを添付）
+ok urn:ma:rule.稟議#起案
+as urn:person:佐々木
+list
+as urn:person:鈴木
+ok urn:ma:rule.承認経路.途中#承認
+as urn:person:佐々木
+set urn:ma:rule.承認経路.途中#承認 urn:ma:判断 承認
+ok urn:ma:rule.承認経路.途中#承認
+as urn:person:小林
+set urn:ma:rule.承認経路.最後#承認 urn:ma:判断 承認
+ok urn:ma:rule.承認経路.最後#承認
+as urn:person:田中
+ok @稟議
+list
+end

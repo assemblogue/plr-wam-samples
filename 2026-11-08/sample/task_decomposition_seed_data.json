@@ -1,0 +1,381 @@
+{
+ "_comment": "タスク分解の試しのデータ（起動の前の状態）。人は 橋田・review・kgwf-2b・docs（参加者）と管理者。課題のチャネルは管理者が作った",
+ "Person": [
+  {
+   "@id": "urn:person:橋田",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:review",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:kgwf-2b",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:docs",
+   "@type": "Person"
+  },
+  {
+   "@id": "urn:person:管理者",
+   "@type": "Person"
+  }
+ ],
+ "ONTOc1": [
+  {
+   "@id": "urn:channel:組織マスター",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:td:設定.組織マスター"
+   },
+   "onto0": "組織マスター",
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "TaskAccess": [
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者",
+     "channel": {
+      "@id": "urn:channel:組織マスター",
+      "onto0": "組織マスター"
+     },
+     "task": {
+      "@id": "Post"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:person:管理者"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者"
+     }
+    },
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者",
+     "channel": {
+      "@id": "urn:channel:組織マスター",
+      "onto0": "組織マスター"
+     },
+     "task": {
+      "@id": "Group"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:person:管理者"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者"
+     }
+    },
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者",
+     "channel": {
+      "@id": "urn:channel:組織マスター",
+      "onto0": "組織マスター"
+     },
+     "task": {
+      "@id": "OrgMember"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:person:管理者"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.全構成員"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者"
+     }
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  },
+  {
+   "@id": "urn:channel:課題",
+   "@type": "ONTOc1",
+   "ontoC": {
+    "@id": "urn:td:設定.課題"
+   },
+   "onto0": "課題",
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "_initiator": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "TaskAccess": [
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者",
+     "channel": {
+      "@id": "urn:channel:課題",
+      "onto0": "課題"
+     },
+     "task": {
+      "@id": "urn:td:課題"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:org:グループ.参加者"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.参加者"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者"
+     }
+    },
+    {
+     "@type": "TaskAccess",
+     "begin": "2026-10-01T00:00:00.000Z",
+     "end": "2026-10-01T00:00:00.000Z",
+     "creator": "urn:person:管理者",
+     "channel": {
+      "@id": "urn:channel:課題",
+      "onto0": "課題"
+     },
+     "task": {
+      "@id": "urn:td:発言"
+     },
+     "taskAgent": [
+      {
+       "@id": "urn:org:グループ.参加者"
+      }
+     ],
+     "taskUser": [
+      {
+       "@id": "urn:org:グループ.参加者"
+      }
+     ],
+     "agent": {
+      "@id": "urn:person:管理者"
+     },
+     "completeByOkButton": {
+      "@id": "urn:person:管理者"
+     }
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  }
+ ],
+ "OrgMember": [
+  {
+   "@id": "urn:org:構成員.橋田",
+   "@type": "OrgMember",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "person": {
+    "@id": "urn:person:橋田"
+   },
+   "publicFolder": "https://example.invalid/橋田/public",
+   "publicKey": "…",
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  },
+  {
+   "@id": "urn:org:構成員.review",
+   "@type": "OrgMember",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "person": {
+    "@id": "urn:person:review"
+   },
+   "publicFolder": "https://example.invalid/review/public",
+   "publicKey": "…",
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  },
+  {
+   "@id": "urn:org:構成員.kgwf-2b",
+   "@type": "OrgMember",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "person": {
+    "@id": "urn:person:kgwf-2b"
+   },
+   "publicFolder": "https://example.invalid/kgwf-2b/public",
+   "publicKey": "…",
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  },
+  {
+   "@id": "urn:org:構成員.docs",
+   "@type": "OrgMember",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "person": {
+    "@id": "urn:person:docs"
+   },
+   "publicFolder": "https://example.invalid/docs/public",
+   "publicKey": "…",
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  },
+  {
+   "@id": "urn:org:構成員.管理者",
+   "@type": "OrgMember",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "person": {
+    "@id": "urn:person:管理者"
+   },
+   "publicFolder": "https://example.invalid/管理者/public",
+   "publicKey": "…",
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  }
+ ],
+ "Group": [
+  {
+   "@id": "urn:org:グループ.全構成員",
+   "@type": "Group",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "name": "全構成員",
+   "hasMember": [
+    {
+     "@id": "urn:person:橋田"
+    },
+    {
+     "@id": "urn:person:review"
+    },
+    {
+     "@id": "urn:person:kgwf-2b"
+    },
+    {
+     "@id": "urn:person:docs"
+    },
+    {
+     "@id": "urn:person:管理者"
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  },
+  {
+   "@id": "urn:org:グループ.参加者",
+   "@type": "Group",
+   "inChannel": {
+    "@id": "urn:channel:組織マスター"
+   },
+   "agent": {
+    "@id": "urn:person:管理者"
+   },
+   "completeByOkButton": {
+    "@id": "urn:person:管理者"
+   },
+   "name": "参加者",
+   "hasMember": [
+    {
+     "@id": "urn:person:橋田"
+    },
+    {
+     "@id": "urn:person:review"
+    },
+    {
+     "@id": "urn:person:kgwf-2b"
+    },
+    {
+     "@id": "urn:person:docs"
+    }
+   ],
+   "begin": "2026-10-01T00:00:00.000Z",
+   "creator": "urn:person:管理者"
+  }
+ ]
+}
